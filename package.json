@@ -1,0 +1,22 @@
+{
+  "name": "rescript-snippets",
+  "version": "0.0.1",
+  "scripts": {
+    "build": "rescript",
+    "clean": "rescript clean -with-deps",
+    "start": "rescript build -w"
+  },
+  "keywords": [
+    "rescript"
+  ],
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@glennsl/bs-jest": "^0.7.0",
+    "jest": "^27.0.4",
+    "rescript": "^9.1.4"
+  },
+  "dependencies": {
+    "rescript": "*"
+  }
+}
