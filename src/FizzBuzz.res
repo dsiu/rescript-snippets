@@ -16,18 +16,14 @@ let ifUnhandledDo = (result, f) =>
 
 let lastStep = x =>
   switch x {
-  | Handled(str) => str->Utils.log
-  | Unhandled(n) => n->string_of_int->Utils.log
+  | Handled(str) => str
+  | Unhandled(n) => n->string_of_int
   }
 
-let fizbuzz = n =>
+let fizzbuzz = n =>
   n
   -> handle(~divisor=15, ~label="FizzBuzz")
   -> ifUnhandledDo(handle(~divisor=3, ~label="Fizz"))
   -> ifUnhandledDo(handle(~divisor=5, ~label="Buzz"))
   -> lastStep
 
-12->fizbuzz
-10->fizbuzz
-15->fizbuzz
-1->fizbuzz
