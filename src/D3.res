@@ -40,15 +40,15 @@ module Interval = {
 // -----------------------------------------------
 // v2
 module D3v2 = {
-type time<'a>
-type minute
-type second
-type millisecond
+  type time<'a>
+  type minute
+  type second
+  type millisecond
 
-@module("d3") external timeMinute: time<minute> = "timeMinute"
-@module("d3") external timeSecond: time<second> = "timeSecond"
-@module("d3") external timeMillisecond: time<millisecond> = "timeMillisecond"
+  @module("d3") external timeMinute: time<minute> = "timeMinute"
+  @module("d3") external timeSecond: time<second> = "timeSecond"
+  @module("d3") external timeMillisecond: time<millisecond> = "timeMillisecond"
 
-@send external floor: (time<_>, Js.Date.t) => Js.Date.t = "floor"
-@send external ceil: (time<_>, Js.Date.t) => Js.Date.t = "ceil"
+  @send external floor: (time<_>, Js.Date.t) => Js.Date.t = "floor"
+  @send external ceil: (time<_>, Js.Date.t) => Js.Date.t = "ceil"
 }
