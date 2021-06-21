@@ -1,3 +1,4 @@
+// https://forum.rescript-lang.org/t/newb-support-for-node-worker-threads/1858
 
 // binding a node global value
 // Small note, ReScript supports the equivalent __FILE__ macro directly, so no need for a binding.
