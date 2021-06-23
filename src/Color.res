@@ -4,14 +4,14 @@ type color =
   | Yellow
   | Green
   | Blue
-  | Purple;
+  | Purple
 
 let invert = (c: color) =>
-  switch (c) {
+  switch c {
   | Red => Green
   | Orange => Blue
   | Yellow => Purple
   | Green => Red
   | Blue => Orange
   | Purple => Yellow
-  };
+  }

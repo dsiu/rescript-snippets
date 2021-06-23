@@ -20,7 +20,7 @@
   "bs-dependencies": [
   ],
   "bs-dev-dependencies": [
-    "@glennsl/bs-jest"
+    "rescript-test"
   ],
   "warnings": {
     "error": "+101"

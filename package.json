@@ -4,7 +4,8 @@
   "scripts": {
     "build": "rescript",
     "clean": "rescript clean -with-deps",
-    "start": "rescript build -w"
+    "start": "rescript build -w",
+    "test": "retest __tests__/*.bs.js"
   },
   "keywords": [
     "rescript"
@@ -14,7 +15,8 @@
   "devDependencies": {
     "@glennsl/bs-jest": "^0.7.0",
     "jest": "^27.0.4",
-    "rescript": "^9.1.4"
+    "rescript": "^9.1.4",
+    "rescript-test": "^3.0.0"
   },
   "dependencies": {
     "rescript": "*"

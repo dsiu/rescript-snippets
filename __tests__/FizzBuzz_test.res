@@ -1,25 +1,24 @@
-open Jest
-open Expect
-open! Expect.Operators
+open Test
 open FizzBuzz
 
-describe("FizzBuzz", () => {
-  test("FizzBuzz 12", () => {
-    12->fizzbuzz -> expect |> toBe("Fizz")
-  })
+let intEqual = (~message=?, a: int, b: int) =>
+  assertion(~message?, ~operator="intEqual", (a, b) => a === b, a, b)
 
-  test("FizzBuzz 10", () => {
-    10->fizzbuzz  -> expect |> toBe("Buzz")
-//    15->fizzbuzz -> expect |> toBe("Fizz")
-//    1->fizzbuzz -> expect |> toBe("Fizz")
-  })
+let stringEqual = (~message=?, a: string, b: string) =>
+  assertion(~message?, ~operator="stringEqual", (a, b) => a == b, a, b)
 
-  test("FizzBuzz 15", () => {
-    15->fizzbuzz -> expect |> toBe("FizzBuzz")
-//    1->fizzbuzz -> expect |> toBe("Fizz")
-  })
+test("FizzBuzz 12", () => {
+  stringEqual(12->fizzbuzz, "Fizz")
+})
 
-  test("FizzBuzz 1", () => {
-    1->fizzbuzz -> expect |> toBe("1")
-  })
+test("FizzBuzz 10", () => {
+  stringEqual(10->fizzbuzz, "Buzz")
+})
+
+test("FizzBuzz 15", () => {
+  stringEqual(15->fizzbuzz, "FizzBuzz")
+})
+
+test("FizzBuzz 1", () => {
+  stringEqual(1->fizzbuzz, "1")
 })
