@@ -7,6 +7,25 @@
     "start": "rescript build -w",
     "test": "retest __tests__/*.bs.js"
   },
+  "fig": {
+    "test": {
+      "description": "Run all tests",
+      "icon": "🧪",
+      "priority": 100
+    },
+    "build": {
+      "description": "Build the project",
+      "icon": "🛠"
+    },
+    "start": {
+      "description": "Start watching and building project",
+      "icon": "⭐️"
+    },
+    "clean": {
+      "description": "Clean the project",
+      "icon": "🛀"
+    }
+  },
   "keywords": [
     "rescript"
   ],
