@@ -38,6 +38,7 @@
     "rescript-test": "^3.0.0"
   },
   "dependencies": {
+    "re-optic": "github:scoville/re-optic",
     "rescript": "*"
   }
 }

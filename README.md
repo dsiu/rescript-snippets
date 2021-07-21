@@ -6,3 +6,4 @@
 
 ## DONE:
 [x] use [resript-test](https://github.com/bloodyowl/rescript-test)
+[x] added [re-optic](https://github.com/scoville/re-optic)
