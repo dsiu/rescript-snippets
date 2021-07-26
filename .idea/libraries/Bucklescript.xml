@@ -1,6 +1,13 @@
 <component name="libraryTable">
   <library name="Bucklescript" type="javaScript">
-    <CLASSES />
+    <properties>
+      <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/node_modules/re-optic" />
+      </sourceFilesUrls>
+    </properties>
+    <CLASSES>
+      <root url="file://$PROJECT_DIR$/node_modules/re-optic" />
+    </CLASSES>
     <JAVADOC />
     <SOURCES />
   </library>

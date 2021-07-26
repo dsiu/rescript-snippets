@@ -19,7 +19,8 @@
   "suffix": ".bs.js",
   "ppx-flags": ["./node_modules/re-optic/lenses-ppx"],
   "bs-dependencies": [
-    "re-optic"
+    "re-optic",
+    "@ryyppy/rescript-promise"
   ],
   "bs-dev-dependencies": [
     "rescript-test"

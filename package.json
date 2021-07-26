@@ -38,6 +38,7 @@
     "rescript-test": "^3.0.0"
   },
   "dependencies": {
+    "@ryyppy/rescript-promise": "^2.1.0",
     "re-optic": "github:scoville/re-optic",
     "rescript": "*"
   }
