@@ -2,11 +2,15 @@
   <library name="Bucklescript" type="javaScript">
     <properties>
       <sourceFilesUrls>
+        <item url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
         <item url="file://$PROJECT_DIR$/node_modules/re-optic" />
+        <item url="file://$PROJECT_DIR$/node_modules/rescript-js" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
+      <root url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
       <root url="file://$PROJECT_DIR$/node_modules/re-optic" />
+      <root url="file://$PROJECT_DIR$/node_modules/rescript-js" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

@@ -27,7 +27,13 @@ function dump_mapString_of_int(param) {
               }), param);
 }
 
-function dump_mapInt_of(f, m) {
+function dump_mapString_of_string(param) {
+  return dump_mapString_of((function (a) {
+                return a;
+              }), param);
+}
+
+function dump_mapInt_of(m, f) {
   return Belt_MapInt.forEach(m, (function (k, v) {
                 var prim = "key:" + String(k) + ", val:" + Curry._1(f, v);
                 console.log(prim);
@@ -35,10 +41,10 @@ function dump_mapInt_of(f, m) {
               }));
 }
 
-function dump_mapInt_of_int(param) {
-  return dump_mapInt_of((function (prim) {
+function dump_mapInt_of_int(__x) {
+  return dump_mapInt_of(__x, (function (prim) {
                 return String(prim);
-              }), param);
+              }));
 }
 
 function dump_mutableMapInt_of(f, m) {
@@ -59,17 +65,43 @@ function dump_list(__x) {
   return Belt_List.forEach(__x, log);
 }
 
-function flattenArray(arr) {
-  return Belt_Array.reduce(arr, [], Belt_Array.concat);
+function splitChars(__x) {
+  return __x.split("");
+}
+
+function splitNewline(__x) {
+  return __x.split("\n");
+}
+
+function splitDoubleNewline(__x) {
+  return __x.split("\n\n");
+}
+
+function sum(a, x) {
+  return a + x | 0;
+}
+
+function sumIntArray(__x) {
+  return Belt_Array.reduce(__x, 0, sum);
+}
+
+function join(__x) {
+  return __x.join("");
 }
 
 exports.log = log;
 exports.dump_mapString_of = dump_mapString_of;
 exports.dump_mapString_of_int = dump_mapString_of_int;
+exports.dump_mapString_of_string = dump_mapString_of_string;
 exports.dump_mapInt_of = dump_mapInt_of;
 exports.dump_mapInt_of_int = dump_mapInt_of_int;
 exports.dump_mutableMapInt_of = dump_mutableMapInt_of;
 exports.dump_mutableMapInt_of_int = dump_mutableMapInt_of_int;
 exports.dump_list = dump_list;
-exports.flattenArray = flattenArray;
+exports.splitChars = splitChars;
+exports.splitNewline = splitNewline;
+exports.splitDoubleNewline = splitDoubleNewline;
+exports.sum = sum;
+exports.sumIntArray = sumIntArray;
+exports.join = join;
 /* No side effect */

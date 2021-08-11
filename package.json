@@ -32,14 +32,15 @@
   "author": "",
   "license": "MIT",
   "devDependencies": {
-    "@glennsl/bs-jest": "^0.7.0",
-    "jest": "^27.0.5",
-    "rescript": "^9.1.4",
-    "rescript-test": "^3.0.0"
+    "@glennsl/bs-jest": "*",
+    "jest": "*",
+    "rescript-test": "*"
   },
   "dependencies": {
-    "@ryyppy/rescript-promise": "^2.1.0",
+    "@ryyppy/rescript-promise": "*",
     "re-optic": "github:scoville/re-optic",
-    "rescript": "*"
+    "rescript": "*",
+    "rescript-js": "*",
+    "rescript-jzon": "*"
   }
 }
