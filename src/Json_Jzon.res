@@ -47,5 +47,5 @@ let myPoint = Codecs.point->Jzon.decode(myJsonData)
 "Json"->Js.log
 myJsonData->Js.log
 
-"ReScript Type"
+"ReScript Type"->Js.log
 myPoint->Js.log
