@@ -33,8 +33,8 @@
   "license": "MIT",
   "devDependencies": {
     "@glennsl/bs-jest": "*",
-    "jest": "*",
-    "rescript-test": "*"
+    "jest": "^27.0.6",
+    "rescript-test": "^3.1.0"
   },
   "dependencies": {
     "@ryyppy/rescript-promise": "*",
