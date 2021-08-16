@@ -38,21 +38,21 @@ module Launch = {
 }
 
 let tony = #TonyStark
-let program =
-  SuitUp.assembleParts()->Option.flatMap(suit =>
-    suit
-    ->SuitUp.fuel
-    ->Option.flatMap(fueledSuit =>
-      fueledSuit
-      ->SuitUp.suitUp(tony)
-      ->Option.flatMap(ironMan =>
-        ironMan
-        ->EngineStart.preLaunchChecks
-        ->Option.flatMap(checkResult =>
-          Launch.rangeVerification()->Option.flat Map(coord => ironMan->Launch.launch(coord))
-        )
-      )
+let program = SuitUp.assembleParts()->Option.flatMap(suit =>
+  suit
+  ->SuitUp.fuel
+  ->Option.flatMap(fueledSuit =>
+    fueledSuit
+    ->SuitUp.suitUp(tony)
+    ->Option.flatMap(ironMan =>
+      ironMan
+      ->EngineStart.preLaunchChecks
+      ->Option.flatMap(checkResult => {
+        checkResult->ignore
+        Launch.rangeVerification()->Option.flatMap(coord => ironMan->Launch.launch(coord))
+      })
     )
   )
+)
 
 program->Js.log
