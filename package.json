@@ -40,7 +40,7 @@
     "@ryyppy/rescript-promise": "*",
     "re-optic": "github:scoville/re-optic",
     "rescript": "*",
-    "rescript-js": "*",
+    "rescript-js": "^0.5.17",
     "rescript-jzon": "*"
   }
 }

@@ -2,7 +2,6 @@
 'use strict';
 
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
-var Caml_option = require("rescript/lib/js/caml_option.js");
 
 function assembleParts(param) {
   return "ASSEMBLED";
@@ -23,7 +22,7 @@ var SuitUp = {
 };
 
 function preLaunchChecks(ironMan) {
-  return Caml_option.some(undefined);
+  return "IRONMAN_PRELAUNCH_CHECKED";
 }
 
 function startEngine(ironMan) {
@@ -51,28 +50,27 @@ var Launch = {
   launch: launch
 };
 
-var program = Belt_Option.flatMap("ASSEMBLED", (function (suit) {
-        return Belt_Option.flatMap("FUELED", (function (fueledSuit) {
-                      return Belt_Option.flatMap("IRONMAN_SUITEDUP", (function (ironMan) {
-                                    return Belt_Option.flatMap(Caml_option.some(undefined), (function (checkResult) {
-                                                  return Belt_Option.flatMap({
-                                                              x: 12,
-                                                              y: 14
-                                                            }, (function (coord) {
-                                                                return "LAUNCHED";
-                                                              }));
-                                                }));
-                                  }));
-                    }));
-      }));
+function tonySuitUp(__x) {
+  return suitUp(__x, "TonyStark");
+}
+
+var startedEngine = Belt_Option.flatMap(Belt_Option.flatMap(Belt_Option.flatMap(Belt_Option.flatMap("ASSEMBLED", fuel), tonySuitUp), preLaunchChecks), startEngine);
+
+function launch$1(coords) {
+  return Belt_Option.flatMap(startedEngine, (function (i) {
+                return launch(i, coords);
+              }));
+}
+
+var program = Belt_Option.flatMap({
+      x: 12,
+      y: 14
+    }, launch$1);
 
 console.log(program);
-
-var tony = "TonyStark";
 
 exports.SuitUp = SuitUp;
 exports.EngineStart = EngineStart;
 exports.Launch = Launch;
-exports.tony = tony;
 exports.program = program;
-/* program Not a pure module */
+/* startedEngine Not a pure module */
