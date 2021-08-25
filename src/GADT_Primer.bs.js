@@ -37,7 +37,46 @@ var myBool = false;
 
 var myStr = "Hello";
 
+var List$p = {};
+
+var HList = {};
+
+var myHList = /* Cons */{
+  _0: 1,
+  _1: /* Cons */{
+    _0: "a",
+    _1: /* Cons */{
+      _0: 1.5,
+      _1: /* Nil */0
+    }
+  }
+};
+
+console.log(myHList);
+
 var b = /* None' */0;
+
+var myList = /* Con */{
+  _0: 1,
+  _1: /* Con */{
+    _0: 2,
+    _1: /* Con */{
+      _0: 3,
+      _1: /* Empty */0
+    }
+  }
+};
+
+var hList = [
+  1,
+  [
+    "Hello",
+    [
+      1.234,
+      undefined
+    ]
+  ]
+];
 
 exports.mapOption$p = mapOption$p;
 exports.a = a;
@@ -50,4 +89,9 @@ exports.myInt = myInt;
 exports.myFloat = myFloat;
 exports.myBool = myBool;
 exports.myStr = myStr;
+exports.List$p = List$p;
+exports.myList = myList;
+exports.HList = HList;
+exports.myHList = myHList;
+exports.hList = hList;
 /* c Not a pure module */

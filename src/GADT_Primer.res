@@ -25,7 +25,7 @@ let c = a |> mapOption'(inc)
 let d = b |> mapOption'(inc)
 
 // Unleashing GADTs
-type rec prim = [
+type rec prim<'a> = [
   | #Int(int)
   | #Float(float)
   | #Bool(bool)
@@ -46,3 +46,33 @@ let myBool = eval(#Bool(false))
 let myStr = eval(#Str("Hello"))
 
 // Heterogeneous List
+//
+// for rescript: https://forum.rescript-lang.org/t/how-to-define-heterogeneous-list/1015/1
+//
+module List' = {
+  type rec t<'a> =
+    | Empty
+    | Con('a, t<'a>)
+}
+
+let myList = {
+  open List'
+  Con(1, Con(2, Con(3, Empty)))
+}
+
+// here is the trick defining heterogeneous list in ReScript
+// NOT RECOMMANDED in practice
+module HList = {
+  type rec t<'b, 'c> =
+    | Nil: t<'b, 'b>
+    | Cons('a, t<'b, 'c>): t<'b, 'a => 'c>
+}
+
+let myHList = {
+  open HList
+  Cons(1, Cons("a", Cons(1.5, Nil)))
+}
+myHList->Js.log
+
+// alternative
+let hList = (1, ("Hello", (1.234, ())))
