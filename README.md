@@ -10,6 +10,7 @@
 * [Rescript Relay - GraphGL] (https://rescript-relay-documentation.vercel.app)
 * [Jest - Run multiple tests with same input] (https://forum.rescript-lang.org/t/unit-testing-with-jest/2323/11)
 * [Add some Belt.Option utility functions] (https://forum.rescript-lang.org/t/add-some-belt-option-utility-functions/2437)
+* [funicular - composable JSON parsing for ReScript] (https://github.com/chris-armstrong/funicular)
 
 ## DONE:
 [x] play with [jzon](https://github.com/nkrkv/jzon)
