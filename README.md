@@ -16,3 +16,6 @@
 [x] play with [jzon](https://github.com/nkrkv/jzon)
 [x] use [rescript-test](https://github.com/bloodyowl/rescript-test)
 [x] added [re-optic](https://github.com/scoville/re-optic)
+
+## Resources:
+[ReScript - BuckleScript Bindings Cookbook] (https://github.com/yawaramin/bucklescript-bindings-cookbook/blob/master/ReScript.md)
