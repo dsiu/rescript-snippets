@@ -23,3 +23,4 @@
 
 ## Resources:
 [ReScript - BuckleScript Bindings Cookbook](https://github.com/yawaramin/bucklescript-bindings-cookbook/blob/master/ReScript.md)
+[Awesome ReScript](https://github.com/fhammerschmidt/awesome-rescript)
