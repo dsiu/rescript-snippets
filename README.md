@@ -15,6 +15,7 @@
 * [ReScript AWS SDK v3 bindings](https://github.com/chris-armstrong/rescript-aws-sdk-v3-wrapper)
 * [Node.js bindings for ReScript](https://github.55860.com/TheSpyder/rescript-nodejs)
 * [Bindings to the DOM and other browser-specific web APIs.](https://github.55860.com/tinymce/rescript-webapi)
+* [Date manipulation in ReScript with the same modern and convenient API as date-fns.](https://github.com/mobily/rescript-date)
 
 ## DONE:
 [x] play with [jzon](https://github.com/nkrkv/jzon)
