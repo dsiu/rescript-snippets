@@ -1,6 +1,7 @@
 # rescript-snippets
 
 ## TODOs:
+* [ReScript Intro](https://github.com/mellson/rescript-intro)
 * [ReScript Webapi](https://github.com/tinymce/rescript-webapi)
 * [ReScript Logger](https://github.com/shakacode/rescript-logger)
 * [ReScript Blossom](https://github.com/johnridesabike/rescript-blossom)
@@ -11,6 +12,7 @@
 * [Jest - Run multiple tests with same input](https://forum.rescript-lang.org/t/unit-testing-with-jest/2323/11)
 * [Add some Belt.Option utility functions](https://forum.rescript-lang.org/t/add-some-belt-option-utility-functions/2437)
 * [funicular - composable JSON parsing for ReScript](https://github.com/chris-armstrong/funicular)
+* [ReScript JSON Typed Strongly](https://fullsteak.dev/posts/rescript-json-typed-strongly)
 * [HtmlEntities in ReScript](https://github.com/johnridesabike/coronate/blob/master/src/HtmlEntities.res)
 * [ReScript AWS SDK v3 bindings](https://github.com/chris-armstrong/rescript-aws-sdk-v3-wrapper)
 * [Node.js bindings for ReScript](https://github.55860.com/TheSpyder/rescript-nodejs)
