@@ -27,3 +27,4 @@
 ## Resources:
 [ReScript - BuckleScript Bindings Cookbook](https://github.com/yawaramin/bucklescript-bindings-cookbook/blob/master/ReScript.md)
 [Awesome ReScript](https://github.com/fhammerschmidt/awesome-rescript)
+[更好的TypeScript - 张宏波](https://www.zhihu.com/column/c_96822072)
