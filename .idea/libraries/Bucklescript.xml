@@ -3,14 +3,20 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
+        <item url="file://$PROJECT_DIR$/node_modules/bisect_ppx" />
+        <item url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
         <item url="file://$PROJECT_DIR$/node_modules/re-optic" />
+        <item url="file://$PROJECT_DIR$/node_modules/relude" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-js" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
       </sourceFilesUrls>
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
+      <root url="file://$PROJECT_DIR$/node_modules/bisect_ppx" />
+      <root url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
       <root url="file://$PROJECT_DIR$/node_modules/re-optic" />
+      <root url="file://$PROJECT_DIR$/node_modules/relude" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-js" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
     </CLASSES>
