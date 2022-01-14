@@ -21,6 +21,7 @@
 * [Benchmark.js](https://github.com/austindd/rescript-benchmarkjs)
 * [bastet - ReasonML/Ocaml library for category theory and abstract algebra](https://risto-stevcev.github.io/bastet/bastet/index.html#monoidal-categories)
 * [Use Big.js](https://github.com/greyblake/from-typescript-to-rescript/blob/master/rescript/src/bindings/Big.res)
+* [AsyncData - A ReScript variant type to represent async data](https://github.com/bloodyowl/rescript-asyncdata)
 
 ## DONE:
 [x] play with [jzon](https://github.com/nkrkv/jzon)
