@@ -293,3 +293,10 @@ resolve(1)
   resolve()
 })
 ->ignore
+
+// ref:
+// https://kevanstannard.github.io/rescript-blog/promise-empty-value.html
+// Return empty value in a promise
+let _ = Promise.make((resolve, _reject) => {
+  resolve(. ignore())
+})

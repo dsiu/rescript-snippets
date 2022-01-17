@@ -1,3 +1,5 @@
+// ref:
+// https://zhuanlan.zhihu.com/p/384308761
 // 结构化的代数数据类型以#作为标识符号
 
 let hello = #hello
@@ -71,3 +73,39 @@ let httpStatus = (code: [#404 | #201]) => {
 
 一般对于复杂的结构化代数数据类型，初期建模结束后会调整为代数数据类型，便于理解。
 */
+
+// -------------------------------------------------------------------------------------------
+// ref:
+// https://kevanstannard.github.io/rescript-blog/polymorphic-variants.html
+//
+
+// Polymorphic variants are distinguished from ordinary variants by the leading hash.
+// Unlike ordinary variants, polymorphic variants can be used without an explicit type declaration.
+let status = #yes
+
+let statusString = {
+  switch status {
+  | #yes => "Yes"
+  | #no => "No"
+  }
+}
+
+// However they may be assigned to a type:
+type color = [#red | #green | #blue]
+
+let colorToString = (color: color): string => {
+  switch color {
+  | #red => "Red"
+  | #green => "Green"
+  | #blue => "Blue"
+  }
+}
+
+// How to convert a polymorphic variable to a string?
+// ref:
+// https://kevanstannard.github.io/rescript-blog/convert-polyvar-to-string.html
+
+// Coerce the polyvar to a string
+let toString = (color: color): string => (color :> string)
+
+let red: string = toString(#red)

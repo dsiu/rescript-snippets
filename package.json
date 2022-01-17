@@ -39,8 +39,11 @@
     "rescript-test": "latest"
   },
   "dependencies": {
+    "@glennsl/bs-json": "^5.0.4",
     "@ryyppy/rescript-promise": "latest",
-    "re-optic": "github:scoville/re-optic",
+    "bs-fetch": "^0.6.2",
+    "isomorphic-fetch": "^3.0.0",
+    "re-fp": "github:snatvb/re-fp",
     "rescript": "^9.1.4",
     "rescript-js": "^0.6.0",
     "rescript-jzon": "latest"

@@ -55,11 +55,31 @@ function httpStatus(code) {
   
 }
 
+var statusString = "Yes";
+
+function colorToString(color) {
+  if (color === "red") {
+    return "Red";
+  } else if (color === "green") {
+    return "Green";
+  } else {
+    return "Blue";
+  }
+}
+
+function toString(color) {
+  return color;
+}
+
 var hello = "hello";
 
 var hello2 = "hello";
 
 var a = "hello";
+
+var status = "yes";
+
+var red = "red";
 
 exports.hello = hello;
 exports.hello2 = hello2;
@@ -69,4 +89,9 @@ exports.len = len;
 exports.$$eval = $$eval;
 exports.eval_ = eval_;
 exports.httpStatus = httpStatus;
+exports.status = status;
+exports.statusString = statusString;
+exports.colorToString = colorToString;
+exports.toString = toString;
+exports.red = red;
 /*  Not a pure module */

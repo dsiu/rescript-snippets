@@ -233,6 +233,10 @@ $$Promise.$$catch(Promise.resolve(1).then(function (value) {
         return Promise.resolve(undefined);
       }));
 
+new Promise((function (resolve, _reject) {
+        return resolve(undefined);
+      }));
+
 var queryUser$1;
 
 exports.MyOwnError = MyOwnError;
