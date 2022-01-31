@@ -10,6 +10,11 @@ function length(l) {
   }
 }
 
+console.log(length(/* Node */{
+          val: 3,
+          next: /* Empty */0
+        }));
+
 function len(l) {
   if (typeof l === "object") {
     return len(l.VAL[1]) + 1 | 0;

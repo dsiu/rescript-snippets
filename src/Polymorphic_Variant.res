@@ -24,6 +24,8 @@ let rec length = l => {
   }
 }
 
+length(Node({val: 3, next: Empty}))->Js.log
+
 let rec len = l => {
   switch l {
   | #Empty => 0
