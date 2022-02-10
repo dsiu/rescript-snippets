@@ -43,7 +43,6 @@
     "@ryyppy/rescript-promise": "latest",
     "bs-fetch": "^0.6.2",
     "isomorphic-fetch": "^3.0.0",
-    "re-fp": "github:snatvb/re-fp",
     "rescript": "^9.1.4",
     "rescript-js": "^0.6.0",
     "rescript-jzon": "latest"

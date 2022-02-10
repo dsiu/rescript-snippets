@@ -7,6 +7,10 @@
       "subdirs": true
     },
     {
+      "dir": "re-fp/src",
+      "subdirs": true
+    },
+    {
       "dir": "__tests__",
       "subdirs": true,
       "type": "dev"
@@ -26,8 +30,7 @@
     "bs-bastet",
     "relude",
     "bs-fetch",
-    "@glennsl/bs-json",
-    "re-fp"
+    "@glennsl/bs-json"
   ],
   "bs-dev-dependencies": [
     "rescript-test"

@@ -48,9 +48,11 @@ nextBool(3.0)->Js.log
 
 //let nextLong:
 
-module R = ReFp.Reader
+"Use re-fp"->Js.log
+module R = REFP__Reader
 
-let c = 1.0
-let double = n => n *. 2
-let f = R.map(c, double)
-f->Js.log
+let getSeed = R.from(0.14)
+let double = n => n *. 2.0
+let addOne = n => n +. 1.0
+let f = getSeed->R.map(double)->R.map(addOne)->R.map(addOne)
+0->f->Js.log
