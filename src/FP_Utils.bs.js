@@ -13,6 +13,10 @@ function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
 
+function id(x) {
+  return x;
+}
+
 function composeU(f, g, x) {
   return g(f(x));
 }
@@ -29,6 +33,7 @@ exports.List = List;
 exports.flatMapList = flatMapList;
 exports.$$Array = $$Array;
 exports.flatMapArray = flatMapArray;
+exports.id = id;
 exports.composeU = composeU;
 exports.compose = compose;
 /* No side effect */

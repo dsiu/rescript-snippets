@@ -7,6 +7,7 @@ var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var FP_Utils = require("./FP_Utils.bs.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Caml_int32 = require("rescript/lib/js/caml_int32.js");
 var Belt_MapInt = require("rescript/lib/js/belt_MapInt.js");
 var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_format = require("rescript/lib/js/caml_format.js");
@@ -150,6 +151,10 @@ function minIntInArray(xs) {
   return Belt_Array.getExn(sorted, 0);
 }
 
+function flatten(xs) {
+  return Belt_Array.reduce(xs, [], Belt_Array.concat);
+}
+
 function int32ToUint32(x) {
   return new Uint32Array([x])[0];
 }
@@ -161,6 +166,20 @@ function base2(__x) {
 function intFromStringExn(param) {
   return FP_Utils.compose(Belt_Int.fromString, Belt_Option.getExn, param);
 }
+
+function add(x, y) {
+  return x + y | 0;
+}
+
+function sub(x, y) {
+  return x - y | 0;
+}
+
+function mul(x, y) {
+  return Math.imul(x, y);
+}
+
+var div = Caml_int32.div;
 
 function int64FromBitString(str) {
   return Caml_format.caml_int64_of_string("0b" + str);
@@ -190,8 +209,13 @@ exports.join = join;
 exports.sumRange = sumRange;
 exports.maxIntInArray = maxIntInArray;
 exports.minIntInArray = minIntInArray;
+exports.flatten = flatten;
 exports.int32ToUint32 = int32ToUint32;
 exports.base2 = base2;
 exports.intFromStringExn = intFromStringExn;
+exports.add = add;
+exports.sub = sub;
+exports.mul = mul;
+exports.div = div;
 exports.int64FromBitString = int64FromBitString;
 /* No side effect */

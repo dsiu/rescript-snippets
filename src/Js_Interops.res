@@ -3,6 +3,8 @@
 //
 // ref:
 // https://forum.rescript-lang.org/t/comparison-operators/2662/2
+// https://github.com/yawaramin/bucklescript-bindings-cookbook/blob/master/ReScript.md
+//
 
 type t
 let isBefore: (t, t) => bool = %raw(`(a, b) => a < b`)

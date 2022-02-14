@@ -78,6 +78,10 @@ let minIntInArray = xs => {
   sorted->Array.getExn(0)
 }
 
+let flatten = (xs: array<array<'a>>) => {
+  xs->Array.reduce([], (a, x) => Array.concat(a, x))
+}
+
 // Unsigned Int conversion
 let int32ToUint32 = x => {
   open Js.TypedArray2
@@ -94,6 +98,10 @@ let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
 
 let intFromStringExn = FP_Utils.compose(Int.fromString, Belt.Option.getExn)
 
+let add = (x, y) => x + y
+let sub = (x, y) => x - y
+let mul = (x, y) => x * y
+let div = (x, y) => x / y
 //
 // Int64
 //
