@@ -67,6 +67,42 @@ var prim$3 = Curry._1(FP_Utils.compose(add1, times, 2), 7);
 
 console.log(prim$3);
 
+function f(x, y, z) {
+  return x + Math.imul(y, z) | 0;
+}
+
+function g(param) {
+  return param[0] + Math.imul(param[1], param[2]) | 0;
+}
+
+console.log("f");
+
+console.log(7);
+
+console.log("g");
+
+var prim$4 = g([
+      1,
+      2,
+      3
+    ]);
+
+console.log(prim$4);
+
+function h(x, y, z) {
+  
+}
+
+function h1(param, param$1) {
+  return h(1, param, param$1);
+}
+
+function h2(param) {
+  return h(1, true, param);
+}
+
+var h3;
+
 var compose = FP_Utils.compose;
 
 exports.log = log;
@@ -79,4 +115,10 @@ exports.twice = twice;
 exports.add1 = add1;
 exports.add1Twice = add1Twice;
 exports.add1ThenMultiply = add1ThenMultiply;
+exports.f = f;
+exports.g = g;
+exports.h = h;
+exports.h1 = h1;
+exports.h2 = h2;
+exports.h3 = h3;
 /* prim Not a pure module */

@@ -23,3 +23,21 @@ let add1Twice = add1->twice
 
 let add1ThenMultiply = compose(add1, times)
 add1ThenMultiply(2, 7)->log
+
+let f = (x, y, z) => x + y * z
+let g = ((x, y, z)) => x + y * z
+
+log("f")
+2->(1->f)(3)->log
+log("g")
+(1, 2, 3)->g->log
+
+let h = (x: int, y: bool, z: float) => {
+  x->ignore
+  y->ignore
+  z->ignore
+}
+
+let h1 = 1->h
+let h2 = true->h1
+let h3 = 1.0->h2
