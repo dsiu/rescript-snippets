@@ -17,12 +17,32 @@ function id(x) {
   return x;
 }
 
+function eq(x, y) {
+  return x === y;
+}
+
 function composeU(f, g, x) {
   return g(f(x));
 }
 
 function compose(f, g, x) {
   return Curry._1(g, Curry._1(f, x));
+}
+
+function compose3(f, g, h, x) {
+  return Curry._1(h, Curry._1(g, Curry._1(f, x)));
+}
+
+function compose4(f, g, h, i, x) {
+  return Curry._1(i, Curry._1(h, Curry._1(g, Curry._1(f, x))));
+}
+
+function composeN(fs) {
+  return Belt_Array.reduce(Belt_Array.sliceToEnd(fs, 1), Belt_Array.getExn(fs, 0), (function (a, f) {
+                return function (param) {
+                  return Curry._1(f, Curry._1(a, param));
+                };
+              }));
 }
 
 var List;
@@ -34,6 +54,10 @@ exports.flatMapList = flatMapList;
 exports.$$Array = $$Array;
 exports.flatMapArray = flatMapArray;
 exports.id = id;
+exports.eq = eq;
 exports.composeU = composeU;
 exports.compose = compose;
+exports.compose3 = compose3;
+exports.compose4 = compose4;
+exports.composeN = composeN;
 /* No side effect */

@@ -2,7 +2,7 @@
 'use strict';
 
 var Curry = require("rescript/lib/js/curry.js");
-var FP_Utils = require("../FP_Utils.bs.js");
+var FP_Utils = require("../../FP_Utils.bs.js");
 
 function log(prim) {
   console.log(prim);

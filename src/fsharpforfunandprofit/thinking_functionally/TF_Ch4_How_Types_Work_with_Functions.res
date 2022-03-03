@@ -57,6 +57,7 @@ onAStick(Ts_Float(2.0))->Js.log
 let a = ("hello", 1)
 
 // Functions with more than two parameters
+@@warning("-27")
 let multiParamFn = (p1: int, p2: bool, p3: string, p4: float) => {p1->ignore}
 
 let intermediateFn1 = 42->multiParamFn
