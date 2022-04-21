@@ -5,7 +5,8 @@
     "build": "rescript",
     "clean": "rescript clean -with-deps",
     "start": "rescript build -w",
-    "test": "retest __tests__/*.bs.js"
+    "test": "retest __tests__/*.bs.js",
+    "test99": "npx nodemon --exec retest src/Problems_in_OCaml/*_Test.bs.js"
   },
   "fig": {
     "test": {
@@ -43,8 +44,9 @@
     "@ryyppy/rescript-promise": "latest",
     "bs-fetch": "^0.6.2",
     "isomorphic-fetch": "^3.0.0",
+    "nodemon": "^2.0.15",
     "rescript": "^9.1.4",
-    "rescript-js": "^0.6.0",
+    "rescript-js": "^0.6.2",
     "rescript-jzon": "latest"
   }
 }

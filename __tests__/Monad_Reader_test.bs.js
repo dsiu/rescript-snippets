@@ -2,37 +2,8 @@
 'use strict';
 
 var Test = require("rescript-test/src/Test.bs.js");
-var Belt_Array = require("rescript/lib/js/belt_Array.js");
+var Test_Utils = require("./Test_Utils.bs.js");
 var Monad_Reader = require("../src/Monad_Reader.bs.js");
-var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
-
-function intEqual(message, a, b) {
-  return Test.assertion(message, "intEqual", (function (a, b) {
-                return a === b;
-              }), a, b);
-}
-
-function stringEqual(message, a, b) {
-  return Test.assertion(message, "stringEqual", (function (a, b) {
-                return a === b;
-              }), a, b);
-}
-
-function stringMapEqual(message, a, b) {
-  return Test.assertion(message, "stringMapEqual", (function (a, b) {
-                return Belt_MapString.eq(a, b, (function (a, b) {
-                              return a === b;
-                            }));
-              }), a, b);
-}
-
-function stringArrayEqual(message, a, b) {
-  return Test.assertion(message, "stringMapEqual", (function (a, b) {
-                return Belt_Array.eq(a, b, (function (a, b) {
-                              return a === b;
-                            }));
-              }), a, b);
-}
 
 Test.test("Reader Type", (function (param) {
         
@@ -44,17 +15,17 @@ Test.test("run()", (function (param) {
                   return e + 1 | 0;
                 })
             }, 1);
-        return intEqual(undefined, result, 2);
+        return Test_Utils.intEqual(undefined, result, 2);
       }));
 
 Test.test("return()", (function (param) {
         var result = Monad_Reader.run(Monad_Reader.$$return(99), 1);
-        return intEqual(undefined, result, 99);
+        return Test_Utils.intEqual(undefined, result, 99);
       }));
 
 Test.test("ask()", (function (param) {
         var result = Monad_Reader.run(Monad_Reader.ask(undefined), 123);
-        return intEqual(undefined, result, 123);
+        return Test_Utils.intEqual(undefined, result, 123);
       }));
 
 Test.test("local()", (function (param) {
@@ -66,7 +37,7 @@ Test.test("local()", (function (param) {
         var result = Monad_Reader.run(Monad_Reader.local((function (e) {
                     return -e | 0;
                   }), __x), 1);
-        return intEqual(undefined, result, 0);
+        return Test_Utils.intEqual(undefined, result, 0);
       }));
 
 Test.test("map()", (function (param) {
@@ -78,7 +49,7 @@ Test.test("map()", (function (param) {
         var result = Monad_Reader.run(Monad_Reader.map((function (x) {
                     return Math.imul(x, 10);
                   }), __x), 1);
-        return intEqual(undefined, result, 20);
+        return Test_Utils.intEqual(undefined, result, 20);
       }));
 
 Test.test("bind() 1", (function (param) {
@@ -94,7 +65,7 @@ Test.test("bind() 1", (function (param) {
                               })
                           };
                   }), __x), 1);
-        return intEqual(undefined, result, 4);
+        return Test_Utils.intEqual(undefined, result, 4);
       }));
 
 Test.test("bind() 2", (function (param) {
@@ -106,7 +77,7 @@ Test.test("bind() 2", (function (param) {
         var result = Monad_Reader.run(Monad_Reader.bind((function (x) {
                     return Monad_Reader.$$return((x << 1));
                   }), __x), 1);
-        return intEqual(undefined, result, 4);
+        return Test_Utils.intEqual(undefined, result, 4);
       }));
 
 Test.test("bind() 3", (function (param) {
@@ -140,7 +111,7 @@ Test.test("bind() 3", (function (param) {
                             }), rb);
               }), ra);
         var result = Monad_Reader.run(r12, "Hello");
-        return stringArrayEqual(undefined, result, [
+        return Test_Utils.stringArrayEqual(undefined, result, [
                     "Hello: One",
                     "Hello: Two",
                     "Hello: Three"
@@ -177,15 +148,11 @@ Test.test("bind() 3.1", (function (param) {
                                               }), __x);
                                 }), __x);
                   }), __x), "Hey");
-        return stringArrayEqual(undefined, result, [
+        return Test_Utils.stringArrayEqual(undefined, result, [
                     "Hey: One",
                     "Hey: Two",
                     "Hey: Three"
                   ]);
       }));
 
-exports.intEqual = intEqual;
-exports.stringEqual = stringEqual;
-exports.stringMapEqual = stringMapEqual;
-exports.stringArrayEqual = stringArrayEqual;
 /*  Not a pure module */

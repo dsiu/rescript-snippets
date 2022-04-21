@@ -2,30 +2,7 @@
 
 open Test
 open Monad_Reader
-
-let intEqual = (~message=?, a: int, b: int) =>
-  assertion(~message?, ~operator="intEqual", (a, b) => a === b, a, b)
-
-let stringEqual = (~message=?, a: string, b: string) =>
-  assertion(~message?, ~operator="stringEqual", (a, b) => a == b, a, b)
-
-let stringMapEqual = (~message=?, a, b) =>
-  assertion(
-    ~message?,
-    ~operator="stringMapEqual",
-    (a, b) => Belt.Map.String.eq(a, b, (a, b) => a === b),
-    a,
-    b,
-  )
-
-let stringArrayEqual = (~message=?, a, b) =>
-  assertion(
-    ~message?,
-    ~operator="stringMapEqual",
-    (a, b) => Belt.Array.eq(a, b, (a, b) => a === b),
-    a,
-    b,
-  )
+open Test_Utils
 
 test("Reader Type", () => {
   Reader(e => e + 1)->ignore

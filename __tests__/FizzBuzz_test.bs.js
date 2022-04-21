@@ -3,35 +3,22 @@
 
 var Test = require("rescript-test/src/Test.bs.js");
 var FizzBuzz = require("../src/FizzBuzz.bs.js");
-
-function intEqual(message, a, b) {
-  return Test.assertion(message, "intEqual", (function (a, b) {
-                return a === b;
-              }), a, b);
-}
-
-function stringEqual(message, a, b) {
-  return Test.assertion(message, "stringEqual", (function (a, b) {
-                return a === b;
-              }), a, b);
-}
+var Test_Utils = require("./Test_Utils.bs.js");
 
 Test.test("FizzBuzz 12", (function (param) {
-        return stringEqual(undefined, FizzBuzz.fizzbuzz(12), "Fizz");
+        return Test_Utils.stringEqual(undefined, FizzBuzz.fizzbuzz(12), "Fizz");
       }));
 
 Test.test("FizzBuzz 10", (function (param) {
-        return stringEqual(undefined, FizzBuzz.fizzbuzz(10), "Buzz");
+        return Test_Utils.stringEqual(undefined, FizzBuzz.fizzbuzz(10), "Buzz");
       }));
 
 Test.test("FizzBuzz 15", (function (param) {
-        return stringEqual(undefined, FizzBuzz.fizzbuzz(15), "FizzBuzz");
+        return Test_Utils.stringEqual(undefined, FizzBuzz.fizzbuzz(15), "FizzBuzz");
       }));
 
 Test.test("FizzBuzz 1", (function (param) {
-        return stringEqual(undefined, FizzBuzz.fizzbuzz(1), "1");
+        return Test_Utils.stringEqual(undefined, FizzBuzz.fizzbuzz(1), "1");
       }));
 
-exports.intEqual = intEqual;
-exports.stringEqual = stringEqual;
 /*  Not a pure module */

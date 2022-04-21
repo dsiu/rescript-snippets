@@ -4,7 +4,8 @@
   "sources": [
     {
       "dir": "src",
-      "subdirs": true
+      "subdirs": true,
+      "type": "dev"
     },
     {
       "dir": "re-fp/src",

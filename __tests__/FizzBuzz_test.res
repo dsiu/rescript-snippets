@@ -1,11 +1,6 @@
 open Test
 open FizzBuzz
-
-let intEqual = (~message=?, a: int, b: int) =>
-  assertion(~message?, ~operator="intEqual", (a, b) => a === b, a, b)
-
-let stringEqual = (~message=?, a: string, b: string) =>
-  assertion(~message?, ~operator="stringEqual", (a, b) => a == b, a, b)
+open Test_Utils
 
 test("FizzBuzz 12", () => {
   stringEqual(12->fizzbuzz, "Fizz")
