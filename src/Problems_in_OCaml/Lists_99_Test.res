@@ -79,3 +79,56 @@ test("10. encode", () => {
 
   let expected = [(4, 'a'), (1, 'b'), (2, 'c'), (2, 'a'), (1, 'd'), (4, 'e')]
 })
+
+test("11. encode'", () => {
+  let result =
+    list{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}
+    ->encode_11
+    ->Belt.List.toArray
+    ->Js.log2("11. encode result", _)
+
+  let expected =
+    [Many(4, "a"), One("b"), Many(2, "c"), Many(2, "a"), One("d"), Many(4, "e")]->Js.log2(
+      "11. encode expected",
+      _,
+    )
+})
+
+test("12. decode", () => {
+  let result =
+    list{Many(4, "a"), One("b"), Many(2, "c"), Many(2, "a"), One("d"), Many(4, "e")}
+    ->decode
+    ->Belt.List.toArray
+    ->Js.log2("12. decode result", _)
+
+  let expected =
+    list{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}
+    ->Belt.List.toArray
+    ->Js.log2("12. decode expected", _)
+})
+
+test("13. encode", () => {
+  let result =
+    list{"a", "a", "a", "a", "b", "c", "c", "a", "a", "d", "e", "e", "e", "e"}
+    ->encode_13
+    ->Belt.List.toArray
+    ->Js.log2("13. encode result", _)
+
+  let expected =
+    [Many(4, "a"), One("b"), Many(2, "c"), Many(2, "a"), One("d"), Many(4, "e")]->Js.log2(
+      "13. encode expected",
+      _,
+    )
+})
+
+test("14. duplicate", () => {
+  let result = list{"a", "b", "c", "c", "d"}->duplicate
+  let expected = list{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}
+  listEqual(result, expected)
+})
+
+test("15. replicate", () => {
+  let result = replicate(list{"a", "b", "c"}, 3)
+  let expected = list{"a", "a", "a", "b", "b", "b", "c", "c", "c"}
+  listEqual(result, expected)
+})

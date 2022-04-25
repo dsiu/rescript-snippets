@@ -404,4 +404,343 @@ Test.test("10. encode", (function (param) {
         
       }));
 
+Test.test("11. encode'", (function (param) {
+        var __x = Belt_List.toArray(Lists_99.encode_11({
+                  hd: "a",
+                  tl: {
+                    hd: "a",
+                    tl: {
+                      hd: "a",
+                      tl: {
+                        hd: "a",
+                        tl: {
+                          hd: "b",
+                          tl: {
+                            hd: "c",
+                            tl: {
+                              hd: "c",
+                              tl: {
+                                hd: "a",
+                                tl: {
+                                  hd: "a",
+                                  tl: {
+                                    hd: "d",
+                                    tl: {
+                                      hd: "e",
+                                      tl: {
+                                        hd: "e",
+                                        tl: {
+                                          hd: "e",
+                                          tl: {
+                                            hd: "e",
+                                            tl: /* [] */0
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }));
+        console.log("11. encode result", __x);
+        var __x$1 = [
+          {
+            TAG: /* Many */1,
+            _0: 4,
+            _1: "a"
+          },
+          {
+            TAG: /* One */0,
+            _0: "b"
+          },
+          {
+            TAG: /* Many */1,
+            _0: 2,
+            _1: "c"
+          },
+          {
+            TAG: /* Many */1,
+            _0: 2,
+            _1: "a"
+          },
+          {
+            TAG: /* One */0,
+            _0: "d"
+          },
+          {
+            TAG: /* Many */1,
+            _0: 4,
+            _1: "e"
+          }
+        ];
+        console.log("11. encode expected", __x$1);
+        
+      }));
+
+Test.test("12. decode", (function (param) {
+        var __x = Belt_List.toArray(Lists_99.decode({
+                  hd: {
+                    TAG: /* Many */1,
+                    _0: 4,
+                    _1: "a"
+                  },
+                  tl: {
+                    hd: {
+                      TAG: /* One */0,
+                      _0: "b"
+                    },
+                    tl: {
+                      hd: {
+                        TAG: /* Many */1,
+                        _0: 2,
+                        _1: "c"
+                      },
+                      tl: {
+                        hd: {
+                          TAG: /* Many */1,
+                          _0: 2,
+                          _1: "a"
+                        },
+                        tl: {
+                          hd: {
+                            TAG: /* One */0,
+                            _0: "d"
+                          },
+                          tl: {
+                            hd: {
+                              TAG: /* Many */1,
+                              _0: 4,
+                              _1: "e"
+                            },
+                            tl: /* [] */0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }));
+        console.log("12. decode result", __x);
+        var __x$1 = Belt_List.toArray({
+              hd: "a",
+              tl: {
+                hd: "a",
+                tl: {
+                  hd: "a",
+                  tl: {
+                    hd: "a",
+                    tl: {
+                      hd: "b",
+                      tl: {
+                        hd: "c",
+                        tl: {
+                          hd: "c",
+                          tl: {
+                            hd: "a",
+                            tl: {
+                              hd: "a",
+                              tl: {
+                                hd: "d",
+                                tl: {
+                                  hd: "e",
+                                  tl: {
+                                    hd: "e",
+                                    tl: {
+                                      hd: "e",
+                                      tl: {
+                                        hd: "e",
+                                        tl: /* [] */0
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            });
+        console.log("12. decode expected", __x$1);
+        
+      }));
+
+Test.test("13. encode", (function (param) {
+        var __x = Belt_List.toArray(Lists_99.encode_13({
+                  hd: "a",
+                  tl: {
+                    hd: "a",
+                    tl: {
+                      hd: "a",
+                      tl: {
+                        hd: "a",
+                        tl: {
+                          hd: "b",
+                          tl: {
+                            hd: "c",
+                            tl: {
+                              hd: "c",
+                              tl: {
+                                hd: "a",
+                                tl: {
+                                  hd: "a",
+                                  tl: {
+                                    hd: "d",
+                                    tl: {
+                                      hd: "e",
+                                      tl: {
+                                        hd: "e",
+                                        tl: {
+                                          hd: "e",
+                                          tl: {
+                                            hd: "e",
+                                            tl: /* [] */0
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }));
+        console.log("13. encode result", __x);
+        var __x$1 = [
+          {
+            TAG: /* Many */1,
+            _0: 4,
+            _1: "a"
+          },
+          {
+            TAG: /* One */0,
+            _0: "b"
+          },
+          {
+            TAG: /* Many */1,
+            _0: 2,
+            _1: "c"
+          },
+          {
+            TAG: /* Many */1,
+            _0: 2,
+            _1: "a"
+          },
+          {
+            TAG: /* One */0,
+            _0: "d"
+          },
+          {
+            TAG: /* Many */1,
+            _0: 4,
+            _1: "e"
+          }
+        ];
+        console.log("13. encode expected", __x$1);
+        
+      }));
+
+Test.test("14. duplicate", (function (param) {
+        var result = Lists_99.duplicate({
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: {
+                    hd: "c",
+                    tl: {
+                      hd: "d",
+                      tl: /* [] */0
+                    }
+                  }
+                }
+              }
+            });
+        return Test_Utils.listEqual(undefined, result, {
+                    hd: "a",
+                    tl: {
+                      hd: "a",
+                      tl: {
+                        hd: "b",
+                        tl: {
+                          hd: "b",
+                          tl: {
+                            hd: "c",
+                            tl: {
+                              hd: "c",
+                              tl: {
+                                hd: "c",
+                                tl: {
+                                  hd: "c",
+                                  tl: {
+                                    hd: "d",
+                                    tl: {
+                                      hd: "d",
+                                      tl: /* [] */0
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  });
+      }));
+
+Test.test("15. replicate", (function (param) {
+        var result = Lists_99.replicate({
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: /* [] */0
+                }
+              }
+            }, 3);
+        return Test_Utils.listEqual(undefined, result, {
+                    hd: "a",
+                    tl: {
+                      hd: "a",
+                      tl: {
+                        hd: "a",
+                        tl: {
+                          hd: "b",
+                          tl: {
+                            hd: "b",
+                            tl: {
+                              hd: "b",
+                              tl: {
+                                hd: "c",
+                                tl: {
+                                  hd: "c",
+                                  tl: {
+                                    hd: "c",
+                                    tl: /* [] */0
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  });
+      }));
+
 /*  Not a pure module */

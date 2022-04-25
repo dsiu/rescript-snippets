@@ -241,6 +241,201 @@ function encode(l) {
   return rev(aux(l, 0, /* [] */0));
 }
 
+function encode_11(l) {
+  var create_tuple = function (cnt, elem) {
+    if (cnt === 1) {
+      return {
+              TAG: /* One */0,
+              _0: elem
+            };
+    } else {
+      return {
+              TAG: /* Many */1,
+              _0: cnt,
+              _1: elem
+            };
+    }
+  };
+  var aux = function (_l, _count, _acc) {
+    while(true) {
+      var acc = _acc;
+      var count = _count;
+      var l = _l;
+      if (!l) {
+        return /* [] */0;
+      }
+      var match = l.tl;
+      var x = l.hd;
+      if (!match) {
+        return {
+                hd: create_tuple(count + 1 | 0, x),
+                tl: acc
+              };
+      }
+      var t = match.tl;
+      var b = match.hd;
+      if (Caml_obj.caml_equal(x, b)) {
+        _count = count + 1 | 0;
+        _l = {
+          hd: b,
+          tl: t
+        };
+        continue ;
+      }
+      _acc = {
+        hd: create_tuple(count + 1 | 0, x),
+        tl: acc
+      };
+      _count = 0;
+      _l = {
+        hd: b,
+        tl: t
+      };
+      continue ;
+    };
+  };
+  return rev(aux(l, 0, /* [] */0));
+}
+
+function decode(l) {
+  var many = function (_acc, _n, x) {
+    while(true) {
+      var n = _n;
+      var acc = _acc;
+      if (n === 0) {
+        return acc;
+      }
+      _n = n - 1 | 0;
+      _acc = {
+        hd: x,
+        tl: acc
+      };
+      continue ;
+    };
+  };
+  var _l = rev(l);
+  var _acc = /* [] */0;
+  while(true) {
+    var acc = _acc;
+    var l$1 = _l;
+    if (!l$1) {
+      return acc;
+    }
+    var x = l$1.hd;
+    if (x.TAG === /* One */0) {
+      _acc = {
+        hd: x._0,
+        tl: acc
+      };
+      _l = l$1.tl;
+      continue ;
+    }
+    _acc = many(acc, x._0, x._1);
+    _l = l$1.tl;
+    continue ;
+  };
+}
+
+function encode_13(l) {
+  var rle = function (count, x) {
+    if (count !== 0) {
+      return {
+              TAG: /* Many */1,
+              _0: count + 1 | 0,
+              _1: x
+            };
+    } else {
+      return {
+              TAG: /* One */0,
+              _0: x
+            };
+    }
+  };
+  var aux = function (_l, _count, _acc) {
+    while(true) {
+      var acc = _acc;
+      var count = _count;
+      var l = _l;
+      if (!l) {
+        return /* [] */0;
+      }
+      var match = l.tl;
+      var x = l.hd;
+      if (!match) {
+        return {
+                hd: rle(count, x),
+                tl: acc
+              };
+      }
+      var t = match.tl;
+      var b = match.hd;
+      if (Caml_obj.caml_equal(x, b)) {
+        _count = count + 1 | 0;
+        _l = {
+          hd: b,
+          tl: t
+        };
+        continue ;
+      }
+      _acc = {
+        hd: rle(count, x),
+        tl: acc
+      };
+      _count = 0;
+      _l = {
+        hd: b,
+        tl: t
+      };
+      continue ;
+    };
+  };
+  return rev(aux(l, 0, /* [] */0));
+}
+
+function duplicate(l) {
+  if (!l) {
+    return /* [] */0;
+  }
+  var h = l.hd;
+  return {
+          hd: h,
+          tl: {
+            hd: h,
+            tl: duplicate(l.tl)
+          }
+        };
+}
+
+function replicate(l, n) {
+  var prepend = function (x, _n, _acc) {
+    while(true) {
+      var acc = _acc;
+      var n = _n;
+      if (n === 0) {
+        return acc;
+      }
+      _acc = {
+        hd: x,
+        tl: acc
+      };
+      _n = n - 1 | 0;
+      continue ;
+    };
+  };
+  var _l = rev(l);
+  var _acc = /* [] */0;
+  while(true) {
+    var acc = _acc;
+    var l$1 = _l;
+    if (!l$1) {
+      return acc;
+    }
+    _acc = prepend(l$1.hd, n, acc);
+    _l = l$1.tl;
+    continue ;
+  };
+}
+
 exports.last = last;
 exports.last_two = last_two;
 exports.at = at;
@@ -251,4 +446,9 @@ exports.flatten = flatten;
 exports.compress = compress;
 exports.pack = pack;
 exports.encode = encode;
+exports.encode_11 = encode_11;
+exports.decode = decode;
+exports.encode_13 = encode_13;
+exports.duplicate = duplicate;
+exports.replicate = replicate;
 /* No side effect */
