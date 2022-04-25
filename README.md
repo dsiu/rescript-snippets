@@ -1,6 +1,7 @@
 # rescript-snippets
 
 ## TODOs:
+* [quinn-dougherty/ParserCombinators.res](https://gist.github.com/quinn-dougherty/70d5b278bbfc2d8402ff28fa3af4a746)
 * [ReScript Intro](https://github.com/mellson/rescript-intro)
 * [ReScript Webapi](https://github.com/tinymce/rescript-webapi)
 * [ReScript Logger](https://github.com/shakacode/rescript-logger)
