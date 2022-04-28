@@ -3,6 +3,7 @@
 
 var Caml_obj = require("rescript/lib/js/caml_obj.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
+var Caml_int32 = require("rescript/lib/js/caml_int32.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 
 function last(_l) {
@@ -436,6 +437,98 @@ function replicate(l, n) {
   };
 }
 
+function drop(l, n) {
+  var aux = function (_l, _i) {
+    while(true) {
+      var i = _i;
+      var l = _l;
+      if (!l) {
+        return /* [] */0;
+      }
+      var t = l.tl;
+      if (i !== n) {
+        return {
+                hd: l.hd,
+                tl: aux(t, i + 1 | 0)
+              };
+      }
+      _i = 1;
+      _l = t;
+      continue ;
+    };
+  };
+  return aux(l, 1);
+}
+
+function split(l, n) {
+  var _l = l;
+  var _i = n;
+  var _acc = /* [] */0;
+  while(true) {
+    var acc = _acc;
+    var i = _i;
+    var l$1 = _l;
+    if (!l$1) {
+      return [
+              rev(acc),
+              /* [] */0
+            ];
+    }
+    if (i === 0) {
+      return [
+              rev(acc),
+              l$1
+            ];
+    }
+    _acc = {
+      hd: l$1.hd,
+      tl: acc
+    };
+    _i = i - 1 | 0;
+    _l = l$1.tl;
+    continue ;
+  };
+}
+
+function slice(l, i, k) {
+  var take = function (l, n) {
+    if (l && n !== 0) {
+      return {
+              hd: l.hd,
+              tl: take(l.tl, n - 1 | 0)
+            };
+    } else {
+      return /* [] */0;
+    }
+  };
+  var drop = function (_l, _n) {
+    while(true) {
+      var n = _n;
+      var l = _l;
+      if (!l) {
+        return /* [] */0;
+      }
+      if (n === 0) {
+        return l;
+      }
+      _n = n - 1 | 0;
+      _l = l.tl;
+      continue ;
+    };
+  };
+  return take(drop(l, i), (k - i | 0) + 1 | 0);
+}
+
+function rotate(l, n) {
+  var len = length(l);
+  var n$1 = len === 0 ? 0 : Caml_int32.mod_(Caml_int32.mod_(n, len) + len | 0, len);
+  if (n$1 === 0) {
+    return l;
+  }
+  var match = split(l, n$1);
+  return Belt_List.concat(match[1], match[0]);
+}
+
 exports.last = last;
 exports.last_two = last_two;
 exports.at = at;
@@ -451,4 +544,8 @@ exports.decode = decode;
 exports.encode_13 = encode_13;
 exports.duplicate = duplicate;
 exports.replicate = replicate;
+exports.drop = drop;
+exports.split = split;
+exports.slice = slice;
+exports.rotate = rotate;
 /* No side effect */

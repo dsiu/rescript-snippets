@@ -195,3 +195,55 @@ let replicate = (l, n) => {
   }
   aux(l->rev, list{})
 }
+
+// 16. Drop every N'th element from a list. (medium)
+let drop = (l, n) => {
+  let rec aux = (l, i) => {
+    switch l {
+    | list{} => list{}
+    | list{h, ...t} => i == n ? aux(t, 1) : list{h, ...aux(t, i + 1)}
+    }
+  }
+  aux(l, 1)
+}
+
+// 17. Split a list into two parts; the length of the first part is given. (easy)
+let split = (l, n) => {
+  let rec aux = (l, i, acc) => {
+    switch l {
+    | list{} => (rev(acc), list{})
+    | list{h, ...t} => i == 0 ? (rev(acc), l) : aux(t, i - 1, list{h, ...acc})
+    }
+  }
+  aux(l, n, list{})
+}
+
+// 18. Extract a slice from a list. (medium)
+let slice = (l, i, k) => {
+  let rec take = (l, n) => {
+    switch l {
+    | list{} => list{}
+    | list{h, ...t} => n == 0 ? list{} : list{h, ...take(t, n - 1)}
+    }
+  }
+
+  let rec drop = (l, n) => {
+    switch l {
+    | list{} => list{}
+    | list{h, ...t} => n == 0 ? l : drop(t, n - 1)
+    }
+  }
+  l->drop(i)->take(k - i + 1)
+}
+
+// 19. Rotate a list N places to the left. (medium)
+let rotate = (l, n) => {
+  let len = l->length
+  let n = len == 0 ? 0 : mod(mod(n, len) + len, len)
+  n == 0
+    ? l
+    : {
+        let (a, b) = split(l, n)
+        Belt.List.concat(b, a)
+      }
+}

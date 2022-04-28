@@ -743,4 +743,229 @@ Test.test("15. replicate", (function (param) {
                   });
       }));
 
+Test.test("16. drop", (function (param) {
+        var result = Lists_99.drop({
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: {
+                    hd: "d",
+                    tl: {
+                      hd: "e",
+                      tl: {
+                        hd: "f",
+                        tl: {
+                          hd: "g",
+                          tl: {
+                            hd: "h",
+                            tl: {
+                              hd: "i",
+                              tl: {
+                                hd: "j",
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }, 3);
+        return Test_Utils.listEqual(undefined, result, {
+                    hd: "a",
+                    tl: {
+                      hd: "b",
+                      tl: {
+                        hd: "d",
+                        tl: {
+                          hd: "e",
+                          tl: {
+                            hd: "g",
+                            tl: {
+                              hd: "h",
+                              tl: {
+                                hd: "j",
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  });
+      }));
+
+Test.test("17. split", (function (param) {
+        var match = Lists_99.split({
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: {
+                    hd: "d",
+                    tl: {
+                      hd: "e",
+                      tl: {
+                        hd: "f",
+                        tl: {
+                          hd: "g",
+                          tl: {
+                            hd: "h",
+                            tl: {
+                              hd: "i",
+                              tl: {
+                                hd: "j",
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }, 3);
+        Test_Utils.listEqual(undefined, match[0], {
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: /* [] */0
+                }
+              }
+            });
+        return Test_Utils.listEqual(undefined, match[1], {
+                    hd: "d",
+                    tl: {
+                      hd: "e",
+                      tl: {
+                        hd: "f",
+                        tl: {
+                          hd: "g",
+                          tl: {
+                            hd: "h",
+                            tl: {
+                              hd: "i",
+                              tl: {
+                                hd: "j",
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  });
+      }));
+
+Test.test("18. slice", (function (param) {
+        var result = Lists_99.slice({
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: {
+                    hd: "d",
+                    tl: {
+                      hd: "e",
+                      tl: {
+                        hd: "f",
+                        tl: {
+                          hd: "g",
+                          tl: {
+                            hd: "h",
+                            tl: {
+                              hd: "i",
+                              tl: {
+                                hd: "j",
+                                tl: /* [] */0
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }, 2, 6);
+        return Test_Utils.listEqual(undefined, result, {
+                    hd: "c",
+                    tl: {
+                      hd: "d",
+                      tl: {
+                        hd: "e",
+                        tl: {
+                          hd: "f",
+                          tl: {
+                            hd: "g",
+                            tl: /* [] */0
+                          }
+                        }
+                      }
+                    }
+                  });
+      }));
+
+Test.test("19. rotate", (function (param) {
+        var result = Lists_99.rotate({
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: {
+                    hd: "d",
+                    tl: {
+                      hd: "e",
+                      tl: {
+                        hd: "f",
+                        tl: {
+                          hd: "g",
+                          tl: {
+                            hd: "h",
+                            tl: /* [] */0
+                          }
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }, 3);
+        return Test_Utils.listEqual(undefined, result, {
+                    hd: "d",
+                    tl: {
+                      hd: "e",
+                      tl: {
+                        hd: "f",
+                        tl: {
+                          hd: "g",
+                          tl: {
+                            hd: "h",
+                            tl: {
+                              hd: "a",
+                              tl: {
+                                hd: "b",
+                                tl: {
+                                  hd: "c",
+                                  tl: /* [] */0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  });
+      }));
+
 /*  Not a pure module */

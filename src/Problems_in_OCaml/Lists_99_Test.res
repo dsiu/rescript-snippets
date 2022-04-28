@@ -132,3 +132,29 @@ test("15. replicate", () => {
   let expected = list{"a", "a", "a", "b", "b", "b", "c", "c", "c"}
   listEqual(result, expected)
 })
+
+test("16. drop", () => {
+  let result = list{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}->drop(3)
+  let expected = list{"a", "b", "d", "e", "g", "h", "j"}
+  listEqual(result, expected)
+})
+
+test("17. split", () => {
+  let (r1, r2) = list{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}->split(3)
+  let e1 = list{"a", "b", "c"}
+  let e2 = list{"d", "e", "f", "g", "h", "i", "j"}
+  listEqual(r1, e1)
+  listEqual(r2, e2)
+})
+
+test("18. slice", () => {
+  let result = list{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}->slice(2, 6)
+  let expected = list{"c", "d", "e", "f", "g"}
+  listEqual(result, expected)
+})
+
+test("19. rotate", () => {
+  let result = list{"a", "b", "c", "d", "e", "f", "g", "h"}->rotate(3)
+  let expected = list{"d", "e", "f", "g", "h", "a", "b", "c"}
+  listEqual(result, expected)
+})
