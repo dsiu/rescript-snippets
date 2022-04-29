@@ -230,7 +230,7 @@ let slice = (l, i, k) => {
   let rec drop = (l, n) => {
     switch l {
     | list{} => list{}
-    | list{h, ...t} => n == 0 ? l : drop(t, n - 1)
+    | list{_, ...t} => n == 0 ? l : drop(t, n - 1)
     }
   }
   l->drop(i)->take(k - i + 1)
