@@ -158,3 +158,35 @@ test("19. rotate", () => {
   let expected = list{"d", "e", "f", "g", "h", "a", "b", "c"}
   listEqual(result, expected)
 })
+
+test("20. remove_at", () => {
+  let result = list{"a", "b", "c", "d"}->remove_at(1)
+  let expected = list{"a", "c", "d"}
+  listEqual(result, expected)
+})
+
+test("21. insert_at", () => {
+  let result = list{"a", "b", "c", "d"}->insert_at(1, "alfa")->Belt.List.toArray
+
+  let expected = list{"a", "alfa", "b", "c", "d"}->Belt.List.toArray
+  stringArrayEqual(result, expected)
+})
+
+test("22. range", () => {
+  let result = range(4, 9)->Belt.List.toArray
+  let expected = list{4, 5, 6, 7, 8, 9}->Belt.List.toArray
+  intArrayEqual(result, expected)
+})
+
+test("23. range", () => {
+  let result = range_tail_recur(3, 11)->Belt.List.toArray
+  let expected = range(3, 11)->Belt.List.toArray
+  intArrayEqual(result, expected)
+})
+
+test("24. rand_select", () => {
+  let result =
+    rand_select(list{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}, 3)->Belt.List.toArray
+  let expected = list{"d", "i", "e"}->Belt.List.toArray
+  intArrayEqual(result, expected)
+})

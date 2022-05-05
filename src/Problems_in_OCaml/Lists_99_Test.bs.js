@@ -968,4 +968,138 @@ Test.test("19. rotate", (function (param) {
                   });
       }));
 
+Test.test("20. remove_at", (function (param) {
+        var result = Lists_99.remove_at({
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: {
+                    hd: "d",
+                    tl: /* [] */0
+                  }
+                }
+              }
+            }, 1);
+        return Test_Utils.listEqual(undefined, result, {
+                    hd: "a",
+                    tl: {
+                      hd: "c",
+                      tl: {
+                        hd: "d",
+                        tl: /* [] */0
+                      }
+                    }
+                  });
+      }));
+
+Test.test("21. insert_at", (function (param) {
+        var result = Belt_List.toArray(Lists_99.insert_at({
+                  hd: "a",
+                  tl: {
+                    hd: "b",
+                    tl: {
+                      hd: "c",
+                      tl: {
+                        hd: "d",
+                        tl: /* [] */0
+                      }
+                    }
+                  }
+                }, 1, "alfa"));
+        var expected = Belt_List.toArray({
+              hd: "a",
+              tl: {
+                hd: "alfa",
+                tl: {
+                  hd: "b",
+                  tl: {
+                    hd: "c",
+                    tl: {
+                      hd: "d",
+                      tl: /* [] */0
+                    }
+                  }
+                }
+              }
+            });
+        return Test_Utils.stringArrayEqual(undefined, result, expected);
+      }));
+
+Test.test("22. range", (function (param) {
+        var result = Belt_List.toArray(Lists_99.range(4, 9));
+        var expected = Belt_List.toArray({
+              hd: 4,
+              tl: {
+                hd: 5,
+                tl: {
+                  hd: 6,
+                  tl: {
+                    hd: 7,
+                    tl: {
+                      hd: 8,
+                      tl: {
+                        hd: 9,
+                        tl: /* [] */0
+                      }
+                    }
+                  }
+                }
+              }
+            });
+        return Test_Utils.intArrayEqual(undefined, result, expected);
+      }));
+
+Test.test("23. range", (function (param) {
+        var result = Belt_List.toArray(Lists_99.range_tail_recur(3, 11));
+        var expected = Belt_List.toArray(Lists_99.range(3, 11));
+        return Test_Utils.intArrayEqual(undefined, result, expected);
+      }));
+
+Test.test("24. rand_select", (function (param) {
+        var result = Belt_List.toArray(Lists_99.rand_select({
+                  hd: "a",
+                  tl: {
+                    hd: "b",
+                    tl: {
+                      hd: "c",
+                      tl: {
+                        hd: "d",
+                        tl: {
+                          hd: "e",
+                          tl: {
+                            hd: "f",
+                            tl: {
+                              hd: "g",
+                              tl: {
+                                hd: "h",
+                                tl: {
+                                  hd: "i",
+                                  tl: {
+                                    hd: "j",
+                                    tl: /* [] */0
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    }
+                  }
+                }, 3));
+        var expected = Belt_List.toArray({
+              hd: "d",
+              tl: {
+                hd: "i",
+                tl: {
+                  hd: "e",
+                  tl: /* [] */0
+                }
+              }
+            });
+        return Test_Utils.intArrayEqual(undefined, result, expected);
+      }));
+
 /*  Not a pure module */

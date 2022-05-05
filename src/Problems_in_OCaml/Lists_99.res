@@ -247,3 +247,60 @@ let rotate = (l, n) => {
         Belt.List.concat(b, a)
       }
 }
+
+// 20. Remove the K'th element from a list.
+let rec remove_at = (l, n) => {
+  switch l {
+  | list{} => list{}
+  | list{h, ...t} => n == 0 ? t : list{h, ...remove_at(t, n - 1)}
+  }
+}
+
+// 21. Insert an element at a given position into a list.
+let rec insert_at = (l, n, x) => {
+  switch l {
+  | list{} => list{x}
+  | list{h, ...t} => n == 0 ? list{x, h, ...t} : list{h, ...insert_at(t, n - 1, x)}
+  }
+}
+
+// 22. Create a list containing all integers within a given range.
+let range = (a, b) => {
+  let rec aux = (a, b) => {
+    a > b ? list{} : list{a, ...aux(a + 1, b)}
+  }
+  a > b ? aux(b, a) : aux(a, b)
+}
+
+let range_tail_recur = (a, b) => {
+  let rec aux = (acc, high, low) => {
+    high >= low ? aux(list{high, ...acc}, high - 1, low) : acc
+  }
+  b > a ? aux(list{}, b, a) : aux(list{}, a, b)
+}
+
+// 23. Extract a given number of randomly selected elements from a list.
+let rand_select = (list, n) => {
+  let rec extract = (l, acc, n) => {
+    switch l {
+    | list{} => raise(Not_found)
+    | list{h, ...t} => n == 0 ? (h, Belt.List.concat(acc, t)) : extract(t, list{h, ...acc}, n - 1)
+    }
+  }
+
+  let extract_rand = (list, len) => {
+    extract(list, list{}, Random.int(len))
+  }
+
+  let rec aux = (n, acc, list, len) => {
+    n == 0
+      ? acc
+      : {
+          let (picked, rest) = extract_rand(list, len)
+          aux(n - 1, list{picked, ...acc}, rest, len - 1)
+        }
+  }
+
+  let len = length(list)
+  aux(min(n, len), list{}, list, len)
+}
