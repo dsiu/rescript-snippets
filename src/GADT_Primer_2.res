@@ -1,6 +1,8 @@
 //
 // https://moondaddi-dev.translate.goog/posts/what_is_gadt/?_x_tr_sl=auto&_x_tr_tl=en&_x_tr_hl=en&_x_tr_pto=wapp#혼종heterogeneous-리스트
 //
+// x-devonthink-item://D6062B6B-6C38-43A8-A983-8AC4FE20C004
+//
 @@warning("-27")
 
 //

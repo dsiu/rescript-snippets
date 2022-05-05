@@ -21,7 +21,16 @@ let stringMapEqual = (~message=?, a, b) =>
 let stringArrayEqual = (~message=?, a, b) =>
   assertion(
     ~message?,
-    ~operator="stringMapEqual",
+    ~operator="stringArrayEqual",
+    (a, b) => Belt.Array.eq(a, b, (a, b) => a === b),
+    a,
+    b,
+  )
+
+let intArrayEqual = (~message=?, a, b) =>
+  assertion(
+    ~message?,
+    ~operator="intArrayEqual",
     (a, b) => Belt.Array.eq(a, b, (a, b) => a === b),
     a,
     b,

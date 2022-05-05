@@ -52,3 +52,30 @@ let y = JsonBool(true)
 // x has type responseType<string> and y has type responseType<bool>. If you do something like,
 
 // let x: responseType<bool> = JsonString("hello") // we get compile error now. Nice!
+
+//
+// Polymorphic add
+//
+// https://github.com/rescript-lang/playground/blob/master/examples/gadt.ml
+// https://github.com/rescript-lang/rescript-compiler/issues/686#issuecomment-243556683
+//
+
+%%raw(`
+  /*
+   * this js function will work under both [string] and [float]
+   */
+  function add (x,y){
+    return x + y;
+  }
+  `)
+
+type rec kind<_> =
+  | String: kind<string>
+  | Float: kind<float>
+
+@val external add: (@ignore kind<'a>, 'a, 'a) => 'a = ""
+
+let () = {
+  Js.log(add(Float, 3.0, 2.0))
+  Js.log(add(String, "hello, ", "BuckleScript"))
+}

@@ -2,6 +2,7 @@
 'use strict';
 
 var Curry = require("rescript/lib/js/curry.js");
+var Belt_Array = require("rescript/lib/js/belt_Array.js");
 
 function map_pair(r, param) {
   return [
@@ -15,11 +16,90 @@ var array = [
   "a"
 ];
 
+function number(v) {
+  return v;
+}
+
+function string(v) {
+  return v;
+}
+
+function classify(v) {
+  if (typeof v === "number") {
+    return {
+            TAG: /* Number */0,
+            _0: v
+          };
+  } else {
+    return {
+            TAG: /* String */1,
+            _0: v
+          };
+  }
+}
+
+var Number_or_string = {
+  number: number,
+  string: string,
+  classify: classify
+};
+
+var b = "hello";
+
+var c = [
+  3.14,
+  b
+];
+
+Belt_Array.map(c, (function (x) {
+        console.log(x);
+        
+      }));
+
+function a(v) {
+  return v;
+}
+
+function b$1(v) {
+  return v;
+}
+
+var $$instanceof = (function(a) {
+      return  a instanceof globalThis.A;
+      });
+
+function classify$1(v) {
+  if ($$instanceof(v)) {
+    return {
+            TAG: /* A */0,
+            _0: v
+          };
+  } else {
+    return {
+            TAG: /* B */1,
+            _0: b$1
+          };
+  }
+}
+
+var A_or_b = {
+  a: a,
+  b: b$1,
+  classify: classify$1
+};
+
 var x = {
   f: "foo"
 };
 
+var a$1 = 3.14;
+
 exports.x = x;
 exports.map_pair = map_pair;
 exports.array = array;
-/* No side effect */
+exports.Number_or_string = Number_or_string;
+exports.a = a$1;
+exports.b = b;
+exports.c = c;
+exports.A_or_b = A_or_b;
+/*  Not a pure module */

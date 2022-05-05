@@ -2,6 +2,18 @@
 'use strict';
 
 
+/*
+   * this js function will work under both [string] and [float]
+   */
+  function add (x,y){
+    return x + y;
+  }
+;
+
+console.log(add(3.0, 2.0));
+
+console.log(add("hello, ", "BuckleScript"));
+
 var x = {
   TAG: /* JsonString */1,
   _0: "hello"
@@ -14,4 +26,4 @@ var y = {
 
 exports.x = x;
 exports.y = y;
-/* No side effect */
+/*  Not a pure module */

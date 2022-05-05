@@ -34,7 +34,15 @@ function stringMapEqual(message, a, b) {
 }
 
 function stringArrayEqual(message, a, b) {
-  return Test.assertion(message, "stringMapEqual", (function (a, b) {
+  return Test.assertion(message, "stringArrayEqual", (function (a, b) {
+                return Belt_Array.eq(a, b, (function (a, b) {
+                              return a === b;
+                            }));
+              }), a, b);
+}
+
+function intArrayEqual(message, a, b) {
+  return Test.assertion(message, "intArrayEqual", (function (a, b) {
                 return Belt_Array.eq(a, b, (function (a, b) {
                               return a === b;
                             }));
@@ -72,6 +80,7 @@ exports.boolEqual = boolEqual;
 exports.stringEqual = stringEqual;
 exports.stringMapEqual = stringMapEqual;
 exports.stringArrayEqual = stringArrayEqual;
+exports.intArrayEqual = intArrayEqual;
 exports.listEqual = listEqual;
 exports.optionEqual = optionEqual;
 exports.optionListEqual = optionListEqual;
