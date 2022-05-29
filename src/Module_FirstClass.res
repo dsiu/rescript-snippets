@@ -32,3 +32,28 @@ module M1_Id = unpack(Belt.Id.comparable(~cmp=(m1: M1.t, m2: M1.t) => m1 - m2))
 // use module() to turn M_Id into a first-class module
 let map = Belt.MutableMap.make(~id=module(M1_Id))
 Belt.MutableMap.set(map, 1, "a")
+
+//
+// Document First Class Modules #155
+// https://github.com/rescript-association/rescript-lang.org/issues/155
+//
+// here's pretty much the whole syntax surface in one snippet:
+
+module type X = {
+  type t
+  let add: (int, int) => int
+}
+
+// convert module to first-class module
+type f = module(X)
+
+// create a first-class module
+let a = module(
+  {
+    type t
+    let add = (a, b) => a + b
+  }: X
+)
+
+// convert first-class module to module (in a module scope only)
+module B = unpack(a)

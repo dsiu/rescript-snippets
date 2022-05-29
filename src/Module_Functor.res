@@ -135,6 +135,8 @@ Friends.add({name: "lizzi", age: 8})
 /**
  How can get keys of object in generic
  https://forum.rescript-lang.org/t/how-can-get-keys-of-object-in-generic/1996/15
+
+ keywords: polymorphic, module functor
 */
 
 //
@@ -193,6 +195,7 @@ let doSome = (firestore: firestore) => {
 //
 // tsnobip
 // for the sake of exhaustiveness, there are other solutions that don’t involve functors like this one:
+//
 module Solution2 = {
   type firestore
 

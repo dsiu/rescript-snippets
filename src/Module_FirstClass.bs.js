@@ -28,9 +28,21 @@ var map$1 = Belt_MutableMap.make(M1_Id);
 
 Belt_MutableMap.set(map$1, 1, "a");
 
+function add(a, b) {
+  return a + b | 0;
+}
+
+var a = {
+  add: add
+};
+
+var B = a;
+
 exports.M = M;
 exports.M_Id = M_Id;
 exports.M1 = M1;
 exports.M1_Id = M1_Id;
 exports.map = map$1;
+exports.a = a;
+exports.B = B;
 /* M_Id Not a pure module */
