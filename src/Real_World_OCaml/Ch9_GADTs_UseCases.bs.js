@@ -2,6 +2,7 @@
 'use strict';
 
 var Curry = require("rescript/lib/js/curry.js");
+var Belt_List = require("rescript/lib/js/belt_List.js");
 var Pervasives = require("rescript/lib/js/pervasives.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 var Caml_js_exceptions = require("rescript/lib/js/caml_js_exceptions.js");
@@ -264,7 +265,65 @@ var If_not_found_2$1 = {
   flexible_find_2: flexible_find_2
 };
 
+function tuple_i_f(x, y) {
+  return [
+          x,
+          y
+        ];
+}
+
+function tuple_s_s(x, y) {
+  return [
+          x,
+          y
+        ];
+}
+
+function print_stringable(s) {
+  console.log(Curry._1(s.to_string, s.value));
+  
+}
+
+function id(x) {
+  return x;
+}
+
+var stringables_0 = /* Stringable */{
+  value: 100,
+  to_string: (function (prim) {
+      return String(prim);
+    })
+};
+
+var stringables_1 = {
+  hd: /* Stringable */{
+    value: 12.3,
+    to_string: (function (prim) {
+        return String(prim);
+      })
+  },
+  tl: {
+    hd: /* Stringable */{
+      value: "foo",
+      to_string: id
+    },
+    tl: /* [] */0
+  }
+};
+
+var stringables = {
+  hd: stringables_0,
+  tl: stringables_1
+};
+
+Belt_List.map(stringables, print_stringable);
+
 exports.list_find = list_find;
 exports.If_not_found_1 = If_not_found_1$1;
 exports.If_not_found_2 = If_not_found_2$1;
+exports.tuple_i_f = tuple_i_f;
+exports.tuple_s_s = tuple_s_s;
+exports.print_stringable = print_stringable;
+exports.id = id;
+exports.stringables = stringables;
 /*  Not a pure module */

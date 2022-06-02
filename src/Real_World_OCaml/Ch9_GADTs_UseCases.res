@@ -14,7 +14,6 @@
 //
 // Varying Your Return Type
 //
-
 // Sometimes, you want to write a single function that can effectively have different types in
 // different circumstances. In some sense, this is totally ordinary. After all, OCaml’s
 // polymorphism means that values can take on different types in different contexts. List.find
@@ -131,3 +130,41 @@ module If_not_found_2 = {
   }
   flexible_find_2(~f=x => x > 10, list{1, 2, 20}, Raise)->Js.log2("flexible_find_2", _)
 }
+
+//
+// Capturing the Unknown
+//
+// Code that works with unknown types is routine in OCaml, and comes up in the simplest of
+// examples:
+
+let tuple_i_f: (int, float) => (int, float) = (x, y) => (x, y)
+let tuple_s_s: (string, string) => (string, string) = (x, y) => (x, y)
+
+// Sometimes, however, we want type variables that are existentially quantified, meaning that
+// instead of being compatible with all types, the type represents a particular but unknown type.
+type rec stringable = Stringable({value: 'a, to_string: 'a => string}): stringable
+
+// This type packs together a value of some arbitrary type, along with a function for converting
+// values of that type to strings.
+
+// We can tell that 'a is existentially quantified because it shows up on the left-hand side of the
+// arrow but not on the right, so the 'a that shows up internally doesn’t appear in a type
+// parameter for stringable itself. Essentially, the existentially quantified type is bound within
+// the definition of stringable.
+
+// The following function can print an arbitrary stringable:
+let print_stringable = (Stringable(s)) => Js.log(s.to_string(s.value))
+
+let id = x => x
+
+let stringables = {
+  let s = (value, to_string) => Stringable({value: value, to_string: to_string})
+  list{s(100, Belt.Int.toString), s(12.3, Belt.Float.toString), s("foo", id)}
+}
+
+// polymorphic print!!
+Belt.List.map(stringables, print_stringable)->ignore
+
+// The thing that lets this all work is that the type of the underlying object is existentially
+// bound within the type stringable. As such, the type of the underlying values can’t escape the
+// scope of stringable, and any function that tries to return such a value won’t type-check.
