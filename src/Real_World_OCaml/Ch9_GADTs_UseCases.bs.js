@@ -2,7 +2,9 @@
 'use strict';
 
 var Curry = require("rescript/lib/js/curry.js");
+var Pervasives = require("rescript/lib/js/pervasives.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
+var Caml_js_exceptions = require("rescript/lib/js/caml_js_exceptions.js");
 
 function list_find(_l, f) {
   while(true) {
@@ -64,33 +66,205 @@ console.log(list_find({
             return x === x.toUpperCase();
           })));
 
-var If_not_found = {};
+var If_not_found_1 = {};
 
-function flexible_find(_l, f, if_not_found) {
+function flexible_find_1(_l, f, if_not_found) {
   while(true) {
     var l = _l;
-    if (l) {
-      var hd = l.hd;
-      if (Curry._1(f, hd)) {
-        return Caml_option.some(hd);
+    if (!l) {
+      if (typeof if_not_found === "number") {
+        if (if_not_found !== 0) {
+          return ;
+        } else {
+          return Pervasives.failwith("Element not found");
+        }
+      } else {
+        return Caml_option.some(if_not_found._0);
       }
-      _l = l.tl;
-      continue ;
     }
-    if (typeof if_not_found !== "number") {
-      return Caml_option.some(if_not_found._0);
+    var hd = l.hd;
+    if (Curry._1(f, hd)) {
+      return Caml_option.some(hd);
     }
-    if (if_not_found !== 0) {
-      return ;
-    }
-    throw {
-          RE_EXN_ID: "Not_found",
-          Error: new Error()
-        };
+    _l = l.tl;
+    continue ;
   };
 }
 
+var __x = flexible_find_1({
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 5,
+          tl: /* [] */0
+        }
+      }
+    }, (function (x) {
+        return x > 10;
+      }), /* Return_none */1);
+
+console.log("flexible_find_1", __x);
+
+var __x$1 = flexible_find_1({
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 5,
+          tl: /* [] */0
+        }
+      }
+    }, (function (x) {
+        return x > 10;
+      }), /* Default_to */{
+      _0: 10
+    });
+
+console.log("flexible_find_1", __x$1);
+
+try {
+  var __x$2 = flexible_find_1({
+        hd: 1,
+        tl: {
+          hd: 2,
+          tl: {
+            hd: 5,
+            tl: /* [] */0
+          }
+        }
+      }, (function (x) {
+          return x > 10;
+        }), /* Raise */0);
+  console.log("flexible_find_1", __x$2);
+}
+catch (raw_e){
+  var e = Caml_js_exceptions.internalToOCamlException(raw_e);
+  console.log("flexible_find_1", e);
+}
+
+var __x$3 = flexible_find_1({
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 20,
+          tl: /* [] */0
+        }
+      }
+    }, (function (x) {
+        return x > 10;
+      }), /* Raise */0);
+
+console.log("flexible_find_1", __x$3);
+
+var If_not_found_1$1 = {
+  If_not_found_1: If_not_found_1,
+  flexible_find_1: flexible_find_1
+};
+
+var If_not_found_2 = {};
+
+function flexible_find_2(f, _list, if_not_found) {
+  while(true) {
+    var list = _list;
+    if (!list) {
+      if (typeof if_not_found === "number") {
+        if (if_not_found !== 0) {
+          return ;
+        } else {
+          return Pervasives.failwith("No matching item found");
+        }
+      } else {
+        return if_not_found._0;
+      }
+    }
+    var hd = list.hd;
+    if (Curry._1(f, hd)) {
+      if (typeof if_not_found === "number" && if_not_found !== 0) {
+        return Caml_option.some(hd);
+      } else {
+        return hd;
+      }
+    }
+    _list = list.tl;
+    continue ;
+  };
+}
+
+var __x$4 = flexible_find_2((function (x) {
+        return x > 10;
+      }), {
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 5,
+          tl: /* [] */0
+        }
+      }
+    }, /* Return_none */1);
+
+console.log("flexible_find_2", __x$4);
+
+var __x$5 = flexible_find_2((function (x) {
+        return x > 10;
+      }), {
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 5,
+          tl: /* [] */0
+        }
+      }
+    }, /* Default_to */{
+      _0: 10
+    });
+
+console.log("flexible_find_2", __x$5);
+
+try {
+  var __x$6 = flexible_find_2((function (x) {
+          return x > 10;
+        }), {
+        hd: 1,
+        tl: {
+          hd: 2,
+          tl: {
+            hd: 5,
+            tl: /* [] */0
+          }
+        }
+      }, /* Raise */0);
+  console.log("flexible_find_2", __x$6);
+}
+catch (raw_e$1){
+  var e$1 = Caml_js_exceptions.internalToOCamlException(raw_e$1);
+  console.log("flexible_find_2", e$1);
+}
+
+var __x$7 = flexible_find_2((function (x) {
+        return x > 10;
+      }), {
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 20,
+          tl: /* [] */0
+        }
+      }
+    }, /* Raise */0);
+
+console.log("flexible_find_2", __x$7);
+
+var If_not_found_2$1 = {
+  If_not_found_2: If_not_found_2,
+  flexible_find_2: flexible_find_2
+};
+
 exports.list_find = list_find;
-exports.If_not_found = If_not_found;
-exports.flexible_find = flexible_find;
+exports.If_not_found_1 = If_not_found_1$1;
+exports.If_not_found_2 = If_not_found_2$1;
 /*  Not a pure module */
