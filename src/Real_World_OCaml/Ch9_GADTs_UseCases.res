@@ -23,17 +23,17 @@
 
 // Danny: my implementation of list flnd
 let rec list_find:
-  type a. (list<a>, ~f: a => bool) => option<a> =
-  (type a, l: list<a>, ~f: a => bool): option<a> => {
+  type a. (list<a>, a => bool) => option<a> =
+  (type a, l: list<a>, f: a => bool): option<a> => {
     switch l {
     | list{} => None
-    | list{x, ...t} => f(x) ? Some(x) : list_find(t, ~f)
+    | list{x, ...t} => f(x) ? Some(x) : list_find(t, f)
     }
   }
 
-list{1, 3, 5, 2}->list_find(~f=x => x > 3)->Js.log
-list{1, 3, 5, 2}->list_find(~f=x => x > 10)->Js.log
-list{"a", "B", "C"}->list_find(~f=x => x === x->Js.String2.toUpperCase)->Js.log
+list{1, 3, 5, 2}->list_find(x => x > 3)->Js.log
+list{1, 3, 5, 2}->list_find(x => x > 10)->Js.log
+list{"a", "B", "C"}->list_find(x => x === x->Js.String2.toUpperCase)->Js.log
 
 // But this approach is limited to simple dependencies between types that correspond to how data
 // flows through your code. Sometimes you want types to vary in a more flexible way.
@@ -54,9 +54,9 @@ module If_not_found = {
 // Now we can write flexible_find, which takes an If_not_found.t as a parameter and varies its
 // behavior accordingly.
 
-let rec flexible_find = (l, ~f, if_not_found: If_not_found.t<_>) => {
+let rec flexible_find = (l, f, if_not_found: If_not_found.t<_>) => {
   switch l {
-  | list{hd, ...tl} => f(hd) ? Some(hd) : flexible_find(tl, ~f, if_not_found)
+  | list{hd, ...tl} => f(hd) ? Some(hd) : flexible_find(tl, f, if_not_found)
   | list{} =>
     switch if_not_found {
     | Raise => raise(Not_found)
