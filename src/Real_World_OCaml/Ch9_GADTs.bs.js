@@ -338,9 +338,37 @@ function $$eval$1(_e) {
   };
 }
 
+function eval_value_2(v) {
+  return v._0;
+}
+
+function eval_2(_e) {
+  while(true) {
+    var e = _e;
+    switch (e.TAG | 0) {
+      case /* Value */0 :
+          return e._0._0;
+      case /* Eq */1 :
+          return eval_2(e._0) === eval_2(e._1);
+      case /* Plus */2 :
+          return eval_2(e._0) + eval_2(e._1) | 0;
+      case /* If */3 :
+          if (eval_2(e._0)) {
+            _e = e._1;
+            continue ;
+          }
+          _e = e._2;
+          continue ;
+      
+    }
+  };
+}
+
 var GADTs = {
   eval_value: eval_value,
-  $$eval: $$eval$1
+  $$eval: $$eval$1,
+  eval_value_2: eval_value_2,
+  eval_2: eval_2
 };
 
 exports.Ill_typed = Ill_typed;

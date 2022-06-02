@@ -3,8 +3,9 @@
 // https://dev.realworldocaml.org/gadts.html
 //
 
-// ordinary variant
+@@warning("-26")
 
+// ordinary variant
 type value =
   | Int(int)
   | Bool(bool)
@@ -157,7 +158,7 @@ module Try_Ordinary_Variants = {
 "GADTs"->Js.log
 
 module GADTs = {
-  // this is how to contruct a GADT
+  // this is how to construct a GADT
   // notice the use of return type of value<int> in the type constructor Int(int)
   // think of it as function, input type is int and constructed type is value<int>
   type rec value<_> =
@@ -188,6 +189,7 @@ module GADTs = {
     // doesn’t need any type-safety checks.
   }
 
+  // marking eval_value as polymorphic with type annotation
   let eval_value:
     type a. value<a> => a =
     // notice this line.  type a. is existential type (locally abstract type)
@@ -198,6 +200,9 @@ module GADTs = {
       }
     }
 
+  // marking eval as polymorphic with type annotation
+  // note: OCaml has syntactic sugar to combine the polymorphism annotation and the creation of
+  // the locally abstract types:
   let rec eval:
     type a. expr<a> => a =
     e => {
@@ -211,4 +216,31 @@ module GADTs = {
 
   // Note that we now have a single polymorphic eval function, as opposed to the two
   //  type-specific evaluators we needed when using phantom types.
+
+  // GADTs, Locally Abstract Types, and Polymorphic Recursion
+  //
+  // The above example lets us see one of the downsides of GADTs, which is that code using them
+  // needs extra type annotations. Look at what happens if we write the definition of value without the annotation.
+
+  // locally abstract type
+  let eval_value_2 = (type a, v: value<a>): a => {
+    switch v {
+    | Int(x) => x
+    | Bool(x) => x
+    }
+  }
+
+  // marking function as polymorphic with type annotation and with locally abstract type.
+  // must use this for recursive function
+  // this is a bit verbose.  See above "eval"
+  let rec eval_2:
+    type a. expr<a> => a =
+    (type a, e: expr<a>): a => {
+      switch e {
+      | Value(v) => eval_value_2(v)
+      | If(c, t, e) => eval_2(c) ? eval_2(t) : eval_2(e)
+      | Eq(x, y) => eval_2(x) == eval_2(y)
+      | Plus(x, y) => eval_2(x) + eval_2(y)
+      }
+    }
 }
