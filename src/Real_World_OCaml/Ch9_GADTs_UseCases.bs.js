@@ -2,10 +2,12 @@
 'use strict';
 
 var Curry = require("rescript/lib/js/curry.js");
+var Belt_Int = require("rescript/lib/js/belt_Int.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Pervasives = require("rescript/lib/js/pervasives.js");
+var Belt_Option = require("rescript/lib/js/belt_Option.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
-var Caml_js_exceptions = require("rescript/lib/js/caml_js_exceptions.js");
+var Caml_string = require("rescript/lib/js/caml_string.js");
 
 function list_find(_l, f) {
   while(true) {
@@ -139,9 +141,8 @@ try {
         }), /* Raise */0);
   console.log("flexible_find_1", __x$2);
 }
-catch (raw_e){
-  var e = Caml_js_exceptions.internalToOCamlException(raw_e);
-  console.log("flexible_find_1", e);
+catch (exn){
+  console.log("flexible_find_1", "nothing > 10");
 }
 
 var __x$3 = flexible_find_1({
@@ -240,9 +241,8 @@ try {
       }, /* Raise */0);
   console.log("flexible_find_2", __x$6);
 }
-catch (raw_e$1){
-  var e$1 = Caml_js_exceptions.internalToOCamlException(raw_e$1);
-  console.log("flexible_find_2", e$1);
+catch (exn$1){
+  console.log("flexible_find_2", "nothing > 10");
 }
 
 var __x$7 = flexible_find_2((function (x) {
@@ -264,6 +264,8 @@ var If_not_found_2$1 = {
   If_not_found_2: If_not_found_2,
   flexible_find_2: flexible_find_2
 };
+
+console.log("Capturing_The_Unknown");
 
 function tuple_i_f(x, y) {
   return [
@@ -318,12 +320,59 @@ var stringables = {
 
 Belt_List.map(stringables, print_stringable);
 
+var Capturing_The_Unknown = {
+  tuple_i_f: tuple_i_f,
+  tuple_s_s: tuple_s_s,
+  print_stringable: print_stringable,
+  id: id,
+  stringables: stringables
+};
+
+var ls_dir = {
+  hd: "d1",
+  tl: {
+    hd: "f111",
+    tl: {
+      hd: "f222",
+      tl: {
+        hd: "d2",
+        tl: {
+          hd: "f333",
+          tl: /* [] */0
+        }
+      }
+    }
+  }
+};
+
+function is_file_exn(s) {
+  return Caml_string.get(s, 0) === /* 'f' */102;
+}
+
+function lstat(s) {
+  return {
+          st_size: Belt_Option.getWithDefault(Belt_Int.fromString(s.substring(1)), 0)
+        };
+}
+
+function sum_file_sizes(param) {
+  return Belt_List.map(Belt_List.keep(ls_dir, is_file_exn), (function (x) {
+                return lstat(x).st_size;
+              }));
+}
+
+console.log(sum_file_sizes(undefined));
+
+var Abstracting_Computational_Machines = {
+  ls_dir: ls_dir,
+  is_file_exn: is_file_exn,
+  lstat: lstat,
+  sum_file_sizes: sum_file_sizes
+};
+
 exports.list_find = list_find;
 exports.If_not_found_1 = If_not_found_1$1;
 exports.If_not_found_2 = If_not_found_2$1;
-exports.tuple_i_f = tuple_i_f;
-exports.tuple_s_s = tuple_s_s;
-exports.print_stringable = print_stringable;
-exports.id = id;
-exports.stringables = stringables;
+exports.Capturing_The_Unknown = Capturing_The_Unknown;
+exports.Abstracting_Computational_Machines = Abstracting_Computational_Machines;
 /*  Not a pure module */

@@ -31,7 +31,8 @@
     "bs-bastet",
     "relude",
     "bs-fetch",
-    "@glennsl/bs-json"
+    "@glennsl/bs-json",
+    "rescript-nodejs"
   ],
   "bs-dev-dependencies": [
     "rescript-test"

@@ -71,7 +71,7 @@ module If_not_found_1 = {
   try {
     list{1, 2, 5}->flexible_find_1(~f=x => x > 10, Raise)->Js.log2("flexible_find_1", _)
   } catch {
-  | e => Js.log2("flexible_find_1", e)
+  | _ => Js.log2("flexible_find_1", "nothing > 10")
   }
   list{1, 2, 20}->flexible_find_1(~f=x => x > 10, Raise)->Js.log2("flexible_find_1", _)
 }
@@ -126,7 +126,7 @@ module If_not_found_2 = {
   try {
     flexible_find_2(~f=x => x > 10, list{1, 2, 5}, Raise)->Js.log2("flexible_find_2", _)
   } catch {
-  | e => Js.log2("flexible_find_2", e)
+  | _ => Js.log2("flexible_find_2", "nothing > 10")
   }
   flexible_find_2(~f=x => x > 10, list{1, 2, 20}, Raise)->Js.log2("flexible_find_2", _)
 }
@@ -137,34 +137,89 @@ module If_not_found_2 = {
 // Code that works with unknown types is routine in OCaml, and comes up in the simplest of
 // examples:
 
-let tuple_i_f: (int, float) => (int, float) = (x, y) => (x, y)
-let tuple_s_s: (string, string) => (string, string) = (x, y) => (x, y)
+module Capturing_The_Unknown = {
+  "Capturing_The_Unknown"->Js.log
 
-// Sometimes, however, we want type variables that are existentially quantified, meaning that
-// instead of being compatible with all types, the type represents a particular but unknown type.
-type rec stringable = Stringable({value: 'a, to_string: 'a => string}): stringable
+  let tuple_i_f: (int, float) => (int, float) = (x, y) => (x, y)
+  let tuple_s_s: (string, string) => (string, string) = (x, y) => (x, y)
 
-// This type packs together a value of some arbitrary type, along with a function for converting
-// values of that type to strings.
+  // Sometimes, however, we want type variables that are existentially quantified, meaning that
+  // instead of being compatible with all types, the type represents a particular but unknown type.
+  type rec stringable = Stringable({value: 'a, to_string: 'a => string}): stringable
 
-// We can tell that 'a is existentially quantified because it shows up on the left-hand side of the
-// arrow but not on the right, so the 'a that shows up internally doesn’t appear in a type
-// parameter for stringable itself. Essentially, the existentially quantified type is bound within
-// the definition of stringable.
+  // This type packs together a value of some arbitrary type, along with a function for converting
+  // values of that type to strings.
 
-// The following function can print an arbitrary stringable:
-let print_stringable = (Stringable(s)) => Js.log(s.to_string(s.value))
+  // We can tell that 'a is existentially quantified because it shows up on the left-hand side of the
+  // arrow but not on the right, so the 'a that shows up internally doesn’t appear in a type
+  // parameter for stringable itself. Essentially, the existentially quantified type is bound within
+  // the definition of stringable.
 
-let id = x => x
+  // The following function can print an arbitrary stringable:
+  let print_stringable = (Stringable(s)) => Js.log(s.to_string(s.value))
 
-let stringables = {
-  let s = (value, to_string) => Stringable({value: value, to_string: to_string})
-  list{s(100, Belt.Int.toString), s(12.3, Belt.Float.toString), s("foo", id)}
+  let id = x => x
+
+  let stringables = {
+    let s = (value, to_string) => Stringable({value: value, to_string: to_string})
+    list{s(100, Belt.Int.toString), s(12.3, Belt.Float.toString), s("foo", id)}
+  }
+
+  // polymorphic print!!
+  Belt.List.map(stringables, print_stringable)->ignore
+
+  // The thing that lets this all work is that the type of the underlying object is existentially
+  // bound within the type stringable. As such, the type of the underlying values can’t escape the
+  // scope of stringable, and any function that tries to return such a value won’t type-check.
+
+  // let get_value = (Stringable(s)) => s.value // this wont' compile
+
+  // Error: This expression has type \"$Stringable_'a"
+  //       but an expression was expected of type 'a
+  //       The type constructor $Stringable_'a would escape its scope
+
+  // It’s worth spending a moment to decode this error message, and the meaning of the type
+  // variable $Stringable_'a in particular. You can think of this variable as having three parts:
+
+  //  * The $ marks the variable as an existential.
+  //  * Stringable is the name of the GADT tag that this variable came from.
+  //  * 'a is the name of the type variable from inside that tag.
 }
 
-// polymorphic print!!
-Belt.List.map(stringables, print_stringable)->ignore
+module Abstracting_Computational_Machines = {
+  // A common idiom in OCaml is to combine small components into larger computational
+  // machines, using a collection of component-combining functions, or combinators.
 
-// The thing that lets this all work is that the type of the underlying object is existentially
-// bound within the type stringable. As such, the type of the underlying values can’t escape the
-// scope of stringable, and any function that tries to return such a value won’t type-check.
+  // GADTs can be helpful for writing such combinators. To see how, let’s consider an example:
+  // pipelines. Here, a pipeline is a sequence of steps where each step consumes the output of the
+  // previous step, potentially do2es some side effects, and returns a value to be passed to the
+  // next step. This is analogous to a shell pipeline, and is useful for all sorts of system
+  // automation tasks.
+
+  // But, can’t we write pipelines already? After all, OCaml comes with a perfectly serviceable
+  // pipeline operator:
+  type stats = {st_size: int}
+  let ls_dir = list{"d1", "f111", "f222", "d2", "f333"}
+  let is_file_exn = s => s->String.get(0) == 'f'
+  let lstat = s => {
+    {
+      st_size: s
+      ->Js.String2.substringToEnd(~from=1)
+      ->Belt.Int.fromString
+      ->Belt.Option.getWithDefault(0),
+    }
+  }
+
+  let sum_file_sizes = () => {
+    ls_dir->Belt.List.keep(is_file_exn)->Belt.List.map(x => {x->lstat}.st_size)
+  }
+
+  sum_file_sizes()->Js.log
+
+  module type Pipeline = {
+    type t<'input, 'output>
+
+    let add: ('a => 'b, t<'b, 'c>) => t<'a, 'c>
+    let empty: t<'a, 'a>
+  }
+}
