@@ -1,6 +1,9 @@
 # rescript-snippets
 
 ## TODOs:
+* [Typesafe JSON Schema for ReScript](https://github.com/DZakh/rescript-json-schema)
+* [ReScript bindings for Ava Testing Framework](https://github.com/DZakh/rescript-ava)
+* [A simple and composable way to describe relationship between JavaScript and ReScript structures](https://github.com/DZakh/rescript-struct)
 * [An ergonomic, cross-platform, standard library for Rescript and OCaml](https://github.com/darklang/tablecloth)
 * [Tablecloth - A portable standard library enhancement for Reason and OCaml.](https://tableclothml.netlify.app)
 * [rescript-future](https://github.com/bloodyowl/rescript-future)
