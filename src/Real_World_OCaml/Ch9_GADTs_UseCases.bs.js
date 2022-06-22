@@ -467,9 +467,12 @@ var Abstracting_Computational_Machines = {
   exec_with_profile: exec_with_profile
 };
 
+var Narrowing_the_Possibilities = {};
+
 exports.list_find = list_find;
 exports.If_not_found_1 = If_not_found_1$1;
 exports.If_not_found_2 = If_not_found_2$1;
 exports.Capturing_The_Unknown = Capturing_The_Unknown;
 exports.Abstracting_Computational_Machines = Abstracting_Computational_Machines;
+exports.Narrowing_the_Possibilities = Narrowing_the_Possibilities;
 /*  Not a pure module */

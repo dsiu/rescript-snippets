@@ -265,3 +265,17 @@ module Abstracting_Computational_Machines = {
   Js.log("using pipeline GADT with profile p1")
   exec_with_profile(p1)()->Js.log
 }
+
+//
+// Narrowing the Possibilities
+//
+// A COMPLETION-SENSITIVE OPTION TYPE
+//
+module Narrowing_the_Possibilities = {
+  type incomplete = Incomplete
+  type complete = Complete
+
+  type rec coption<_, _> =
+    | Absent: coption<_, incomplete>
+    | Present('a): coption<'a, _>
+}
