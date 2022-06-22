@@ -200,7 +200,7 @@ module Abstracting_Computational_Machines = {
   // pipeline operator:
   type stats = {st_size: int}
   let ls_dir = list{"d1", "f111", "f222", "d2", "f333"}
-  let is_file_exn = s => s->String.get(0) == 'f'
+  let is_file_exn = s => s->String.get(0) === 'f'
   let lstat = s => {
     {
       st_size: s
@@ -209,17 +209,59 @@ module Abstracting_Computational_Machines = {
       ->Belt.Option.getWithDefault(0),
     }
   }
+  let list_sum = l => l->Belt.List.reduce(0, (a, x) => a + x)
 
   let sum_file_sizes = () => {
-    ls_dir->Belt.List.keep(is_file_exn)->Belt.List.map(x => {x->lstat}.st_size)
+    ls_dir->Belt.List.keep(is_file_exn)->Belt.List.map(x => {x->lstat}.st_size)->list_sum
   }
 
   sum_file_sizes()->Js.log
 
-  module type Pipeline = {
-    type t<'input, 'output>
+  type rec pipeline<_, _> =
+    | Step('a => 'b, pipeline<'b, 'c>): pipeline<'a, 'c>
+    | Empty: pipeline<'a, 'a>
 
-    let add: ('a => 'b, t<'b, 'c>) => t<'a, 'c>
-    let empty: t<'a, 'a>
+  let add_step = (pipeline, f) => Step(pipeline, f)
+  let \"+" = add_step
+  let empty = Empty
+
+  let rec exec:
+    type a b. (pipeline<a, b>, a) => b =
+    (pipeline, input) => {
+      switch pipeline {
+      | Empty => input
+      | Step(f, tail) => exec(tail, f(input))
+      }
+    }
+
+  let p1 = add_step(
+    () => ls_dir,
+    add_step(
+      Belt.List.keep(_, is_file_exn),
+      add_step(Belt.List.map(_, x => {x->lstat}.st_size), add_step(list_sum, Empty)),
+    ),
+  )
+
+  Js.log("using pipeline GADT p1")
+  exec(p1)()->Js.log
+
+  let exec_with_profile = (pipeline, input) => {
+    let rec loop:
+      type a b. (pipeline<a, b>, a, list<int>) => (b, list<int>) =
+      (pipeline, input, rev_profile) =>
+        switch pipeline {
+        | Empty => (input, rev_profile)
+        | Step(f, tail) => {
+            let start = 0
+            let output = f(input)
+            let elapsed = 13
+            loop(tail, output, list{elapsed, ...rev_profile})
+          }
+        }
+    let (output, rev_profile) = loop(pipeline, input, list{})
+    (output, List.rev(rev_profile))
   }
+
+  Js.log("using pipeline GADT with profile p1")
+  exec_with_profile(p1)()->Js.log
 }
