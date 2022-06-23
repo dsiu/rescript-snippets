@@ -329,22 +329,61 @@ var Capturing_The_Unknown = {
   stringables: stringables
 };
 
-var ls_dir = {
-  hd: "d1",
-  tl: {
-    hd: "f111",
-    tl: {
-      hd: "f222",
-      tl: {
-        hd: "d2",
-        tl: {
-          hd: "f333",
-          tl: /* [] */0
-        }
-      }
-    }
+function ls_dir(d) {
+  switch (d) {
+    case "." :
+        return {
+                hd: "d1",
+                tl: {
+                  hd: "f111",
+                  tl: {
+                    hd: "f222",
+                    tl: {
+                      hd: "d2",
+                      tl: {
+                        hd: "f333",
+                        tl: /* [] */0
+                      }
+                    }
+                  }
+                }
+              };
+    case ".." :
+        return {
+                hd: "d10",
+                tl: {
+                  hd: "f100",
+                  tl: {
+                    hd: "f200",
+                    tl: {
+                      hd: "d2",
+                      tl: {
+                        hd: "f300",
+                        tl: /* [] */0
+                      }
+                    }
+                  }
+                }
+              };
+    default:
+      return {
+              hd: "d1000",
+              tl: {
+                hd: "f11100",
+                tl: {
+                  hd: "f22200",
+                  tl: {
+                    hd: "d200",
+                    tl: {
+                      hd: "f33300",
+                      tl: /* [] */0
+                    }
+                  }
+                }
+              }
+            };
   }
-};
+}
 
 function is_file_exn(s) {
   return Caml_string.get(s, 0) === /* 'f' */102;
@@ -362,18 +401,18 @@ function list_sum(l) {
               }));
 }
 
-function sum_file_sizes(param) {
-  return list_sum(Belt_List.map(Belt_List.keep(ls_dir, is_file_exn), (function (x) {
+function sum_file_sizes(d) {
+  return list_sum(Belt_List.map(Belt_List.keep(ls_dir(d), is_file_exn), (function (x) {
                     return lstat(x).st_size;
                   })));
 }
 
-console.log(sum_file_sizes(undefined));
+console.log(sum_file_sizes("."));
 
-function add_step(pipeline, f) {
+function add_step(f, pipeline) {
   return /* Step */{
-          _0: pipeline,
-          _1: f
+          _0: f,
+          _1: pipeline
         };
 }
 
@@ -388,10 +427,6 @@ function exec(_pipeline, _input) {
     _pipeline = pipeline._1;
     continue ;
   };
-}
-
-function p1_0(param) {
-  return ls_dir;
 }
 
 var p1_1 = /* Step */{
@@ -412,13 +447,15 @@ var p1_1 = /* Step */{
 };
 
 var p1 = /* Step */{
-  _0: p1_0,
+  _0: ls_dir,
   _1: p1_1
 };
 
 console.log("using pipeline GADT p1");
 
-console.log(exec(p1, undefined));
+console.log(exec(p1, "."));
+
+console.log(exec(p1, ".."));
 
 function exec_with_profile(pipeline, input) {
   var loop = function (_pipeline, _input, _rev_profile) {
@@ -451,7 +488,7 @@ function exec_with_profile(pipeline, input) {
 
 console.log("using pipeline GADT with profile p1");
 
-console.log(exec_with_profile(p1, undefined));
+console.log(exec_with_profile(p1, "."));
 
 var Abstracting_Computational_Machines = {
   ls_dir: ls_dir,
@@ -467,7 +504,75 @@ var Abstracting_Computational_Machines = {
   exec_with_profile: exec_with_profile
 };
 
-var Narrowing_the_Possibilities = {};
+function get(x) {
+  return x._0;
+}
+
+var User_name = {};
+
+var User_id = {};
+
+function check(permissions, user_id) {
+  return [
+          permissions,
+          user_id
+        ];
+}
+
+var $$Permissions = {
+  check: check
+};
+
+function set_user_id(request, x) {
+  return {
+          user_name: request.user_name,
+          user_id: /* Present */{
+            _0: x
+          },
+          permissions: request.permissions
+        };
+}
+
+function set_permissions(request, x) {
+  return {
+          user_name: request.user_name,
+          user_id: request.user_id,
+          permissions: /* Present */{
+            _0: x
+          }
+        };
+}
+
+function check_completeness(request) {
+  var match = request.user_id;
+  var match$1 = request.permissions;
+  if (match && match$1) {
+    return {
+            user_name: request.user_name,
+            user_id: match,
+            permissions: match$1
+          };
+  }
+  
+}
+
+function authorized(request) {
+  return [
+          request.permissions._0,
+          request.user_id._0
+        ];
+}
+
+var Narrowing_the_Possibilities = {
+  get: get,
+  User_name: User_name,
+  User_id: User_id,
+  $$Permissions: $$Permissions,
+  set_user_id: set_user_id,
+  set_permissions: set_permissions,
+  check_completeness: check_completeness,
+  authorized: authorized
+};
 
 exports.list_find = list_find;
 exports.If_not_found_1 = If_not_found_1$1;

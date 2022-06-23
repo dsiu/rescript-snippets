@@ -199,7 +199,14 @@ module Abstracting_Computational_Machines = {
   // But, can’t we write pipelines already? After all, OCaml comes with a perfectly serviceable
   // pipeline operator:
   type stats = {st_size: int}
-  let ls_dir = list{"d1", "f111", "f222", "d2", "f333"}
+  let ls_dir = d => {
+    switch d {
+    | "." => list{"d1", "f111", "f222", "d2", "f333"}
+    | ".." => list{"d10", "f100", "f200", "d2", "f300"}
+    | _ => list{"d1000", "f11100", "f22200", "d200", "f33300"}
+    }
+  }
+
   let is_file_exn = s => s->String.get(0) === 'f'
   let lstat = s => {
     {
@@ -211,17 +218,17 @@ module Abstracting_Computational_Machines = {
   }
   let list_sum = l => l->Belt.List.reduce(0, (a, x) => a + x)
 
-  let sum_file_sizes = () => {
-    ls_dir->Belt.List.keep(is_file_exn)->Belt.List.map(x => {x->lstat}.st_size)->list_sum
+  let sum_file_sizes = d => {
+    d->ls_dir->Belt.List.keep(is_file_exn)->Belt.List.map(x => {x->lstat}.st_size)->list_sum
   }
 
-  sum_file_sizes()->Js.log
+  sum_file_sizes(".")->Js.log
 
   type rec pipeline<_, _> =
     | Step('a => 'b, pipeline<'b, 'c>): pipeline<'a, 'c>
     | Empty: pipeline<'a, 'a>
 
-  let add_step = (pipeline, f) => Step(pipeline, f)
+  let add_step = (f, pipeline) => Step(f, pipeline)
   let \"+" = add_step
   let empty = Empty
 
@@ -234,16 +241,26 @@ module Abstracting_Computational_Machines = {
       }
     }
 
-  let p1 = add_step(
-    () => ls_dir,
-    add_step(
+  // this pipeline can be used in both exec() and exec_with_profile!
+  //  let p1 = add_step(
+  //    ls_dir,
+  //    add_step(
+  //      Belt.List.keep(_, is_file_exn),
+  //      add_step(Belt.List.map(_, x => {x->lstat}.st_size), add_step(list_sum, Empty)),
+  //    ),
+  //  )
+
+  let p1 = Step(
+    ls_dir,
+    Step(
       Belt.List.keep(_, is_file_exn),
-      add_step(Belt.List.map(_, x => {x->lstat}.st_size), add_step(list_sum, Empty)),
+      Step(Belt.List.map(_, x => {x->lstat}.st_size), Step(list_sum, Empty)),
     ),
   )
 
   Js.log("using pipeline GADT p1")
-  exec(p1)()->Js.log
+  exec(p1, ".")->Js.log
+  exec(p1, "..")->Js.log
 
   let exec_with_profile = (pipeline, input) => {
     let rec loop:
@@ -263,19 +280,82 @@ module Abstracting_Computational_Machines = {
   }
 
   Js.log("using pipeline GADT with profile p1")
-  exec_with_profile(p1)()->Js.log
+  exec_with_profile(p1, ".")->Js.log
 }
 
 //
 // Narrowing the Possibilities
 //
+// As this kind of complexity creeps in, it can be useful to be able to track the state of a given
+// request at the type level, and to use that to narrow the set of states a given request can be
+// in, thereby removing some extra case analysis and error handling, which can reduce the
+// complexity of the code and remove opportunities for mistakes.
+//
+// One way of doing this is to mint different types to represent different states of the request,
+// e.g., one type for an incomplete request where various fields are optional, and a different
+// type where all of the data is mandatory.
+//
+// While this works, it can be awkward and verbose. With GADTs, we can track the state of the
+// request in a type parameter, and have that parameter be used to narrow the set of available
+// cases, without duplicating the type.
+
 // A COMPLETION-SENSITIVE OPTION TYPE
 //
 module Narrowing_the_Possibilities = {
+  // The definition of the types doesn’t really matter, since we’re never instantiating these types,
+  // just using them as markers of different states. All that matters is that the types are distinct.
   type incomplete = Incomplete
   type complete = Complete
 
+  // Now we can mint a completeness-sensitive option type. Note the two type variables: the first
+  // indicates the type of the contents of the option, and the second indicates whether this is
+  // being used in an incomplete state.
   type rec coption<_, _> =
     | Absent: coption<_, incomplete>
     | Present('a): coption<'a, _>
+
+  let get = (Present(x): coption<_, complete>) => x
+
+  module User_name = {
+    type t
+  }
+  module User_id = {
+    type t
+  }
+  module Permissions = {
+    type t
+    let check = (permissions, user_id) => (permissions, user_id)
+  }
+
+  // A COMPLETION-SENSITIVE REQUEST TYPE
+  //
+  // There’s a single type parameter for the logon_request that marks whether it’s complete,
+  // at which point, both the user_id and permissions fields will be complete as well.
+  type logon_request<'c> = {
+    user_name: User_name.t,
+    user_id: coption<User_id.t, 'c>,
+    permissions: coption<Permissions.t, 'c>,
+  }
+
+  let set_user_id = (request, x) => {...request, user_id: Present(x)}
+  let set_permissions = (request, x) => {...request, permissions: Present(x)}
+
+  let check_completeness = (request): option<logon_request<complete>> => {
+    switch (request.user_id, request.permissions) {
+    | (Absent, _)
+    | (_, Absent) =>
+      None
+    | (Present(_) as user_id, Present(_) as permissions) =>
+      Some({...request, user_id: user_id, permissions: permissions})
+    }
+  }
+
+  let authorized = (request: logon_request<complete>) => {
+    let {user_id: Present(user_id), permissions: Present(permissions), _} = request
+    Permissions.check(permissions, user_id)
+  }
 }
+
+//
+// TYPE DISTINCTNESS AND ABSTRACTION
+//
