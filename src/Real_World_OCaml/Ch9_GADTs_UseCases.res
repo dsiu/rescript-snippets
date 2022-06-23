@@ -355,7 +355,3 @@ module Narrowing_the_Possibilities = {
     Permissions.check(permissions, user_id)
   }
 }
-
-//
-// TYPE DISTINCTNESS AND ABSTRACTION
-//
