@@ -56,12 +56,12 @@ function Extend(Arg) {
                     Error: new Error()
                   };
             }));
-      return true;
+      return false;
     }
     catch (raw_exn){
       var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
       if (exn.RE_EXN_ID === Short_circuit) {
-        return false;
+        return true;
       }
       throw exn;
     }
