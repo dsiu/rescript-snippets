@@ -5,6 +5,7 @@ var Curry = require("rescript/lib/js/curry.js");
 var Js_int = require("rescript/lib/js/js_int.js");
 var Js_list = require("rescript/lib/js/js_list.js");
 var Caml_obj = require("rescript/lib/js/caml_obj.js");
+var Caml_option = require("rescript/lib/js/caml_option.js");
 
 function log(prim) {
   console.log(prim);
@@ -17,14 +18,14 @@ function logList(l) {
   
 }
 
-function log2(prim0, prim1) {
-  console.log(prim0, prim1);
+function log2(x, y) {
+  console.log(y, x);
   
 }
 
 function logList2(l, str) {
-  var prim1 = Js_list.toVector(l);
-  console.log(str, prim1);
+  var x = Js_list.toVector(l);
+  console.log(str, x);
   
 }
 
@@ -41,19 +42,9 @@ function fold_left(f, _a, _l) {
   };
 }
 
-function fold_right(f, l, a) {
-  if (l) {
-    return Curry._2(f, l.hd, fold_right(f, l.tl, a));
-  } else {
-    return a;
-  }
-}
-
-function plus(a, b) {
-  return a + b | 0;
-}
-
-var prim = fold_left(plus, 0, {
+var prim = fold_left((function (prim0, prim1) {
+        return prim0 + prim1 | 0;
+      }), 0, {
       hd: 1,
       tl: {
         hd: 2,
@@ -66,6 +57,29 @@ var prim = fold_left(plus, 0, {
 
 console.log(prim);
 
+function fold_right(f, l, a) {
+  if (l) {
+    return Curry._2(f, l.hd, fold_right(f, l.tl, a));
+  } else {
+    return a;
+  }
+}
+
+var prim$1 = fold_right((function (prim0, prim1) {
+        return prim0 + prim1 | 0;
+      }), {
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 3,
+          tl: /* [] */0
+        }
+      }
+    }, 0);
+
+console.log(prim$1);
+
 function max(a, b) {
   if (Caml_obj.caml_greaterthan(a, b)) {
     return a;
@@ -74,7 +88,7 @@ function max(a, b) {
   }
 }
 
-var prim$1 = fold_left((function (prim0, prim1) {
+var prim$2 = fold_left((function (prim0, prim1) {
         return Math.max(prim0, prim1);
       }), Js_int.min, {
       hd: 2,
@@ -93,7 +107,7 @@ var prim$1 = fold_left((function (prim0, prim1) {
       }
     });
 
-console.log(prim$1);
+console.log(prim$2);
 
 function all(l) {
   return fold_left((function (prim0, prim1) {
@@ -124,18 +138,22 @@ function map(f, l) {
               }), l, /* [] */0);
 }
 
-logList2(map((function (x) {
-            return (x << 1);
-          }), {
-          hd: 2,
-          tl: {
-            hd: 9,
-            tl: {
-              hd: 1,
-              tl: /* [] */0
-            }
-          }
-        }), "map");
+var l = map((function (x) {
+        return (x << 1);
+      }), {
+      hd: 2,
+      tl: {
+        hd: 9,
+        tl: {
+          hd: 1,
+          tl: /* [] */0
+        }
+      }
+    });
+
+var x = Js_list.toVector(l);
+
+console.log("map", x);
 
 function fold_right_tr(f, l, e) {
   return fold_left((function (x, y) {
@@ -152,16 +170,44 @@ function copy(l) {
               }), l, /* [] */0);
 }
 
-logList2(copy({
-          hd: 2,
-          tl: {
-            hd: 5,
-            tl: {
-              hd: 6,
-              tl: /* [] */0
-            }
-          }
-        }), "copy");
+var l$1 = copy({
+      hd: 2,
+      tl: {
+        hd: 5,
+        tl: {
+          hd: 6,
+          tl: /* [] */0
+        }
+      }
+    });
+
+var x$1 = Js_list.toVector(l$1);
+
+console.log("copy", x$1);
+
+function copy_l(l) {
+  return fold_left((function (e, a) {
+                return {
+                        hd: a,
+                        tl: e
+                      };
+              }), /* [] */0, Js_list.rev(l));
+}
+
+var l$2 = copy_l({
+      hd: 2,
+      tl: {
+        hd: 5,
+        tl: {
+          hd: 6,
+          tl: /* [] */0
+        }
+      }
+    });
+
+var x$2 = Js_list.toVector(l$2);
+
+console.log("copy_l", x$2);
 
 function append(x, y) {
   return fold_right((function (e, a) {
@@ -172,25 +218,29 @@ function append(x, y) {
               }), x, y);
 }
 
-logList2(append({
-          hd: 8,
-          tl: {
-            hd: 1,
-            tl: {
-              hd: 2,
-              tl: /* [] */0
-            }
-          }
-        }, {
-          hd: 9,
-          tl: {
-            hd: 6,
-            tl: {
-              hd: 3,
-              tl: /* [] */0
-            }
-          }
-        }), "append");
+var l$3 = append({
+      hd: 8,
+      tl: {
+        hd: 1,
+        tl: {
+          hd: 2,
+          tl: /* [] */0
+        }
+      }
+    }, {
+      hd: 9,
+      tl: {
+        hd: 6,
+        tl: {
+          hd: 3,
+          tl: /* [] */0
+        }
+      }
+    });
+
+var x$3 = Js_list.toVector(l$3);
+
+console.log("append", x$3);
 
 function split(l) {
   return fold_right((function (param, param$1) {
@@ -210,7 +260,7 @@ function split(l) {
             ]);
 }
 
-var prim$2 = split({
+var prim$3 = split({
       hd: [
         1,
         "one"
@@ -224,7 +274,213 @@ var prim$2 = split({
       }
     });
 
-console.log(prim$2);
+console.log(prim$3);
+
+function fold_tree(f, e, t) {
+  if (t) {
+    return Curry._3(f, t._0, fold_tree(f, e, t._1), fold_tree(f, e, t._2));
+  } else {
+    return e;
+  }
+}
+
+function tree_size(t) {
+  return fold_tree((function (param, l, r) {
+                return (1 + l | 0) + r | 0;
+              }), 0, t);
+}
+
+function tree_sum(t) {
+  return fold_tree((function (x, l, r) {
+                return (x + l | 0) + r | 0;
+              }), 0, t);
+}
+
+var exp_tr = /* Br */{
+  _0: 1,
+  _1: /* Br */{
+    _0: 0,
+    _1: /* Lf */0,
+    _2: /* Lf */0
+  },
+  _2: /* Br */{
+    _0: 6,
+    _1: /* Br */{
+      _0: 4,
+      _1: /* Lf */0,
+      _2: /* Lf */0
+    },
+    _2: /* Lf */0
+  }
+};
+
+function tree_preorder(t) {
+  return fold_tree((function (x, l, r) {
+                return append(append({
+                                hd: x,
+                                tl: /* [] */0
+                              }, l), r);
+              }), /* [] */0, t);
+}
+
+function tree_inorder(t) {
+  return fold_tree((function (x, l, r) {
+                return append(append(l, {
+                                hd: x,
+                                tl: /* [] */0
+                              }), r);
+              }), /* [] */0, t);
+}
+
+function tree_postorder(t) {
+  return fold_tree((function (x, l, r) {
+                return append(append(l, r), {
+                            hd: x,
+                            tl: /* [] */0
+                          });
+              }), /* [] */0, t);
+}
+
+var l$4 = tree_preorder(exp_tr);
+
+var x$4 = Js_list.toVector(l$4);
+
+console.log("preorder", x$4);
+
+var l$5 = tree_inorder(exp_tr);
+
+var x$5 = Js_list.toVector(l$5);
+
+console.log("inorder", x$5);
+
+var l$6 = tree_postorder(exp_tr);
+
+var x$6 = Js_list.toVector(l$6);
+
+console.log("postorder", x$6);
+
+function q1_deduct(exp, budget) {
+  return fold_left((function (prim0, prim1) {
+                return prim0 - prim1 | 0;
+              }), budget, exp);
+}
+
+var x$7 = q1_deduct({
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 3,
+          tl: /* [] */0
+        }
+      }
+    }, 10);
+
+console.log("q1", x$7);
+
+function q2_length(l) {
+  return fold_right((function (param, a) {
+                return a + 1 | 0;
+              }), l, 0);
+}
+
+var x$8 = q2_length({
+      hd: 4,
+      tl: {
+        hd: 6,
+        tl: {
+          hd: 1,
+          tl: {
+            hd: 6,
+            tl: {
+              hd: 4,
+              tl: {
+                hd: 9,
+                tl: {
+                  hd: 2,
+                  tl: {
+                    hd: 1,
+                    tl: /* [] */0
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+console.log("q2", x$8);
+
+function q3_last(l) {
+  if (!l) {
+    return ;
+  }
+  var t = l.tl;
+  var a = l.hd;
+  if (t) {
+    return Caml_option.some(fold_left((function (param, e) {
+                      return e;
+                    }), a, t));
+  } else {
+    return Caml_option.some(a);
+  }
+}
+
+var x$9 = q3_last({
+      hd: 4,
+      tl: {
+        hd: 6,
+        tl: {
+          hd: 1,
+          tl: {
+            hd: 6,
+            tl: {
+              hd: 4,
+              tl: {
+                hd: 9,
+                tl: {
+                  hd: 2,
+                  tl: /* [] */0
+                }
+              }
+            }
+          }
+        }
+      }
+    });
+
+console.log("q3", x$9);
+
+function q4_rev(l) {
+  return fold_left((function (e, a) {
+                return {
+                        hd: a,
+                        tl: e
+                      };
+              }), /* [] */0, l);
+}
+
+var l$7 = q4_rev({
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 3,
+          tl: {
+            hd: 4,
+            tl: {
+              hd: 5,
+              tl: /* [] */0
+            }
+          }
+        }
+      }
+    });
+
+var x$10 = Js_list.toVector(l$7);
+
+console.log("q4", x$10);
 
 var List;
 
@@ -235,13 +491,24 @@ exports.log2 = log2;
 exports.logList2 = logList2;
 exports.fold_left = fold_left;
 exports.fold_right = fold_right;
-exports.plus = plus;
 exports.max = max;
 exports.all = all;
 exports.any = any;
 exports.map = map;
 exports.fold_right_tr = fold_right_tr;
 exports.copy = copy;
+exports.copy_l = copy_l;
 exports.append = append;
 exports.split = split;
+exports.fold_tree = fold_tree;
+exports.tree_size = tree_size;
+exports.tree_sum = tree_sum;
+exports.exp_tr = exp_tr;
+exports.tree_preorder = tree_preorder;
+exports.tree_inorder = tree_inorder;
+exports.tree_postorder = tree_postorder;
+exports.q1_deduct = q1_deduct;
+exports.q2_length = q2_length;
+exports.q3_last = q3_last;
+exports.q4_rev = q4_rev;
 /* prim Not a pure module */
