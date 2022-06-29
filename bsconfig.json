@@ -32,7 +32,8 @@
     "relude",
     "bs-fetch",
     "@glennsl/bs-json",
-    "rescript-nodejs"
+    "rescript-nodejs",
+    "@mobily/rescript-date"
   ],
   "bs-dev-dependencies": [
     "rescript-test"

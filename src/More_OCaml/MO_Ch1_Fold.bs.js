@@ -5,6 +5,7 @@ var Curry = require("rescript/lib/js/curry.js");
 var Js_int = require("rescript/lib/js/js_int.js");
 var Js_list = require("rescript/lib/js/js_list.js");
 var Caml_obj = require("rescript/lib/js/caml_obj.js");
+var Belt_List = require("rescript/lib/js/belt_List.js");
 var Caml_option = require("rescript/lib/js/caml_option.js");
 
 function log(prim) {
@@ -376,7 +377,7 @@ var x$7 = q1_deduct({
       }
     }, 10);
 
-console.log("q1", x$7);
+console.log("q1_deduct", x$7);
 
 function q2_length(l) {
   return fold_right((function (param, a) {
@@ -410,7 +411,7 @@ var x$8 = q2_length({
       }
     });
 
-console.log("q2", x$8);
+console.log("q2_length", x$8);
 
 function q3_last(l) {
   if (!l) {
@@ -450,13 +451,13 @@ var x$9 = q3_last({
       }
     });
 
-console.log("q3", x$9);
+console.log("q3_last", x$9);
 
 function q4_rev(l) {
-  return fold_left((function (e, a) {
+  return fold_left((function (a, e) {
                 return {
-                        hd: a,
-                        tl: e
+                        hd: e,
+                        tl: a
                       };
               }), /* [] */0, l);
 }
@@ -480,7 +481,126 @@ var l$7 = q4_rev({
 
 var x$10 = Js_list.toVector(l$7);
 
-console.log("q4", x$10);
+console.log("q4_rev", x$10);
+
+function q5_member(x, l) {
+  return fold_left((function (a, e) {
+                if (e === x) {
+                  return true;
+                } else {
+                  return a;
+                }
+              }), false, l);
+}
+
+var x$11 = q5_member(3, {
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 3,
+          tl: {
+            hd: 4,
+            tl: {
+              hd: 5,
+              tl: /* [] */0
+            }
+          }
+        }
+      }
+    });
+
+console.log("q5_member", x$11);
+
+function q6_sentence(l) {
+  return fold_right((function (e, a) {
+                return e + " " + a;
+              }), l, "");
+}
+
+var x$12 = q6_sentence({
+      hd: "i",
+      tl: {
+        hd: "am",
+        tl: {
+          hd: "good",
+          tl: /* [] */0
+        }
+      }
+    });
+
+console.log("q6_sentence", x$12);
+
+function q7_max_depth(t) {
+  return fold_tree((function (param, l, r) {
+                return 1 + max(l, r) | 0;
+              }), 0, t);
+}
+
+var x$13 = q7_max_depth(exp_tr);
+
+console.log("q7_max_depth", x$13);
+
+var q8_l = {
+  hd: 1,
+  tl: {
+    hd: 2,
+    tl: {
+      hd: 3,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 1,
+          tl: {
+            hd: 2,
+            tl: {
+              hd: 2,
+              tl: {
+                hd: 56,
+                tl: {
+                  hd: 32,
+                  tl: {
+                    hd: 2,
+                    tl: {
+                      hd: 34,
+                      tl: {
+                        hd: 4,
+                        tl: {
+                          hd: 2,
+                          tl: /* [] */0
+                        }
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+};
+
+var t = Date.now();
+
+for(var _for = 1; _for <= 10000000; ++_for){
+  Belt_List.has(q8_l, q8_l, (function (a, param) {
+          return a === 56;
+        }));
+}
+
+var t$p = Date.now();
+
+for(var _for$1 = 1; _for$1 <= 10000000; ++_for$1){
+  q5_member(56, q8_l);
+}
+
+var t$p$p = Date.now();
+
+console.log("Our member    took " + (t$p$p - t$p).toString() + " ms");
+
+console.log("Belt.List.has took " + (t$p - t).toString() + " ms");
 
 var List;
 
@@ -511,4 +631,11 @@ exports.q1_deduct = q1_deduct;
 exports.q2_length = q2_length;
 exports.q3_last = q3_last;
 exports.q4_rev = q4_rev;
+exports.q5_member = q5_member;
+exports.q6_sentence = q6_sentence;
+exports.q7_max_depth = q7_max_depth;
+exports.q8_l = q8_l;
+exports.t = t;
+exports.t$p = t$p;
+exports.t$p$p = t$p$p;
 /* prim Not a pure module */

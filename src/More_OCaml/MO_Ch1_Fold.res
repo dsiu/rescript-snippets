@@ -118,11 +118,11 @@ exp_tr->tree_postorder->logList2("postorder")
 let q1_deduct = (exp, budget) => {
   fold_left(\"-", budget, exp)
 }
-q1_deduct(list{1, 2, 3}, 10)->log2("q1")
+q1_deduct(list{1, 2, 3}, 10)->log2("q1_deduct")
 
 // 2. Calculate the length of a list using one of the fold_ functions.
 let q2_length = l => fold_right((_, a) => a + 1, l, 0)
-list{4, 6, 1, 6, 4, 9, 2, 1}->q2_length->log2("q2")
+list{4, 6, 1, 6, 4, 9, 2, 1}->q2_length->log2("q2_length")
 
 // 3. Use one of the fold_ functions to find the last element of list, if any. Behave sensibly if the list is empty.”
 let q3_last = l => {
@@ -132,12 +132,49 @@ let q3_last = l => {
   | list{h, ...t} => Some(fold_left((_, e) => e, h, t))
   }
 }
-list{4, 6, 1, 6, 4, 9, 2}->q3_last->log2("q3")
+list{4, 6, 1, 6, 4, 9, 2}->q3_last->log2("q3_last")
 
 // 4. Write a function to reverse a list, using one of the fold_ functions
-let q4_rev = l => fold_left((e, a) => list{a, ...e}, list{}, l)
-list{1, 2, 3, 4, 5}->q4_rev->logList2("q4")
+let q4_rev = l => fold_left((a, e) => list{e, ...a}, list{}, l)
+list{1, 2, 3, 4, 5}->q4_rev->logList2("q4_rev")
 
 // 5. Write a version of List.mem using one of the fold_ functions. Now setify can be defined
 // entirely using folds.
-// let q5_member = (x,l)
+let q5_member = (x, l) => fold_left((a, e) => {e === x || a}, false, l)
+q5_member(3, list{1, 2, 3, 4, 5})->log2("q5_member")
+
+// 6. Use a fold to write a function which, given a list of non-empty strings representing words,
+// returns a single string where the words are separated by spaces. Comment on its efficiency.
+let q6_sentence = l => fold_right((e, a) => e ++ " " ++ a, l, "")
+list{"i", "am", "good"}->q6_sentence->log2("q6_sentence")
+
+// 7. Use fold_tree to write a function which calculates the maximum depth of a tree. What is
+// its type?
+let q7_max_depth = t => fold_tree((_, l, r) => 1 + max(l, r), 0, t)
+
+exp_tr->q7_max_depth->log2("q7_max_depth")
+
+// 8. Compare the time efficiency of one or more of your functions with the system implementation
+// of the same function (for example, our fold-based member function vs. List.mem) with regard to
+// both computational complexity and actual time taken.
+let q8_l = list{1, 2, 3, 2, 1, 2, 2, 56, 32, 2, 34, 4, 2}
+
+let t = Js.Date.now()
+
+let _ = {
+  for _ in 1 to 10_000_000 {
+    q8_l->Belt.List.has(q8_l, (a, _) => a === 56)->ignore
+  }
+}
+
+let t' = Js.Date.now()
+
+let _ = {
+  for _ in 1 to 10_000_000 {
+    q5_member(56, q8_l)->ignore
+  }
+}
+
+let t'' = Js.Date.now()
+Js.log(`Our member    took ${(t'' -. t')->Js.Float.toString} ms`)
+Js.log(`Belt.List.has took ${(t' -. t)->Js.Float.toString} ms`)
