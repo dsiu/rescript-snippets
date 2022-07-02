@@ -3,6 +3,7 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/node_modules/@glennsl/bs-json" />
+        <item url="file://$PROJECT_DIR$/node_modules/@mobily/rescript-date" />
         <item url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
         <item url="file://$PROJECT_DIR$/node_modules/bisect_ppx" />
         <item url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
@@ -15,6 +16,7 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/node_modules/@glennsl/bs-json" />
+      <root url="file://$PROJECT_DIR$/node_modules/@mobily/rescript-date" />
       <root url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
       <root url="file://$PROJECT_DIR$/node_modules/bisect_ppx" />
       <root url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
