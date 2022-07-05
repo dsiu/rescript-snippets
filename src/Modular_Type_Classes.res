@@ -1,11 +1,16 @@
 //
 // https://accu.org/journals/overload/25/142/fletcher_2445/
+// https://blog.shaynefletcher.org/2016/10/implementing-type-classes-as-ocaml.html
+// https://okmij.org/ftp/Computation/typeclass.html
 //
 // Implementing Type-Classes as OCaml Modules
 //
 
 // Starting with the basics, consider the class of types whose values can be compared for equality.
 // Call this type-class Eq . We represent the class as a module signature.
+
+@@warning("-44")
+
 module type EQ = {
   type t
   let eq: (t, t) => bool
@@ -155,4 +160,150 @@ module Num_bool: NUM with type t = bool = {
 
 let num_bool = module(Num_bool: NUM with type t = bool)
 
-// [TBC]
+// The existence of Num admits writing a polymorphic function sum that will work for any 'a
+// list of values if only 'a can be shown to be in Num .
+let sum: (num_impl<'a>, list<'a>) => 'a = (type a, num: num_impl<a>, ls: list<a>) => {
+  module Num = unpack(num: NUM with type t = a)
+  List.fold_right(Num.\"+", ls, Num.from_int(0))
+}
+
+let test_sum = sum(num_int, list{1, 2, 3, 4, 20})
+test_sum->Js.log //30
+
+// This next function requires evidence of membership in two classes.
+let print_incr: ((show_impl<'a>, num_impl<'a>), 'a) => unit = (
+  type a,
+  (show: show_impl<a>, num: num_impl<a>),
+  x: a,
+) => {
+  module Num = unpack(num: NUM with type t = a)
+  open Num
+  print(show, x + from_int(1))
+}
+
+// (*An instantiation*)
+let print_incr_int = (x: int): unit => print_incr((show_int, num_int), x)
+print_incr_int(27) // 28
+
+// If 'a is in Show then we can easily extend Show to include the type 'a list .
+// As we saw earlier, this kind of thing can be done with an appropriate functor. (See Listing 2.)
+module type LIST_SHOW = (X: SHOW) => (SHOW with type t = list<X.t>)
+
+module List_show: LIST_SHOW = (X: SHOW) => {
+  type t = list<X.t>
+
+  let show = xs => {
+    let rec go = (first, x) =>
+      switch x {
+      | list{} => "]"
+      | list{h, ...t} =>
+        if first {
+          ""
+        } else {
+          ", "
+        } ++
+        (X.show(h) ++
+        go(false, t))
+      }
+    "[" ++ go(true, xs)
+  }
+}
+
+// There is also another way: one can write a function to dynamically compute an 'a list show_impl
+// from an 'a show_impl (see Listing 3).
+let show_list: show_impl<'a> => show_impl<list<'a>> = (type a, show: show_impl<a>) => {
+  module Show = unpack(show: SHOW with type t = a)
+  module(
+    {
+      type t = list<a>
+      let show: t => string = xs => {
+        let rec go = (first, x) =>
+          switch x {
+          | list{} => "]"
+          | list{h, ...t} =>
+            if first {
+              ""
+            } else {
+              ", "
+            } ++
+            (Show.show(h) ++
+            go(false, t))
+          }
+        "[" ++ go(true, xs)
+      }
+    }: SHOW with type t = list<a>
+  )
+}
+
+let testls: string = {
+  module Show = unpack(show_list(show_int): SHOW with type t = list<int>)
+  Show.show(list{1, 2, 3})
+}
+
+// The type-class Mul is an aggregation of the type-classes Eq and Num together with a function to
+// perform multiplication. (Listing 4.)
+module type MUL = {
+  include EQ
+  include NUM with type t := t
+
+  let mul: (t, t) => t
+}
+
+type mul_impl<'a> = module(MUL with type t = 'a)
+
+module type MUL_F = (E: EQ, N: NUM with type t = E.t) => (MUL with type t = E.t)
+
+// A default instance of Mul can be provided given compatible instances of Eq and Num .
+// (See Listing 5.)
+module Mul_default: MUL_F = (E: EQ, N: NUM with type t = E.t) => {
+  include (E: EQ with type t = E.t)
+  include (N: NUM with type t := E.t)
+
+  let mul: (t, t) => t = {
+    let rec loop = (x, y) =>
+      switch () {
+      | () if eq(x, from_int(0)) => from_int(0)
+      | () if eq(x, from_int(1)) => y
+      | () => y + loop(x + from_int(-1), y)
+      }
+    loop
+  }
+}
+
+module Mul_bool: MUL with type t = bool = Mul_default(Eq_bool, Num_bool)
+
+// Specific instances can be constructed as needs demand (Listing 6).
+module Mul_int: MUL with type t = int = {
+  include (Eq_int: EQ with type t = int)
+  include (Num_int: NUM with type t := int)
+  let mul = Pervasives.\"*"
+}
+
+let dot: (mul_impl<'a>, list<'a>, list<'a>) => 'a = (type a, mul: mul_impl<a>, xs, ys) => {
+  module M = unpack(mul: MUL with type t = a)
+  \"@@"(sum(module(M: NUM with type t = a)), List.map2(M.mul, xs, ys))
+}
+let test_dot = dot(module(Mul_int: MUL with type t = int), list{1, 2, 3}, list{4, 5, 6})
+
+// Note that in this definition of dot , coercion of the provided Mul instance to its base Num
+// instance is performed.
+
+// Listing 7 provides an example of polymorphic recursion utilizing the dynamic production of
+// evidence by way of the show_list function presented earlier.
+let rec replicate: (int, 'a) => list<'a> = (n, x) =>
+  if n <= 0 {
+    list{}
+  } else {
+    list{x, ...replicate(n - 1, x)}
+  }
+
+let rec print_nested: 'a. (show_impl<'a>, int, 'a) => unit = (show_mod, x) =>
+  switch x {
+  | 0 => x => print(show_mod, x)
+  | n => x => print_nested(show_list(show_mod), n - 1, replicate(n, x))
+  }
+
+let test_nested = {
+  let n = read_int()
+  print_nested(module(Show_int: SHOW with type t = int), n, 5)
+}
