@@ -36,7 +36,8 @@
     "@glennsl/bs-jest": "*",
     "bs-bastet": "^2.0.0",
     "jest": "latest",
-    "relude": "^0.65.0",
+    "relude": "^0.66.1",
+    "rescript": "^9.1.4",
     "rescript-test": "latest"
   },
   "dependencies": {
@@ -45,10 +46,9 @@
     "@ryyppy/rescript-promise": "latest",
     "add": "^2.0.6",
     "bs-fetch": "^0.6.2",
-    "d3": "^7.5.0",
+    "d3": "^7.6.1",
     "isomorphic-fetch": "^3.0.0",
     "nodemon": "^2.0.18",
-    "rescript": "^9.1.4",
     "rescript-js": "^0.7.0",
     "rescript-jzon": "latest",
     "rescript-nodejs": "^14.3.0"

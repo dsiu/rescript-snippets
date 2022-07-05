@@ -2,7 +2,7 @@
 // https://accu.org/journals/overload/25/142/fletcher_2445/
 // https://blog.shaynefletcher.org/2016/10/implementing-type-classes-as-ocaml.html
 // https://okmij.org/ftp/Computation/typeclass.html
-//
+// https://github.com/hongchangwu/ocaml-type-classes
 // Implementing Type-Classes as OCaml Modules
 //
 
