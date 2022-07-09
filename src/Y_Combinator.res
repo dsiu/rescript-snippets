@@ -3,6 +3,7 @@
 //
 // https://blog.shaynefletcher.org/2015/03/y-combinator.html
 //
+@@warning("-3-32")
 
 /*
   There is this blog post by Caltech computer scientist, Mike Vanier. The code in Mike's article uses the Scheme
@@ -85,3 +86,8 @@ let _ = {
   let result = y(int2nat, 6)
   Printf.printf("%s\n%!", string_of_nat(result))
 }
+
+//
+// Continue reading here:
+// https://homes.cs.washington.edu/~sorawee/en/blog/2017/10-05-deriving-Y.html
+// https://eli.thegreenplace.net/2016/some-notes-on-the-y-combinator/
