@@ -31,15 +31,15 @@ module Dfs: S = {
 
   let string_of_state = ({d, f, pred, color}) => {
     open Printf
-    let bindings = (m, fmt) => {
+    let bindings = (. m, fmt) => {
       let b = Str_map.toList(m)
       String.concat(", ", b->List.map(((x, y)) => sprintf(fmt, x, y)))
     }
     sprintf(
       " d = {%s}\n f = {%s}\n pred = {%s}\n",
-      bindings(d, "'%s':'%d'"),
-      bindings(f, "'%s':'%d'"),
-      bindings(pred, "'%s':'%s'"),
+      bindings(. d, "'%s':'%d'"),
+      bindings(. f, "'%s':'%d'"),
+      bindings(. pred, "'%s':'%s'"),
     )
   }
 
