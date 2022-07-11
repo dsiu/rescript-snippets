@@ -7,6 +7,41 @@ var $$String = require("rescript/lib/js/string.js");
 var Belt_List = require("rescript/lib/js/belt_List.js");
 var Belt_MapString = require("rescript/lib/js/belt_MapString.js");
 
+function log(prim) {
+  console.log(prim);
+  
+}
+
+function logList(l) {
+  var prim = Belt_List.toArray(l);
+  console.log(prim);
+  
+}
+
+function log2(x, y) {
+  console.log(y, x);
+  
+}
+
+function logList2(l, str) {
+  var x = Belt_List.toArray(l);
+  console.log(str, x);
+  
+}
+
+function mapListToString(m) {
+  var b = Belt_MapString.toList(m);
+  return $$String.concat(", ", Belt_List.map(b, (function (param) {
+                    return param[0] + ": " + param[1];
+                  })));
+}
+
+function logStrMapList(m, str) {
+  var prim = str + ": " + mapListToString(m);
+  console.log(prim);
+  
+}
+
 function string_of_state(param) {
   var bindings = function (m, fmt) {
     var b = Belt_MapString.toList(m);
@@ -305,5 +340,11 @@ Curry._1(Printf.printf(/* Format */{
 var Str_map;
 
 exports.Str_map = Str_map;
+exports.log = log;
+exports.logList = logList;
+exports.log2 = log2;
+exports.logList2 = logList2;
+exports.mapListToString = mapListToString;
+exports.logStrMapList = logStrMapList;
 exports.Dfs = Dfs;
 /* g Not a pure module */

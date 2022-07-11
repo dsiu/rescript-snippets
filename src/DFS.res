@@ -8,10 +8,20 @@
 @@warning("-3-27")
 
 open Belt
-
 module Str_map = Map.String
-
 type graph = Str_map.t<list<string>>
+
+let log = Js.log
+let logList = l => l->List.toArray->log
+let log2 = (x, y) => Js.log2(y, x)
+let logList2 = (l, str) => l->List.toArray->log2(str)
+
+let mapListToString = m => {
+  let b = Str_map.toList(m)
+  String.concat(", ", b->List.map(((x, y)) => `${x}: ${y}`))
+}
+
+let logStrMapList = (m, str) => log(`${str}: ${mapListToString(m)}`)
 
 module type S = {
   type state
@@ -46,12 +56,14 @@ module Dfs: S = {
   let depth_first_search = g => {
     let node = ((t, {d, f, pred, color}), u) => {
       let rec dfs_visit = (t, u, {d, f, pred, color}) => {
-        let edge = ((t, {d, f, pred, color}), v) =>
+        // invariant: u MUST be White
+        let edge = ((t, {d, f, pred, color}), v) => {
           if color->Str_map.getExn(v) == White {
             dfs_visit(t, v, {d: d, f: f, pred: pred->Str_map.set(v, u), color: color})
           } else {
             (t, {d: d, f: f, pred: pred, color: color})
           }
+        }
 
         let (t, {d, f, pred, color}) = {
           let t = t + 1
@@ -81,6 +93,7 @@ module Dfs: S = {
       }
     }
 
+    // v has all vertices in g
     let v = List.reduce(Str_map.toList(g), list{}, (acc, (x, _)) => list{x, ...acc})
     let initial_state = {
       d: Str_map.empty,
@@ -89,6 +102,7 @@ module Dfs: S = {
       color: v->List.reduceReverse(Str_map.empty, (m, x) => m->Str_map.set(x, White)),
     }
 
+    // visit all vertices in g by node()
     snd(List.reduceReverse(v, (0, initial_state), node))
   }
 }
@@ -109,6 +123,7 @@ let () = {
     (m, (x, y)) => m->Str_map.set(x, y),
   )
 
+  //  g->logStrMapList("g")
   let s = Dfs.depth_first_search(g)
   Printf.printf("%s\n", Dfs.string_of_state(s))
 }
