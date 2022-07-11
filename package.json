@@ -48,7 +48,7 @@
     "bs-fetch": "^0.6.2",
     "d3": "^7.6.1",
     "isomorphic-fetch": "^3.0.0",
-    "nodemon": "^2.0.18",
+    "nodemon": "^2.0.19",
     "rescript-js": "^0.7.0",
     "rescript-jzon": "latest",
     "rescript-nodejs": "^14.3.0"
