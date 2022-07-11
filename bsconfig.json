@@ -12,6 +12,14 @@
       "subdirs": true
     },
     {
+      "dir": "ocamlgraph/src",
+      "subdirs": true
+    },
+    {
+      "dir": "ocamlgraph/examples",
+      "subdirs": true
+    },
+    {
       "dir": "__tests__",
       "subdirs": true,
       "type": "dev"
