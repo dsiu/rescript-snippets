@@ -12,11 +12,7 @@
       "subdirs": true
     },
     {
-      "dir": "ocamlgraph/src",
-      "subdirs": true
-    },
-    {
-      "dir": "ocamlgraph/examples",
+      "dir": "ocamlgraph",
       "subdirs": true
     },
     {
@@ -26,7 +22,7 @@
     }
   ],
   "package-specs": {
-    "module": "commonjs",
+    "module": "es6-global",
     "in-source": true
   },
   "suffix": ".bs.js",
@@ -47,6 +43,6 @@
     "rescript-test"
   ],
   "warnings": {
-    "error": "+101"
+    "number": "-101-33-3-60-44-27"
   }
 }

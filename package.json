@@ -1,6 +1,8 @@
 {
   "name": "rescript-snippets",
   "version": "0.0.1",
+  "type": "module",
+  "type": "module",
   "scripts": {
     "build": "rescript",
     "clean": "rescript clean -with-deps",
