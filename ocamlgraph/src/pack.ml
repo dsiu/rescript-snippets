@@ -99,16 +99,16 @@ struct
 
   include Kruskal.Make(G)(Int)
 
-  module Display = struct
-    include G
-    let vertex_name v = string_of_int (V.label v)
-    let graph_attributes _ = []
-    let default_vertex_attributes _ = []
-    let vertex_attributes _ = []
-    let default_edge_attributes _ = []
-    let edge_attributes e = [ `Label (string_of_int (E.label e) ) ]
-    let get_subgraph _ = None
-  end
+(*  module Display = struct*)
+(*    include G*)
+(*    let vertex_name v = string_of_int (V.label v)*)
+(*    let graph_attributes _ = []*)
+(*    let default_vertex_attributes _ = []*)
+(*    let vertex_attributes _ = []*)
+(*    let default_edge_attributes _ = []*)
+(*    let edge_attributes e = [ `Label (string_of_int (E.label e) ) ]*)
+(*    let get_subgraph _ = None*)
+(*  end*)
 (*  module Dot_ = Graphviz.Dot(Display)*)
 (*  module Neato = Graphviz.Neato(Display)*)
 

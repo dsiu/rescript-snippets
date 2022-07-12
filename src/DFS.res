@@ -127,3 +127,56 @@ let () = {
   let s = Dfs.depth_first_search(g)
   Printf.printf("%s\n", Dfs.string_of_state(s))
 }
+
+let () = {
+  module Str = {
+    type t = string
+    let compare = compare
+    let equal = \"="
+    let hash = Hashtbl.hash
+  }
+
+  //  module G = Imperative.Graph.Concrete(Str)
+  module G = Imperative.Digraph.ConcreteBidirectional(Str)
+
+  let g = G.create()
+
+  List.forEach(
+    list{
+      ("u", list{"v", "x"}),
+      ("v", list{"y"}),
+      ("w", list{"z", "y"}),
+      ("x", list{"v"}),
+      ("y", list{"x"}),
+      ("z", list{"z"}),
+    },
+    ((v, e)) => {
+      e->List.forEach(y => G.add_edge(g, v, y))
+    },
+  )
+
+  module Dfs = Traverse.Dfs(G)
+  Dfs.has_cycle(g)->log
+
+  // Dfs.iter
+
+  let pre = v => Js.log(` pre ${G.V.label(v)}.`)
+  let post = v => Js.log(`post ${G.V.label(v)}.`)
+
+  "iter: "->Js.log
+  Dfs.iter_component(~pre, ~post, g, "w")
+  "prefix: "->Js.log
+  Dfs.prefix_component(pre, g, "w")
+
+  let rec visit = it => {
+    let v = Dfs.get(it)
+    Js.log(`visit ${G.V.label(v)}`)
+    visit(Dfs.step(it))
+  }
+
+  //  try {
+  //    visit(Dfs.start(g))
+  //  } catch {
+  //  | Exit => ()
+  //  }
+}
