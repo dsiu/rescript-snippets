@@ -5,9 +5,11 @@ import * as Printf from "../node_modules/rescript/lib/es6/printf.js";
 import * as $$String from "../node_modules/rescript/lib/es6/string.js";
 import * as Hashtbl from "../node_modules/rescript/lib/es6/hashtbl.js";
 import * as Caml_obj from "../node_modules/rescript/lib/es6/caml_obj.js";
+import * as Graphviz from "../ocamlgraph/src/graphviz.bs.js";
 import * as Traverse from "../ocamlgraph/src/traverse.bs.js";
 import * as Belt_List from "../node_modules/rescript/lib/es6/belt_List.js";
 import * as Imperative from "../ocamlgraph/src/imperative.bs.js";
+import * as Pervasives from "../node_modules/rescript/lib/es6/pervasives.js";
 import * as Belt_MapString from "../node_modules/rescript/lib/es6/belt_MapString.js";
 
 function log(prim) {
@@ -449,6 +451,55 @@ Curry._4(Dfs$1.iter_component, pre, post, g$1, "w");
 console.log("prefix: ");
 
 Curry._3(Dfs$1.prefix_component, pre, g$1, "w");
+
+var E = G.E;
+
+function vertex_name(v) {
+  return Curry._1(G.V.label, v);
+}
+
+function graph_attributes(param) {
+  return /* [] */0;
+}
+
+function default_vertex_attributes(param) {
+  return /* [] */0;
+}
+
+function vertex_attributes(param) {
+  return /* [] */0;
+}
+
+function default_edge_attributes(param) {
+  return /* [] */0;
+}
+
+function edge_attributes(param) {
+  return /* [] */0;
+}
+
+function get_subgraph(param) {
+  
+}
+
+var Gv = Graphviz.Dot({
+      V: {},
+      E: {
+        src: E.src,
+        dst: E.dst
+      },
+      iter_vertex: G.iter_vertex,
+      iter_edges_e: G.iter_edges_e,
+      graph_attributes: graph_attributes,
+      default_vertex_attributes: default_vertex_attributes,
+      vertex_name: vertex_name,
+      vertex_attributes: vertex_attributes,
+      get_subgraph: get_subgraph,
+      default_edge_attributes: default_edge_attributes,
+      edge_attributes: edge_attributes
+    });
+
+Curry._2(Gv.output_graph, Pervasives.stdout, g$1);
 
 var Str_map;
 

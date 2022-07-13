@@ -179,4 +179,20 @@ let () = {
   //  } catch {
   //  | Exit => ()
   //  }
+
+  // output Graphvis DOT
+  module Display = {
+    include G
+    let vertex_name = v => V.label(v)
+    let graph_attributes = _ => list{}
+    let default_vertex_attributes = _ => list{}
+    let vertex_attributes = _ => list{}
+    let default_edge_attributes = _ => list{}
+    let edge_attributes = _ => list{}
+    let get_subgraph = _ => None
+  }
+
+  module Gv = Graphviz.Dot(Display)
+
+  let () = Gv.output_graph(stdout, g)
 }
