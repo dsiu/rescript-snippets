@@ -22,7 +22,7 @@
     }
   ],
   "package-specs": {
-    "module": "es6-global",
+    "module": "es6",
     "in-source": true
   },
   "suffix": ".bs.js",
@@ -40,7 +40,8 @@
     "@mobily/rescript-date"
   ],
   "bs-dev-dependencies": [
-    "rescript-test"
+    "rescript-test",
+    "@glennsl/rescript-jest"
   ],
   "warnings": {
     "number": "-101-33-3-60-44-27"

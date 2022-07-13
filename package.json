@@ -2,13 +2,12 @@
   "name": "rescript-snippets",
   "version": "0.0.1",
   "type": "module",
-  "type": "module",
   "scripts": {
     "build": "rescript",
     "clean": "rescript clean -with-deps",
     "start": "rescript build -w",
-    "test": "retest __tests__/*.bs.js",
-    "test99": "npx nodemon --exec retest src/Problems_in_OCaml/*_Test.bs.js"
+    "test": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.bs.js",
+    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.bs.js"
   },
   "fig": {
     "test": {
@@ -34,7 +33,26 @@
   ],
   "author": "",
   "license": "MIT",
+  "jest": {
+      "testMatch": [
+        "<rootDir>/**/**/*.test.(js|jsx|ts|tsx)",
+        "<rootDir>/**/__tests__/*_Test.bs.js"
+      ],
+      "transform": {
+        "^.+\\.jsx?$": "esbuild-jest"
+      },
+      "transformIgnorePatterns": [
+        "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale)/)"
+      ],
+      "moduleFileExtensions": [
+        "js",
+        "jsx",
+        "mjs"
+      ]
+    },
   "devDependencies": {
+    "@glennsl/rescript-jest": "^0.9.1",
+    "esbuild-jest": "^0.5.0",
     "@glennsl/bs-jest": "*",
     "bs-bastet": "^2.0.0",
     "jest": "latest",

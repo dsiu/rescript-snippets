@@ -2,9 +2,9 @@
 
 import * as Pack from "../src/pack.bs.js";
 import * as Rand from "../src/rand.bs.js";
-import * as Curry from "../../node_modules/rescript/lib/es6/curry.js";
-import * as Format from "../../node_modules/rescript/lib/es6/format.js";
-import * as Random from "../../node_modules/rescript/lib/es6/random.js";
+import * as Curry from "rescript/lib/es6/curry.js";
+import * as Format from "rescript/lib/es6/format.js";
+import * as Random from "rescript/lib/es6/random.js";
 import * as Builder from "../src/builder.bs.js";
 import * as Traverse from "../src/traverse.bs.js";
 import * as Components from "../src/components.bs.js";
