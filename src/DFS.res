@@ -140,6 +140,7 @@ let () = {
   module G = Imperative.Digraph.ConcreteBidirectional(Str)
 
   let g = G.create()
+  let temp = G.create()
 
   List.forEach(
     list{
@@ -194,5 +195,14 @@ let () = {
 
   module Gv = Graphviz.Dot(Display)
 
-  let () = Gv.output_graph(stdout, g)
+  temp->G.add_edge("a", "b")
+  temp->G.add_edge("a", "c")
+  temp->G.add_edge("b", "e")
+  temp->G.add_edge("a", "a")
+  //  let file_ch = open_out("DFS.dot")
+  //  let () = Gv.output_graph(stdout, temp)
+  let () = Gv.fprint_graph(Format.str_formatter, g)
+  let s = Format.flush_str_formatter()
+  "s="->Js.log
+  s->Js.log
 }

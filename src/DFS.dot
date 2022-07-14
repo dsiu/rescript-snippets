@@ -1,19 +1,13 @@
 digraph G {
-  v;
-  z;
-  u;
-  y;
-  w;
-  x;
+  a;
+  b;
+  e;
+  c;
 
 
-  v -> y;
-  z -> z;
-  u -> v;
-  u -> x;
-  y -> x;
-  w -> y;
-  w -> z;
-  x -> v;
+  a -> a;
+  a -> b;
+  a -> c;
+  b -> e;
 
   }
