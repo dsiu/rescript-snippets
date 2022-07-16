@@ -12,10 +12,6 @@
       "subdirs": true
     },
     {
-      "dir": "ocamlgraph",
-      "subdirs": true
-    },
-    {
       "dir": "__tests__",
       "subdirs": true,
       "type": "dev"
@@ -37,7 +33,8 @@
     "bs-fetch",
     "@glennsl/bs-json",
     "rescript-nodejs",
-    "@mobily/rescript-date"
+    "@mobily/rescript-date",
+    "rescript-ocamlgraph"
   ],
   "bs-dev-dependencies": [
     "rescript-test",

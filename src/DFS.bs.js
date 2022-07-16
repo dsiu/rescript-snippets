@@ -6,11 +6,11 @@ import * as Printf from "rescript/lib/es6/printf.js";
 import * as $$String from "rescript/lib/es6/string.js";
 import * as Hashtbl from "rescript/lib/es6/hashtbl.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
-import * as Graphviz from "../ocamlgraph/src/graphviz.bs.js";
-import * as Traverse from "../ocamlgraph/src/traverse.bs.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
-import * as Imperative from "../ocamlgraph/src/imperative.bs.js";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
+import * as Graphviz$Graph from "rescript-ocamlgraph/src/graphviz.bs.js";
+import * as Traverse$Graph from "rescript-ocamlgraph/src/traverse.bs.js";
+import * as Imperative$Graph from "rescript-ocamlgraph/src/imperative.bs.js";
 
 function log(prim) {
   console.log(prim);
@@ -346,7 +346,7 @@ var compare = Caml_obj.caml_compare;
 
 var equal = Caml_obj.caml_equal;
 
-var G = Imperative.Digraph.ConcreteBidirectional({
+var G = Imperative$Graph.Digraph.ConcreteBidirectional({
       compare: compare,
       hash: Hashtbl.hash,
       equal: equal
@@ -423,7 +423,7 @@ Belt_List.forEach({
                     }));
       }));
 
-var Dfs$1 = Traverse.Dfs({
+var Dfs$1 = Traverse$Graph.Dfs({
       is_directed: G.is_directed,
       V: G.V,
       iter_vertex: G.iter_vertex,
@@ -484,7 +484,7 @@ function get_subgraph(param) {
   
 }
 
-var Gv = Graphviz.Dot({
+var Gv = Graphviz$Graph.Dot({
       V: {},
       E: {
         src: E.src,

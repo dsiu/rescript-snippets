@@ -107,7 +107,8 @@ module Dfs: S = {
   }
 }
 
-/* Test */
+/* Use Ocamlraph Module */
+open Graph
 
 let () = {
   let g = List.reduceReverse(

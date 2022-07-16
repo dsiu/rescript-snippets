@@ -34,27 +34,27 @@
   "author": "",
   "license": "MIT",
   "jest": {
-      "testMatch": [
-        "<rootDir>/**/**/*.test.(js|jsx|ts|tsx)",
-        "<rootDir>/**/__tests__/*_Test.bs.js"
-      ],
-      "transform": {
-        "^.+\\.jsx?$": "esbuild-jest"
-      },
-      "transformIgnorePatterns": [
-        "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale)/)"
-      ],
-      "moduleFileExtensions": [
-        "js",
-        "jsx",
-        "mjs"
-      ]
+    "testMatch": [
+      "<rootDir>/**/**/*.test.(js|jsx|ts|tsx)",
+      "<rootDir>/**/__tests__/*_Test.bs.js"
+    ],
+    "transform": {
+      "^.+\\.jsx?$": "esbuild-jest"
     },
+    "transformIgnorePatterns": [
+      "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale)/)"
+    ],
+    "moduleFileExtensions": [
+      "js",
+      "jsx",
+      "mjs"
+    ]
+  },
   "devDependencies": {
-    "@glennsl/rescript-jest": "^0.9.1",
-    "esbuild-jest": "^0.5.0",
     "@glennsl/bs-jest": "*",
+    "@glennsl/rescript-jest": "^0.9.1",
     "bs-bastet": "^2.0.0",
+    "esbuild-jest": "^0.5.0",
     "jest": "latest",
     "relude": "^0.66.1",
     "rescript": "^9.1.4",
@@ -71,6 +71,7 @@
     "nodemon": "^2.0.19",
     "rescript-js": "^0.7.0",
     "rescript-jzon": "latest",
-    "rescript-nodejs": "^14.3.0"
+    "rescript-nodejs": "^14.3.0",
+    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#main"
   }
 }
