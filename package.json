@@ -8,7 +8,8 @@
     "start": "rescript build -w",
     "test": "jest",
     "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.mjs",
-    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.mjs"
+    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.mjs",
+    "runparsercombinator": "npx nodemon --exec node src/fsharpforfunandprofit/understanding_parser_combinators/Parser_Combinator.mjs"
   },
   "fig": {
     "test": {
