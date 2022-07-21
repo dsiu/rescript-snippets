@@ -12,6 +12,10 @@
       "subdirs": true
     },
     {
+      "dir": "interop",
+      "type": "dev"
+    },
+    {
       "dir": "__tests__",
       "subdirs": true,
       "type": "dev"
@@ -21,7 +25,7 @@
     "module": "es6",
     "in-source": true
   },
-  "suffix": ".bs.js",
+  "suffix": ".mjs",
   "ppx-flags": [
   ],
   "bs-dependencies": [

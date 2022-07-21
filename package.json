@@ -6,8 +6,9 @@
     "build": "rescript",
     "clean": "rescript clean -with-deps",
     "start": "rescript build -w",
-    "test": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.bs.js",
-    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.bs.js"
+    "test": "jest",
+    "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.mjs",
+    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.mjs"
   },
   "fig": {
     "test": {
@@ -35,11 +36,11 @@
   "license": "MIT",
   "jest": {
     "testMatch": [
-      "<rootDir>/**/**/*.test.(js|jsx|ts|tsx)",
-      "<rootDir>/**/__tests__/*_Test.bs.js"
+      "<rootDir>/**/**/*.test.(js|mjs|jsx|ts|tsx)",
+      "<rootDir>/**/__tests__/*_Test.mjs"
     ],
     "transform": {
-      "^.+\\.jsx?$": "esbuild-jest"
+      "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!(rescript|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale)/)"
@@ -53,9 +54,11 @@
   "devDependencies": {
     "@glennsl/bs-jest": "*",
     "@glennsl/rescript-jest": "^0.9.1",
+    "@swc/core": "^1.2.218",
+    "@swc/jest": "^0.2.22",
     "bs-bastet": "^2.0.0",
     "esbuild-jest": "^0.5.0",
-    "jest": "latest",
+    "jest": "^28.1.3",
     "relude": "^0.66.1",
     "rescript": "^9.1.4",
     "rescript-test": "latest"

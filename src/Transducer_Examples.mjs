@@ -3,7 +3,7 @@
 import * as List from "rescript/lib/es6/list.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
-import * as Transducer from "./Transducer.bs.js";
+import * as Transducer from "./Transducer.mjs";
 import * as Caml_string from "rescript/lib/es6/caml_string.js";
 
 console.log("======================================");

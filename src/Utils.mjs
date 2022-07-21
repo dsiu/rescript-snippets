@@ -3,7 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Int64 from "rescript/lib/es6/int64.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
-import * as FP_Utils from "./FP_Utils.bs.js";
+import * as FP_Utils from "./FP_Utils.mjs";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
