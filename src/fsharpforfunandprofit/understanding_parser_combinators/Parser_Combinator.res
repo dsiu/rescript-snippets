@@ -232,6 +232,7 @@ let parseLowercase = {
   ->Belt.List.fromArray
   ->anyOf
 }
+
 let parseDigit = {
   "0123456789"->Js.String2.split("")->Belt.Array.map(strToChar)->Belt.List.fromArray->anyOf
 }
@@ -242,3 +243,96 @@ run(parseLowercase, "ABC")->log2("parseLowercase ABC", _)
 run(parseDigit, "1ABC")->log2("parseDigit 1ABC", _)
 run(parseDigit, "9ABC")->log2("parseDigit 9ABC", _)
 run(parseDigit, "|ABC")->log2("parseDigit |ABC", _)
+
+//
+// Building a useful set of parser combinators
+// https://fsharpforfunandprofit.com/posts/understanding-parser-combinators-2/
+//
+"----------"->log
+"Building a useful set of parser combinators"->log
+
+"1. Transforming the contents of a parser with map"->log
+
+let parseDigit = {
+  "0123456789"->Js.String2.split("")->Belt.Array.map(strToChar)->Belt.List.fromArray->anyOf
+}
+
+let parseThreeDigits = parseDigit->andThen(parseDigit)->andThen(parseDigit)
+
+run(parseThreeDigits, "123A")->log2("parseThreeDigits 123A", _)
+
+let mapP = (f, parser) => {
+  let innerFn = input => {
+    let result = run(parser, input)
+
+    switch result {
+    | Success(value, remaining) => {
+        let newValue = f(value)
+        Success(newValue, remaining)
+      }
+    | Failure(err) => Failure(err)
+    }
+  }
+  Parser(innerFn)
+}
+
+// let ( <!> ) = mapP
+// let ( |>> ) x f = mapP f x
+
+let parseThreeDigitsAsStr = {
+  let tupleParser = parseThreeDigits
+  let transformTuple = (((c1, c2), c3)) => c1->charToStr ++ c2->charToStr ++ c3->charToStr
+  mapP(transformTuple, tupleParser)
+}
+
+run(parseThreeDigitsAsStr, "123A")->log2("parseThreeDigitsAsStr 123A", _)
+
+let parseThreeDigitsAsStr = {
+  parseDigit
+  ->andThen(parseDigit)
+  ->andThen(parseDigit)
+  ->mapP((((c1, c2), c3)) => {c1->charToStr ++ c2->charToStr ++ c3->charToStr}, _)
+}
+
+run(parseThreeDigitsAsStr, "123A")->log2("parseThreeDigitsAsStr 123A", _)
+
+let parseThreeDigitsAsInt = mapP(
+  s => s->Belt.Int.fromString->Belt.Option.getExn,
+  parseThreeDigitsAsStr,
+)
+
+run(parseThreeDigitsAsInt, "123A")->log2("parseThreeDigitsAsInt 123A", _)
+
+"2. Lifting functions to the world of Parsers"->log
+
+let returnP = x => {
+  let innerFn = input => {
+    Success(x, input)
+  }
+  Parser(innerFn)
+}
+
+let applyP = (fP, xP) => {
+  let fxP = andThen(fP, xP)
+  fxP->mapP(((f, x)) => f(x), _)
+}
+
+// let ( <*> ) = applyP
+
+let lift2 = (f, xP, yP) => {
+  returnP(f)->applyP(xP)->applyP(yP)
+}
+
+let addP = lift2(\"+")
+
+let startsWith = (str: string, prefix: string) => {
+  str->Js.String2.startsWith(prefix)
+}
+
+let startWithP = lift2(startsWith)
+
+"3. Turning a list of Parsers into a single Parser"->log
+
+//let rec sequence = parserList => {
+//
+//}
