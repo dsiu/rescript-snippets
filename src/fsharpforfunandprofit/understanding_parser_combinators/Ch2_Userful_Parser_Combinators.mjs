@@ -123,10 +123,6 @@ function choice(listOfParsers) {
             }, orElse);
 }
 
-function anyOf(listOfChars) {
-  return choice(Belt_List.map(listOfChars, pchar));
-}
-
 console.log("Building a useful set of parser combinators");
 
 console.log("-- 1. Transforming the contents of a parser with map");
@@ -509,6 +505,8 @@ var prim1$28 = run(pint, "ABC");
 
 console.log("pint ABC", prim1$28);
 
+console.log("");
+
 console.log("-- 5. Matching a parser zero or one time");
 
 function opt(p) {
@@ -565,48 +563,476 @@ var prim1$32 = run(pint$1, "-123C");
 
 console.log("pint 123C", prim1$32);
 
+console.log("");
+
 console.log("-- 6. Throwing results away");
+
+function keepLeft(p1, p2) {
+  var __x = andThen(p1, p2);
+  return mapP((function (param) {
+                return param[0];
+              }), __x);
+}
+
+function keepRight(p1, p2) {
+  var __x = andThen(p1, p2);
+  return mapP((function (param) {
+                return param[1];
+              }), __x);
+}
+
+var digitThenSemicolon$1 = keepLeft(digit, opt(pchar(/* ';' */59)));
+
+var prim1$33 = run(digitThenSemicolon$1, "1;");
+
+console.log("digitThenSemicolon 1;", prim1$33);
+
+var prim1$34 = run(digitThenSemicolon$1, "1");
+
+console.log("digitThenSemicolon 1;", prim1$34);
+
+var whitespaceChar$1 = choice(Belt_List.map({
+          hd: /* ' ' */32,
+          tl: {
+            hd: /* '\t' */9,
+            tl: {
+              hd: /* '\n' */10,
+              tl: /* [] */0
+            }
+          }
+        }, pchar));
+
+var whitespace$1 = many(whitespaceChar$1);
+
+var ab = pstring("AB");
+
+var cd = pstring("CD");
+
+var ab_cd = andThen(keepLeft(ab, whitespace$1), cd);
+
+var prim1$35 = run(ab_cd, "AB \t\nCD");
+
+console.log("ab_cd AB \\t\\nCD", prim1$35);
+
+console.log("");
+
+console.log("-- Introducing between");
+
+function between(p1, p2, p3) {
+  return keepLeft(keepRight(p1, p2), p3);
+}
+
+var pdoublequote = pchar(/* '"' */34);
+
+var quotedInterger = between(pdoublequote, pint$1, pdoublequote);
+
+var prim1$36 = run(quotedInterger, "\"1234\"");
+
+console.log("quotedInterger \"1234\"", prim1$36);
+
+var prim1$37 = run(quotedInterger, "1234");
+
+console.log("quotedInterger \"1234\"", prim1$37);
+
+console.log("");
+
+console.log("-- 7. Parsing lists with separators");
+
+function sepBy1(p, sep) {
+  var sepThenP = keepRight(sep, p);
+  var __x = andThen(p, many(sepThenP));
+  return mapP((function (param) {
+                return {
+                        hd: param[0],
+                        tl: param[1]
+                      };
+              }), __x);
+}
+
+function sepBy(p, sep) {
+  var innerFn = function (input) {
+    return {
+            TAG: /* Success */0,
+            _0: [
+              /* [] */0,
+              input
+            ]
+          };
+  };
+  return orElse(sepBy1(p, sep), /* Parser */{
+              _0: innerFn
+            });
+}
+
+var comma = pchar(/* ',' */44);
+
+var zeroOfMoreDigitList = sepBy(digit, comma);
+
+var oneOrMoreDigitList = sepBy1(digit, comma);
+
+var prim1$38 = run(oneOrMoreDigitList, "1;");
+
+console.log("oneOrMoreDigitList 1", prim1$38);
+
+var prim1$39 = run(oneOrMoreDigitList, "1,2;");
+
+console.log("oneOrMoreDigitList 1,2", prim1$39);
+
+var prim1$40 = run(oneOrMoreDigitList, "1,2,3;");
+
+console.log("oneOrMoreDigitList 1,2,3", prim1$40);
+
+var prim1$41 = run(oneOrMoreDigitList, "Z;");
+
+console.log("oneOrMoreDigitList Z;", prim1$41);
+
+var prim1$42 = run(zeroOfMoreDigitList, "1;");
+
+console.log("zeroOfMoreDigitList 1", prim1$42);
+
+var prim1$43 = run(zeroOfMoreDigitList, "1,2;");
+
+console.log("zeroOfMoreDigitList 1,2", prim1$43);
+
+var prim1$44 = run(zeroOfMoreDigitList, "1,2,3;");
+
+console.log("zeroOfMoreDigitList 1,2,3", prim1$44);
+
+var prim1$45 = run(zeroOfMoreDigitList, "Z;");
+
+console.log("zeroOfMoreDigitList Z;", prim1$45);
+
+console.log("");
+
+console.log("-- What about bind?");
+
+console.log("-- Reimplementing other combinators using bind");
+
+function strToChar$1(__x) {
+  return Caml_string.get(__x, 0);
+}
+
+function charToStr$1(__x) {
+  return $$String.make(1, __x);
+}
+
+function compose(f, g, x) {
+  return Curry._1(g, Curry._1(f, x));
+}
+
+function pchar$1(charToMatch) {
+  var innerFn = function (str) {
+    if (str.length === 0) {
+      return {
+              TAG: /* Failure */1,
+              _0: "No more input"
+            };
+    }
+    var first = Caml_string.get(str.charAt(0), 0);
+    if (first === charToMatch) {
+      var remaining = str.slice(1);
+      return {
+              TAG: /* Success */0,
+              _0: [
+                charToMatch,
+                remaining
+              ]
+            };
+    }
+    var msg = "Expecting '" + $$String.make(1, charToMatch) + "'. Got '" + $$String.make(1, first) + "'";
+    return {
+            TAG: /* Failure */1,
+            _0: msg
+          };
+  };
+  return /* Parser */{
+          _0: innerFn
+        };
+}
+
+function run$1(parser, input) {
+  return Curry._1(parser._0, input);
+}
+
+function bindP(f, p) {
+  var innerFn = function (input) {
+    var result1 = run$1(p, input);
+    if (result1.TAG !== /* Success */0) {
+      return {
+              TAG: /* Failure */1,
+              _0: result1._0
+            };
+    }
+    var match = result1._0;
+    var p2 = Curry._1(f, match[0]);
+    return run$1(p2, match[1]);
+  };
+  return /* Parser */{
+          _0: innerFn
+        };
+}
+
+function returnP$1(x) {
+  var innerFn = function (input) {
+    return {
+            TAG: /* Success */0,
+            _0: [
+              x,
+              input
+            ]
+          };
+  };
+  return /* Parser */{
+          _0: innerFn
+        };
+}
+
+function mapP$1(f, __x) {
+  return bindP((function (param) {
+                return returnP$1(Curry._1(f, param));
+              }), __x);
+}
+
+function applyP$1(fP, xP) {
+  return bindP((function (f) {
+                return bindP((function (x) {
+                              return returnP$1(Curry._1(f, x));
+                            }), xP);
+              }), fP);
+}
+
+function lift2$1(f, xP, yP) {
+  return applyP$1(applyP$1(returnP$1(f), xP), yP);
+}
+
+function andThen$1(p1, p2) {
+  return bindP((function (p1Result) {
+                return bindP((function (p2Result) {
+                              return returnP$1([
+                                          p1Result,
+                                          p2Result
+                                        ]);
+                            }), p2);
+              }), p1);
+}
+
+function orElse$1(parser1, parser2) {
+  var innerFn = function (input) {
+    var result1 = run$1(parser1, input);
+    if (result1.TAG === /* Success */0) {
+      return result1;
+    } else {
+      return run$1(parser2, input);
+    }
+  };
+  return /* Parser */{
+          _0: innerFn
+        };
+}
+
+function choice$1(listOfParsers) {
+  return Belt_List.reduce(listOfParsers, /* Parser */{
+              _0: (function (string) {
+                  return {
+                          TAG: /* Failure */1,
+                          _0: "Initial parser"
+                        };
+                })
+            }, orElse$1);
+}
+
+function anyOf(listOfChars) {
+  return choice$1(Belt_List.map(listOfChars, pchar$1));
+}
+
+function sequence$1(parserList) {
+  var cons = function (head, tail) {
+    return {
+            hd: head,
+            tl: tail
+          };
+  };
+  if (parserList) {
+    return lift2$1(cons, parserList.hd, sequence$1(parserList.tl));
+  }
+  var innerFn = function (input) {
+    return {
+            TAG: /* Success */0,
+            _0: [
+              /* [] */0,
+              input
+            ]
+          };
+  };
+  return /* Parser */{
+          _0: innerFn
+        };
+}
+
+function parseZeroOrMore$1(parser, input) {
+  var firstResult = run$1(parser, input);
+  if (firstResult.TAG !== /* Success */0) {
+    return [
+            /* [] */0,
+            input
+          ];
+  }
+  var match = firstResult._0;
+  var match$1 = parseZeroOrMore$1(parser, match[1]);
+  var values_0 = match[0];
+  var values_1 = match$1[0];
+  var values = {
+    hd: values_0,
+    tl: values_1
+  };
+  return [
+          values,
+          match$1[1]
+        ];
+}
+
+function many$1(parser) {
+  var innerFn = function (input) {
+    return {
+            TAG: /* Success */0,
+            _0: parseZeroOrMore$1(parser, input)
+          };
+  };
+  return /* Parser */{
+          _0: innerFn
+        };
+}
+
+function many1$1(p) {
+  return bindP((function (head) {
+                var __x = many$1(p);
+                return bindP((function (tail) {
+                              return returnP$1({
+                                          hd: head,
+                                          tl: tail
+                                        });
+                            }), __x);
+              }), p);
+}
+
+function opt$1(p) {
+  var some = mapP$1((function (x) {
+          return Caml_option.some(x);
+        }), p);
+  var innerFn = function (input) {
+    return {
+            TAG: /* Success */0,
+            _0: [
+              undefined,
+              input
+            ]
+          };
+  };
+  var none = /* Parser */{
+    _0: innerFn
+  };
+  return orElse$1(some, none);
+}
+
+function keepLeft$1(p1, p2) {
+  var __x = andThen$1(p1, p2);
+  return mapP$1((function (param) {
+                return param[0];
+              }), __x);
+}
+
+function keepRight$1(p1, p2) {
+  var __x = andThen$1(p1, p2);
+  return mapP$1((function (param) {
+                return param[1];
+              }), __x);
+}
+
+function between$1(p1, p2, p3) {
+  return keepLeft$1(keepRight$1(p1, p2), p3);
+}
+
+function sepBy1$1(p, sep) {
+  var sepThenP = keepRight$1(sep, p);
+  var __x = andThen$1(p, many$1(sepThenP));
+  return mapP$1((function (param) {
+                return {
+                        hd: param[0],
+                        tl: param[1]
+                      };
+              }), __x);
+}
+
+function sepBy$1(p, sep) {
+  var innerFn = function (input) {
+    return {
+            TAG: /* Success */0,
+            _0: [
+              /* [] */0,
+              input
+            ]
+          };
+  };
+  return orElse$1(sepBy1$1(p, sep), /* Parser */{
+              _0: innerFn
+            });
+}
 
 export {
   log ,
   log2 ,
-  strToChar ,
-  charToStr ,
-  pchar ,
-  run ,
-  andThen ,
-  orElse ,
-  choice ,
-  anyOf ,
   parseDigit ,
   parseThreeDigits ,
-  mapP ,
   parseThreeDigitsAsStr$1 as parseThreeDigitsAsStr,
   parseThreeDigitsAsInt ,
-  returnP ,
-  applyP ,
-  lift2 ,
   addP ,
   startsWith ,
   startWithP ,
-  sequence ,
   parsers ,
   combined ,
   charListToStr ,
   pstring ,
   parseABC ,
-  parseZeroOrMore ,
-  many ,
   manyA ,
   manyAB ,
-  whitespaceChar ,
-  whitespace ,
-  many1 ,
   digit ,
   digits ,
-  opt ,
-  digitThenSemicolon ,
   pint$1 as pint,
+  digitThenSemicolon$1 as digitThenSemicolon,
+  whitespaceChar$1 as whitespaceChar,
+  whitespace$1 as whitespace,
+  ab ,
+  cd ,
+  ab_cd ,
+  pdoublequote ,
+  quotedInterger ,
+  comma ,
+  zeroOfMoreDigitList ,
+  oneOrMoreDigitList ,
+  strToChar$1 as strToChar,
+  charToStr$1 as charToStr,
+  compose ,
+  pchar$1 as pchar,
+  run$1 as run,
+  bindP ,
+  returnP$1 as returnP,
+  mapP$1 as mapP,
+  applyP$1 as applyP,
+  lift2$1 as lift2,
+  andThen$1 as andThen,
+  orElse$1 as orElse,
+  choice$1 as choice,
+  anyOf ,
+  sequence$1 as sequence,
+  parseZeroOrMore$1 as parseZeroOrMore,
+  many$1 as many,
+  many1$1 as many1,
+  opt$1 as opt,
+  keepLeft$1 as keepLeft,
+  keepRight$1 as keepRight,
+  between$1 as between,
+  sepBy1$1 as sepBy1,
+  sepBy$1 as sepBy,
   
 }
 /*  Not a pure module */
