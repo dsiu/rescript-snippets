@@ -2,10 +2,8 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as $$String from "rescript/lib/es6/string.js";
-import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
-import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_string from "rescript/lib/es6/caml_string.js";
 
 function log(prim) {
@@ -46,6 +44,8 @@ function parseA(str) {
         ];
 }
 
+console.log("Understanding Parser Combinators");
+
 var inputABC = "ABC";
 
 var prim1 = parseA(inputABC);
@@ -57,6 +57,8 @@ var inputZBC = "ZBC";
 var prim1$1 = parseA(inputZBC);
 
 console.log("parseA", prim1$1);
+
+console.log("");
 
 console.log("-- Parsing a specified character");
 
@@ -95,6 +97,8 @@ var prim1$4 = pchar(/* 'Z' */90, inputZBC);
 
 console.log("pchar", prim1$4);
 
+console.log("");
+
 console.log("-- Returning a Success/Failure");
 
 function pchar$1(charToMatch, str) {
@@ -130,6 +134,8 @@ var prim1$6 = pchar$1(/* 'A' */65, inputZBC);
 
 console.log("pchar", prim1$6);
 
+console.log("");
+
 console.log("-- Rewriting with an inner function");
 
 function pchar$2(charToMatch) {
@@ -158,6 +164,8 @@ function pchar$2(charToMatch) {
           };
   };
 }
+
+console.log("");
 
 console.log("-- The benefits of the curried implementation");
 
@@ -203,6 +211,8 @@ function pchar$3(charToMatch) {
         };
 }
 
+console.log("");
+
 console.log("-- Testing the wrapped function");
 
 function run(parser, input) {
@@ -218,6 +228,8 @@ console.log("parseA", prim1$9);
 var prim1$10 = run(parseA$2, inputZBC);
 
 console.log("parseA", prim1$10);
+
+console.log("");
 
 console.log("-- Combining two parsers in sequence");
 
@@ -258,6 +270,8 @@ function andThen(parser1, parser2) {
         };
 }
 
+console.log("");
+
 console.log("-- Testing andThen");
 
 var parseA$3 = pchar$3(/* 'A' */65);
@@ -278,6 +292,8 @@ var prim1$13 = run(parseAThenB, "AZC");
 
 console.log("parseAThenB AZC", prim1$13);
 
+console.log("");
+
 console.log("-- Choosing between two parsers");
 
 function orElse(parser1, parser2) {
@@ -293,6 +309,8 @@ function orElse(parser1, parser2) {
           _0: innerFn
         };
 }
+
+console.log("");
 
 console.log("-- Testing orElse");
 
@@ -313,6 +331,8 @@ console.log("parseAOrElseB BZZ", prim1$15);
 var prim1$16 = run(parseAOrElseB, "CZZ");
 
 console.log("parseAOrElseB CZZ", prim1$16);
+
+console.log("");
 
 console.log("-- Combining andThen and orElse");
 
@@ -341,6 +361,8 @@ console.log("aAndThenBorC QBZ", prim1$19);
 var prim1$20 = run(aAndThenBorC, "AQZ");
 
 console.log("aAndThenBorC AQZ", prim1$20);
+
+console.log("");
 
 console.log("-- Choosing from a list of parsers");
 
@@ -387,120 +409,6 @@ var prim1$25 = run(parseDigit, "|ABC");
 
 console.log("parseDigit |ABC", prim1$25);
 
-console.log("----------");
-
-console.log("Building a useful set of parser combinators");
-
-console.log("1. Transforming the contents of a parser with map");
-
-var listOfChars$2 = Belt_List.fromArray(Belt_Array.map("0123456789".split(""), strToChar));
-
-var parseDigit$1 = choice(Belt_List.map(listOfChars$2, pchar$3));
-
-var parseThreeDigits = andThen(andThen(parseDigit$1, parseDigit$1), parseDigit$1);
-
-var prim1$26 = run(parseThreeDigits, "123A");
-
-console.log("parseThreeDigits 123A", prim1$26);
-
-function mapP(f, parser) {
-  var innerFn = function (input) {
-    var result = run(parser, input);
-    if (result.TAG !== /* Success */0) {
-      return {
-              TAG: /* Failure */1,
-              _0: result._0
-            };
-    }
-    var match = result._0;
-    var newValue = Curry._1(f, match[0]);
-    return {
-            TAG: /* Success */0,
-            _0: [
-              newValue,
-              match[1]
-            ]
-          };
-  };
-  return /* Parser */{
-          _0: innerFn
-        };
-}
-
-function transformTuple(param) {
-  var match = param[0];
-  return $$String.make(1, match[0]) + $$String.make(1, match[1]) + $$String.make(1, param[1]);
-}
-
-var parseThreeDigitsAsStr = mapP(transformTuple, parseThreeDigits);
-
-var prim1$27 = run(parseThreeDigitsAsStr, "123A");
-
-console.log("parseThreeDigitsAsStr 123A", prim1$27);
-
-var __x = andThen(andThen(parseDigit$1, parseDigit$1), parseDigit$1);
-
-var parseThreeDigitsAsStr$1 = mapP((function (param) {
-        var match = param[0];
-        return $$String.make(1, match[0]) + $$String.make(1, match[1]) + $$String.make(1, param[1]);
-      }), __x);
-
-var prim1$28 = run(parseThreeDigitsAsStr$1, "123A");
-
-console.log("parseThreeDigitsAsStr 123A", prim1$28);
-
-var parseThreeDigitsAsInt = mapP((function (s) {
-        return Belt_Option.getExn(Belt_Int.fromString(s));
-      }), parseThreeDigitsAsStr$1);
-
-var prim1$29 = run(parseThreeDigitsAsInt, "123A");
-
-console.log("parseThreeDigitsAsInt 123A", prim1$29);
-
-console.log("2. Lifting functions to the world of Parsers");
-
-function returnP(x) {
-  var innerFn = function (input) {
-    return {
-            TAG: /* Success */0,
-            _0: [
-              x,
-              input
-            ]
-          };
-  };
-  return /* Parser */{
-          _0: innerFn
-        };
-}
-
-function applyP(fP, xP) {
-  var __x = andThen(fP, xP);
-  return mapP((function (param) {
-                return Curry._1(param[0], param[1]);
-              }), __x);
-}
-
-function lift2(f, xP, yP) {
-  return applyP(applyP(returnP(f), xP), yP);
-}
-
-function addP(param, param$1) {
-  return lift2((function (prim0, prim1) {
-                return prim0 + prim1 | 0;
-              }), param, param$1);
-}
-
-function startsWith(str, prefix) {
-  return str.startsWith(prefix);
-}
-
-function startWithP(param, param$1) {
-  return lift2(startsWith, param, param$1);
-}
-
-console.log("3. Turning a list of Parsers into a single Parser");
-
 export {
   log ,
   log2 ,
@@ -522,17 +430,7 @@ export {
   choice ,
   anyOf ,
   parseLowercase ,
-  parseDigit$1 as parseDigit,
-  parseThreeDigits ,
-  mapP ,
-  parseThreeDigitsAsStr$1 as parseThreeDigitsAsStr,
-  parseThreeDigitsAsInt ,
-  returnP ,
-  applyP ,
-  lift2 ,
-  addP ,
-  startsWith ,
-  startWithP ,
+  parseDigit ,
   
 }
-/* prim1 Not a pure module */
+/*  Not a pure module */

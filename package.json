@@ -9,7 +9,8 @@
     "test": "jest",
     "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.mjs",
     "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.mjs",
-    "runparsercombinator": "npx nodemon --exec node src/fsharpforfunandprofit/understanding_parser_combinators/Parser_Combinator.mjs"
+    "runparsercomb1": "npx nodemon --exec node src/fsharpforfunandprofit/understanding_parser_combinators/Ch1_Parser_Combinator_Intro.mjs",
+    "runparsercomb2": "npx nodemon --exec node src/fsharpforfunandprofit/understanding_parser_combinators/Ch2_Userful_Parser_Combinators.mjs"
   },
   "fig": {
     "test": {
