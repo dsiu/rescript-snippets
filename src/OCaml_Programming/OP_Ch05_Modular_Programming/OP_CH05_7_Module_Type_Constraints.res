@@ -131,7 +131,7 @@ module C: U = {
   module A = {
     type x = int
     type y = float
-    let x = 42
+    let _x = 42
   }
 }
 
