@@ -118,6 +118,5 @@ export {
   $$double ,
   addOne ,
   f ,
-  
 }
 /*  Not a pure module */

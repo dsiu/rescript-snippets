@@ -19,7 +19,7 @@ Test.test("1. last", (function (param) {
                     }
                   }
                 }), "d");
-        return Test_Utils.optionEqual(undefined, Lists_99.last(/* [] */0), undefined);
+        Test_Utils.optionEqual(undefined, Lists_99.last(/* [] */0), undefined);
       }));
 
 Test.test("2. last_two", (function (param) {
@@ -42,10 +42,10 @@ Test.test("2. last_two", (function (param) {
                 tl: /* [] */0
               }
             });
-        return Test_Utils.optionListEqual(undefined, Lists_99.last_two({
-                        hd: "a",
-                        tl: /* [] */0
-                      }), undefined);
+        Test_Utils.optionListEqual(undefined, Lists_99.last_two({
+                  hd: "a",
+                  tl: /* [] */0
+                }), undefined);
       }));
 
 Test.test("3. at", (function (param) {
@@ -65,10 +65,10 @@ Test.test("3. at", (function (param) {
                     }
                   }
                 }, 3), "c");
-        return Test_Utils.optionEqual(undefined, Lists_99.at({
-                        hd: "a",
-                        tl: /* [] */0
-                      }, 3), undefined);
+        Test_Utils.optionEqual(undefined, Lists_99.at({
+                  hd: "a",
+                  tl: /* [] */0
+                }, 3), undefined);
       }));
 
 Test.test("4. length", (function (param) {
@@ -92,7 +92,7 @@ Test.test("4. length", (function (param) {
                   hd: "a",
                   tl: /* [] */0
                 }), 1);
-        return Test_Utils.intEqual(undefined, Lists_99.length(/* [] */0), 0);
+        Test_Utils.intEqual(undefined, Lists_99.length(/* [] */0), 0);
       }));
 
 Test.test("5. rev", (function (param) {
@@ -127,7 +127,7 @@ Test.test("5. rev", (function (param) {
                 }
               }
             });
-        return Test_Utils.listEqual(undefined, Lists_99.rev(/* [] */0), /* [] */0);
+        Test_Utils.listEqual(undefined, Lists_99.rev(/* [] */0), /* [] */0);
       }));
 
 Test.test("6. is_palindrome", (function (param) {
@@ -161,14 +161,22 @@ Test.test("6. is_palindrome", (function (param) {
                   hd: "a",
                   tl: /* [] */0
                 }), true);
-        return Test_Utils.boolEqual(undefined, Lists_99.is_palindrome(/* [] */0), true);
+        Test_Utils.boolEqual(undefined, Lists_99.is_palindrome(/* [] */0), true);
       }));
 
 Test.test("7. flatten", (function (param) {
-        return Test_Utils.listEqual(undefined, Lists_99.flatten({
+        Test_Utils.listEqual(undefined, Lists_99.flatten({
+                  hd: {
+                    TAG: /* One */0,
+                    _0: "a"
+                  },
+                  tl: {
+                    hd: {
+                      TAG: /* Many */1,
+                      _0: {
                         hd: {
                           TAG: /* One */0,
-                          _0: "a"
+                          _0: "b"
                         },
                         tl: {
                           hd: {
@@ -176,53 +184,45 @@ Test.test("7. flatten", (function (param) {
                             _0: {
                               hd: {
                                 TAG: /* One */0,
-                                _0: "b"
+                                _0: "c"
                               },
                               tl: {
                                 hd: {
-                                  TAG: /* Many */1,
-                                  _0: {
-                                    hd: {
-                                      TAG: /* One */0,
-                                      _0: "c"
-                                    },
-                                    tl: {
-                                      hd: {
-                                        TAG: /* One */0,
-                                        _0: "d"
-                                      },
-                                      tl: /* [] */0
-                                    }
-                                  }
+                                  TAG: /* One */0,
+                                  _0: "d"
                                 },
-                                tl: {
-                                  hd: {
-                                    TAG: /* One */0,
-                                    _0: "e"
-                                  },
-                                  tl: /* [] */0
-                                }
+                                tl: /* [] */0
                               }
                             }
                           },
-                          tl: /* [] */0
-                        }
-                      }), {
-                    hd: "a",
-                    tl: {
-                      hd: "b",
-                      tl: {
-                        hd: "c",
-                        tl: {
-                          hd: "d",
                           tl: {
-                            hd: "e",
+                            hd: {
+                              TAG: /* One */0,
+                              _0: "e"
+                            },
                             tl: /* [] */0
                           }
                         }
                       }
+                    },
+                    tl: /* [] */0
+                  }
+                }), {
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "c",
+                  tl: {
+                    hd: "d",
+                    tl: {
+                      hd: "e",
+                      tl: /* [] */0
                     }
-                  });
+                  }
+                }
+              }
+            });
       }));
 
 Test.test("8. compress", (function (param) {
@@ -297,13 +297,13 @@ Test.test("8. compress", (function (param) {
               hd: "a",
               tl: /* [] */0
             });
-        return Test_Utils.listEqual(undefined, Lists_99.compress({
-                        hd: "a",
-                        tl: /* [] */0
-                      }), {
-                    hd: "a",
-                    tl: /* [] */0
-                  });
+        Test_Utils.listEqual(undefined, Lists_99.compress({
+                  hd: "a",
+                  tl: /* [] */0
+                }), {
+              hd: "a",
+              tl: /* [] */0
+            });
       }));
 
 Test.test("9. pack", (function (param) {
@@ -353,7 +353,6 @@ Test.test("9. pack", (function (param) {
                         }
                       }
                     }), Belt_List.toArray));
-        
       }));
 
 Test.test("10. encode", (function (param) {
@@ -400,7 +399,6 @@ Test.test("10. encode", (function (param) {
                     }
                   }
                 }));
-        
       }));
 
 Test.test("11. encode'", (function (param) {
@@ -479,7 +477,6 @@ Test.test("11. encode'", (function (param) {
           }
         ];
         console.log("11. encode expected", __x$1);
-        
       }));
 
 Test.test("12. decode", (function (param) {
@@ -569,7 +566,6 @@ Test.test("12. decode", (function (param) {
               }
             });
         console.log("12. decode expected", __x$1);
-        
       }));
 
 Test.test("13. encode", (function (param) {
@@ -648,7 +644,6 @@ Test.test("13. encode", (function (param) {
           }
         ];
         console.log("13. encode expected", __x$1);
-        
       }));
 
 Test.test("14. duplicate", (function (param) {
@@ -668,37 +663,37 @@ Test.test("14. duplicate", (function (param) {
                 }
               }
             });
-        return Test_Utils.listEqual(undefined, result, {
-                    hd: "a",
+        Test_Utils.listEqual(undefined, result, {
+              hd: "a",
+              tl: {
+                hd: "a",
+                tl: {
+                  hd: "b",
+                  tl: {
+                    hd: "b",
                     tl: {
-                      hd: "a",
+                      hd: "c",
                       tl: {
-                        hd: "b",
+                        hd: "c",
                         tl: {
-                          hd: "b",
+                          hd: "c",
                           tl: {
                             hd: "c",
                             tl: {
-                              hd: "c",
+                              hd: "d",
                               tl: {
-                                hd: "c",
-                                tl: {
-                                  hd: "c",
-                                  tl: {
-                                    hd: "d",
-                                    tl: {
-                                      hd: "d",
-                                      tl: /* [] */0
-                                    }
-                                  }
-                                }
+                                hd: "d",
+                                tl: /* [] */0
                               }
                             }
                           }
                         }
                       }
                     }
-                  });
+                  }
+                }
+              }
+            });
       }));
 
 Test.test("15. replicate", (function (param) {
@@ -712,34 +707,34 @@ Test.test("15. replicate", (function (param) {
                 }
               }
             }, 3);
-        return Test_Utils.listEqual(undefined, result, {
-                    hd: "a",
+        Test_Utils.listEqual(undefined, result, {
+              hd: "a",
+              tl: {
+                hd: "a",
+                tl: {
+                  hd: "a",
+                  tl: {
+                    hd: "b",
                     tl: {
-                      hd: "a",
+                      hd: "b",
                       tl: {
-                        hd: "a",
+                        hd: "b",
                         tl: {
-                          hd: "b",
+                          hd: "c",
                           tl: {
-                            hd: "b",
+                            hd: "c",
                             tl: {
-                              hd: "b",
-                              tl: {
-                                hd: "c",
-                                tl: {
-                                  hd: "c",
-                                  tl: {
-                                    hd: "c",
-                                    tl: /* [] */0
-                                  }
-                                }
-                              }
+                              hd: "c",
+                              tl: /* [] */0
                             }
                           }
                         }
                       }
                     }
-                  });
+                  }
+                }
+              }
+            });
       }));
 
 Test.test("16. drop", (function (param) {
@@ -774,28 +769,28 @@ Test.test("16. drop", (function (param) {
                 }
               }
             }, 3);
-        return Test_Utils.listEqual(undefined, result, {
-                    hd: "a",
+        Test_Utils.listEqual(undefined, result, {
+              hd: "a",
+              tl: {
+                hd: "b",
+                tl: {
+                  hd: "d",
+                  tl: {
+                    hd: "e",
                     tl: {
-                      hd: "b",
+                      hd: "g",
                       tl: {
-                        hd: "d",
+                        hd: "h",
                         tl: {
-                          hd: "e",
-                          tl: {
-                            hd: "g",
-                            tl: {
-                              hd: "h",
-                              tl: {
-                                hd: "j",
-                                tl: /* [] */0
-                              }
-                            }
-                          }
+                          hd: "j",
+                          tl: /* [] */0
                         }
                       }
                     }
-                  });
+                  }
+                }
+              }
+            });
       }));
 
 Test.test("17. split", (function (param) {
@@ -840,28 +835,28 @@ Test.test("17. split", (function (param) {
                 }
               }
             });
-        return Test_Utils.listEqual(undefined, match[1], {
-                    hd: "d",
+        Test_Utils.listEqual(undefined, match[1], {
+              hd: "d",
+              tl: {
+                hd: "e",
+                tl: {
+                  hd: "f",
+                  tl: {
+                    hd: "g",
                     tl: {
-                      hd: "e",
+                      hd: "h",
                       tl: {
-                        hd: "f",
+                        hd: "i",
                         tl: {
-                          hd: "g",
-                          tl: {
-                            hd: "h",
-                            tl: {
-                              hd: "i",
-                              tl: {
-                                hd: "j",
-                                tl: /* [] */0
-                              }
-                            }
-                          }
+                          hd: "j",
+                          tl: /* [] */0
                         }
                       }
                     }
-                  });
+                  }
+                }
+              }
+            });
       }));
 
 Test.test("18. slice", (function (param) {
@@ -896,22 +891,22 @@ Test.test("18. slice", (function (param) {
                 }
               }
             }, 2, 6);
-        return Test_Utils.listEqual(undefined, result, {
-                    hd: "c",
+        Test_Utils.listEqual(undefined, result, {
+              hd: "c",
+              tl: {
+                hd: "d",
+                tl: {
+                  hd: "e",
+                  tl: {
+                    hd: "f",
                     tl: {
-                      hd: "d",
-                      tl: {
-                        hd: "e",
-                        tl: {
-                          hd: "f",
-                          tl: {
-                            hd: "g",
-                            tl: /* [] */0
-                          }
-                        }
-                      }
+                      hd: "g",
+                      tl: /* [] */0
                     }
-                  });
+                  }
+                }
+              }
+            });
       }));
 
 Test.test("19. rotate", (function (param) {
@@ -940,31 +935,31 @@ Test.test("19. rotate", (function (param) {
                 }
               }
             }, 3);
-        return Test_Utils.listEqual(undefined, result, {
-                    hd: "d",
+        Test_Utils.listEqual(undefined, result, {
+              hd: "d",
+              tl: {
+                hd: "e",
+                tl: {
+                  hd: "f",
+                  tl: {
+                    hd: "g",
                     tl: {
-                      hd: "e",
+                      hd: "h",
                       tl: {
-                        hd: "f",
+                        hd: "a",
                         tl: {
-                          hd: "g",
+                          hd: "b",
                           tl: {
-                            hd: "h",
-                            tl: {
-                              hd: "a",
-                              tl: {
-                                hd: "b",
-                                tl: {
-                                  hd: "c",
-                                  tl: /* [] */0
-                                }
-                              }
-                            }
+                            hd: "c",
+                            tl: /* [] */0
                           }
                         }
                       }
                     }
-                  });
+                  }
+                }
+              }
+            });
       }));
 
 Test.test("20. remove_at", (function (param) {
@@ -981,16 +976,16 @@ Test.test("20. remove_at", (function (param) {
                 }
               }
             }, 1);
-        return Test_Utils.listEqual(undefined, result, {
-                    hd: "a",
-                    tl: {
-                      hd: "c",
-                      tl: {
-                        hd: "d",
-                        tl: /* [] */0
-                      }
-                    }
-                  });
+        Test_Utils.listEqual(undefined, result, {
+              hd: "a",
+              tl: {
+                hd: "c",
+                tl: {
+                  hd: "d",
+                  tl: /* [] */0
+                }
+              }
+            });
       }));
 
 Test.test("21. insert_at", (function (param) {
@@ -1023,7 +1018,7 @@ Test.test("21. insert_at", (function (param) {
                 }
               }
             });
-        return Test_Utils.stringArrayEqual(undefined, result, expected);
+        Test_Utils.stringArrayEqual(undefined, result, expected);
       }));
 
 Test.test("22. range", (function (param) {
@@ -1047,13 +1042,13 @@ Test.test("22. range", (function (param) {
                 }
               }
             });
-        return Test_Utils.intArrayEqual(undefined, result, expected);
+        Test_Utils.intArrayEqual(undefined, result, expected);
       }));
 
 Test.test("23. range", (function (param) {
         var result = Belt_List.toArray(Lists_99.range_tail_recur(3, 11));
         var expected = Belt_List.toArray(Lists_99.range(3, 11));
-        return Test_Utils.intArrayEqual(undefined, result, expected);
+        Test_Utils.intArrayEqual(undefined, result, expected);
       }));
 
 Test.test("24. rand_select", (function (param) {
@@ -1098,7 +1093,7 @@ Test.test("24. rand_select", (function (param) {
                 }
               }
             });
-        return Test_Utils.intArrayEqual(undefined, result, expected);
+        Test_Utils.intArrayEqual(undefined, result, expected);
       }));
 
 export {

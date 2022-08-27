@@ -8,12 +8,10 @@ import * as Caml_string from "rescript/lib/es6/caml_string.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
-  
 }
 
 function strToChar(__x) {
@@ -72,7 +70,7 @@ function pchar(charToMatch, str) {
   var first = Caml_string.get(str.charAt(0), 0);
   if (first === charToMatch) {
     var remaining = str.slice(1);
-    var msg = "Found " + $$String.make(1, charToMatch);
+    var msg = "Found " + $$String.make(1, charToMatch) + "";
     return [
             msg,
             remaining
@@ -431,6 +429,5 @@ export {
   anyOf ,
   parseLowercase ,
   parseDigit ,
-  
 }
 /*  Not a pure module */

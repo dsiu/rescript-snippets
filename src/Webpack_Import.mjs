@@ -8,6 +8,5 @@ var url = new URL("./images/logo.png", import.meta.url);
 export {
   Webpack ,
   url ,
-  
 }
 /* url Not a pure module */

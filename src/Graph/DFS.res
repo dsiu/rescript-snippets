@@ -40,17 +40,10 @@ module Dfs: S = {
   }
 
   let string_of_state = ({d, f, pred, color}) => {
-    open Printf
-    let bindings = (. m, fmt) => {
-      let b = Str_map.toList(m)
-      String.concat(", ", b->List.map(((x, y)) => sprintf(fmt, x, y)))
-    }
-    sprintf(
-      " d = {%s}\n f = {%s}\n pred = {%s}\n",
-      bindings(. d, "'%s':'%d'"),
-      bindings(. f, "'%s':'%d'"),
-      bindings(. pred, "'%s':'%s'"),
-    )
+    let d_str = Utils.Printable.MapString.Int.toString(d)
+    let f_str = Utils.Printable.MapString.Int.toString(f)
+    let pred_str = Utils.Printable.MapString.String.toString(pred)
+    ` d = ${d_str}\n f = ${f_str}\n pred = ${pred_str}\n`
   }
 
   let depth_first_search = g => {
@@ -59,9 +52,9 @@ module Dfs: S = {
         // invariant: u MUST be White
         let edge = ((t, {d, f, pred, color}), v) => {
           if color->Str_map.getExn(v) == White {
-            dfs_visit(t, v, {d: d, f: f, pred: pred->Str_map.set(v, u), color: color})
+            dfs_visit(t, v, {d, f, pred: pred->Str_map.set(v, u), color})
           } else {
-            (t, {d: d, f: f, pred: pred, color: color})
+            (t, {d, f, pred, color})
           }
         }
 
@@ -73,8 +66,8 @@ module Dfs: S = {
               t,
               {
                 d: d->Str_map.set(u, t),
-                f: f,
-                pred: pred,
+                f,
+                pred,
                 color: color->Str_map.set(u, Gray),
               },
             ),
@@ -83,13 +76,13 @@ module Dfs: S = {
         }
 
         let t = t + 1
-        (t, {d: d, f: f->Str_map.set(u, t), pred: pred, color: color->Str_map.set(u, Black)})
+        (t, {d, f: f->Str_map.set(u, t), pred, color: color->Str_map.set(u, Black)})
       }
 
       if color->Str_map.getExn(u) == White {
-        dfs_visit(t, u, {d: d, f: f, pred: pred, color: color})
+        dfs_visit(t, u, {d, f, pred, color})
       } else {
-        (t, {d: d, f: f, pred: pred, color: color})
+        (t, {d, f, pred, color})
       }
     }
 
@@ -123,5 +116,5 @@ let () = {
 
   //  g->logStrMapList("g")
   let s = Dfs.depth_first_search(g)
-  Printf.printf("%s\n", Dfs.string_of_state(s))
+  Dfs.string_of_state(s)->log
 }

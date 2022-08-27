@@ -4,7 +4,7 @@ import * as List from "rescript/lib/es6/list.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 
 function elements(s) {
-  return List.sort_uniq(Caml_obj.caml_compare, s);
+  return List.sort_uniq(Caml_obj.compare, s);
 }
 
 var M = {
@@ -16,6 +16,5 @@ var M = {
 
 export {
   M ,
-  
 }
 /* No side effect */

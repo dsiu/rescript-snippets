@@ -61,6 +61,5 @@ export {
   enqueue ,
   dequeue ,
   fold ,
-  
 }
 /* No side effect */

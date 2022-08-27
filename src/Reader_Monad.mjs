@@ -141,7 +141,6 @@ function greet(name, greeting) {
 function lines(param) {
   return $$Array.map((function (prim) {
                 console.log(prim);
-                
               }), param);
 }
 
@@ -193,7 +192,6 @@ function greet$1(name, greeting) {
 function lines$1(param) {
   return $$Array.map((function (prim) {
                 console.log(prim);
-                
               }), param);
 }
 
@@ -261,6 +259,5 @@ export {
   rb$1 as rb,
   rc$1 as rc,
   r13 ,
-  
 }
 /*  Not a pure module */

@@ -283,7 +283,6 @@ function tuple_s_s(x, y) {
 
 function print_stringable(s) {
   console.log(Curry._1(s.to_string, s.value));
-  
 }
 
 function id(x) {
@@ -580,6 +579,5 @@ export {
   Capturing_The_Unknown ,
   Abstracting_Computational_Machines ,
   Narrowing_the_Possibilities ,
-  
 }
 /*  Not a pure module */

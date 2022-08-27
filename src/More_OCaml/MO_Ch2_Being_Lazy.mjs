@@ -9,24 +9,20 @@ import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function logList(l) {
   var prim = Js_list.toVector(l);
   console.log(prim);
-  
 }
 
 function log2(x, y) {
   console.log(y, x);
-  
 }
 
 function logList2(l, str) {
   var x = Js_list.toVector(l);
   console.log(str, x);
-  
 }
 
 function lseq(n) {
@@ -377,6 +373,5 @@ export {
   q5_b ,
   q6_letter_string ,
   alphas ,
-  
 }
 /* prim Not a pure module */

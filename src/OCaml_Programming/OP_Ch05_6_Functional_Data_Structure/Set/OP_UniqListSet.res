@@ -8,5 +8,5 @@ module M: OP_Set.S = {
     } else {
       list{x, ...s}
     }
-  let elements = FP_Utils.id
+  let elements = FP_Utils.identity
 }

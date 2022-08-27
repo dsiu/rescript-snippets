@@ -3,6 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
+import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 function flatMapList(xs, f) {
   return Belt_List.reduce(Belt_List.map(xs, f), /* [] */0, Belt_List.concat);
@@ -12,8 +13,50 @@ function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
 }
 
-function id(x) {
-  return x;
+function foldLeftArray(xs, f) {
+  var init = Belt_Array.getExn(xs, 0);
+  var rest = Belt_Array.sliceToEnd(xs, 1);
+  return Belt_Array.reduce(rest, init, f);
+}
+
+function foldRightArray(xs, f) {
+  var end = xs.length - 1 | 0;
+  var init = Belt_Array.getExn(xs, end);
+  var rest = Belt_Array.slice(xs, 0, end);
+  return Belt_Array.reduceReverse(rest, init, f);
+}
+
+function combinationArray2(a, b, f) {
+  return Belt_Array.reduce(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
+                                  return Belt_Array.concat(acc, [Curry._2(f, x, y)]);
+                                })));
+              }));
+}
+
+function combinationIfArray2(a, b, f) {
+  return Belt_Array.reduce(a, [], (function (acc, x) {
+                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
+                                  var r = Curry._2(f, x, y);
+                                  if (r !== undefined) {
+                                    return Belt_Array.concat(acc, [Caml_option.valFromOption(r)]);
+                                  } else {
+                                    return acc;
+                                  }
+                                })));
+              }));
+}
+
+function optionOr(a, b) {
+  if (a !== undefined) {
+    return a;
+  } else {
+    return b;
+  }
+}
+
+function identity(a) {
+  return a;
 }
 
 function eq(x, y) {
@@ -37,11 +80,7 @@ function compose4(f, g, h, i, x) {
 }
 
 function composeN(fs) {
-  return Belt_Array.reduce(Belt_Array.sliceToEnd(fs, 1), Belt_Array.getExn(fs, 0), (function (a, f) {
-                return function (param) {
-                  return Curry._1(f, Curry._1(a, param));
-                };
-              }));
+  return foldLeftArray(fs, compose);
 }
 
 var List;
@@ -53,13 +92,17 @@ export {
   flatMapList ,
   $$Array ,
   flatMapArray ,
-  id ,
+  foldLeftArray ,
+  foldRightArray ,
+  combinationArray2 ,
+  combinationIfArray2 ,
+  optionOr ,
+  identity ,
   eq ,
   composeU ,
   compose ,
   compose3 ,
   compose4 ,
   composeN ,
-  
 }
 /* No side effect */

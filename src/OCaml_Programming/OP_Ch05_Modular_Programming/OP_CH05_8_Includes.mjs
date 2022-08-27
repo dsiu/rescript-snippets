@@ -4,7 +4,7 @@ import * as List from "rescript/lib/es6/list.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 
 function elements(s) {
-  return List.sort_uniq(Caml_obj.caml_compare, s);
+  return List.sort_uniq(Caml_obj.compare, s);
 }
 
 var ListSet = {
@@ -39,7 +39,7 @@ var ListSetExtended = {
 };
 
 function elements$1(s) {
-  return List.sort_uniq(Caml_obj.caml_compare, s);
+  return List.sort_uniq(Caml_obj.compare, s);
 }
 
 var ListSetImpl = {
@@ -105,6 +105,5 @@ export {
   ListSetExtended ,
   Work_Around ,
   ListSetExtendedImpl$1 as ListSetExtendedImpl,
-  
 }
 /* No side effect */

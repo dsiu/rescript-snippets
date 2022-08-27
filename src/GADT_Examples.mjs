@@ -26,6 +26,5 @@ var y = {
 export {
   x ,
   y ,
-  
 }
 /*  Not a pure module */

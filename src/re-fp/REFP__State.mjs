@@ -41,6 +41,5 @@ export {
   from ,
   map ,
   chain ,
-  
 }
 /* No side effect */

@@ -28,7 +28,6 @@ function handleDataA(data) {
   console.log(id);
   console.log(title);
   console.log(date);
-  
 }
 
 function handleDataB(data) {
@@ -38,7 +37,6 @@ function handleDataB(data) {
   console.log(body);
   console.log(title);
   console.log(template);
-  
 }
 
 handleDataA(dataA);
@@ -48,6 +46,5 @@ handleDataB(dataB);
 export {
   handleDataA ,
   handleDataB ,
-  
 }
 /*  Not a pure module */

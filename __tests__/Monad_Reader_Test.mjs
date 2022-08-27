@@ -13,19 +13,16 @@ test("run()", (function () {
                 })
             }, 1);
         expect(result).toEqual(2);
-        
       }));
 
 test("return()", (function () {
         var result = Monad_Reader.run(Monad_Reader.$$return(99), 1);
         expect(result).toEqual(99);
-        
       }));
 
 test("ask()", (function () {
         var result = Monad_Reader.run(Monad_Reader.ask(undefined), 123);
         expect(result).toEqual(123);
-        
       }));
 
 test("local()", (function () {
@@ -38,7 +35,6 @@ test("local()", (function () {
                     return -e | 0;
                   }), __x), 1);
         expect(result).toEqual(0);
-        
       }));
 
 test("map()", (function () {
@@ -51,7 +47,6 @@ test("map()", (function () {
                     return Math.imul(x, 10);
                   }), __x), 1);
         expect(result).toEqual(20);
-        
       }));
 
 test("bind() 1", (function () {
@@ -68,7 +63,6 @@ test("bind() 1", (function () {
                           };
                   }), __x), 1);
         expect(result).toEqual(4);
-        
       }));
 
 test("bind() 2", (function () {
@@ -81,7 +75,6 @@ test("bind() 2", (function () {
                     return Monad_Reader.$$return((x << 1));
                   }), __x), 1);
         expect(result).toEqual(4);
-        
       }));
 
 test("bind() 3", (function () {
@@ -120,7 +113,6 @@ test("bind() 3", (function () {
               "Hello: Two",
               "Hello: Three"
             ]);
-        
       }));
 
 test("bind() 3.1", (function () {
@@ -158,7 +150,6 @@ test("bind() 3.1", (function () {
               "Hey: Two",
               "Hey: Three"
             ]);
-        
       }));
 
 export {

@@ -15,6 +15,5 @@ function isFile(path) {
 export {
   Fs$1 as Fs,
   isFile ,
-  
 }
 /* fs Not a pure module */

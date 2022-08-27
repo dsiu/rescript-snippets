@@ -17,6 +17,5 @@ function filter(predicate, combine, result, element) {
 export {
   map ,
   filter ,
-  
 }
 /* No side effect */

@@ -2,8 +2,6 @@
 
 import * as List from "rescript/lib/es6/list.js";
 import * as Curry from "rescript/lib/es6/curry.js";
-import * as Pervasives from "rescript/lib/es6/pervasives.js";
-import * as Caml_js_exceptions from "rescript/lib/es6/caml_js_exceptions.js";
 
 function compose(param, param$1) {
   var f = param$1.this;
@@ -177,28 +175,6 @@ function iter_list(input) {
         };
 }
 
-function iter_chan(input) {
-  var next = function (c) {
-    try {
-      return [
-              Pervasives.input_line(c),
-              c
-            ];
-    }
-    catch (raw_exn){
-      var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
-      if (exn.RE_EXN_ID === "End_of_file") {
-        return ;
-      }
-      throw exn;
-    }
-  };
-  return /* Iterator */{
-          _0: input,
-          _1: next
-        };
-}
-
 function into_list(l0, xf, iterator) {
   return List.rev(transduce(xf, (function (r, x) {
                     return {
@@ -206,14 +182,6 @@ function into_list(l0, xf, iterator) {
                             tl: r
                           };
                   }), l0, iterator));
-}
-
-function into_chan(c0, xf, iterator) {
-  transduce(xf, (function (r, x) {
-          Pervasives.output_string(r, x + "\n");
-          return r;
-        }), c0, iterator);
-  
 }
 
 export {
@@ -226,9 +194,6 @@ export {
   filter ,
   take ,
   iter_list ,
-  iter_chan ,
   into_list ,
-  into_chan ,
-  
 }
 /* No side effect */

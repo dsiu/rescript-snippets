@@ -28,17 +28,23 @@ module Dfs: S = {
   }
 
   let string_of_state = ({d, f, pred, color}) => {
-    open Printf
-    let bindings = (m, fmt) => {
+    let bindings = m => {
       let b = Char_map.bindings(m)
-      String.concat(", ", List.map(((x, y)) => sprintf(fmt, x, y), b))
+      String.concat(", ", List.map(((x, y)) => {
+          `'%{x}':'%{y}'`
+        }, b))
     }
-    sprintf(
-      " d = {%s}\n f = {%s}\n pred = {%s}\n",
-      bindings(d, "'%c':'%d'"),
-      bindings(f, "'%c':'%d'"),
-      bindings(pred, "'%c':'%c'"),
-    )
+    //    sprintf(
+    //      " d = {%s}\n f = {%s}\n pred = {%s}\n",
+    //      bindings(d, "'%c':'%d'"),
+    //      bindings(f, "'%c':'%d'"),
+    //      bindings(pred, "'%c':'%c'"),
+    //    )
+
+    let d_str = bindings(d)
+    let f_str = bindings(f)
+    let pred_str = bindings(pred)
+    ` d = ${d_str}\n f = ${f_str}\n pred = ${pred_str}\n`
   }
 
   let depth_first_search = g => {
@@ -46,9 +52,9 @@ module Dfs: S = {
       let rec dfs_visit = (t, u, {d, f, pred, color}) => {
         let edge = ((t, {d, f, pred, color}), v) =>
           if Char_map.find(v, color) == White {
-            dfs_visit(t, v, {d: d, f: f, pred: Char_map.add(v, u, pred), color: color})
+            dfs_visit(t, v, {d, f, pred: Char_map.add(v, u, pred), color})
           } else {
-            (t, {d: d, f: f, pred: pred, color: color})
+            (t, {d, f, pred, color})
           }
 
         let (t, {d, f, pred, color}) = {
@@ -59,8 +65,8 @@ module Dfs: S = {
               t,
               {
                 d: Char_map.add(u, t, d),
-                f: f,
-                pred: pred,
+                f,
+                pred,
                 color: Char_map.add(u, Gray, color),
               },
             ),
@@ -69,13 +75,13 @@ module Dfs: S = {
         }
 
         let t = t + 1
-        (t, {d: d, f: Char_map.add(u, t, f), pred: pred, color: Char_map.add(u, Black, color)})
+        (t, {d, f: Char_map.add(u, t, f), pred, color: Char_map.add(u, Black, color)})
       }
 
       if Char_map.find(u, color) == White {
-        dfs_visit(t, u, {d: d, f: f, pred: pred, color: color})
+        dfs_visit(t, u, {d, f, pred, color})
       } else {
-        (t, {d: d, f: f, pred: pred, color: color})
+        (t, {d, f, pred, color})
       }
     }
 
@@ -108,5 +114,5 @@ let () = {
   )
 
   let s = Dfs.depth_first_search(g)
-  Printf.printf("%s\n", Dfs.string_of_state(s))
+  Dfs.string_of_state(s)->Js.log
 }

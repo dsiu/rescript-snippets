@@ -23,7 +23,6 @@ function asyncProg(param) {
                         }), 10));
               var c = await(asyncSum(a, b));
               console.log(c);
-              
             });
 }
 
@@ -31,6 +30,5 @@ export {
   asyncGetInt ,
   asyncSum ,
   asyncProg ,
-  
 }
 /* No side effect */

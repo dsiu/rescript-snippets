@@ -118,7 +118,7 @@ function $$eval$1(_expr) {
           _expr = expr._2;
           continue ;
       case /* Eq */2 :
-          return Caml_obj.caml_equal($$eval$1(expr._0), $$eval$1(expr._1));
+          return Caml_obj.equal($$eval$1(expr._0), $$eval$1(expr._1));
       case /* Lt */3 :
           return $$eval$1(expr._0) < $$eval$1(expr._1);
       
@@ -203,6 +203,5 @@ console.log($$eval$1({
 export {
   ADTs ,
   GADT ,
-  
 }
 /*  Not a pure module */

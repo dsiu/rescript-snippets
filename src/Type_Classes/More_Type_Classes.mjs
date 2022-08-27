@@ -8,12 +8,10 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
-  
 }
 
 function compose(f, g, x) {
@@ -46,7 +44,7 @@ var ListFunctor = {
 
 function TestFunctor(F) {
   var test_id = function (x) {
-    return Caml_obj.caml_equal(Curry._2(F.map, id, x), x);
+    return Caml_obj.equal(Curry._2(F.map, id, x), x);
   };
   var test_compose = function (xs) {
     var f = function (x) {
@@ -55,7 +53,7 @@ function TestFunctor(F) {
     var g = function (x) {
       return x - 1 | 0;
     };
-    return Caml_obj.caml_equal(Curry._2(F.map, (function (param) {
+    return Caml_obj.equal(Curry._2(F.map, (function (param) {
                       return (param - 1 | 0) % 2;
                     }), xs), Curry._2(F.map, f, Curry._2(F.map, g, xs)));
   };
@@ -66,7 +64,7 @@ function TestFunctor(F) {
 }
 
 function test_id(x) {
-  return Caml_obj.caml_equal(List.map(id, x), x);
+  return Caml_obj.equal(List.map(id, x), x);
 }
 
 function test_compose(xs) {
@@ -79,7 +77,7 @@ function test_compose(xs) {
   var f$1 = function (param) {
     return (param - 1 | 0) % 2;
   };
-  return Caml_obj.caml_equal(List.map(f$1, xs), List.map(f, List.map(g, xs)));
+  return Caml_obj.equal(List.map(f$1, xs), List.map(f, List.map(g, xs)));
 }
 
 var TFL = {
@@ -132,7 +130,7 @@ var OptionFunctor = {
 };
 
 function test_id$1(x) {
-  return Caml_obj.caml_equal(map$1(id, x), x);
+  return Caml_obj.equal(map$1(id, x), x);
 }
 
 function test_compose$1(xs) {
@@ -142,7 +140,7 @@ function test_compose$1(xs) {
   var g = function (x) {
     return x - 1 | 0;
   };
-  return Caml_obj.caml_equal(map$1((function (param) {
+  return Caml_obj.equal(map$1((function (param) {
                     return (param - 1 | 0) % 2;
                   }), xs), map$1(f, map$1(g, xs)));
 }
@@ -172,13 +170,13 @@ console.log(prim$7);
 
 function TestMonoid(M) {
   var test_left_id = function (x) {
-    return Caml_obj.caml_equal(Curry._2(M.append, M.empty, x), x);
+    return Caml_obj.equal(Curry._2(M.append, M.empty, x), x);
   };
   var test_right_id = function (x) {
-    return Caml_obj.caml_equal(Curry._2(M.append, x, M.empty), x);
+    return Caml_obj.equal(Curry._2(M.append, x, M.empty), x);
   };
   var test_assoc = function (x, y, z) {
-    return Caml_obj.caml_equal(Curry._2(M.append, x, Curry._2(M.append, y, z)), Curry._2(M.append, Curry._2(M.append, x, y), z));
+    return Caml_obj.equal(Curry._2(M.append, x, Curry._2(M.append, y, z)), Curry._2(M.append, Curry._2(M.append, x, y), z));
   };
   return {
           test_left_id: test_left_id,
@@ -248,6 +246,5 @@ export {
   IntAddMonoid ,
   MonoidUtils ,
   ListMonoid ,
-  
 }
 /*  Not a pure module */

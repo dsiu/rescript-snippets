@@ -23,7 +23,7 @@ module EmailAddress = {
   let apply = (f, EmailAddress(e)) => f(e)
 
   // unwrap directly
-  let value = e => apply(FP_Utils.id, e)
+  let value = e => apply(FP_Utils.identity, e)
 }
 
 module ZipCode = {
@@ -48,7 +48,7 @@ module ZipCode = {
   let apply = (f, ZipCode(e)) => f(e)
 
   // unwrap directly
-  let value = e => apply(FP_Utils.id, e)
+  let value = e => apply(FP_Utils.identity, e)
 }
 
 module StateCode = {
@@ -74,7 +74,7 @@ module StateCode = {
   let apply = (f, StateCode(e)) => f(e)
 
   // unwrap directly
-  let value = e => apply(FP_Utils.id, e)
+  let value = e => apply(FP_Utils.identity, e)
 }
 
 module PersonalName = {

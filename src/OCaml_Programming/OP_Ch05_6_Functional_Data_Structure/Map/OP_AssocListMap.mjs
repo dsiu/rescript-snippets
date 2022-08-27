@@ -16,7 +16,7 @@ function insert(k, v, m) {
 var lookup = List.assoc;
 
 function keys(m) {
-  return List.sort_uniq(Caml_obj.caml_compare, List.map((function (prim) {
+  return List.sort_uniq(Caml_obj.compare, List.map((function (prim) {
                     return prim[0];
                   }), m));
 }
@@ -39,6 +39,5 @@ var M = {
 
 export {
   M ,
-  
 }
 /* No side effect */

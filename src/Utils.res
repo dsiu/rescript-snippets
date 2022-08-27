@@ -4,47 +4,132 @@ open Belt
 let log = Js.Console.log
 @val @scope("console") external consoleDir: 'a => unit = "dir"
 
+let identity = FP_Utils.identity
+
 // map string
-let dump_mapString_of = (f, m) =>
-  Map.String.forEach(m, (k, v) => {
-    log(`key:${k}, val:${v->f}`)
-  })
+module Printable = {
+  module MapString = {
+    let toString = (m, f) =>
+      Map.String.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k}, val:${v->f}\n`
+      })
 
-let dump_mapString_of_int = dump_mapString_of(Int.toString)
-let dump_mapString_of_string = dump_mapString_of(a => a)
+    module String = {
+      let toString = m => toString(m, identity)
+    }
 
-// map int
-let dump_mapInt_of = (m, f) =>
-  Map.Int.forEach(m, (k, v) => {
-    log(`key:${k->Int.toString}, val:${f(v)}`)
-  })
-let dump_mapInt_of_int = dump_mapInt_of(_, Int.toString)
-let dump_mapInt_of_int64 = dump_mapInt_of(_, Int64.to_string)
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
+  }
 
-// mutable map int
-let dump_mutableMapInt_of = (f, m) =>
-  MutableMap.Int.forEach(m, (k, v) => {
-    log(`key:${k->Int.toString}, val:${v->f}`)
-  })
-let dump_mutableMapInt_of_int = dump_mutableMapInt_of(Int.toString)
-let dump_mutableMapInt_of_int64 = dump_mutableMapInt_of(Int64.to_string)
+  // map int
+  module MapInt = {
+    let toString = (m, f) => {
+      Map.Int.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k->Int.toString}, val:${f(v)}\n`
+      })
+    }
+    module String = {
+      let toString = m => toString(m, identity)
+    }
 
-let dump_mutableMapInt_of_int_base2 = dump_mutableMapInt_of(x =>
-  x->Js.Int.toStringWithRadix(~radix=2)
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
+
+    module Int64 = {
+      let toString = m => toString(m, Int64.to_string)
+    }
+  }
+
+  // mutable map int
+  module MutableMapInt = {
+    let toString = (m, f) =>
+      MutableMap.Int.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k->Int.toString}, val:${v->f}\n`
+      })
+
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
+
+    module Int64 = {
+      let toString = m => toString(m, Int64.to_string)
+    }
+
+    module IntBase2 = {
+      let toString = m => toString(m, x => x->Js.Int.toStringWithRadix(~radix=2))
+    }
+  }
+
+  // mutable map string
+  module MutableMapString = {
+    let toString = (m, f) =>
+      MutableMap.String.reduce(m, "", (a, k, v) => {
+        a ++ `key:${k}, val:${v->f}\n`
+      })
+    module Int = {
+      let toString = m => toString(m, Int.toString)
+    }
+    module Int64 = {
+      let toString = m => toString(m, Int64.to_string)
+    }
+  }
+
+  module Array = {
+    let toString = (a, f) => {
+      "[" ++ a->Belt.Array.map(f)->Js.Array2.joinWith(",") ++ "]"
+    }
+  }
+
+  module List = {
+    let toString = (a, f) => {
+      a->Belt.Array.reduce("{", (a, v) => a ++ f(v) ++ ",") ++ "}"
+    }
+  }
+}
+
+//
+// Int / Int64
+//
+//@scope("Math") @val
+@val
+external parseInt: (~x: string, ~base: int) => int = "parseInt"
+let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
+
+let intFromStringExn = FP_Utils.compose(
+  Js.String2.trim,
+  FP_Utils.compose(Int.fromString, Belt.Option.getExn),
 )
 
-// mutable map string
-let dump_mutableMapString_of = (f, m) =>
-  MutableMap.String.forEach(m, (k, v) => {
-    log(`key:${k}, val:${v->f}`)
-  })
-let dump_mutableMapString_of_int = dump_mutableMapString_of(Int.toString)
-let dump_mutableMapString_of_int64 = dump_mutableMapString_of(Int64.to_string)
+let add = (x, y) => x + y
+let sub = (x, y) => x - y
+let mul = (x, y) => x * y
+let div = (x, y) => x / y
+
+// Unsigned Int conversion
+let int32ToUint32 = x => {
+  open Js.TypedArray2
+  Uint32Array.make([x])->Uint32Array.unsafe_get(0)
+}
+
+let increaseByInt64 = (v, n) => {
+  v->Option.mapWithDefault(n, x => x->Int64.add(n))
+}
+
+let increaseBy1L = increaseByInt64(_, 1L)
+
+let increaseBy = (v, n) => {
+  v->Option.mapWithDefault(n, x => x + n)
+}
+
+let increaseBy1 = increaseBy(_, 1)
 
 //
-// list
+// Int64
 //
-let dump_list = List.forEach(_, log)
+let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
 
 //
 // strings
@@ -56,8 +141,7 @@ let splitDoubleNewline = Js.String2.split(_, "\n\n")
 //
 // array
 //
-let sum = (a, x) => a + x
-let sumIntArray = Array.reduce(_, 0, sum)
+let sumIntArray = Array.reduce(_, 0, add)
 let join = Js.Array2.joinWith(_, "")
 
 // sum up elements of array from ~offset with ~len (same as Array.slice)
@@ -82,27 +166,34 @@ let flatten = (xs: array<array<'a>>) => {
   xs->Array.reduce([], (a, x) => Array.concat(a, x))
 }
 
-// Unsigned Int conversion
-let int32ToUint32 = x => {
-  open Js.TypedArray2
-  Uint32Array.make([x])->Uint32Array.unsafe_get(0)
+let maxKeyIntValuePair = Array.reduce(_, ("", 0), (acc, (k, v)) => {
+  let (_, va) = acc
+  v > va ? (k, v) : acc
+})
+
+let minKeyIntValuePair = Array.reduce(_, ("", max_int), (acc, (k, v)) => {
+  let (_, va) = acc
+  v < va ? (k, v) : acc
+})
+
+let maxKeyInt64ValuePair = Array.reduce(_, ("", 0L), (acc, (k, v)) => {
+  let (_, va) = acc
+  Int64.compare(v, va) > 0 ? (k, v) : acc
+})
+
+let minKeyInt64ValuePair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) => {
+  let (_, va) = acc
+  Int64.compare(v, va) < 0 ? (k, v) : acc
+})
+
+//
+// Map / HashMap
+//
+
+let hashMapStringUpdate = (h, k, f) => {
+  h->HashMap.String.set(
+    k,
+    h->HashMap.String.get(k)->Option.mapWithDefaultU(f(None), (. x) => f(Some(x))),
+  )
+  h
 }
-
-//
-// Int
-//
-//@scope("Math") @val
-@val
-external parseInt: (~x: string, ~base: int) => int = "parseInt"
-let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
-
-let intFromStringExn = FP_Utils.compose(Int.fromString, Belt.Option.getExn)
-
-let add = (x, y) => x + y
-let sub = (x, y) => x - y
-let mul = (x, y) => x * y
-let div = (x, y) => x / y
-//
-// Int64
-//
-let int64FromBitString = str => ("0b" ++ str)->Int64.of_string

@@ -32,8 +32,6 @@
     "@ryyppy/rescript-promise",
     "rescript-js",
     "rescript-jzon",
-    "bs-bastet",
-    "relude",
     "bs-fetch",
     "@glennsl/bs-json",
     "rescript-nodejs",

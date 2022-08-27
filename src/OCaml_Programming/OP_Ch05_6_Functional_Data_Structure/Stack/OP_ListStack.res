@@ -19,5 +19,5 @@ module M: OP_Stack.S = {
     | list{_, ...s} => s
     }
   let size = List.length
-  let to_list = FP_Utils.id
+  let to_list = FP_Utils.identity
 }

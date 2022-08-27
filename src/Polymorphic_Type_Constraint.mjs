@@ -17,6 +17,5 @@ export {
   id2 ,
   id1 ,
   fst ,
-  
 }
 /* No side effect */

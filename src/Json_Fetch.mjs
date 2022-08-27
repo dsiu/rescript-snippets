@@ -26,7 +26,6 @@ var Xkcd = {
 
 $$Promise.$$catch(fetchCurrentComic(undefined).then(function (result) {
           console.log(result);
-          
         }), (function (error) {
         console.log(error);
         return Promise.resolve(undefined);
@@ -35,6 +34,5 @@ $$Promise.$$catch(fetchCurrentComic(undefined).then(function (result) {
 export {
   Fetch ,
   Xkcd ,
-  
 }
 /*  Not a pure module */

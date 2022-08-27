@@ -99,6 +99,5 @@ export {
   colorToString ,
   toString ,
   red ,
-  
 }
 /*  Not a pure module */

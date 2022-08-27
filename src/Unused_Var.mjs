@@ -7,6 +7,5 @@ function fun(a, b) {
 
 export {
   fun ,
-  
 }
 /* No side effect */

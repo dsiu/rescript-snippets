@@ -6,7 +6,6 @@ var isBefore = ((a, b) => a < b);
 
 setTimeout((function (param) {
         console.log("Hello");
-        
       }), 2000);
 
 var devOpt = typeof __DEV__ === "undefined" ? undefined : __DEV__;
@@ -23,7 +22,6 @@ console.log(window.location.ancestorOrigins.length);
 
 function f(x) {
   x.hi(true, 2);
-  
 }
 
 var devOpt$1 = devOpt === undefined ? undefined : Caml_option.some(devOpt);
@@ -33,6 +31,5 @@ export {
   devOpt$1 as devOpt,
   someNumber ,
   f ,
-  
 }
 /*  Not a pure module */

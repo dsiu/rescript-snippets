@@ -68,6 +68,5 @@ export {
   peter ,
   noone ,
   isABoy ,
-  
 }
 /* b Not a pure module */

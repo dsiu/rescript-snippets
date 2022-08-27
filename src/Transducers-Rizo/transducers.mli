@@ -34,14 +34,14 @@ val take : int -> ('a, 'a) transducer
 val iter_list : 'a list -> 'a iterator
 (** [of_list l] create an iterator of list. *)
 
-val iter_chan : in_channel -> string iterator
+(*val iter_chan : in_channel -> string iterator*)
 (** Create an iterator from input channel. *)
 
 val into_list : 'b list -> ('a, 'b) transducer -> 'a iterator -> 'b list
 (** [into_list l0 xf iter] applies the transducer [xf] to the iterator [iter]
     and adds the results to the list [l0]. *)
 
-val into_chan : out_channel -> ('a, string) transducer -> 'a iterator -> unit
+(*val into_chan : out_channel -> ('a, string) transducer -> 'a iterator -> unit*)
 (** [into_chan c xf iter] applies the transducer [xf] to the iterator [iter]
     and sends the results to the output channel [c]. *)
 

@@ -31,6 +31,5 @@ var B = {
 export {
   A ,
   B ,
-  
 }
 /* No side effect */

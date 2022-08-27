@@ -76,15 +76,19 @@ let int2nat = (self, n) =>
 let rec string_of_nat = x =>
   switch x {
   | Zero => "Zero"
-  | Succ(n) => Printf.sprintf("Succ(%s)", string_of_nat(n))
+  | Succ(n) => {
+      let s = string_of_nat(n)
+      `Succ(${s} )`
+    }
   }
 
 let _ = {
   let result = y(fact, 6)
-  Printf.printf("%d\n%!", result)
+  j`$result\n`->Js.log
 
   let result = y(int2nat, 6)
-  Printf.printf("%s\n%!", string_of_nat(result))
+  let result_str = string_of_nat(result)
+  j`$result_str\n`->Js.log
 }
 
 //

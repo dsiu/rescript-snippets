@@ -17,6 +17,5 @@ export {
   x ,
   map ,
   keep ,
-  
 }
 /* x Not a pure module */

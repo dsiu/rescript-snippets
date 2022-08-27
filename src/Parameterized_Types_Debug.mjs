@@ -21,6 +21,5 @@ maybeSaveThing("Siu");
 export {
   saveThing ,
   maybeSaveThing ,
-  
 }
 /*  Not a pure module */

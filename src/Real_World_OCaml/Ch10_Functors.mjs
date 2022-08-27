@@ -96,7 +96,7 @@ function Make_interval(Endpoint) {
 }
 
 function create(low, high) {
-  if (Caml_obj.caml_compare(low, high) > 0) {
+  if (Caml_obj.compare(low, high) > 0) {
     return /* Empty */0;
   } else {
     return /* Interval */{
@@ -115,8 +115,8 @@ function is_empty(x) {
 }
 
 function contains(t, x) {
-  if (t && Caml_obj.caml_compare(x, t._0) >= 0) {
-    return Caml_obj.caml_compare(x, t._1) <= 0;
+  if (t && Caml_obj.compare(x, t._0) >= 0) {
+    return Caml_obj.compare(x, t._1) <= 0;
   } else {
     return false;
   }
@@ -124,14 +124,14 @@ function contains(t, x) {
 
 function intersect(t1, t2) {
   var min = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) <= 0) {
+    if (Caml_obj.compare(x, y) <= 0) {
       return x;
     } else {
       return y;
     }
   };
   var max = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) >= 0) {
+    if (Caml_obj.compare(x, y) >= 0) {
       return x;
     } else {
       return y;
@@ -152,7 +152,7 @@ var Int_interval = {
 };
 
 function create$1(low, high) {
-  if (Caml_obj.caml_compare(low, high) > 0) {
+  if (Caml_obj.compare(low, high) > 0) {
     return /* Empty */0;
   } else {
     return /* Interval */{
@@ -171,8 +171,8 @@ function is_empty$1(x) {
 }
 
 function contains$1(t, x) {
-  if (t && Caml_obj.caml_compare(x, t._0) >= 0) {
-    return Caml_obj.caml_compare(x, t._1) <= 0;
+  if (t && Caml_obj.compare(x, t._0) >= 0) {
+    return Caml_obj.compare(x, t._1) <= 0;
   } else {
     return false;
   }
@@ -180,14 +180,14 @@ function contains$1(t, x) {
 
 function intersect$1(t1, t2) {
   var min = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) <= 0) {
+    if (Caml_obj.compare(x, y) <= 0) {
       return x;
     } else {
       return y;
     }
   };
   var max = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) >= 0) {
+    if (Caml_obj.compare(x, y) >= 0) {
       return x;
     } else {
       return y;
@@ -389,7 +389,7 @@ function Make_interval$1(Endpoint) {
 }
 
 function create$4(low, high) {
-  if (Caml_obj.caml_compare(low, high) > 0) {
+  if (Caml_obj.compare(low, high) > 0) {
     return /* Empty */0;
   } else {
     return /* Interval */{
@@ -408,8 +408,8 @@ function is_empty$4(x) {
 }
 
 function contains$4(t, x) {
-  if (t && Caml_obj.caml_compare(x, t._0) >= 0) {
-    return Caml_obj.caml_compare(x, t._1) <= 0;
+  if (t && Caml_obj.compare(x, t._0) >= 0) {
+    return Caml_obj.compare(x, t._1) <= 0;
   } else {
     return false;
   }
@@ -417,14 +417,14 @@ function contains$4(t, x) {
 
 function intersect$4(t1, t2) {
   var min = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) <= 0) {
+    if (Caml_obj.compare(x, y) <= 0) {
       return x;
     } else {
       return y;
     }
   };
   var max = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) >= 0) {
+    if (Caml_obj.compare(x, y) >= 0) {
       return x;
     } else {
       return y;
@@ -509,7 +509,7 @@ function Make_interval$2(Endpoint) {
 }
 
 function create$5(low, high) {
-  if (Caml_obj.caml_compare(low, high) > 0) {
+  if (Caml_obj.compare(low, high) > 0) {
     return /* Empty */0;
   } else {
     return /* Interval */{
@@ -528,8 +528,8 @@ function is_empty$5(x) {
 }
 
 function contains$5(t, x) {
-  if (t && Caml_obj.caml_compare(x, t._0) >= 0) {
-    return Caml_obj.caml_compare(x, t._1) <= 0;
+  if (t && Caml_obj.compare(x, t._0) >= 0) {
+    return Caml_obj.compare(x, t._1) <= 0;
   } else {
     return false;
   }
@@ -537,14 +537,14 @@ function contains$5(t, x) {
 
 function intersect$5(t1, t2) {
   var min = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) <= 0) {
+    if (Caml_obj.compare(x, y) <= 0) {
       return x;
     } else {
       return y;
     }
   };
   var max = function (x, y) {
-    if (Caml_obj.caml_compare(x, y) >= 0) {
+    if (Caml_obj.compare(x, y) >= 0) {
       return x;
     } else {
       return y;
@@ -644,6 +644,5 @@ export {
   Destructive_Substitution ,
   Using_Multiple_Interfaces ,
   Extending_Modules ,
-  
 }
 /*  Not a pure module */

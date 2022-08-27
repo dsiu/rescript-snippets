@@ -4,7 +4,6 @@ import * as $$Map from "rescript/lib/es6/map.js";
 import * as Char from "rescript/lib/es6/char.js";
 import * as List from "rescript/lib/es6/list.js";
 import * as Curry from "rescript/lib/es6/curry.js";
-import * as Printf from "rescript/lib/es6/printf.js";
 import * as $$String from "rescript/lib/es6/string.js";
 
 var Char_map = $$Map.Make({
@@ -12,113 +11,16 @@ var Char_map = $$Map.Make({
     });
 
 function string_of_state(param) {
-  var bindings = function (m, fmt) {
+  var bindings = function (m) {
     var b = Curry._1(Char_map.bindings, m);
     return $$String.concat(", ", List.map((function (param) {
-                      return Curry._2(Printf.sprintf(fmt), param[0], param[1]);
+                      return "'%{x}':'%{y}'";
                     }), b));
   };
-  return Curry._3(Printf.sprintf(/* Format */{
-                  _0: {
-                    TAG: /* String_literal */11,
-                    _0: " d = {",
-                    _1: {
-                      TAG: /* String */2,
-                      _0: /* No_padding */0,
-                      _1: {
-                        TAG: /* String_literal */11,
-                        _0: "}\n f = {",
-                        _1: {
-                          TAG: /* String */2,
-                          _0: /* No_padding */0,
-                          _1: {
-                            TAG: /* String_literal */11,
-                            _0: "}\n pred = {",
-                            _1: {
-                              TAG: /* String */2,
-                              _0: /* No_padding */0,
-                              _1: {
-                                TAG: /* String_literal */11,
-                                _0: "}\n",
-                                _1: /* End_of_format */0
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  },
-                  _1: " d = {%s}\n f = {%s}\n pred = {%s}\n"
-                }), bindings(param.d, /* Format */{
-                  _0: {
-                    TAG: /* Char_literal */12,
-                    _0: /* '\'' */39,
-                    _1: {
-                      TAG: /* Char */0,
-                      _0: {
-                        TAG: /* String_literal */11,
-                        _0: "':'",
-                        _1: {
-                          TAG: /* Int */4,
-                          _0: /* Int_d */0,
-                          _1: /* No_padding */0,
-                          _2: /* No_precision */0,
-                          _3: {
-                            TAG: /* Char_literal */12,
-                            _0: /* '\'' */39,
-                            _1: /* End_of_format */0
-                          }
-                        }
-                      }
-                    }
-                  },
-                  _1: "'%c':'%d'"
-                }), bindings(param.f, /* Format */{
-                  _0: {
-                    TAG: /* Char_literal */12,
-                    _0: /* '\'' */39,
-                    _1: {
-                      TAG: /* Char */0,
-                      _0: {
-                        TAG: /* String_literal */11,
-                        _0: "':'",
-                        _1: {
-                          TAG: /* Int */4,
-                          _0: /* Int_d */0,
-                          _1: /* No_padding */0,
-                          _2: /* No_precision */0,
-                          _3: {
-                            TAG: /* Char_literal */12,
-                            _0: /* '\'' */39,
-                            _1: /* End_of_format */0
-                          }
-                        }
-                      }
-                    }
-                  },
-                  _1: "'%c':'%d'"
-                }), bindings(param.pred, /* Format */{
-                  _0: {
-                    TAG: /* Char_literal */12,
-                    _0: /* '\'' */39,
-                    _1: {
-                      TAG: /* Char */0,
-                      _0: {
-                        TAG: /* String_literal */11,
-                        _0: "':'",
-                        _1: {
-                          TAG: /* Char */0,
-                          _0: {
-                            TAG: /* Char_literal */12,
-                            _0: /* '\'' */39,
-                            _1: /* End_of_format */0
-                          }
-                        }
-                      }
-                    }
-                  },
-                  _1: "'%c':'%c'"
-                }));
+  var d_str = bindings(param.d);
+  var f_str = bindings(param.f);
+  var pred_str = bindings(param.pred);
+  return " d = " + d_str + "\n f = " + f_str + "\n pred = " + pred_str + "\n";
 }
 
 function depth_first_search(g) {
@@ -292,22 +194,10 @@ var g = List.fold_right((function (param) {
 
 var s = depth_first_search(g);
 
-Curry._1(Printf.printf(/* Format */{
-          _0: {
-            TAG: /* String */2,
-            _0: /* No_padding */0,
-            _1: {
-              TAG: /* Char_literal */12,
-              _0: /* '\n' */10,
-              _1: /* End_of_format */0
-            }
-          },
-          _1: "%s\n"
-        }), string_of_state(s));
+console.log(string_of_state(s));
 
 export {
   Char_map ,
   Dfs ,
-  
 }
 /* Char_map Not a pure module */

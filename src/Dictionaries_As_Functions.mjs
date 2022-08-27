@@ -10,7 +10,7 @@ function empty(k) {
 }
 
 function add(d, k, v, l) {
-  if (Caml_obj.caml_equal(l, k)) {
+  if (Caml_obj.equal(l, k)) {
     return Caml_option.some(v);
   } else {
     return Curry._1(d, l);
@@ -38,6 +38,5 @@ export {
   add ,
   find ,
   despicable ,
-  
 }
 /*  Not a pure module */

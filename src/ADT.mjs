@@ -63,6 +63,5 @@ export {
   sum ,
   append ,
   append_ ,
-  
 }
 /* No side effect */

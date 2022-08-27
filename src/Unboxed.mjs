@@ -52,7 +52,6 @@ var c = [
 
 Belt_Array.map(c, (function (x) {
         console.log(x);
-        
       }));
 
 function a(v) {
@@ -102,6 +101,5 @@ export {
   b ,
   c ,
   A_or_b ,
-  
 }
 /*  Not a pure module */

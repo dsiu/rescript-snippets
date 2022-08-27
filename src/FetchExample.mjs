@@ -65,7 +65,7 @@ var Login = {
 
 function getProducts(token, param) {
   var params = {
-    Authorization: "Bearer " + token
+    Authorization: "Bearer " + token + ""
   };
   return $$Promise.$$catch(globalThis.fetch("https://reqres.in/api/products", params).then(function (res) {
                     return res.json();
@@ -111,8 +111,7 @@ $$Promise.$$catch(login("emma.wong@reqres.in", "pw").then(function (ret) {
           if (result.TAG === /* Ok */0) {
             console.log("\nAvailable Products:\n---");
             tmp = Belt_Array.forEach(result._0, (function (p) {
-                    console.log(String(p.id) + " - " + p.name);
-                    
+                    console.log("" + String(p.id) + " - " + p.name + "");
                   }));
           } else {
             console.log("Could not query products: " + result._0);
@@ -134,6 +133,5 @@ export {
   Login ,
   Product ,
   FailedRequest ,
-  
 }
 /*  Not a pure module */

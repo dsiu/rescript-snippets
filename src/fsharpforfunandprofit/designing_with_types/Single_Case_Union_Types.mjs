@@ -31,7 +31,7 @@ function apply(f, e) {
 }
 
 function value(e) {
-  return FP_Utils.id(e._0);
+  return FP_Utils.identity(e._0);
 }
 
 var EmailAddress = {
@@ -67,7 +67,7 @@ function apply$1(f, e) {
 }
 
 function value$1(e) {
-  return FP_Utils.id(e._0);
+  return FP_Utils.identity(e._0);
 }
 
 var ZipCode = {
@@ -112,7 +112,7 @@ function apply$2(f, e) {
 }
 
 function value$2(e) {
-  return FP_Utils.id(e._0);
+  return FP_Utils.identity(e._0);
 }
 
 var StateCode = {
@@ -141,6 +141,5 @@ export {
   PostalAddress ,
   PostalContactInfo ,
   Contact ,
-  
 }
 /* No side effect */

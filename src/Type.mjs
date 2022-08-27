@@ -80,6 +80,5 @@ export {
   payloadResults ,
   age ,
   gpa ,
-  
 }
 /* No side effect */

@@ -56,6 +56,5 @@ function safeParse(string) {
 export {
   safeParse1 ,
   safeParse ,
-  
 }
 /* No side effect */

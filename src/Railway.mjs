@@ -79,7 +79,6 @@ function make(x) {
   } else {
     console.log("Do something other");
   }
-  
 }
 
 export {
@@ -87,6 +86,5 @@ export {
   makeStageB ,
   makeStageC ,
   make ,
-  
 }
 /* No side effect */

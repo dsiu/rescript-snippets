@@ -8,6 +8,5 @@ var D3v2 = {};
 export {
   Interval ,
   D3v2 ,
-  
 }
 /* No side effect */

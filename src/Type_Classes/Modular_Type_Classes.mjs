@@ -3,7 +3,6 @@
 import * as List from "rescript/lib/es6/list.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
-import * as Pervasives from "rescript/lib/es6/pervasives.js";
 
 function eq(a, b) {
   return a === b;
@@ -46,7 +45,7 @@ var Eq_bool_int = {
   eq: eq$2
 };
 
-var lt = Caml_obj.caml_lessthan;
+var lt = Caml_obj.lessthan;
 
 var Ord_int = {
   eq: eq$1,
@@ -148,7 +147,6 @@ var Show_bool = {
 
 function print(show, x) {
   console.log(Curry._1(show.show, x));
-  
 }
 
 var test_print_1 = print(Show_bool, true);
@@ -210,14 +208,14 @@ console.log(test_sum);
 
 function print_incr(param, x) {
   var num = param[1];
-  return print(param[0], Curry._2(num.$plus, x, Curry._1(num.from_int, 1)));
+  print(param[0], Curry._2(num.$plus, x, Curry._1(num.from_int, 1)));
 }
 
 function print_incr_int(x) {
-  return print_incr([
-              Show_int,
-              Num_int
-            ], x);
+  print_incr([
+        Show_int,
+        Num_int
+      ], x);
 }
 
 print_incr_int(27);
@@ -361,18 +359,16 @@ function replicate(n, x) {
 function print_nested(show_mod, x) {
   if (x !== 0) {
     return function (x$1) {
-      return print_nested(show_list(show_mod), x - 1 | 0)(replicate(x, x$1));
+      print_nested(show_list(show_mod), x - 1 | 0)(replicate(x, x$1));
     };
   } else {
     return function (x) {
-      return print(show_mod, x);
+      print(show_mod, x);
     };
   }
 }
 
-var n = Pervasives.read_int(undefined);
-
-var test_nested = print_nested(Show_int, n)(5);
+var test_nested = print_nested(Show_int, 10)(5);
 
 var show_int = Show_int;
 
@@ -417,6 +413,5 @@ export {
   replicate ,
   print_nested ,
   test_nested ,
-  
 }
 /* test_ord_int_int Not a pure module */

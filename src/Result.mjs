@@ -22,6 +22,5 @@ var payloadResults = [
 
 export {
   payloadResults ,
-  
 }
 /* No side effect */

@@ -49,6 +49,5 @@ export {
   Database ,
   cache$1 as cache,
   connect$2 as connect,
-  
 }
 /*  Not a pure module */

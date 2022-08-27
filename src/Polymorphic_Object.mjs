@@ -3,7 +3,6 @@
 
 function logName(o) {
   console.log(o.name);
-  
 }
 
 var a = {
@@ -24,6 +23,5 @@ export {
   logName ,
   a ,
   b ,
-  
 }
 /*  Not a pure module */

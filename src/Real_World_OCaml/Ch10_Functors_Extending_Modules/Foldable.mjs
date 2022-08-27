@@ -6,9 +6,9 @@ import * as Caml_js_exceptions from "rescript/lib/es6/caml_js_exceptions.js";
 
 function Extend(Arg) {
   var iter = function (t, f) {
-    return Curry._3(Arg.fold, t, undefined, (function (param, a) {
-                  return Curry._1(f, a);
-                }));
+    Curry._3(Arg.fold, t, undefined, (function (param, a) {
+            Curry._1(f, a);
+          }));
   };
   var length = function (t) {
     return Curry._3(Arg.fold, t, 0, (function (acc, param) {
@@ -76,6 +76,5 @@ function Extend(Arg) {
 
 export {
   Extend ,
-  
 }
 /* No side effect */

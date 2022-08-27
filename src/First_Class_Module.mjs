@@ -27,6 +27,5 @@ export {
   A ,
   packedA ,
   UnpackedA ,
-  
 }
 /*  Not a pure module */

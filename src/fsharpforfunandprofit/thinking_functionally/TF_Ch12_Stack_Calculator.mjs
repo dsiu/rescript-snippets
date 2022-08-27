@@ -355,6 +355,5 @@ export {
   stackWith2$2 as stackWith2,
   twoSquared ,
   lambda_square ,
-  
 }
 /*  Not a pure module */

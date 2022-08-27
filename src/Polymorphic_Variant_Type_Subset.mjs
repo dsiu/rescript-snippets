@@ -14,6 +14,5 @@ console.log({
 
 export {
   f ,
-  
 }
 /*  Not a pure module */

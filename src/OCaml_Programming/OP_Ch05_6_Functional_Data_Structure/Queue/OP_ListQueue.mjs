@@ -50,11 +50,10 @@ var M = {
   front: front,
   dequeue: dequeue,
   size: List.length,
-  to_list: FP_Utils.id
+  to_list: FP_Utils.identity
 };
 
 export {
   M ,
-  
 }
 /* No side effect */

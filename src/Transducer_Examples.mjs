@@ -55,15 +55,13 @@ function $less$less(f, g, x) {
 }
 
 function countAdultsWithInitial$1(initial) {
-  var g = function (param, param$1, param$2) {
+  var param = function (param$1, param$2) {
+    var param$3 = function (prim0, prim1) {
+      return prim0 + prim1 | 0;
+    };
     return Transducer.map((function (param) {
                   return 1;
-                }), param, param$1, param$2);
-  };
-  var param = function (param$1, param$2) {
-    return g((function (prim0, prim1) {
-                  return prim0 + prim1 | 0;
-                }), param$1, param$2);
+                }), param$3, param$1, param$2);
   };
   return function (param$1, param$2) {
     var param$3 = function (param$4, param$5) {
@@ -221,6 +219,5 @@ export {
   append ,
   Tree ,
   people$1 as people,
-  
 }
 /*  Not a pure module */

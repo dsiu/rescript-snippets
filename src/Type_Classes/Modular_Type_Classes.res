@@ -304,6 +304,7 @@ let rec print_nested: 'a. (show_impl<'a>, int, 'a) => unit = (show_mod, x) =>
   }
 
 let test_nested = {
-  let n = read_int()
+  //  let n = read_int()
+  let n = 10
   print_nested(module(Show_int: SHOW with type t = int), n, 5)
 }

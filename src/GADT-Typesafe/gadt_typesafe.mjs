@@ -41,6 +41,5 @@ export {
   $$default as default,
   toString ,
   getProperty ,
-  
 }
 /*  Not a pure module */

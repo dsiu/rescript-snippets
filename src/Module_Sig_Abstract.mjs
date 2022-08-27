@@ -18,6 +18,5 @@ var joe = {
 export {
   ShowPerson ,
   joe ,
-  
 }
 /*  Not a pure module */

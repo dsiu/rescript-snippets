@@ -35,6 +35,5 @@ export {
   count ,
   for_all ,
   exists ,
-  
 }
 /* include Not a pure module */

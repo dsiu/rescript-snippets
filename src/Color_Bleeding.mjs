@@ -3,13 +3,12 @@
 
 var name = "foo";
 
-console.log("namefoo");
+console.log("name" + name);
 
 var id = 1789;
 
 export {
   name ,
   id ,
-  
 }
 /*  Not a pure module */

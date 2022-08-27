@@ -77,6 +77,5 @@ export {
   shouldBeTrue ,
   is2mult2plus3equalTo7 ,
   shoulBeAlsoTrue ,
-  
 }
 /* shouldBeTrue Not a pure module */

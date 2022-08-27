@@ -11,12 +11,10 @@ import * as Caml_string from "rescript/lib/es6/caml_string.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
-  
 }
 
 function strToChar(__x) {
@@ -1033,6 +1031,5 @@ export {
   between$1 as between,
   sepBy1$1 as sepBy1,
   sepBy$1 as sepBy,
-  
 }
 /*  Not a pure module */

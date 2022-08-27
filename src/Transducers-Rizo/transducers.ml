@@ -63,18 +63,18 @@ let iter_list input =
     | x :: xs -> Some (x, xs) in
   Iterator (input, next)
 
-let iter_chan input =
-  let next c =
-    try Some (input_line c, c)
-    with End_of_file -> None in
-  Iterator (input, next)
+(*let iter_chan input =*)
+(*  let next c =*)
+(*    try Some (input_line c, c)*)
+(*    with End_of_file -> None in*)
+(*  Iterator (input, next)*)
 
 
 let into_list l0 xf iterator =
   List.rev (transduce xf (fun r x -> x :: r) l0 iterator)
 
 
-let into_chan c0 xf iterator =
-  let _ = (transduce xf (fun r x -> output_string r (x ^ "\n"); r) c0 iterator)
-  in ()
+(*let into_chan c0 xf iterator =*)
+(*  let _ = (transduce xf (fun r x -> output_string r (x ^ "\n"); r) c0 iterator)*)
+(*  in ()*)
 

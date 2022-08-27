@@ -4,7 +4,6 @@ import * as Curry from "rescript/lib/es6/curry.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function coord(p) {
@@ -32,7 +31,6 @@ console.log(prim$1);
 
 function inc(a) {
   a.contents = a.contents + 1 | 0;
-  
 }
 
 function read(a) {
@@ -45,7 +43,6 @@ function proc(inc, read, x) {
   Curry._1(inc, x);
   var prim = Curry._1(read, x);
   console.log(prim);
-  
 }
 
 proc(inc, read, {
@@ -58,6 +55,5 @@ export {
   inc ,
   read ,
   proc ,
-  
 }
 /* prim Not a pure module */

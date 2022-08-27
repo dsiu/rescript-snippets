@@ -73,7 +73,7 @@ type rec kind<_> =
   | String: kind<string>
   | Float: kind<float>
 
-@val external add: (@ignore kind<'a>, 'a, 'a) => 'a = ""
+@val external add: (@ignore kind<'a>, 'a, 'a) => 'a = "add"
 
 let () = {
   Js.log(add(Float, 3.0, 2.0))

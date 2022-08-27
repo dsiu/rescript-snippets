@@ -2,6 +2,7 @@
 
 import * as Fs from "fs";
 import * as Curry from "rescript/lib/es6/curry.js";
+import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 
 function callbackWithResult(f) {
@@ -30,7 +31,6 @@ function onResult(result) {
   var message;
   message = result.TAG === /* Ok */0 ? "Success: " + result._0 : "Error: " + Belt_Option.getWithDefault(result._0.message, "Unknown");
   console.log(message);
-  
 }
 
 Fs.readFile("hello.txt", "UTF-8", callbackWithResult(onResult));
@@ -54,13 +54,11 @@ function callbackWithSuccessOrError(onSuccess, onError) {
 function onSuccess(result) {
   var message = "Success: " + result;
   console.log(message);
-  
 }
 
 function onError(error) {
   var message = "Error: " + Belt_Option.getWithDefault(error.message, "Unknown");
   console.log(message);
-  
 }
 
 Fs.readFile("hello.txt", "UTF-8", callbackWithSuccessOrError(onSuccess, onError));
@@ -78,25 +76,24 @@ function callbackWithPromise(f) {
       }
     }
     var message = Belt_Option.getWithDefault(error.message, "Unknown");
-    return Curry._1(f, Promise.reject({
-                    RE_EXN_ID: "Failure",
-                    _1: message
-                  }));
+    Curry._1(f, Promise.reject({
+              RE_EXN_ID: "Failure",
+              _1: message
+            }));
   };
 }
 
 function handlePromise(promise) {
-  var __x = promise.then(function (result) {
-        return Promise.resolve("Success: " + result);
-      });
-  var __x$1 = __x.catch(function (_error) {
-        return Promise.resolve("Error: Unknown");
-      });
-  __x$1.then(function (message) {
-        console.log(message);
-        return Promise.resolve(undefined);
-      });
-  
+  var __x = Js_promise.then_((function (result) {
+          return Promise.resolve("Success: " + result);
+        }), promise);
+  var __x$1 = Js_promise.$$catch((function (_error) {
+          return Promise.resolve("Error: Unknown");
+        }), __x);
+  Js_promise.then_((function (message) {
+          console.log(message);
+          return Promise.resolve(undefined);
+        }), __x$1);
 }
 
 Fs.readFile("hello.txt", "UTF-8", callbackWithPromise(handlePromise));
@@ -109,6 +106,5 @@ export {
   onError ,
   callbackWithPromise ,
   handlePromise ,
-  
 }
 /*  Not a pure module */

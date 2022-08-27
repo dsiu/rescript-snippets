@@ -34,6 +34,5 @@ export {
   friendAccount ,
   me ,
   me1 ,
-  
 }
 /* No side effect */

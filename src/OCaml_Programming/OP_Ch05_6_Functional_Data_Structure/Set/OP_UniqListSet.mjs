@@ -18,11 +18,10 @@ var M = {
   empty: /* [] */0,
   mem: List.mem,
   add: add,
-  elements: FP_Utils.id
+  elements: FP_Utils.identity
 };
 
 export {
   M ,
-  
 }
 /* No side effect */

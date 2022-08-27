@@ -66,6 +66,5 @@ export {
   Codecs ,
   myJsonData ,
   myPoint ,
-  
 }
 /* style Not a pure module */

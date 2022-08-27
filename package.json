@@ -8,10 +8,7 @@
     "start": "rescript build -w",
     "test": "jest",
     "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.mjs",
-    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.mjs",
-    "runparsercomb1": "npx nodemon --exec node src/fsharpforfunandprofit/understanding_parser_combinators/Ch1_Parser_Combinator_Intro.mjs",
-    "runparsercomb2": "npx nodemon --exec node src/fsharpforfunandprofit/understanding_parser_combinators/Ch2_Userful_Parser_Combinators.mjs",
-    "runparsercomb3": "npx nodemon --exec node src/fsharpforfunandprofit/understanding_parser_combinators/Ch3_Improving_Parser_Library.mjs"
+    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.mjs"
   },
   "fig": {
     "test": {
@@ -59,12 +56,11 @@
     "@glennsl/rescript-jest": "^0.9.1",
     "@swc/core": "^1.2.244",
     "@swc/jest": "^0.2.22",
-    "bs-bastet": "^2.0.0",
     "esbuild-jest": "^0.5.0",
     "jest": "^29.0.0",
     "relude": "^0.66.1",
-    "rescript": "^9.1.4",
-    "rescript-test": "latest"
+    "rescript": "^10.0.0",
+    "rescript-test": "^3.4.1"
   },
   "dependencies": {
     "@glennsl/bs-json": "^5.0.4",
@@ -75,9 +71,10 @@
     "d3": "^7.6.1",
     "isomorphic-fetch": "^3.0.0",
     "nodemon": "^2.0.19",
-    "rescript-js": "^0.7.0",
+    "rescript-bag": "github:dsiu/rescript-bag#main",
+    "rescript-js": "^1.0.0-beta.2",
     "rescript-jzon": "latest",
     "rescript-nodejs": "^14.3.0",
-    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#main"
+    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10"
   }
 }

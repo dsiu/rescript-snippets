@@ -12,7 +12,7 @@ function getValue(t) {
   return t;
 }
 
-var cmp = Caml_obj.caml_compare;
+var cmp = Caml_obj.compare;
 
 var SomeId = {
   make: make,
@@ -36,6 +36,5 @@ export {
   empty ,
   someId ,
   map ,
-  
 }
 /* SomeIdCmp Not a pure module */

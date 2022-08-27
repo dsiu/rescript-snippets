@@ -10,11 +10,11 @@ function makeCat(a) {
 }
 
 function mate(a, b) {
-  return a + " and " + b + " are now friends";
+  return "" + a + " and " + b + " are now friends";
 }
 
 function interMate(a, b) {
-  return a + " and " + b + " are now friends";
+  return "" + a + " and " + b + " are now friends";
 }
 
 var Animal = {
@@ -62,6 +62,5 @@ export {
   shouldBeOkay ,
   validatedData ,
   cantBePassed ,
-  
 }
 /*  Not a pure module */

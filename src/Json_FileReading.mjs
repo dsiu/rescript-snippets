@@ -6,11 +6,9 @@ var $$package = PackageJson;
 
 Object.keys($$package.dependencies).forEach(function (prim) {
       console.log(prim);
-      
     });
 
 export {
   $$package ,
-  
 }
 /* package Not a pure module */

@@ -4,27 +4,26 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.mjs";
 
 function testEach(title, data, f) {
-  return test.each(data)(title + "(%#) %p", f);
+  test.each(data)("" + title + "(%#) %p", f);
 }
 
 function testEach2(title, data, f) {
-  return test.each(data)(title + "(%#) %p %p", f);
+  test.each(data)("" + title + "(%#) %p %p", f);
 }
 
 function testEach3(title, data, f) {
-  return test.each(data)(title + "(%#) %p %p %p", f);
+  test.each(data)("" + title + "(%#) %p %p %p", f);
 }
 
 function testEach4(title, data, f) {
-  return test.each(data)(title + "(%#) %p %p %p %p", f);
+  test.each(data)("" + title + "(%#) %p %p %p %p", f);
 }
 
 function awaitThen(pa, done, f) {
   $$Promise.$$catch(pa.then(function (a) {
             Curry._1(f, a);
-            return Curry._1(done, undefined);
+            Curry._1(done, undefined);
           }), done);
-  
 }
 
 export {
@@ -33,6 +32,5 @@ export {
   testEach3 ,
   testEach4 ,
   awaitThen ,
-  
 }
 /* No side effect */

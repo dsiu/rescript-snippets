@@ -30,6 +30,5 @@ export {
   age1 ,
   name2 ,
   age2 ,
-  
 }
 /*  Not a pure module */

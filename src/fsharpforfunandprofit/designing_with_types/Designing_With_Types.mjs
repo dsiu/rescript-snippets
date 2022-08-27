@@ -143,6 +143,5 @@ export {
   createEmail ,
   EmailAddress ,
   address1 ,
-  
 }
 /*  Not a pure module */

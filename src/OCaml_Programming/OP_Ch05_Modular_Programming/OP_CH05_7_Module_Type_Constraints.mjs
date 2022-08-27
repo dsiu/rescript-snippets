@@ -4,7 +4,6 @@ import * as Pervasives from "rescript/lib/es6/pervasives.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function $plus(prim0, prim1) {
@@ -121,6 +120,5 @@ export {
   FloatRing$1 as FloatRing,
   B ,
   C ,
-  
 }
 /* prim Not a pure module */

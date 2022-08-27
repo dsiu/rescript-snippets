@@ -7,7 +7,6 @@ function render(myColor) {
   } else {
     console.log("Hello blue!");
   }
-  
 }
 
 function render1(myColor) {
@@ -18,7 +17,6 @@ function render1(myColor) {
   } else {
     console.log("Hello blue!");
   }
-  
 }
 
 console.log("This red-ish");
@@ -88,6 +86,5 @@ export {
   color ,
   theCompany ,
   message ,
-  
 }
 /*  Not a pure module */

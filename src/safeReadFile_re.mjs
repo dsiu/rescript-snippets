@@ -12,6 +12,5 @@ SafeReadFile("Result.res").then(function (x) {
 
 export {
   safeReadFile ,
-  
 }
 /*  Not a pure module */

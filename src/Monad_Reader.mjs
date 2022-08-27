@@ -58,6 +58,5 @@ export {
   map ,
   bind ,
   bindFlip ,
-  
 }
 /* No side effect */

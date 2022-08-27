@@ -6,7 +6,7 @@ import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
 
 var p1 = new Promise((function (resolve, _reject) {
-        return resolve("hello world");
+        resolve("hello world");
       }));
 
 console.log(p1);
@@ -50,7 +50,6 @@ queryUser("u1").then(function (user) {
       }).then(function (comments) {
       Belt_Array.forEach(comments, (function (comment) {
               console.log(comment);
-              
             }));
       return Promise.resolve(undefined);
     });
@@ -63,7 +62,6 @@ Promise.resolve(5).then(function (num) {
         return num + 1 | 0;
       }).then(function (num) {
       console.log(num);
-      
     });
 
 var MyError = /* @__PURE__ */Caml_exceptions.create("Rescript_Promise_Examples.MyError");
@@ -161,12 +159,11 @@ function delayedMsg(ms, msg) {
   return new Promise((function (resolve, param) {
                 setTimeout((function (param) {
                         place.contents = place.contents + 1 | 0;
-                        return resolve([
-                                    place.contents,
-                                    msg
-                                  ]);
+                        resolve([
+                              place.contents,
+                              msg
+                            ]);
                       }), ms);
-                
               }));
 }
 
@@ -182,8 +179,7 @@ Promise.all([
         p3$1
       ]).then(function (arr) {
       Belt_Array.forEach(arr, (function (param) {
-              console.log("Place " + String(param[0]) + " => " + param[1]);
-              
+              console.log("Place " + String(param[0]) + " => " + param[1] + "");
             }));
       return Promise.resolve(undefined);
     });
@@ -191,9 +187,8 @@ Promise.all([
 function racer(ms, name) {
   return new Promise((function (resolve, param) {
                 setTimeout((function (param) {
-                        return resolve(name);
+                        resolve(name);
                       }), ms);
-                
               }));
 }
 
@@ -224,16 +219,14 @@ $$Promise.$$catch(Promise.resolve(1).then(function (value) {
           }).then(function (p) {
           p.then(function (n) {
                 console.log(n);
-                
               });
-          
         }), (function (e) {
         console.log("luckily, our mistake will be caught here");
         return Promise.resolve(undefined);
       }));
 
 new Promise((function (resolve, _reject) {
-        return resolve(undefined);
+        resolve(undefined);
       }));
 
 var queryUser$1;
@@ -255,6 +248,5 @@ export {
   p3$1 as p3,
   racer ,
   promises ,
-  
 }
 /* p1 Not a pure module */

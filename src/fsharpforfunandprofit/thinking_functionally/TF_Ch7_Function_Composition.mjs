@@ -5,7 +5,6 @@ import * as FP_Utils from "../../FP_Utils.mjs";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function add(n, x) {
@@ -121,6 +120,5 @@ export {
   h1 ,
   h2 ,
   h3 ,
-  
 }
 /* prim Not a pure module */

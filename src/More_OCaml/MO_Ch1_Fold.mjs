@@ -9,24 +9,20 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function logList(l) {
   var prim = Js_list.toVector(l);
   console.log(prim);
-  
 }
 
 function log2(x, y) {
   console.log(y, x);
-  
 }
 
 function logList2(l, str) {
   var x = Js_list.toVector(l);
   console.log(str, x);
-  
 }
 
 function fold_left(f, _a, _l) {
@@ -81,7 +77,7 @@ var prim$1 = fold_right((function (prim0, prim1) {
 console.log(prim$1);
 
 function max(a, b) {
-  if (Caml_obj.caml_greaterthan(a, b)) {
+  if (Caml_obj.greaterthan(a, b)) {
     return a;
   } else {
     return b;
@@ -638,6 +634,5 @@ export {
   t ,
   t$p ,
   t$p$p ,
-  
 }
 /* prim Not a pure module */

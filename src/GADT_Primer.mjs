@@ -94,6 +94,5 @@ export {
   HList ,
   myHList ,
   hList ,
-  
 }
 /* c Not a pure module */

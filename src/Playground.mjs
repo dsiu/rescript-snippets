@@ -65,6 +65,5 @@ export {
   dupl ,
   srcl ,
   flatMapL ,
-  
 }
 /*  Not a pure module */

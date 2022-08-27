@@ -20,7 +20,6 @@ var Password = {
 function f(u, pw) {
   console.log(u);
   console.log(pw);
-  
 }
 
 var u1 = "dsiu";
@@ -35,6 +34,5 @@ export {
   f ,
   u1 ,
   p1 ,
-  
 }
 /*  Not a pure module */

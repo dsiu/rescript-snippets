@@ -43,15 +43,13 @@ function evalWith5AsString(fn) {
 }
 
 function printInt(x) {
-  console.log("x is " + String(x));
-  
+  console.log("x is " + String(x) + "");
 }
 
 console.log("hello world");
 
 function printHelloFn(param) {
   console.log("hello world");
-  
 }
 
 console.log(printHelloFn);
@@ -118,6 +116,5 @@ export {
   intermediateFn2 ,
   intermediateFn3 ,
   finalResult ,
-  
 }
 /*  Not a pure module */

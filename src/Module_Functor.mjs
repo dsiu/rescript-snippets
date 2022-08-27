@@ -21,17 +21,14 @@ function showAndReturn(argument) {
 
 function addDog(dog) {
   Database.add("dogs", dog);
-  
 }
 
 function addFriend(friend) {
   Database.add("friends", friend);
-  
 }
 
 function addBook(book) {
   Database.add("books", book);
-  
 }
 
 var Database$1 = {
@@ -66,7 +63,6 @@ var BookSchema = {
 function MakeSchema(Schema) {
   var add = function (item) {
     Database.add(Schema.tableName, item);
-    
   };
   var get = function (id) {
     return Database.get(id);
@@ -79,7 +75,6 @@ function MakeSchema(Schema) {
 
 function add(item) {
   Database.add(tableName, item);
-  
 }
 
 function get(id) {
@@ -93,7 +88,6 @@ var Friends = {
 
 function add$1(item) {
   Database.add(tableName$1, item);
-  
 }
 
 function get$1(id) {
@@ -107,7 +101,6 @@ var Dogs = {
 
 function add$2(item) {
   Database.add(tableName$2, item);
-  
 }
 
 function get$2(id) {
@@ -176,6 +169,5 @@ export {
   Collections ,
   doSome ,
   Solution2 ,
-  
 }
 /*  Not a pure module */

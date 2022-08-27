@@ -10,12 +10,10 @@ import * as Caml_string from "rescript/lib/es6/caml_string.js";
 
 function log(prim) {
   console.log(prim);
-  
 }
 
 function log2(prim0, prim1) {
   console.log(prim0, prim1);
-  
 }
 
 function strToChar(__x) {
@@ -53,8 +51,7 @@ function printResult(result) {
     console.log(result._0[0]);
     return ;
   }
-  console.log("Error parsing " + result._0 + "\n" + result._1);
-  
+  console.log("Error parsing " + result._0 + "\n" + result._1 + "");
 }
 
 function getLabel(param) {
@@ -104,7 +101,7 @@ function satisfy(predicate, label) {
               ]
             };
     }
-    var err = "Unexpected " + $$String.make(1, first);
+    var err = "Unexpected " + $$String.make(1, first) + "";
     return {
             TAG: /* Failure */1,
             _0: label,
@@ -184,7 +181,7 @@ function lift2(f, xP, yP) {
 }
 
 function andThen(p1, p2) {
-  var label = getLabel(p1) + " andThen " + getLabel(p2);
+  var label = "" + getLabel(p1) + " andThen " + getLabel(p2) + "";
   return setLabel(bindP((function (p1Result) {
                     return bindP((function (p2Result) {
                                   return returnP([
@@ -196,7 +193,7 @@ function andThen(p1, p2) {
 }
 
 function orElse(parser1, parser2) {
-  var label = getLabel(parser1) + " orElse " + getLabel(parser2);
+  var label = "" + getLabel(parser1) + " orElse " + getLabel(parser2) + "";
   var innerFn = function (input) {
     var result1 = run(parser1, input);
     if (result1.TAG === /* Success */0) {
@@ -225,7 +222,7 @@ function choice(listOfParsers) {
 }
 
 function anyOf(listOfChars) {
-  var label = "any of " + charListToString(listOfChars);
+  var label = "any of " + charListToString(listOfChars) + "";
   return setLabel(choice(Belt_List.map(listOfChars, pchar)), label);
 }
 
@@ -266,7 +263,7 @@ function parseZeroOrMore(parser, input) {
 }
 
 function many(parser) {
-  var label = "many " + getLabel(parser);
+  var label = "many " + getLabel(parser) + "";
   var innerFn = function (input) {
     return {
             TAG: /* Success */0,
@@ -394,6 +391,5 @@ export {
   parseDigit_WithLabel ,
   digitChar ,
   whitespaceChar ,
-  
 }
 /*  Not a pure module */

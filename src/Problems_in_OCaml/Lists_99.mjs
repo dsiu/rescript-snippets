@@ -126,7 +126,7 @@ function compress(_l) {
     var t = match.tl;
     var b = match.hd;
     var a = l.hd;
-    if (!Caml_obj.caml_equal(a, b)) {
+    if (!Caml_obj.equal(a, b)) {
       return {
               hd: a,
               tl: compress({
@@ -165,7 +165,7 @@ function pack(l) {
       }
       var t = match.tl;
       var b = match.hd;
-      if (Caml_obj.caml_equal(x, b)) {
+      if (Caml_obj.equal(x, b)) {
         _current = {
           hd: x,
           tl: current
@@ -216,7 +216,7 @@ function encode(l) {
       }
       var t = match.tl;
       var b = match.hd;
-      if (Caml_obj.caml_equal(x, b)) {
+      if (Caml_obj.equal(x, b)) {
         _count = count + 1 | 0;
         _l = {
           hd: b,
@@ -275,7 +275,7 @@ function encode_11(l) {
       }
       var t = match.tl;
       var b = match.hd;
-      if (Caml_obj.caml_equal(x, b)) {
+      if (Caml_obj.equal(x, b)) {
         _count = count + 1 | 0;
         _l = {
           hd: b,
@@ -370,7 +370,7 @@ function encode_13(l) {
       }
       var t = match.tl;
       var b = match.hd;
-      if (Caml_obj.caml_equal(x, b)) {
+      if (Caml_obj.equal(x, b)) {
         _count = count + 1 | 0;
         _l = {
           hd: b,
@@ -692,6 +692,5 @@ export {
   range ,
   range_tail_recur ,
   rand_select ,
-  
 }
 /* No side effect */

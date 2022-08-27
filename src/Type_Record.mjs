@@ -25,6 +25,5 @@ export {
   name ,
   meNextYear ,
   baby ,
-  
 }
 /*  Not a pure module */

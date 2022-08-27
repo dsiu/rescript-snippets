@@ -17,7 +17,6 @@ if (Worker_threads.isMainThread) {
   var worker = new Worker_threads.Worker("Node_Worker.res");
   worker.on("message", (function (msg) {
           console.log(msg);
-          
         }));
 } else {
   Worker_threads.parentPort.postMessage("Hello world!");
@@ -26,6 +25,5 @@ if (Worker_threads.isMainThread) {
 export {
   Global ,
   WorkerThreads ,
-  
 }
 /*  Not a pure module */
