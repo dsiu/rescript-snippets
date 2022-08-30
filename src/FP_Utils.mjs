@@ -9,8 +9,41 @@ function flatMapList(xs, f) {
   return Belt_List.reduce(Belt_List.map(xs, f), /* [] */0, Belt_List.concat);
 }
 
+function listToOption(l) {
+  if (l) {
+    return Caml_option.some(l.hd);
+  }
+  
+}
+
+function combinationIfList2(a, b, f) {
+  return Belt_List.reduceU(a, /* [] */0, (function (acc, x) {
+                return Belt_List.concat(acc, Belt_List.reduceU(b, /* [] */0, (function (acc, y) {
+                                  var r = f(x, y);
+                                  if (r !== undefined) {
+                                    return Belt_List.concat(acc, {
+                                                hd: Caml_option.valFromOption(r),
+                                                tl: /* [] */0
+                                              });
+                                  } else {
+                                    return acc;
+                                  }
+                                })));
+              }));
+}
+
+function combinationList2(a, b, f) {
+  return combinationIfList2(a, b, (function (x, y) {
+                return Caml_option.some(f(x, y));
+              }));
+}
+
 function flatMapArray(xs, f) {
   return Belt_Array.reduce(Belt_Array.map(xs, f), [], Belt_Array.concat);
+}
+
+function arrayToOption(__x) {
+  return Belt_Array.get(__x, 0);
 }
 
 function foldLeftArray(xs, f) {
@@ -26,24 +59,51 @@ function foldRightArray(xs, f) {
   return Belt_Array.reduceReverse(rest, init, f);
 }
 
+function combinationIfArray2(a, b, f) {
+  var ret = {
+    contents: []
+  };
+  a.forEach(function (x) {
+        b.forEach(function (y) {
+              var r = f(x, y);
+              if (r !== undefined) {
+                ret.contents = ret.contents.concat([Caml_option.valFromOption(r)]);
+                return ;
+              }
+              
+            });
+      });
+  return ret.contents;
+}
+
 function combinationArray2(a, b, f) {
-  return Belt_Array.reduce(a, [], (function (acc, x) {
-                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
-                                  return Belt_Array.concat(acc, [Curry._2(f, x, y)]);
-                                })));
+  return combinationIfArray2(a, b, (function (x, y) {
+                return Caml_option.some(f(x, y));
               }));
 }
 
-function combinationIfArray2(a, b, f) {
-  return Belt_Array.reduce(a, [], (function (acc, x) {
-                return Belt_Array.concat(acc, Belt_Array.reduce(b, [], (function (acc, y) {
-                                  var r = Curry._2(f, x, y);
-                                  if (r !== undefined) {
-                                    return Belt_Array.concat(acc, [Caml_option.valFromOption(r)]);
-                                  } else {
-                                    return acc;
-                                  }
-                                })));
+function combinationIfArray3(a, b, c, f) {
+  var ret = {
+    contents: []
+  };
+  a.forEach(function (x) {
+        b.forEach(function (y) {
+              c.forEach(function (z) {
+                    var r = f(x, y, z);
+                    if (r !== undefined) {
+                      ret.contents = ret.contents.concat([Caml_option.valFromOption(r)]);
+                      return ;
+                    }
+                    
+                  });
+            });
+      });
+  return ret.contents;
+}
+
+function combinationArray3(a, b, c, f) {
+  return combinationIfArray3(a, b, c, (function (x, y, z) {
+                return Caml_option.some(f(x, y, z));
               }));
 }
 
@@ -83,19 +143,19 @@ function composeN(fs) {
   return foldLeftArray(fs, compose);
 }
 
-var List;
-
-var $$Array;
-
 export {
-  List ,
   flatMapList ,
-  $$Array ,
+  listToOption ,
+  combinationIfList2 ,
+  combinationList2 ,
   flatMapArray ,
+  arrayToOption ,
   foldLeftArray ,
   foldRightArray ,
-  combinationArray2 ,
   combinationIfArray2 ,
+  combinationArray2 ,
+  combinationIfArray3 ,
+  combinationArray3 ,
   optionOr ,
   identity ,
   eq ,
