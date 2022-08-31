@@ -38,7 +38,7 @@ module type Ring = {
 }
 
 /**
-  Functor to make a Ring given an implementation of Ring_Base_Op
+  Functor to make a Ring given an implementation of Ring_Base
 */
 module Ring_Make = (R: Ring_Base): (Ring with type t = R.t) => {
   include R
@@ -54,7 +54,7 @@ module Ring_Make = (R: Ring_Base): (Ring with type t = R.t) => {
 }
 
 /**
-  Int implementation of Ring_Base_Op
+  Int implementation of Ring_Base
 */
 module Ring_Base_Int = {
   type t = int
@@ -72,7 +72,7 @@ module Ring_Base_Int = {
 module IntRing: Ring = Ring_Make(Ring_Base_Int)
 
 /**
-  Float implementation of Ring_Base_Op
+  Float implementation of Ring_Base
   */
 module Ring_Base_Float = {
   type t = float
@@ -116,7 +116,9 @@ module type Field = {
 }
 
 /**
-  Functor to make a Field given an implementation of Field_Base_Op
+  Functor to make a Field given an implementation of Field_Base
+  recall Field is Ring plus a "/" operation
+  also need so specialize the type of OfInt op to Field_Base implementation type
 */
 module Field_Make = (F: Field_Base): Field => {
   // first make a Ring with a specific instance of OfInt_Op
@@ -125,6 +127,9 @@ module Field_Make = (F: Field_Base): Field => {
   include R
 }
 
+/**
+  Int implementation of Field_Base, which is just Ring_Base_Int plus a / operation
+*/
 module Field_Base_Int = {
   include Ring_Base_Int
   let \"/" = \"/"
@@ -132,6 +137,9 @@ module Field_Base_Int = {
 
 module IntField = Field_Make(Field_Base_Int)
 
+/**
+  Float implementation of Field_Base, which is just Ring_Base_Float plus a / operation
+*/
 module Field_Base_Float = {
   include Ring_Base_Float
   let \"/" = \"/."
@@ -144,10 +152,14 @@ let () = {
   FloatField.of_int(30)->log2("FloatField.of_int", _)
 }
 
+//
+//  Rational Fields
+//
+
 /**
- Rational Fields
+  functor to create a Fractional Field by reusing IntField or FloatField
 */
-module Fraction = (F: Field) => {
+module Fraction = (F: Field): Field_Base => {
   type t = (F.t, F.t)
   let zero = (F.zero, F.one)
   let one = (F.one, F.one)
