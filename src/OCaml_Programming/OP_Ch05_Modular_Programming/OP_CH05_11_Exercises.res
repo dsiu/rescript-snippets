@@ -107,7 +107,7 @@ module Fraction = {
 // Exercise: fraction reduced [★★★]
 //
 module Fraction_Reduced = {
-  // Modify your implementation of Fraction to ensure these invariants hold of every value v of type t
+  // Modify your implementation of Fraction to ensure these invariants hold of every let ue v of type t
   // that is returned from make, add, and mul:
 
   let rec gcd = (x, y) => {
@@ -145,4 +145,45 @@ module Fraction_Reduced = {
 
   open Fraction
   make(12, 6)->to_string->log
+}
+
+// Exercise: use char map [★★]
+//
+module Char_Map = {
+  module CharCmp = Belt.Id.MakeComparable({
+    type t = char
+    let cmp = compare
+  })
+
+  module Map = Belt.Map
+  let empty = Belt.Map.make(~id=module(CharCmp))
+  let nm = {
+    open Map
+    empty->set('A', "Alpha")->set('E', "Echo")->set('S', "Sierra")->set('V', "Victor")
+  }
+  nm->Map.toArray->log
+}
+
+// Exercise: date order [★★]
+//
+module Date_Order = {
+  type date = {month: int, day: int}
+
+  module DateCmp = Belt.Id.MakeComparable({
+    type t = date
+    let cmp = (a, b) => {
+      switch a.month - b.month {
+      | 0 => a.day - b.day
+      | x => x
+      }
+    }
+  })
+
+  module Map = Belt.Map
+  let empty = Belt.Map.make(~id=module(DateCmp))
+  let dm = {
+    open Map
+    empty->set({month: 12, day: 1}, 1)
+  }
+  dm->Map.toArray->log
 }
