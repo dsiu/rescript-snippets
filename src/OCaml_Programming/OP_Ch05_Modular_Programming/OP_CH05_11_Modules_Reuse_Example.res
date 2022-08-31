@@ -135,6 +135,10 @@ module Field_Base_Int = {
   let \"/" = \"/"
 }
 
+/**
+  Concrete implementation a Field of Int
+
+*/
 module IntField = Field_Make(Field_Base_Int)
 
 /**
@@ -145,6 +149,9 @@ module Field_Base_Float = {
   let \"/" = \"/."
 }
 
+/**
+  Concrete implementation a Field of Float
+*/
 module FloatField = Field_Make(Field_Base_Float)
 
 let () = {
@@ -153,36 +160,63 @@ let () = {
 }
 
 //
-//  Rational Fields
+//  Rational
 //
 
 /**
-  functor to create a Fractional Field by reusing IntField or FloatField
+  functor to create a Fractional Ring by reusing IntRing or FloatRing
 */
-module Fraction = (F: Field): Field_Base => {
-  type t = (F.t, F.t)
-  let zero = (F.zero, F.one)
-  let one = (F.one, F.one)
+module FractionRing_Make = (R: Ring) => {
+  type t = (R.t, R.t)
+  let zero = (R.zero, R.one)
+  let one = (R.one, R.one)
   let \"+" = ((a, b), (c, d)) => {
-    open F
+    open R
     (a * d + c * b, b * d)
   }
   let \"~-" = ((a, b)) => {
-    (F.\"~-"(a), b)
+    (R.\"~-"(a), b)
   }
 
   let \"*" = ((a, b), (c, d)) => {
-    (F.\"*"(a, c), F.\"*"(b, d))
-  }
-  let \"/" = ((a, b), (c, d)) => {
-    (a, b) * (d, c)
+    (R.\"*"(a, c), R.\"*"(b, d))
   }
 
   let to_string = ((a, b)) => {
-    open F
-    F.to_string(a) ++ "/" ++ F.to_string(b)
+    open R
+    R.to_string(a) ++ "/" ++ R.to_string(b)
   }
 }
 
-module IntRational: Field = Field_Make(Fraction(IntField))
-module FloatRational: Field = Field_Make(Fraction(FloatField))
+/**
+  Int implementation of Fraction Ring
+*/
+module IntRationalRing: Ring = Ring_Make(FractionRing_Make(IntRing))
+
+/**
+  Float implementation of Fraction Ring
+*/
+module FloatRationalRing: Ring = Ring_Make(FractionRing_Make(FloatRing))
+
+/**
+  functor to create a Fractional Field by reusing IntField or FloatField
+  reuse FractionRing_Make functor and extend with a / operation
+*/
+module FractionField_Make = (F: Field) => {
+  module FR = FractionRing_Make(F)
+  include FR
+
+  let \"/" = ((a, b), (c, d)) => {
+    (a, b) * (d, c)
+  }
+}
+
+/**
+  Int implementation of Fraction Field
+*/
+module IntRationalField: Field = Field_Make(FractionField_Make(IntField))
+
+/**
+  Float implementation of Fraction Field
+*/
+module FloatRationalField: Field = Field_Make(FractionField_Make(FloatField))
