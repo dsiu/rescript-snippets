@@ -3,6 +3,7 @@
 import * as List from "rescript/lib/es6/list.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
+import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
@@ -87,11 +88,11 @@ var TFL = {
 
 console.log("Test List Functor");
 
-var prim = test_id(/* [] */0);
+var prim1 = test_id(/* [] */0);
 
-console.log(prim);
+console.log("id: P{", prim1);
 
-var prim$1 = test_id({
+var prim1$1 = test_id({
       hd: 1,
       tl: {
         hd: 2,
@@ -99,13 +100,13 @@ var prim$1 = test_id({
       }
     });
 
-console.log(prim$1);
+console.log("id: {1,2}", prim1$1);
 
-var prim$2 = test_compose(/* [] */0);
+var prim1$2 = test_compose(/* [] */0);
 
-console.log(prim$2);
+console.log("compose: {}", prim1$2);
 
-var prim$3 = test_compose({
+var prim1$3 = test_compose({
       hd: 1,
       tl: {
         hd: 2,
@@ -116,7 +117,7 @@ var prim$3 = test_compose({
       }
     });
 
-console.log(prim$3);
+console.log("compose: {1,2,3}", prim1$3);
 
 function map$1(f, x) {
   if (x !== undefined) {
@@ -152,21 +153,21 @@ var TOF = {
 
 console.log("Test Option Functor");
 
-var prim$4 = test_id$1(42);
+var prim1$4 = test_id$1(42);
 
-console.log(prim$4);
+console.log("id: Some(42)", prim1$4);
 
-var prim$5 = test_id$1(undefined);
+var prim1$5 = test_id$1(undefined);
 
-console.log(prim$5);
+console.log("id: None", prim1$5);
 
-var prim$6 = test_compose$1(42);
+var prim1$6 = test_compose$1(42);
 
-console.log(prim$6);
+console.log("compose: Some(42)", prim1$6);
 
-var prim$7 = test_compose$1(undefined);
+var prim1$7 = test_compose$1(undefined);
 
-console.log(prim$7);
+console.log("compose: None", prim1$7);
 
 function TestMonoid(M) {
   var test_left_id = function (x) {
@@ -194,7 +195,7 @@ var IntAddMonoid = {
   append: append
 };
 
-var prim$8 = List.fold_left(append, 0, {
+var prim1$8 = List.fold_left(append, 0, {
       hd: 1,
       tl: {
         hd: 10,
@@ -205,7 +206,7 @@ var prim$8 = List.fold_left(append, 0, {
       }
     });
 
-console.log(prim$8);
+console.log("IntAddMonoid.sum {1,10,102}", prim1$8);
 
 function MonoidUtils(M) {
   var empty = M.empty;
@@ -230,11 +231,442 @@ function ListMonoid(T) {
         };
 }
 
+function pure(x) {
+  return {
+          hd: x,
+          tl: /* [] */0
+        };
+}
+
+function apply(fs, xs) {
+  return List.concat(List.map((function (f) {
+                    return List.map(f, xs);
+                  }), fs));
+}
+
+var ListApplicative = {
+  map: map,
+  pure: pure,
+  apply: apply
+};
+
+function ApplicativeUtils(A) {
+  var map = A.map;
+  var apply = A.apply;
+  var $less$$great = Curry.__1(map);
+  var $less$star$great = Curry.__1(apply);
+  var $less$star = function (x, y) {
+    return Curry._2(apply, Curry._2(map, $$const, x), y);
+  };
+  var $star$great = function (x, y) {
+    return Curry._2(apply, Curry._2(map, (function (param, y) {
+                      return y;
+                    }), x), y);
+  };
+  var liftA2 = function (f, x, y) {
+    return Curry._2(apply, Curry._2(map, f, x), y);
+  };
+  return {
+          map: map,
+          pure: A.pure,
+          apply: apply,
+          $less$$great: $less$$great,
+          $less$star$great: $less$star$great,
+          $less$star: $less$star,
+          $star$great: $star$great,
+          liftA2: liftA2
+        };
+}
+
+function $less$$great(f) {
+  return function (param) {
+    return List.map(f, param);
+  };
+}
+
+function $less$star$great(f) {
+  return function (param) {
+    return apply(f, param);
+  };
+}
+
+function $less$star(x, y) {
+  var f = List.map($$const, x);
+  return apply(f, y);
+}
+
+function $star$great(x, y) {
+  var f = function (param, y) {
+    return y;
+  };
+  var f$1 = List.map(f, x);
+  return apply(f$1, y);
+}
+
+function liftA2(f, x, y) {
+  var f$1 = List.map(f, x);
+  return apply(f$1, y);
+}
+
+var LAU = {
+  map: map,
+  pure: pure,
+  apply: apply,
+  $less$$great: $less$$great,
+  $less$star$great: $less$star$great,
+  $less$star: $less$star,
+  $star$great: $star$great,
+  liftA2: liftA2
+};
+
+function makeQuote(time, offer, ticker, value) {
+  return {
+          time: time,
+          offer: offer,
+          ticker: ticker,
+          value: value
+        };
+}
+
+var f = List.map(makeQuote, {
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 3,
+          tl: {
+            hd: 4,
+            tl: {
+              hd: 5,
+              tl: /* [] */0
+            }
+          }
+        }
+      }
+    });
+
+var f$1 = apply(f, {
+      hd: "Ask",
+      tl: {
+        hd: "Bid",
+        tl: /* [] */0
+      }
+    });
+
+var f$2 = apply(f$1, {
+      hd: "XYZ",
+      tl: {
+        hd: "ZYK",
+        tl: {
+          hd: "ABC",
+          tl: {
+            hd: "CDE",
+            tl: {
+              hd: "QRZ",
+              tl: /* [] */0
+            }
+          }
+        }
+      }
+    });
+
+var quotes = apply(f$2, {
+      hd: 100,
+      tl: {
+        hd: 90,
+        tl: {
+          hd: 80,
+          tl: {
+            hd: 70,
+            tl: /* [] */0
+          }
+        }
+      }
+    });
+
+var prim1$9 = Belt_List.toArray(quotes);
+
+console.log("quotes", prim1$9);
+
+function pure$1(x) {
+  return Caml_option.some(x);
+}
+
+function apply$1(fo, xo) {
+  if (fo !== undefined && xo !== undefined) {
+    return Caml_option.some(Curry._1(fo, Caml_option.valFromOption(xo)));
+  }
+  
+}
+
+var OptionApplicative = {
+  map: map$1,
+  pure: pure$1,
+  apply: apply$1
+};
+
+function $less$$great$1(f) {
+  return function (param) {
+    return map$1(f, param);
+  };
+}
+
+function $less$star$great$1(f) {
+  return function (param) {
+    return apply$1(f, param);
+  };
+}
+
+function $less$star$1(x, y) {
+  var f = map$1($$const, x);
+  return apply$1(f, y);
+}
+
+function $star$great$1(x, y) {
+  var f = function (param, y) {
+    return y;
+  };
+  var f$1 = map$1(f, x);
+  return apply$1(f$1, y);
+}
+
+function liftA2$1(f, x, y) {
+  var f$1 = map$1(f, x);
+  return apply$1(f$1, y);
+}
+
+var OAU = {
+  map: map$1,
+  pure: pure$1,
+  apply: apply$1,
+  $less$$great: $less$$great$1,
+  $less$star$great: $less$star$great$1,
+  $less$star: $less$star$1,
+  $star$great: $star$great$1,
+  liftA2: liftA2$1
+};
+
+function $slash$slash$dot(n, d) {
+  if (d === 0) {
+    return ;
+  } else {
+    return n / d;
+  }
+}
+
+function ssqrt(x) {
+  if (x < 0) {
+    return ;
+  } else {
+    return Math.sqrt(x);
+  }
+}
+
+function f$3(x, y) {
+  var match = $slash$slash$dot(x, y);
+  var match$1 = ssqrt(x);
+  var match$2 = ssqrt(y);
+  if (match !== undefined && match$1 !== undefined && match$2 !== undefined) {
+    return match + match$1 - match$2;
+  }
+  
+}
+
+function f$p(x, y) {
+  var f = function (z, r1, r2) {
+    return z + r1 - r2;
+  };
+  var f$1 = map$1(f, $slash$slash$dot(x, y));
+  var f$2 = apply$1(f$1, ssqrt(x));
+  return apply$1(f$2, ssqrt(y));
+}
+
+var prim1$10 = f$3(1, 2);
+
+console.log("f(1.,2.) = ", prim1$10);
+
+var prim1$11 = f$p(1, 2);
+
+console.log("f'(1.,2.) = ", prim1$11);
+
+var prim1$12 = f$3(1, 0);
+
+console.log("f(1.,0.) = ", prim1$12);
+
+var prim1$13 = f$p(1, 0);
+
+console.log("f'(1.,0.) = ", prim1$13);
+
+var prim1$14 = f$3(1, -2);
+
+console.log("f(1.,2.) = ", prim1$14);
+
+var prim1$15 = f$p(1, -2);
+
+console.log("f'(1.,2.) = ", prim1$15);
+
+function TestApplicative(A) {
+  var map = A.map;
+  var pure = A.pure;
+  var apply = A.apply;
+  var $less$$great = Curry.__1(map);
+  var $less$star$great = Curry.__1(apply);
+  var $less$star = function (x, y) {
+    return Curry._2(apply, Curry._2(map, $$const, x), y);
+  };
+  var $star$great = function (x, y) {
+    return Curry._2(apply, Curry._2(map, (function (param, y) {
+                      return y;
+                    }), x), y);
+  };
+  var liftA2 = function (f, x, y) {
+    return Curry._2(apply, Curry._2(map, f, x), y);
+  };
+  var AU = {
+    map: map,
+    pure: pure,
+    apply: apply,
+    $less$$great: $less$$great,
+    $less$star$great: $less$star$great,
+    $less$star: $less$star,
+    $star$great: $star$great,
+    liftA2: liftA2
+  };
+  var test_id = function (x) {
+    return Caml_obj.equal(Curry._2(apply, Curry._1(pure, id), x), x);
+  };
+  var test_hom = function (f, x) {
+    return Caml_obj.equal(Curry._2(apply, Curry._1(pure, f), Curry._1(pure, x)), Curry._1(pure, Curry._1(f, x)));
+  };
+  var test_interchange = function (u, y) {
+    return Caml_obj.equal(Curry._2(apply, u, Curry._1(pure, y)), Curry._2(apply, Curry._1(pure, (function (f) {
+                          return Curry._1(f, y);
+                        })), u));
+  };
+  var test_composition = function (u, v, w) {
+    return Caml_obj.equal(Curry._2(apply, Curry._2(apply, Curry._2(apply, Curry._1(pure, compose), u), v), w), Curry._2(apply, u, Curry._2(apply, v, w)));
+  };
+  return {
+          AU: AU,
+          test_id: test_id,
+          test_hom: test_hom,
+          test_interchange: test_interchange,
+          test_composition: test_composition
+        };
+}
+
+function $less$$great$2(f) {
+  return function (param) {
+    return List.map(f, param);
+  };
+}
+
+function $less$star$great$2(f) {
+  return function (param) {
+    return apply(f, param);
+  };
+}
+
+function $less$star$2(x, y) {
+  var f = List.map($$const, x);
+  return apply(f, y);
+}
+
+function $star$great$2(x, y) {
+  var f = function (param, y) {
+    return y;
+  };
+  var f$1 = List.map(f, x);
+  return apply(f$1, y);
+}
+
+function liftA2$2(f, x, y) {
+  var f$1 = List.map(f, x);
+  return apply(f$1, y);
+}
+
+var AU = {
+  map: map,
+  pure: pure,
+  apply: apply,
+  $less$$great: $less$$great$2,
+  $less$star$great: $less$star$great$2,
+  $less$star: $less$star$2,
+  $star$great: $star$great$2,
+  liftA2: liftA2$2
+};
+
+function test_id$2(x) {
+  var f = {
+    hd: id,
+    tl: /* [] */0
+  };
+  return Caml_obj.equal(apply(f, x), x);
+}
+
+function test_hom(f, x) {
+  var f$1 = {
+    hd: f,
+    tl: /* [] */0
+  };
+  return Caml_obj.equal(apply(f$1, {
+                  hd: x,
+                  tl: /* [] */0
+                }), {
+              hd: Curry._1(f, x),
+              tl: /* [] */0
+            });
+}
+
+function test_interchange(u, y) {
+  var f_0 = function (f) {
+    return Curry._1(f, y);
+  };
+  var f = {
+    hd: f_0,
+    tl: /* [] */0
+  };
+  return Caml_obj.equal(apply(u, {
+                  hd: y,
+                  tl: /* [] */0
+                }), apply(f, u));
+}
+
+function test_composition(u, v, w) {
+  var f = {
+    hd: compose,
+    tl: /* [] */0
+  };
+  var f$1 = apply(f, u);
+  var f$2 = apply(f$1, v);
+  return Caml_obj.equal(apply(f$2, w), apply(u, apply(v, w)));
+}
+
+var TAL = {
+  AU: AU,
+  test_id: test_id$2,
+  test_hom: test_hom,
+  test_interchange: test_interchange,
+  test_composition: test_composition
+};
+
+var prim1$16 = test_hom((function (prim) {
+        return prim.length;
+      }), "Homomorphism");
+
+console.log("test_hom = ", prim1$16);
+
+var $less$less = compose;
+
+var $great$great = compose_right;
+
 export {
   log ,
   log2 ,
   compose ,
+  $less$less ,
   compose_right ,
+  $great$great ,
   id ,
   $$const ,
   ListFunctor ,
@@ -246,5 +678,12 @@ export {
   IntAddMonoid ,
   MonoidUtils ,
   ListMonoid ,
+  ListApplicative ,
+  ApplicativeUtils ,
+  LAU ,
+  OptionApplicative ,
+  OAU ,
+  TestApplicative ,
+  TAL ,
 }
 /*  Not a pure module */
