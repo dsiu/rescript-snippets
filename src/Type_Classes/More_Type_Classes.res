@@ -418,14 +418,15 @@ module OAU = ApplicativeUtils(OptionApplicative)
 
 // We can now use it to conveniently lift operations into versions accepting optional arguments.
 // Consider the following (safe) versions of division and square-root functions:
-{
-  let \"//." = (n, d) => {
-    d == 0. ? None : Some(n /. d)
-  }
-  let ssqrt = x => {
-    x < 0. ? None : Some(sqrt(x))
-  }
 
+let \"//." = (n, d) => {
+  d == 0. ? None : Some(n /. d)
+}
+let ssqrt = x => {
+  x < 0. ? None : Some(sqrt(x))
+}
+
+{
   // Say we want to implement the formula f(x,y,z) = (x / y) + sqrt(x) - sqrt(y). The obvious
   // approach is to use pattern matching as in:
   let f = (x, y) => {
@@ -490,5 +491,350 @@ module TAL = TestApplicative(ListApplicative)
 // This may be used as in:
 TAL.test_hom(String.length, "Homomorphism")->log2("test_hom = ", _)
 
+//
 // Traversables
+//
+
+// Traversable is an interesting type class which also brings a couple of additional challenges to
+// our effort of mapping Haskell patterns to OCaml. It may be described as a generalization of the
+// iterator pattern and is defined in Haskell as:
+//
+//  class (Functor t, Foldable t) => Traversable t where
+//    traverse  :: Applicative f => (a -> f b) -> t a -> f (t b)
+//    sequenceA :: Applicative f => t (f a) -> f (t a)
+//    mapM      ::       Monad m => (a -> m b) -> t a -> m (t b)
+//    sequence  ::       Monad m => t (m a) -> m (t a)
+
+// Concrete instances can be written by implementing any one of the above functions as they can all
+// be expressed in terms of each other. We could potentially replicate this flexibility in OCaml by
+// a set of different module-functors with signatures wrapping each function. However, for the
+// purpose of this exercise we settle on traverse as the defining implementation. Traverse is also
+// parameterized over an Applicative functor. A first attempt in OCaml might be something along the
+// lines of:
+
+// Concrete instances can be written by implementing any one of the above functions as they can all
+// be expressed in terms of each other. We could potentially replicate this flexibility in OCaml by
+// a set of different module-functors with signatures wrapping each function. However, for the
+// purpose of this exercise we settle on traverse as the defining implementation. Traverse is also
+// parameterized over an Applicative functor. A first attempt in OCaml might be something along the
+// lines of:
+
+// (*Psuedo-code - not valid OCaml!*)
+//  module type TRAVERSABLE = sig
+//    type 'a t
+//    val traverse :  (type a)
+//                    (module A : APPLICATIVE with type 'a t = 'a a)
+//                    ('a -> 'b a) ->
+//                    'a A.t ->
+//                    ('b t) a
+//  end;;
+
+// However here the type a would itself require a type parameter. In Haskell lingo it is said to
+// have kind (* -> *). Unfortunately OCaml does not support higher-kinded polymorphism.
+//
+//Instead of passing APPLICATIVE as an argument to each invocation of traverse we can embed it in
+//the module signature:
+
+module type TRAVERSABLE = {
+  type t<'a>
+  module Applicative: APPLICATIVE
+  let traverse: ('a => Applicative.t<'b>, t<'a>) => Applicative.t<t<'b>>
+}
+
+// To mimic the Haskell constraints it is tempting to also require the FUNCTOR interface by throwing
+// in a extra include FUNCTOR. However, there's a technical reason for why this may not be a good
+// idea which we'll return to in a bit.
+
+// Even though the signature references a specific implementation of an APPLICATIVE we can recover
+// genericity by relying on module-functors to specify the implementation of a traversable for any
+// applicative argument. Let's consider the functor for list traversables:
+
+module ListTraversable = (A: APPLICATIVE): (
+  TRAVERSABLE with type t<'a> = list<'a> and type Applicative.t<'a> = A.t<'a>
+) => {
+  type t<'a> = list<'a>
+
+  module Applicative = A
+
+  let rec traverse = (f, xs) => {
+    module AU = ApplicativeUtils(A)
+    open AU
+    switch xs {
+    | list{} => A.pure(list{})
+    //    | list{x, ...xs} => \"<*>"(\"<$>"((y, ys) => list{y, ...ys}, f(x)), traverse(f, xs))
+    | list{x, ...xs} => f(x)->\"<$>"((y, ys) => list{y, ...ys}, _)->\"<*>"(traverse(f, xs))
+    }
+  }
+}
+
+// Here one has to accept some extra verbosity compared to the Haskell version, although the code
+// itself is fairly straightforward. The functor argument A of type APPLICATIVE serves to fulfil the
+// requirement of having to export the APPLICATIVE module. The implementation of traverse is the
+// interesting bit. Note that it is indeed defined generically for any applicative functor. The
+// ApplicativeUtils module constructor comes in handy for accessing the infix versions of the
+// operators.
+
+// To give ListTraversable a try, consider how it can be used for option effects:
+module LTO = ListTraversable(OptionApplicative)
+
+// This results in a module with the following signature:
+//
+//  module LTO :
+//    sig
+//      type 'a t = 'a list
+//      val map : ('a -> 'b) -> 'a t -> 'b t
+//      module Applicative : sig  end
+//      val traverse : ('a -> 'b Applicative.t) -> 'a t -> 'b t Applicative.t
+//    end;;
+
+//
+// where we also know that the Applicative sub-module is in fact our OptionApplicative.
+// traverse in this context is a function that allows us to map each element of a list to an optional
+// value where the computation produces a list with all values collected, only in case every element
+// was successfully mapped to a Some value.
+//
+// For example using the safe square root function from above we can transform it into a version
+// operating on lists:
+
+{
+  let all_roots = LTO.traverse(ssqrt)
+
+  all_roots(list{4.0, 9.0, 16.0})->log2("all_roots = ", _)
+
+  all_roots(list{4.0, -9.0, 16.0})->log2("all_roots = ", _)
+}
+
+// Next, let's consider a custom type ('a tree) for which we are also able to implement the
+// traversable interface:
+
+type rec tree<'a> =
+  | Leaf
+  | Node(tree<'a>, 'a, tree<'a>)
+
+let node = (l, x, r) => Node(l, x, r)
+
+module TreeTraversable = (A: APPLICATIVE): (
+  TRAVERSABLE with type t<'a> = tree<'a> and type Applicative.t<'a> = A.t<'a>
+) => {
+  module Applicative = A
+
+  type t<'a> = tree<'a>
+  // type a<'a> = A.t<'a>
+
+  let rec traverse = (f, t) => {
+    module AU = ApplicativeUtils(A)
+    open AU
+    switch t {
+    | Leaf => pure(Leaf)
+    | Node(l, x, r) => \"<*>"(\"<*>"(\"<$>"(node, traverse(f, l)), f(x)), traverse(f, r))
+    }
+  }
+}
+
+// From the Haskell specification we know that any traversable must be a functor. Comparing the
+// signatures for map and traverse also reveals their similarities:
+
+// val map       : ('a -> b)       -> 'a t -> 'b t
+// val traverse  : ('a -> 't A.t)  -> 'a t -> ('b t) A.t
+
+// However, embedding map in the module signature for TRAVERSABLE forces the user to define it
+// manually. Would it be possible to achieve a generic implementation expressed in terms of the
+// traverse function?
+
+// It can be done by choosing a suitable Applicative where the effect does not impact the result.
+// The simplest possible type forming an applicative functor is the identity type:
+
+type id<'a> = 'a
+
+// for which a trivial APPLICATIVE instance exist:
+module IdApplicative: APPLICATIVE with type t<'a> = id<'a> = {
+  type t<'a> = id<'a>
+  let pure = x => x
+  let map = f => f
+  let apply = f => map(f)
+}
+
+// Using IdApplicative for the effect, traverse collapses into map:
+module TreeTraversableId = TreeTraversable(IdApplicative)
+let map = f => TreeTraversableId.traverse(f)
+
+// Similar to the pattern of utility modules for extending the interface with additional functions
+// we may implement another module-functor TraversableFunctor that produces a functor instance given
+// a module-functor for building traversables:
+module TraversableFunctor = (
+  MT: (A: APPLICATIVE) => (TRAVERSABLE with type Applicative.t<'a> = A.t<'a>),
+) => {
+  module TI = MT(IdApplicative)
+  let map = f => TI.traverse(f)
+}
+
+// Following is an example creating a functor for trees derived from its traversable implementation:
+module TTU = TraversableFunctor(TreeTraversable)
+
+// Its map function can be used as in:
+TTU.map(x => x * x, node(Leaf, 3, node(Leaf, 5, Leaf)))->log2("TTU.map = ", _)
+
+// The Haskell documentation for Applicative also dictates a set of laws:
+//  -- Naturality
+//  t . traverse f = traverse (t . f)
+//
+//  -- Identity
+//  traverse Identity = Identity
+//
+//  -- Composition
+//  traverse (Compose . fmap g . f) = Compose . fmap (traverse g) . traverse f
+
+// The naturality law assumes that t is a natural transformation from one applicative functor to
+// another. Porting it to OCaml requires a couple of further tricks. First we dedicate a specific
+// module functor for the task which takes two arguments for the applicatives mapped between, along
+// with a traversable constructor. In order to also connect the types, an additional module TYPE2
+// representing types of kind (* -> *) is introduced:
+
+module type TYPE2 = {
+  type t<'a>
+}
+
+module TestTraversableNat = (
+  T2: TYPE2,
+  A1: APPLICATIVE,
+  A2: APPLICATIVE,
+  MT: (A: APPLICATIVE) =>
+  (TRAVERSABLE with type Applicative.t<'a> = A.t<'a> and type t<'a> = T2.t<'a>),
+) => {
+  module T1: TRAVERSABLE with type Applicative.t<'a> = A1.t<'a> and type t<'a> = T2.t<'a> = MT(A1)
+
+  module T2: TRAVERSABLE with type Applicative.t<'a> = A2.t<'a> and type t<'a> = T2.t<'a> = MT(A2)
+
+  type nat = {t: 'a. A1.t<'a> => A2.t<'a>}
+
+  let test = (f, {t}, x) => t(T1.traverse(f, x)) == T2.traverse(\">>"(f, t), x)
+}
+
+// Here, nat represents the mapping from A1 to A2 and the type is introduced in order to be able to
+// express that the transformation is existentially quantified over all type parameters to A1.t.
+
+// Here's an example of a concrete realization of a test module:
+module TTN = TestTraversableNat(
+  {
+    type t<'a> = list<'a>
+  },
+  IdApplicative,
+  OptionApplicative,
+  ListTraversable,
+)
+
+// The second law, identity, is expressed in terms of the type Identity and its functor and
+// applicative instances in Haskell. Identity in haskell is defined as:
+
+// newtype Identity a = Identity a
+//
+// instance Functor Identity where
+//   fmap f (Identity x)  = Identity (f x)
+//
+// instance Applicative Identity where
+//   pure = Identity
+//   (Identity f) <*> (Identity x) = Identity (f x)
+
+// We've already seen its corresponding OCaml type 'a id and the applicative instance,
+// IdApplicative. Using that we may create another test module for the identity law:
+
+module TestTraversableId = (
+  MT: (A: APPLICATIVE) => (TRAVERSABLE with type Applicative.t<'a> = A.t<'a>),
+) => {
+  module TI = MT(IdApplicative)
+  let test = x => TI.traverse(id, x) == x
+}
+
+// The following example shows how it can be used to test the ListTraversable module-functor:
+module TTIL = TestTraversableId(ListTraversable)
+
+{
+  TTIL.test(list{1, 2, 3})->log2("TTIL.test = ", _)
+}
+
+// The final law, composibility, relies on the type Compose which takes two higher-kinded type
+// arguments and composes them:
+//
+// newtype Compose f g a = Compose (f (g a))
+//
+// Its functor and applicative functor instances are achieved by:
+//
+//  instance (Functor f, Functor g) => Functor (Compose f g) where
+//    fmap f (Compose x) = Compose (fmap (fmap f) x)
+//
+//  instance (Applicative f, Applicative g) => Applicative (Compose f g) where
+//    pure x = Compose (pure (pure x))
+//    Compose f <*> Compose x = Compose ((<*>) <$> f <*> x)
+
+// Once again to circumvent the higher-kinded type restriction we need to resort to modules in
+// OCaml. The following module-functor takes two applicatives as arguments and produces an
+// APPLICATIVE module for the composed type:
+
+module ComposeApplicative = (F: APPLICATIVE, G: APPLICATIVE): (
+  APPLICATIVE with type t<'a> = F.t<G.t<'a>>
+) => {
+  type t<'a> = F.t<G.t<'a>>
+
+  let pure = x => F.pure(G.pure(x))
+
+  let map = f => F.map(G.map(f))
+
+  let apply = (f, x) => {
+    module FU = ApplicativeUtils(F)
+    open FU
+    G.apply->\"<$>"(f)->\"<*>"(x)
+  }
+}
+
+// Finally tackling the law expressed using the Compose type:
+//
+// traverse (Compose . fmap g . f) = Compose . fmap (traverse g) . traverse f
+//
+// requires some even heavier plumbing. To demonstrate that it's possible, here's an implementation:
+module TestTraversableCompose = (
+  T2: TYPE2,
+  F: APPLICATIVE,
+  G: APPLICATIVE,
+  MT: (A: APPLICATIVE) =>
+  (TRAVERSABLE with type Applicative.t<'a> = A.t<'a> and type t<'a> = T2.t<'a>),
+) => {
+  module AC: APPLICATIVE with type t<'a> = F.t<G.t<'a>> = ComposeApplicative(F, G)
+
+  module TF: TRAVERSABLE with type Applicative.t<'a> = F.t<'a> and type t<'a> = T2.t<'a> = MT(F)
+
+  module TG: TRAVERSABLE with type Applicative.t<'a> = G.t<'a> and type t<'a> = T2.t<'a> = MT(G)
+
+  module TC: TRAVERSABLE with type Applicative.t<'a> = F.t<G.t<'a>> and type t<'a> = T2.t<'a> = MT(
+    AC,
+  )
+
+  let test = (f, g, x) =>
+    F.map(TG.traverse(g), TF.traverse(f, x)) == TC.traverse(\">>"(f, F.map(g)), x)
+}
+
+// It can be used for testing various combinations of traversables and applicatives. For example:
+module TTCL = TestTraversableCompose(
+  {
+    type t<'a> = list<'a>
+  },
+  ListApplicative,
+  OptionApplicative,
+  ListTraversable,
+)
+
+{
+  TTCL.test(
+    x => list{x, x + 1},
+    x =>
+      if x > 10 {
+        Some(-x)
+      } else {
+        None
+      },
+    list{1, 2, 3, 5},
+  )->log
+}
+
+//
+// Using the patterns
 //

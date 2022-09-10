@@ -656,6 +656,391 @@ var prim1$16 = test_hom((function (prim) {
 
 console.log("test_hom = ", prim1$16);
 
+function ListTraversable(A) {
+  var traverse = function (f, xs) {
+    if (xs) {
+      return Curry._2(A.apply, Curry._2(A.map, (function (y, ys) {
+                        return {
+                                hd: y,
+                                tl: ys
+                              };
+                      }), Curry._1(f, xs.hd)), traverse(f, xs.tl));
+    } else {
+      return Curry._1(A.pure, /* [] */0);
+    }
+  };
+  return {
+          Applicative: A,
+          traverse: traverse
+        };
+}
+
+function traverse(f, xs) {
+  if (!xs) {
+    return /* [] */0;
+  }
+  var __x = Curry._1(f, xs.hd);
+  var f$1 = function (y, ys) {
+    return {
+            hd: y,
+            tl: ys
+          };
+  };
+  var f$2 = map$1(f$1, __x);
+  return apply$1(f$2, traverse(f, xs.tl));
+}
+
+var LTO = {
+  Applicative: OptionApplicative,
+  traverse: traverse
+};
+
+var prim1$17 = traverse(ssqrt, {
+      hd: 4.0,
+      tl: {
+        hd: 9.0,
+        tl: {
+          hd: 16.0,
+          tl: /* [] */0
+        }
+      }
+    });
+
+console.log("all_roots = ", prim1$17);
+
+var prim1$18 = traverse(ssqrt, {
+      hd: 4.0,
+      tl: {
+        hd: -9.0,
+        tl: {
+          hd: 16.0,
+          tl: /* [] */0
+        }
+      }
+    });
+
+console.log("all_roots = ", prim1$18);
+
+function node(l, x, r) {
+  return /* Node */{
+          _0: l,
+          _1: x,
+          _2: r
+        };
+}
+
+function TreeTraversable(A) {
+  var traverse = function (f, t) {
+    var apply = A.apply;
+    if (t) {
+      return Curry._2(apply, Curry._2(apply, Curry._2(A.map, node, traverse(f, t._0)), Curry._1(f, t._1)), traverse(f, t._2));
+    } else {
+      return Curry._1(A.pure, /* Leaf */0);
+    }
+  };
+  return {
+          Applicative: A,
+          traverse: traverse
+        };
+}
+
+function pure$2(x) {
+  return x;
+}
+
+function map$2(f) {
+  return f;
+}
+
+function apply$2(f) {
+  return f;
+}
+
+var IdApplicative = {
+  map: map$2,
+  pure: pure$2,
+  apply: apply$2
+};
+
+function traverse$1(f, t) {
+  if (!t) {
+    return /* Leaf */0;
+  }
+  var partial_arg = Curry._1(f, t._1);
+  var partial_arg$1 = traverse$1(f, t._0);
+  var param = traverse$1(f, t._2);
+  return node(partial_arg$1, partial_arg, param);
+}
+
+var TreeTraversableId = {
+  Applicative: IdApplicative,
+  traverse: traverse$1
+};
+
+function map$3(f) {
+  return function (param) {
+    return traverse$1(f, param);
+  };
+}
+
+function TraversableFunctor(MT) {
+  var TI = Curry._1(MT, IdApplicative);
+  var map = function (f) {
+    return Curry._1(TI.traverse, f);
+  };
+  return {
+          TI: TI,
+          map: map
+        };
+}
+
+function traverse$2(f, t) {
+  if (!t) {
+    return /* Leaf */0;
+  }
+  var partial_arg = Curry._1(f, t._1);
+  var partial_arg$1 = traverse$2(f, t._0);
+  var param = traverse$2(f, t._2);
+  return node(partial_arg$1, partial_arg, param);
+}
+
+var TI = {
+  Applicative: IdApplicative,
+  traverse: traverse$2
+};
+
+function map$4(f) {
+  return function (param) {
+    return traverse$2(f, param);
+  };
+}
+
+var TTU = {
+  TI: TI,
+  map: map$4
+};
+
+function f$4(x) {
+  return Math.imul(x, x);
+}
+
+var prim1$19 = traverse$2(f$4, /* Node */{
+      _0: /* Leaf */0,
+      _1: 3,
+      _2: /* Node */{
+        _0: /* Leaf */0,
+        _1: 5,
+        _2: /* Leaf */0
+      }
+    });
+
+console.log("TTU.map = ", prim1$19);
+
+function TestTraversableNat(T2, A1, A2, MT) {
+  var T1 = Curry._1(MT, A1);
+  var T2$1 = Curry._1(MT, A2);
+  var test = function (f, param, x) {
+    var t = param.t;
+    return Caml_obj.equal(Curry._1(t, Curry._2(T1.traverse, f, x)), Curry._2(T2$1.traverse, (function (param) {
+                      return Curry._1(t, Curry._1(f, param));
+                    }), x));
+  };
+  return {
+          T1: T1,
+          T2: T2$1,
+          test: test
+        };
+}
+
+function partial_arg(param, param$1) {
+  var T1 = Curry._1(param$1, IdApplicative);
+  var T2 = Curry._1(param$1, param);
+  var test = function (f, param, x) {
+    var t = param.t;
+    return Caml_obj.equal(Curry._1(t, Curry._2(T1.traverse, f, x)), Curry._2(T2.traverse, (function (param) {
+                      return Curry._1(t, Curry._1(f, param));
+                    }), x));
+  };
+  return {
+          T1: T1,
+          T2: T2,
+          test: test
+        };
+}
+
+var TTN = partial_arg(OptionApplicative, ListTraversable);
+
+function TestTraversableId(MT) {
+  var TI = Curry._1(MT, IdApplicative);
+  var test = function (x) {
+    return Caml_obj.equal(Curry._2(TI.traverse, id, x), x);
+  };
+  return {
+          TI: TI,
+          test: test
+        };
+}
+
+function traverse$3(f, xs) {
+  if (!xs) {
+    return /* [] */0;
+  }
+  var __x = Curry._1(f, xs.hd);
+  return {
+          hd: __x,
+          tl: traverse$3(f, xs.tl)
+        };
+}
+
+var TI$1 = {
+  Applicative: IdApplicative,
+  traverse: traverse$3
+};
+
+function test(x) {
+  return Caml_obj.equal(traverse$3(id, x), x);
+}
+
+var TTIL = {
+  TI: TI$1,
+  test: test
+};
+
+var prim1$20 = test({
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 3,
+          tl: /* [] */0
+        }
+      }
+    });
+
+console.log("TTIL.test = ", prim1$20);
+
+function ComposeApplicative(F, G) {
+  var pure = function (x) {
+    return Curry._1(F.pure, Curry._1(G.pure, x));
+  };
+  var map = function (f) {
+    return Curry._1(F.map, Curry._1(G.map, f));
+  };
+  var apply = function (f, x) {
+    return Curry._2(F.apply, Curry._2(F.map, G.apply, f), x);
+  };
+  return {
+          map: map,
+          pure: pure,
+          apply: apply
+        };
+}
+
+function TestTraversableCompose(T2, F, G, MT) {
+  var pure = function (x) {
+    return Curry._1(F.pure, Curry._1(G.pure, x));
+  };
+  var map = function (f) {
+    return Curry._1(F.map, Curry._1(G.map, f));
+  };
+  var apply = function (f, x) {
+    var map = F.map;
+    var apply$1 = F.apply;
+    var $less$$great = Curry.__1(map);
+    var $less$star$great = Curry.__1(apply$1);
+    return Curry._1($less$star$great(Curry._1($less$$great(G.apply), f)), x);
+  };
+  var AC = {
+    map: map,
+    pure: pure,
+    apply: apply
+  };
+  var TF = Curry._1(MT, F);
+  var TG = Curry._1(MT, G);
+  var TC = Curry._1(MT, AC);
+  var test = function (f, g, x) {
+    var partial_arg = Curry._1(F.map, g);
+    return Caml_obj.equal(Curry._2(F.map, Curry._1(TG.traverse, g), Curry._2(TF.traverse, f, x)), Curry._2(TC.traverse, (function (param) {
+                      return Curry._1(partial_arg, Curry._1(f, param));
+                    }), x));
+  };
+  return {
+          AC: AC,
+          TF: TF,
+          TG: TG,
+          TC: TC,
+          test: test
+        };
+}
+
+function partial_arg$1(param, param$1) {
+  var pure$3 = function (x) {
+    return Curry._1(pure, Curry._1(param.pure, x));
+  };
+  var map$5 = function (f) {
+    return Curry._1(map, Curry._1(param.map, f));
+  };
+  var apply$3 = function (f, x) {
+    var map$6 = map;
+    var apply$4 = apply;
+    var $less$$great = Curry.__1(map$6);
+    var $less$star$great = Curry.__1(apply$4);
+    return Curry._1($less$star$great(Curry._1($less$$great(param.apply), f)), x);
+  };
+  var AC = {
+    map: map$5,
+    pure: pure$3,
+    apply: apply$3
+  };
+  var TF = Curry._1(param$1, ListApplicative);
+  var TG = Curry._1(param$1, param);
+  var TC = Curry._1(param$1, AC);
+  var test = function (f, g, x) {
+    var partial_arg = Curry._1(map, g);
+    return Caml_obj.equal(Curry._2(map, Curry._1(TG.traverse, g), Curry._2(TF.traverse, f, x)), Curry._2(TC.traverse, (function (param) {
+                      return Curry._1(partial_arg, Curry._1(f, param));
+                    }), x));
+  };
+  return {
+          AC: AC,
+          TF: TF,
+          TG: TG,
+          TC: TC,
+          test: test
+        };
+}
+
+var TTCL = partial_arg$1(OptionApplicative, ListTraversable);
+
+var prim = Curry._3(TTCL.test, (function (x) {
+        return {
+                hd: x,
+                tl: {
+                  hd: x + 1 | 0,
+                  tl: /* [] */0
+                }
+              };
+      }), (function (x) {
+        if (x > 10) {
+          return -x | 0;
+        }
+        
+      }), {
+      hd: 1,
+      tl: {
+        hd: 2,
+        tl: {
+          hd: 3,
+          tl: {
+            hd: 5,
+            tl: /* [] */0
+          }
+        }
+      }
+    });
+
+console.log(prim);
+
 var $less$less = compose;
 
 var $great$great = compose_right;
@@ -683,7 +1068,25 @@ export {
   LAU ,
   OptionApplicative ,
   OAU ,
+  $slash$slash$dot ,
+  ssqrt ,
   TestApplicative ,
   TAL ,
+  ListTraversable ,
+  LTO ,
+  node ,
+  TreeTraversable ,
+  IdApplicative ,
+  TreeTraversableId ,
+  map$3 as map,
+  TraversableFunctor ,
+  TTU ,
+  TestTraversableNat ,
+  TTN ,
+  TestTraversableId ,
+  TTIL ,
+  ComposeApplicative ,
+  TestTraversableCompose ,
+  TTCL ,
 }
 /*  Not a pure module */
