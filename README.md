@@ -1,6 +1,8 @@
 # rescript-snippets
 
 ## TODOs:
+* [Cancellable futures for ReScript](https://github.com/bloodyowl/rescript-future)
+* [rescript-struct V1 release - the best decoding library](https://forum.rescript-lang.org/t/ann-rescript-struct-v1-release-the-best-decoding-library/3714)
 * [Typesafe JSON Schema for ReScript](https://github.com/DZakh/rescript-json-schema)
 * [ReScript bindings for Ava Testing Framework](https://github.com/DZakh/rescript-ava)
 * [A simple and composable way to describe relationship between JavaScript and ReScript structures](https://github.com/DZakh/rescript-struct)
