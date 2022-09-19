@@ -1,6 +1,7 @@
 # rescript-snippets
 
 ## TODOs:
+* [ReScript envsafe](https://github.com/DZakh/rescript-envsafe)
 * [Cancellable futures for ReScript](https://github.com/bloodyowl/rescript-future)
 * [rescript-struct V1 release - the best decoding library](https://forum.rescript-lang.org/t/ann-rescript-struct-v1-release-the-best-decoding-library/3714)
 * [Typesafe JSON Schema for ReScript](https://github.com/DZakh/rescript-json-schema)
