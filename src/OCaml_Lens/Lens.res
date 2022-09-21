@@ -1,0 +1,205 @@
+/*
+   Copyright (c) 2011-2012 Alessandro Strada
+
+   Permission is hereby granted, free of charge, to any person obtaining a copy
+   of this software and associated documentation files (the "Software"), to deal
+   in the Software without restriction, including without limitation the rights
+   to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+   copies of the Software, and to permit persons to whom the Software is
+   furnished to do so, subject to the following conditions:
+
+   The above copyright notice and this permission notice shall be included in all
+   copies or substantial portions of the Software.
+
+   THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+   IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+   FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+   AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+   LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+   OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+   SOFTWARE.
+*/
+
+let \"|-" = (f, g, x) => g(f(x))
+
+type t<'a, 'b> = {
+  get: 'a => 'b,
+  set: ('b, 'a) => 'a,
+}
+
+let modify = (l, f, a) => {
+  let value = l.get(a)
+  let new_value = f(value)
+  l.set(new_value, a)
+}
+
+let _get = (a, l) => l.get(a)
+
+let _set = (v, a, l) => l.set(v, a)
+
+let _modify = (f, l) => modify(l, f)
+
+let compose = (l1, l2) => {
+  get: \"|-"(l2.get, l1.get),
+  set: \"|-"(l1.set, modify(l2)),
+}
+
+let pair = (l1, l2) => {
+  get: ((a, b)) => (l1.get(a), l2.get(b)),
+  set: ((a, c), (b, d)) => (l1.set(a, b), l2.set(c, d)),
+}
+
+let pair3 = (l1, l2, l3) => {
+  get: ((a, b, c)) => (l1.get(a), l2.get(b), l3.get(c)),
+  set: ((a, c, e), (b, d, f)) => (l1.set(a, b), l2.set(c, d), l3.set(e, f)),
+}
+
+let cond = (pred, lt, lf) => {
+  let choose = a =>
+    if pred(a) {
+      lt
+    } else {
+      lf
+    }
+  {
+    get: a => choose(a) |> _get(a),
+    set: (b, a) => choose(a) |> _set(b, a),
+  }
+}
+
+let get_state = (l, a) => (_get(a, l), a)
+
+let put_state = (l, v, a) => ((), _set(v, a, l))
+
+let modify_state = (l, f, a) => ((), _modify(f, l, a))
+
+let ignore = {
+  get: ignore,
+  set: (_, a) => a,
+}
+
+let id = {
+  get: a => a,
+  set: (b, _) => b,
+}
+
+let first = {
+  get: fst,
+  set: (v, a) => (v, snd(a)),
+}
+
+let second = {
+  get: snd,
+  set: (v, a) => (fst(a), v),
+}
+
+let head = {
+  get: List.hd,
+  set: (v, xs) => list{v, ...List.tl(xs)},
+}
+
+let tail = {
+  get: List.tl,
+  set: (v, xs) => list{List.hd(xs), ...v},
+}
+
+let for_hash = key => {
+  get: h =>
+    try Some(Hashtbl.find(h, key)) catch {
+    | Not_found => None
+    },
+  set: (v, h) =>
+    switch v {
+    | Some(value) =>
+      Hashtbl.add(h, key, value)
+      h
+    | None =>
+      Hashtbl.remove(h, key)
+      h
+    },
+}
+
+let for_assoc = key => {
+  get: l =>
+    try Some(List.assoc(key, l)) catch {
+    | Not_found => None
+    },
+  set: (v, l) =>
+    switch v {
+    | Some(value) =>
+      let l' = List.remove_assoc(key, l)
+      list{(key, value), ...l'}
+    | None => List.remove_assoc(key, l)
+    },
+}
+
+let for_array = i => {
+  get: a => a[i],
+  set: (v, a) => {
+    let a' = Array.copy(a)
+    a'[i] = v
+    a'
+  },
+}
+
+let for_list = i => {
+  get: xs => List.nth(xs, i),
+  set: (v, xs) => List.fold_left(((xs', j), x) => (
+      if i == j {
+        list{v, ...xs'}
+      } else {
+        list{x, ...xs'}
+      },
+      j + 1,
+    ), (list{}, 0), xs) |> fst |> List.rev,
+}
+
+let option_get = {
+  get: x =>
+    switch x {
+    | None => raise(Not_found)
+    | Some(v) => v
+    },
+  set: (v, _) => Some(v),
+}
+
+let list_map = l => {
+  get: List.map(l.get),
+  set: List.map2(l.set),
+}
+
+/* TODO: array_map */
+
+let xmap = (f, g, l) => {
+  get: \"|-"(l.get, f),
+  set: \"|-"(g, l.set),
+}
+
+module Infix = {
+  // [dsiu]
+  //  let \"|." = _get
+
+  let \"^=" = (l, v, a) => _set(v, a, l)
+
+  let \"^%=" = modify
+
+  let \"|--" = (l1, l2) => compose(l2, l1)
+
+  let \"--|" = compose
+
+  let \"***" = (l1, l2) => pair(l1, l2)
+
+  let \"+=" = (l, v) => _modify(\"+"(v), l)
+
+  let \"-=" = (l, v) => _modify(\"+"(-v), l)
+}
+
+module StateInfix = {
+  let \"^=!" = (l, v) => put_state(l, v)
+
+  let \"+=!" = (l, v) => modify_state(l, \"+"(v))
+
+  let \"-=!" = (l, v) => modify_state(l, \"+"(-v))
+
+  let \"@=!" = (l, v) => modify_state(l, a => \"@"(a, v))
+}
