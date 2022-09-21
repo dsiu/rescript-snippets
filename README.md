@@ -1,6 +1,7 @@
 # rescript-snippets
 
 ## TODOs:
+* [Clarity - functional programming library for OCaml](https://github.com/IndiscriminateCoding/clarity)
 * [ReScript envsafe](https://github.com/DZakh/rescript-envsafe)
 * [Cancellable futures for ReScript](https://github.com/bloodyowl/rescript-future)
 * [rescript-struct V1 release - the best decoding library](https://forum.rescript-lang.org/t/ann-rescript-struct-v1-release-the-best-decoding-library/3714)
