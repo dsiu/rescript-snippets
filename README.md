@@ -1,6 +1,7 @@
 # rescript-snippets
 
 ## TODOs:
+* [check out monads here](https://github.com/BinaryAnalysisPlatform/bap)
 * [Clarity - functional programming library for OCaml](https://github.com/IndiscriminateCoding/clarity)
 * [ReScript envsafe](https://github.com/DZakh/rescript-envsafe)
 * [Cancellable futures for ReScript](https://github.com/bloodyowl/rescript-future)
