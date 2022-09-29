@@ -322,21 +322,21 @@ module ApplicativeUtils = (A: APPLICATIVE) => {
     <* x y
     ('a t, 'b t) => 'a t
   */
-  let \"<*" = (x, y) => \"<*>"(\"<$>"(const, x), y)
+  let \"<*" = (x, y) => const->\"<$>"(x)->\"<*>"(y)
 
   //  (fun _ y -> y) <$> x <*> y
   /**
     *> x y
     ('a t, 'b t) => 'b t
   */
-  let \"*>" = (x, y) => \"<*>"(\"<$>"((_, y) => y, x), y)
+  let \"*>" = (x, y) => ((_, y) => y)->\"<$>"(x)->\"<*>"(y)
 
   // f <$> x <*> y
   /**
     liftA2 f x y
     (('a -> 'b -> 'c), 'a t, 'b t) => 'c t
   */
-  let liftA2 = (f, x, y) => \"<*>"(\"<$>"(f, x), y)
+  let liftA2 = (f, x, y) => f->\"<$>"(x)->\"<*>"(y)
 
   // The infix operators are variations of apply and map, liftA2 is for conveniently lifting a
   // regular function of two arguments into a function operating on two applicative values.
@@ -489,6 +489,8 @@ module TestApplicative = (A: APPLICATIVE) => {
 module TAL = TestApplicative(ListApplicative)
 
 // This may be used as in:
+TAL.test_id(list{})->log2("test_id = ", _)
+//TAL.test_interchange(list{String.length}, "interchange")->log2("test_interchange = ", _)
 TAL.test_hom(String.length, "Homomorphism")->log2("test_hom = ", _)
 
 //

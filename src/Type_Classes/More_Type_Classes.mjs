@@ -650,11 +650,15 @@ var TAL = {
   test_composition: test_composition
 };
 
-var prim1$16 = test_hom((function (prim) {
+var prim1$16 = test_id$2(/* [] */0);
+
+console.log("test_id = ", prim1$16);
+
+var prim1$17 = test_hom((function (prim) {
         return prim.length;
       }), "Homomorphism");
 
-console.log("test_hom = ", prim1$16);
+console.log("test_hom = ", prim1$17);
 
 function ListTraversable(A) {
   var traverse = function (f, xs) {
@@ -695,7 +699,7 @@ var LTO = {
   traverse: traverse
 };
 
-var prim1$17 = traverse(ssqrt, {
+var prim1$18 = traverse(ssqrt, {
       hd: 4.0,
       tl: {
         hd: 9.0,
@@ -706,9 +710,9 @@ var prim1$17 = traverse(ssqrt, {
       }
     });
 
-console.log("all_roots = ", prim1$17);
+console.log("all_roots = ", prim1$18);
 
-var prim1$18 = traverse(ssqrt, {
+var prim1$19 = traverse(ssqrt, {
       hd: 4.0,
       tl: {
         hd: -9.0,
@@ -719,7 +723,7 @@ var prim1$18 = traverse(ssqrt, {
       }
     });
 
-console.log("all_roots = ", prim1$18);
+console.log("all_roots = ", prim1$19);
 
 function node(l, x, r) {
   return /* Node */{
@@ -824,7 +828,7 @@ function f$4(x) {
   return Math.imul(x, x);
 }
 
-var prim1$19 = traverse$2(f$4, /* Node */{
+var prim1$20 = traverse$2(f$4, /* Node */{
       _0: /* Leaf */0,
       _1: 3,
       _2: /* Node */{
@@ -834,7 +838,7 @@ var prim1$19 = traverse$2(f$4, /* Node */{
       }
     });
 
-console.log("TTU.map = ", prim1$19);
+console.log("TTU.map = ", prim1$20);
 
 function TestTraversableNat(T2, A1, A2, MT) {
   var T1 = Curry._1(MT, A1);
@@ -906,7 +910,7 @@ var TTIL = {
   test: test
 };
 
-var prim1$20 = test({
+var prim1$21 = test({
       hd: 1,
       tl: {
         hd: 2,
@@ -917,7 +921,7 @@ var prim1$20 = test({
       }
     });
 
-console.log("TTIL.test = ", prim1$20);
+console.log("TTIL.test = ", prim1$21);
 
 function ComposeApplicative(F, G) {
   var pure = function (x) {
