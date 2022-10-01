@@ -36,7 +36,9 @@
     "@glennsl/bs-json",
     "rescript-nodejs",
     "@mobily/rescript-date",
-    "rescript-ocamlgraph"
+    "rescript-ocamlgraph",
+    "bs-bastet",
+    "relude"
   ],
   "bs-dev-dependencies": [
     "rescript-test",

@@ -58,7 +58,6 @@
     "@swc/jest": "^0.2.22",
     "esbuild-jest": "^0.5.0",
     "jest": "^29.0.1",
-    "relude": "^0.66.1",
     "rescript": "^10.0.0",
     "rescript-test": "^3.4.1"
   },
@@ -76,6 +75,8 @@
     "rescript-js": "^1.0.0-beta.2",
     "rescript-jzon": "latest",
     "rescript-nodejs": "14.2.1",
-    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10"
+    "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10",
+    "bs-bastet": "github:dsiu/bastet#rescript-v10",
+    "relude": "github:dsiu/relude#rescript-v10"
   }
 }
