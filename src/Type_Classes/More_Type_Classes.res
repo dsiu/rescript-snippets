@@ -249,7 +249,7 @@ module ListMonoid = (T: TYPE): (MONOID with type t = list<T.t>) => {
 
 {
   // existential type parameter
-  let concat = (type a, xs) => {
+  let _concat = (type a, xs) => {
     module MU = MonoidUtils(
       ListMonoid({
         type t = a
