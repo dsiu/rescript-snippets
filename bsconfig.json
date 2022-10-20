@@ -38,7 +38,8 @@
     "@mobily/rescript-date",
     "rescript-ocamlgraph",
     "bs-bastet",
-    "relude"
+    "relude",
+    "tablecloth-rescript"
   ],
   "bs-dev-dependencies": [
     "rescript-test",
