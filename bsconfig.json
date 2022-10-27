@@ -39,6 +39,7 @@
     "rescript-ocamlgraph",
     "bs-bastet",
     "relude",
+    "js-array2-ex",
     "tablecloth-rescript"
   ],
   "bs-dev-dependencies": [

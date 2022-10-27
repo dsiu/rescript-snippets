@@ -6,8 +6,14 @@ let log = Js.Console.log
 
 let identity = FP_Utils.identity
 
-// map string
+/**
+ Printable
+ */
 module Printable = {
+  /**
+    MapString
+    @param: m
+  */
   module MapString = {
     let toString = (m, f) =>
       Map.String.reduce(m, "", (a, k, v) => {
@@ -23,7 +29,9 @@ module Printable = {
     }
   }
 
-  // map int
+  /**
+    MapInt
+  */
   module MapInt = {
     let toString = (m, f) => {
       Map.Int.reduce(m, "", (a, k, v) => {
@@ -35,6 +43,11 @@ module Printable = {
     }
 
     module Int = {
+      /**
+       @returns String
+       @param {Map} m the `map`
+       @param b the other
+      */
       let toString = m => toString(m, Int.toString)
     }
 
@@ -166,6 +179,11 @@ let flatten = (xs: array<array<'a>>) => {
   xs->Array.reduce([], (a, x) => Array.concat(a, x))
 }
 
+// ref: https://blog.shaynefletcher.org/2017/08/transpose.html
+// ref: https://github.com/nyinyithann/rescript-js-array2-extension/blob/main/src/JsArray2Ex.res
+
+let transpose = JsArray2Ex.transpose
+
 let maxKeyIntValuePair = Array.reduce(_, ("", 0), (acc, (k, v)) => {
   let (_, va) = acc
   v > va ? (k, v) : acc
@@ -194,6 +212,14 @@ let hashMapStringUpdate = (h, k, f) => {
   h->HashMap.String.set(
     k,
     h->HashMap.String.get(k)->Option.mapWithDefaultU(f(None), (. x) => f(Some(x))),
+  )
+  h
+}
+
+let mutableMapStringUpdate = (h, k, f) => {
+  h->MutableMap.String.set(
+    k,
+    h->MutableMap.String.get(k)->Option.mapWithDefaultU(f(None), (. x) => f(Some(x))),
   )
   h
 }
