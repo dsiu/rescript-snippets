@@ -5,9 +5,9 @@
         <item url="file://$PROJECT_DIR$/node_modules/@glennsl/bs-json" />
         <item url="file://$PROJECT_DIR$/node_modules/@mobily/rescript-date" />
         <item url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
-        <item url="file://$PROJECT_DIR$/node_modules/bisect_ppx" />
         <item url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
         <item url="file://$PROJECT_DIR$/node_modules/bs-fetch" />
+        <item url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
         <item url="file://$PROJECT_DIR$/node_modules/relude" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-js" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
@@ -20,9 +20,9 @@
       <root url="file://$PROJECT_DIR$/node_modules/@glennsl/bs-json" />
       <root url="file://$PROJECT_DIR$/node_modules/@mobily/rescript-date" />
       <root url="file://$PROJECT_DIR$/node_modules/@ryyppy/rescript-promise" />
-      <root url="file://$PROJECT_DIR$/node_modules/bisect_ppx" />
       <root url="file://$PROJECT_DIR$/node_modules/bs-bastet" />
       <root url="file://$PROJECT_DIR$/node_modules/bs-fetch" />
+      <root url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
       <root url="file://$PROJECT_DIR$/node_modules/relude" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-js" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
