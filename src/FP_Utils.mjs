@@ -107,6 +107,33 @@ function combinationArray3(a, b, c, f) {
               }));
 }
 
+function combinationIfArray4(a, b, c, d, f) {
+  var ret = {
+    contents: []
+  };
+  a.forEach(function (x) {
+        b.forEach(function (y) {
+              c.forEach(function (z) {
+                    d.forEach(function (w) {
+                          var r = f(x, y, z, w);
+                          if (r !== undefined) {
+                            ret.contents = ret.contents.concat([Caml_option.valFromOption(r)]);
+                            return ;
+                          }
+                          
+                        });
+                  });
+            });
+      });
+  return ret.contents;
+}
+
+function combinationArray4(a, b, c, d, f) {
+  return combinationIfArray4(a, b, c, d, (function (x, y, z, w) {
+                return Caml_option.some(f(x, y, z, w));
+              }));
+}
+
 function optionOr(a, b) {
   if (a !== undefined) {
     return a;
@@ -156,6 +183,8 @@ export {
   combinationArray2 ,
   combinationIfArray3 ,
   combinationArray3 ,
+  combinationIfArray4 ,
+  combinationArray4 ,
   optionOr ,
   identity ,
   eq ,
