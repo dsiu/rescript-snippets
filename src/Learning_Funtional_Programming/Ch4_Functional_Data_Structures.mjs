@@ -117,9 +117,15 @@ function getFinalGrade(student) {
         };
 }
 
+var Ch4_Monads_student = /* Student */{
+  id: 1,
+  email: "alex"
+};
+
 var Ch4_Monads = {
   getStudent: getStudent,
-  getFinalGrade: getFinalGrade
+  getFinalGrade: getFinalGrade,
+  student: Ch4_Monads_student
 };
 
 export {
