@@ -2,6 +2,7 @@ open Stdlib
 module A = Array
 
 let log = Js.log
+let log2 = Js.log2
 
 module Ch4_flatmap = {
   type customer = Customer(int)
@@ -29,7 +30,7 @@ module Ch4_Higher_Order_Functions = {
   }
 
   let emails = getUsers()->List.map(result => result->Result.map((User(u)) => u.email))
-  emails->List.toArray->log
+  emails->List.toArray->log2(__LINE__, _)
 }
 
 module Ch4_Monads = {
@@ -44,6 +45,10 @@ module Ch4_Monads = {
     Some(FinalGrade({grade: 100}))
   }
 
-  let student = getStudent(1)
-  //  let
+  let students = list{
+    Some(Student({id: 1, email: "jack@example.com"})),
+    None,
+    Some(Student({id: 2, email: "andrea@example.com"})),
+    None,
+  }
 }
