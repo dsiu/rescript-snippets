@@ -1,5 +1,8 @@
 # rescript-snippets
 
+## Monads:
+* [You Could Have Invented Monads! (And Maybe You Already Have.)](http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html) - This article is GOOD
+
 ## TODOs:
 * [check out monads here](https://github.com/BinaryAnalysisPlatform/bap)
 * [Clarity - functional programming library for OCaml](https://github.com/IndiscriminateCoding/clarity)
