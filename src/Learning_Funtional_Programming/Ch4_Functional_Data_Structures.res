@@ -1,4 +1,5 @@
-open Belt
+open Stdlib
+module A = Array
 
 let log = Js.log
 
@@ -12,7 +13,7 @@ module Ch4_flatmap = {
     }
   }
 
-  [0, 1, 2]->FP_Utils.flatMapArray(x => [getUser(x)])->log
+  [0, 1, 2]->A.flatMap(x => [getUser(x)])->log
 }
 
 module Ch4_Higher_Order_Functions = {

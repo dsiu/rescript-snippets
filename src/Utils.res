@@ -1,10 +1,9 @@
 open Belt
+let identity = Stdlib.Function.identity
 
 // Logging
 let log = Js.Console.log
 @val @scope("console") external consoleDir: 'a => unit = "dir"
-
-let identity = FP_Utils.identity
 
 /**
  Printable
@@ -111,10 +110,8 @@ module Printable = {
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Js.Int.toStringWithRadix(_, ~radix=2)
 
-let intFromStringExn = FP_Utils.compose(
-  Js.String2.trim,
-  FP_Utils.compose(Int.fromString, Belt.Option.getExn),
-)
+let compose = Stdlib.Function.compose
+let intFromStringExn = compose(Js.String2.trim, compose(Int.fromString, Belt.Option.getExn))
 
 let add = (x, y) => x + y
 let sub = (x, y) => x - y
@@ -184,7 +181,7 @@ let flatten = (xs: array<array<'a>>) => {
 
 let transpose = JsArray2Ex.transpose
 
-let maxKeyIntValuePair = Array.reduce(_, ("", 0), (acc, (k, v)) => {
+let maxKeyIntValuePair = Array.reduce(_, ("", min_int), (acc, (k, v)) => {
   let (_, va) = acc
   v > va ? (k, v) : acc
 })
@@ -194,7 +191,7 @@ let minKeyIntValuePair = Array.reduce(_, ("", max_int), (acc, (k, v)) => {
   v < va ? (k, v) : acc
 })
 
-let maxKeyInt64ValuePair = Array.reduce(_, ("", 0L), (acc, (k, v)) => {
+let maxKeyInt64ValuePair = Array.reduce(_, ("", Int64.min_int), (acc, (k, v)) => {
   let (_, va) = acc
   Int64.compare(v, va) > 0 ? (k, v) : acc
 })

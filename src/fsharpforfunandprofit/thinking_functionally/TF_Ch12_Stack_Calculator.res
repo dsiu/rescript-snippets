@@ -62,6 +62,7 @@ let pop = (StackContents(contents)) => {
       let newStack = StackContents(rest)
       (top, newStack)
     }
+
   | list{} => raise(Not_found)
   }
 }
@@ -159,7 +160,8 @@ start->one->two->add->show2("1+2")->three->add->show2("+3")->ignore
 start->one->two->add->show2("1+2")->three->mul->show2("*3")->two->div->show2("/2")->ignore
 
 // using composing instead of piping
-open FP_Utils
+open Stdlib
+let compose = Function.compose
 let one_two_add = one->compose(two)->compose(add)
 let one_two_sub = one->compose(two)->compose(sub)
 
@@ -172,6 +174,7 @@ start->two->square->show2("square")->ignore
 let cube = dup->compose(dup)->compose(mul)->compose(mul)
 start->three->cube->show2("cube")->ignore
 
+let composeN = Function.composeN
 let sum_numbers_upto = [dup, one, add, mul, two, div]->composeN
 start->three->square->sum_numbers_upto->show2("sum up to 9")->ignore
 

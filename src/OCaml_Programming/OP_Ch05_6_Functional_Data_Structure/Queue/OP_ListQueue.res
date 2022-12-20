@@ -21,5 +21,5 @@ module M: OP_Queue.S = {
     | list{_, ...q} => q
     }
   let size = List.length
-  let to_list = FP_Utils.identity
+  let to_list = Stdlib.Function.identity
 }

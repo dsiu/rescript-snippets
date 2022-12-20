@@ -1,6 +1,8 @@
 //
 // ref: https://fsharpforfunandprofit.com/posts/designing-with-types-single-case-dus/
 //
+open Stdlib
+let {identity, eq} = module(Stdlib.Function)
 
 module EmailAddress = {
   type t = EmailAddress(string)
@@ -23,7 +25,7 @@ module EmailAddress = {
   let apply = (f, EmailAddress(e)) => f(e)
 
   // unwrap directly
-  let value = e => apply(FP_Utils.identity, e)
+  let value = e => apply(Function.identity, e)
 }
 
 module ZipCode = {
@@ -48,7 +50,7 @@ module ZipCode = {
   let apply = (f, ZipCode(e)) => f(e)
 
   // unwrap directly
-  let value = e => apply(FP_Utils.identity, e)
+  let value = e => apply(identity, e)
 }
 
 module StateCode = {
@@ -58,9 +60,7 @@ module StateCode = {
   let createWithCont = (success, failure, s: string) => {
     let s' = s->Js.String.toUpperCase
     let stateCodes = list{"AZ", "CA", "NY"}
-    stateCodes->Belt.List.has(s', FP_Utils.eq)
-      ? success(StateCode(s))
-      : failure("State is not in list")
+    stateCodes->Belt.List.has(s', eq) ? success(StateCode(s)) : failure("State is not in list")
   }
 
   // create directly
@@ -74,7 +74,7 @@ module StateCode = {
   let apply = (f, StateCode(e)) => f(e)
 
   // unwrap directly
-  let value = e => apply(FP_Utils.identity, e)
+  let value = e => apply(identity, e)
 }
 
 module PersonalName = {

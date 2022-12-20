@@ -358,7 +358,7 @@ module UniqListSet: Set = {
   let add = (x, s) => {
     mem(x, s) ? s : list{x, ...s}
   }
-  let elements = FP_Utils.identity
+  let elements = Stdlib.Function.identity
 }
 
 module OfList = SetOfList(ListSet)

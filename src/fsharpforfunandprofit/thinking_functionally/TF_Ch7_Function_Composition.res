@@ -2,8 +2,9 @@
 // ref: https://fsharpforfunandprofit.com/posts/function-composition/
 //
 
+open Stdlib
 let log = Js.log
-let compose = FP_Utils.compose
+let compose = Function.compose
 
 let add = (n, x) => x + n
 let times = (n, x) => x * n

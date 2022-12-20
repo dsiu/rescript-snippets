@@ -1,7 +1,7 @@
+open Stdlib
 let log = Js.log
 let log2 = Js.log2
-open Belt
-open FP_Utils
+let compose = Function.compose
 
 let f: float => float = x => x +. 2.0
 let g: float => float = x => x *. 3.0
@@ -61,11 +61,11 @@ let lift = (f, x) => (f(x), "")
 // or more simply, lift f = unit . f. The lifted version does much the same as the original function
 // and, quite reasonably, it produces the empty string as a side effect.
 
-let lift' = FP_Utils.compose(f, unit)
+let lift' = Stdlib.Function.compose(f, unit)
 
 // Show that lift f * lift g = lift (f.g)
 let liftThenCompose = x => bind(lift(f))(lift(g)(x))
-let composeLifted = lift(FP_Utils.compose(g, f))
+let composeLifted = lift(Stdlib.Function.compose(g, f))
 
 liftThenCompose(13.0)->log2("liftThenCompose(13.0) = ")
 composeLifted(13.0)->log2("composeLifted(13.0) = ")
