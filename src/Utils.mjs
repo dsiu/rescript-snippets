@@ -3,7 +3,6 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Int64 from "rescript/lib/es6/int64.js";
 import * as Belt_Int from "rescript/lib/es6/belt_Int.js";
-import * as FP_Utils from "./FP_Utils.mjs";
 import * as Belt_Array from "rescript/lib/es6/belt_Array.js";
 import * as Caml_int32 from "rescript/lib/es6/caml_int32.js";
 import * as Caml_int64 from "rescript/lib/es6/caml_int64.js";
@@ -14,6 +13,7 @@ import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_format from "rescript/lib/es6/caml_format.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
 import * as Belt_MapString from "rescript/lib/es6/belt_MapString.js";
+import * as Stdlib_Function from "./stdlib/Stdlib_Function.mjs";
 import * as Belt_SortArrayInt from "rescript/lib/es6/belt_SortArrayInt.js";
 import * as Belt_HashMapString from "rescript/lib/es6/belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/belt_MutableMapInt.js";
@@ -30,7 +30,7 @@ function toString(m, f) {
 }
 
 function toString$1(m) {
-  return toString(m, FP_Utils.identity);
+  return toString(m, Stdlib_Function.identity);
 }
 
 var $$String = {
@@ -60,7 +60,7 @@ function toString$3(m, f) {
 }
 
 function toString$4(m) {
-  return toString$3(m, FP_Utils.identity);
+  return toString$3(m, Stdlib_Function.identity);
 }
 
 var $$String$2 = {
@@ -195,10 +195,10 @@ function base2(__x) {
 }
 
 function intFromStringExn(param) {
-  return FP_Utils.compose((function (prim) {
+  return Stdlib_Function.compose((function (prim) {
                 return prim.trim();
               }), (function (param) {
-                return FP_Utils.compose(Belt_Int.fromString, Belt_Option.getExn, param);
+                return Stdlib_Function.compose(Belt_Int.fromString, Belt_Option.getExn, param);
               }), param);
 }
 
@@ -292,7 +292,7 @@ function flatten(xs) {
 function maxKeyIntValuePair(__x) {
   return Belt_Array.reduce(__x, [
               "",
-              0
+              Pervasives.min_int
             ], (function (acc, param) {
                 var v = param[1];
                 if (v > acc[1]) {
@@ -326,7 +326,7 @@ function minKeyIntValuePair(__x) {
 function maxKeyInt64ValuePair(__x) {
   return Belt_Array.reduce(__x, [
               "",
-              Caml_int64.zero
+              Int64.min_int
             ], (function (acc, param) {
                 var v = param[1];
                 if (Int64.compare(v, acc[1]) > 0) {
@@ -371,15 +371,18 @@ function mutableMapStringUpdate(h, k, f) {
   return h;
 }
 
-var identity = FP_Utils.identity;
+var identity = Stdlib_Function.identity;
+
+var compose = Stdlib_Function.compose;
 
 var transpose = JsArray2Ex.transpose;
 
 export {
-  log ,
   identity ,
+  log ,
   Printable ,
   base2 ,
+  compose ,
   intFromStringExn ,
   add ,
   sub ,

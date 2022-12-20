@@ -6,9 +6,9 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_Id from "rescript/lib/es6/belt_Id.js";
 import * as Belt_Map from "rescript/lib/es6/belt_Map.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
-import * as FP_Utils from "../../FP_Utils.mjs";
 import * as Belt_HashMap from "rescript/lib/es6/belt_HashMap.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
+import * as Stdlib_Function from "../../stdlib/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -314,7 +314,7 @@ var UniqListSet = {
   empty: /* [] */0,
   mem: List.mem,
   add: add$1,
-  elements: FP_Utils.identity
+  elements: Stdlib_Function.identity
 };
 
 function of_list(lst) {
@@ -366,7 +366,7 @@ var UniqSetL = {
   empty: /* [] */0,
   mem: List.mem,
   add: add$1,
-  elements: FP_Utils.identity,
+  elements: Stdlib_Function.identity,
   of_list: of_list$3
 };
 
