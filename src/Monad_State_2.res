@@ -27,14 +27,16 @@ module StateMonad: STATE_MONAD = (State: STATE) => {
   type state = State.t
   type t<'a> = state => ('a, state)
 
-  let bind = (m, f, s) => {
-    switch m(s) {
-    | (x, s') => f(x, s')
+  let bind = (m, f) => {
+    s => {
+      switch m(s) {
+      | (x, s') => f(x, s')
+      }
     }
   }
 
-  let return = (a, s) => {
-    (a, s)
+  let return = a => {
+    s => (a, s)
   }
 
   let access = m => {
@@ -43,12 +45,16 @@ module StateMonad: STATE_MONAD = (State: STATE) => {
     }
   }
 
-  let put = (s, _) => {
-    ((), s)
+  let put = s => {
+    _ => {
+      ((), s)
+    }
   }
 
-  let get = s => {
-    (s, s)
+  let get = {
+    s => {
+      (s, s)
+    }
   }
 }
 
@@ -58,7 +64,8 @@ module IntStateMonad = StateMonad({
 })
 
 let _ = {
-  let blah = IntStateMonad.return(1)
-  let blah2 = IntStateMonad.bind(blah, i => IntStateMonad.return(i + 1))
-  IntStateMonad.access(blah2)->log
+  open IntStateMonad
+  let blah = return(1)
+  let blah2 = blah->bind(x => return(succ(x)))
+  access(blah2)->log2(_, "test1")
 }

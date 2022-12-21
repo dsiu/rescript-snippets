@@ -91,8 +91,8 @@ function blah(param) {
 }
 
 function blah2(param) {
-  return bind(blah, (function (i) {
-                var partial_arg = i + 1 | 0;
+  return bind(blah, (function (x) {
+                var partial_arg = x + 1 | 0;
                 return function (param) {
                   return [
                           partial_arg,
@@ -102,9 +102,9 @@ function blah2(param) {
               }), param);
 }
 
-var prim = access(blah2);
+var prim0 = access(blah2);
 
-console.log(prim);
+console.log(prim0, "test1");
 
 export {
   log ,
@@ -112,4 +112,4 @@ export {
   StateMonad ,
   IntStateMonad ,
 }
-/* prim Not a pure module */
+/* prim0 Not a pure module */
