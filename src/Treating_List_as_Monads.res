@@ -16,6 +16,9 @@ let lessThanEq = (a, b) => a <= b
 let b = 10
 let keyboards = [3, 1]
 let drives = [5, 2, 8]
+let pair = (a, b) => (a, b)
+
+A.liftM2(pair, keyboards, drives)->log
 
 let solve = (b, keyboards, drives) => {
   A.liftM2(\"+", keyboards, drives)

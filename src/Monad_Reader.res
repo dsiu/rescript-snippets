@@ -150,7 +150,7 @@ let name = env => env.name
 let to_string = (age, name) => "Name: " ++ name ++ ", Age: " ++ string_of_int(age)
 
 let _ = {
-  let env = {name: "John", age: 30}
+  let _env = {name: "John", age: 30}
   Js.Console.timeStart("reader")
   let r =
     return(24)
@@ -167,7 +167,7 @@ let _ = {
 type env2 = {state: int}
 
 let _ = {
-  let getState = env2 => env2.state
+  let _getState = env2 => env2.state
 
   let r2 = return("danny")->bind(x => (string_of_int(1) ++ x)->return, _)
 

@@ -24,6 +24,17 @@ var drives = [
   8
 ];
 
+function pair(a, b) {
+  return [
+          a,
+          b
+        ];
+}
+
+var prim = Stdlib_Array.liftM2(pair, keyboards, drives);
+
+console.log(prim);
+
 function solve(b, keyboards, drives) {
   return Stdlib_Option.fromMaybe(Stdlib_Option.arrayToMayBe(Belt_SortArray.stableSortBy(Stdlib_Array.keep(Stdlib_Array.liftM2((function (prim0, prim1) {
                                 return prim0 + prim1 | 0;
@@ -34,9 +45,9 @@ function solve(b, keyboards, drives) {
                       }))), -1);
 }
 
-var prim = solve(10, keyboards, drives);
+var prim$1 = solve(10, keyboards, drives);
 
-console.log(prim);
+console.log(prim$1);
 
 var A;
 
@@ -58,6 +69,7 @@ export {
   b ,
   keyboards ,
   drives ,
+  pair ,
   solve ,
 }
 /* prim Not a pure module */
