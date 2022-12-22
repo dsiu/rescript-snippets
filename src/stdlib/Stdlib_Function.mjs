@@ -31,6 +31,10 @@ function composeN(fs) {
   return Stdlib_Array.foldLeft(fs, compose);
 }
 
+function flip(f, left, right) {
+  return Curry._2(f, right, left);
+}
+
 export {
   identity ,
   eq ,
@@ -39,5 +43,6 @@ export {
   compose3 ,
   compose4 ,
   composeN ,
+  flip ,
 }
 /* No side effect */

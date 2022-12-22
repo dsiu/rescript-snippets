@@ -143,6 +143,25 @@ let foldRight: (array<'a>, ('a, 'a) => 'a) => 'a = (xs, f) => {
   rest->reduceReverse(init, f)
 }
 
+let return = x => [x]
+
+//
+// https://gist.github.com/NicolasT/3789670
+//
+// Operator lifting
+// Not adding type info here since these should be generic
+//liftM2 :: (a -> b -> c) -> m a -> m b -> m c
+let liftM2 = (f, m1, m2) => {
+  m1->flatMap(x1 => m2->flatMap(x2 => return(f(x1, x2))))
+}
+
+//  These become :: (int, int) cont -> (int, int) cont -> (int, int) cont
+//let (-!) = liftM2 (-)
+//let (+!) = liftM2 (+)
+//let ( *! ) = liftM2 ( * )
+
+// TODO: the following combinationIfs can be expressed in LiftM2
+
 /**
   apply f(x,y) for each x in a and each y in b ONLY if f(x,y) returns Some()
   returns result in array

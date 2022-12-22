@@ -21,3 +21,5 @@ let composeN = fs => {
   open Stdlib_Array
   fs->foldLeft(compose)
 }
+
+let flip = (f, left, right) => f(right, left)

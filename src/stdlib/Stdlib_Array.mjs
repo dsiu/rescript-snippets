@@ -168,6 +168,18 @@ function foldRight(xs, f) {
   return Belt_Array.reduceReverse(rest, init, f);
 }
 
+function $$return(x) {
+  return [x];
+}
+
+function liftM2(f, m1, m2) {
+  return flatMap(m1, (function (x1) {
+                return flatMap(m2, (function (x2) {
+                              return [Curry._2(f, x1, x2)];
+                            }));
+              }));
+}
+
 function combinationIf2(a, b, f) {
   var ret = {
     contents: []
@@ -476,6 +488,8 @@ export {
   arrayToOption ,
   foldLeft ,
   foldRight ,
+  $$return ,
+  liftM2 ,
   combinationIf2 ,
   combination2 ,
   combinationIf3 ,

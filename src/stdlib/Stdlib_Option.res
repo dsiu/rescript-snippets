@@ -16,3 +16,14 @@ let optionOr: (option<'a>, option<'a>) => option<'a> = (a, b) => {
   | None => b
   }
 }
+
+// from haskell
+let fromMaybe = getWithDefault
+
+module A = Stdlib_Array
+// from haskell
+let arrayToMayBe = A.get(_, 0)
+
+module L = Stdlib_List
+// from haskell
+let listToMayBe = L.get(_, 0)

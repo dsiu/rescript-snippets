@@ -3,6 +3,8 @@
 import * as Js_exn from "rescript/lib/es6/js_exn.js";
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as Stdlib_List from "./Stdlib_List.mjs";
+import * as Stdlib_Array from "./Stdlib_Array.mjs";
 
 function getExnWithMessage(option, message) {
   if (option !== undefined) {
@@ -18,6 +20,14 @@ function optionOr(a, b) {
   } else {
     return b;
   }
+}
+
+function arrayToMayBe(__x) {
+  return Stdlib_Array.get(__x, 0);
+}
+
+function listToMayBe(__x) {
+  return Stdlib_List.get(__x, 0);
 }
 
 var keepU = Belt_Option.keepU;
@@ -58,6 +68,12 @@ var cmpU = Belt_Option.cmpU;
 
 var cmp = Belt_Option.cmp;
 
+var fromMaybe = Belt_Option.getWithDefault;
+
+var A;
+
+var L;
+
 export {
   keepU ,
   keep ,
@@ -80,5 +96,10 @@ export {
   cmp ,
   getExnWithMessage ,
   optionOr ,
+  fromMaybe ,
+  A ,
+  arrayToMayBe ,
+  L ,
+  listToMayBe ,
 }
 /* No side effect */
