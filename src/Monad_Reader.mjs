@@ -50,6 +50,70 @@ function bindFlip(m, f) {
   return bind(f, m);
 }
 
+function name(env) {
+  return env.name;
+}
+
+function to_string(age, name) {
+  return "Name: " + name + ", Age: " + String(age);
+}
+
+console.time("reader");
+
+var __x = /* Reader */{
+  _0: (function (_env) {
+      return 24;
+    })
+};
+
+var __x$1 = map((function (x) {
+        return x + 1 | 0;
+      }), __x);
+
+var __x$2 = bind((function (x) {
+        var __x = map(name, /* Reader */{
+              _0: (function (env) {
+                  return env;
+                })
+            });
+        return map((function (param) {
+                      return to_string(x, param);
+                    }), __x);
+      }), __x$1);
+
+var r = local((function (env) {
+        return {
+                name: "Vicent",
+                age: env.age
+              };
+      }), __x$2);
+
+console.log(run(r, {
+          name: "Jack",
+          age: 85
+        }));
+
+console.timeEnd("reader");
+
+var __x$3 = /* Reader */{
+  _0: (function (_env) {
+      return "danny";
+    })
+};
+
+var r2 = bind((function (x) {
+        var a = String(1) + x;
+        return /* Reader */{
+                _0: (function (_env) {
+                    return a;
+                  })
+              };
+      }), __x$3);
+
+console.log(run(r2, {
+          state: 1
+        }));
+
 export {
   run ,
   $$return ,
@@ -58,5 +122,7 @@ export {
   map ,
   bind ,
   bindFlip ,
+  name ,
+  to_string ,
 }
-/* No side effect */
+/*  Not a pure module */
