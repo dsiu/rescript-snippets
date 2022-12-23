@@ -315,6 +315,12 @@
     exec-sh "^0.3.2"
     minimist "^1.2.0"
 
+"@dsiu/rescript-stdlib-fp@github:dsiu/rescript-stdlib-fp":
+  version "0.0.1"
+  resolved "https://codeload.github.com/dsiu/rescript-stdlib-fp/tar.gz/c1b951e86c7eaab79580428335f8d175171f6570"
+  dependencies:
+    "@rescript/std" "^10.0.0"
+
 "@glennsl/bs-jest@*":
   version "0.7.0"
   resolved "https://registry.yarnpkg.com/@glennsl/bs-jest/-/bs-jest-0.7.0.tgz#6b6168edf15aa4dab51cfe7734b36705beac2f11"
@@ -934,6 +940,11 @@
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@mobily/rescript-date/-/rescript-date-2.1.0.tgz#d062a8e211fe5609203d8b2c88247c52e4626ae6"
   integrity sha512-F6uc9Ea3nLRQCYOPqYIK8498uWeyVOEjogQNKIKD/VPtrjeS3da0FkMER56JrAGO/RYyCuN/VNuHN6FOqEX2DA==
+
+"@rescript/std@^10.0.0":
+  version "10.0.1"
+  resolved "https://registry.yarnpkg.com/@rescript/std/-/std-10.0.1.tgz#2ffa229f3345fea3341fed4bbc9b15949cf182ba"
+  integrity sha512-cchIxAI/zVU2sITZgVWz/QOKSRDGEhGyzMTWfsZdgNf6QD9+S/CUVfS1lBqPaX9GaGy1FCWHAqGYwIIaVqAS4Q==
 
 "@ryyppy/rescript-promise@^2.1.0", "@ryyppy/rescript-promise@latest":
   version "2.1.0"

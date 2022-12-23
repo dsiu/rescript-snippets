@@ -79,6 +79,7 @@
     "rescript-jzon": "latest",
     "rescript-nodejs": "^14.3.1",
     "rescript-ocamlgraph": "github:dsiu/rescript-ocamlgraph#rescript-v10",
-    "tablecloth-rescript": "github:darklang/tablecloth-rescript#main"
+    "tablecloth-rescript": "github:darklang/tablecloth-rescript#main",
+    "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp"
   }
 }
