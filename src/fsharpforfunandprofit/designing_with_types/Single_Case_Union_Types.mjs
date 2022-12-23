@@ -3,7 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as Stdlib_Function from "../../stdlib/Stdlib_Function.mjs";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 
 function createWithCont(success, failure, s) {
   var match = /^\S+@\S+\.\S+$/.exec(s);

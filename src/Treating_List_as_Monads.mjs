@@ -2,10 +2,10 @@
 
 import * as Caml from "rescript/lib/es6/caml.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
-import * as Stdlib_Array from "./stdlib/Stdlib_Array.mjs";
-import * as Stdlib_Option from "./stdlib/Stdlib_Option.mjs";
+import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
+import * as Stdlib_Option from "@dsiu/rescript-stdlib-fp/src/Stdlib_Option.mjs";
 import * as Belt_SortArray from "rescript/lib/es6/belt_SortArray.js";
-import * as Stdlib_Function from "./stdlib/Stdlib_Function.mjs";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);

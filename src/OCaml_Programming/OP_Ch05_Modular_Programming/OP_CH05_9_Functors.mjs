@@ -8,7 +8,7 @@ import * as Belt_Map from "rescript/lib/es6/belt_Map.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_HashMap from "rescript/lib/es6/belt_HashMap.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
-import * as Stdlib_Function from "../../stdlib/Stdlib_Function.mjs";
+import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
 
 function log(prim) {
   console.log(prim);
