@@ -140,38 +140,41 @@ let bindFlip: bindFlip<'a, 'e, 'b> = (m, f) => bind(f, m)
 // Reader monad in reasonml
 // https://sketch.sh/s/NUtDN1ArEiJ1FIEfG6ZRoj/
 
-type env = {
-  name: string,
-  age: int,
-}
-
-let name = env => env.name
-
-let to_string = (age, name) => "Name: " ++ name ++ ", Age: " ++ string_of_int(age)
-
-let _ = {
-  let _env = {name: "John", age: 30}
-  Js.Console.timeStart("reader")
-  let r =
-    return(24)
-    ->map(x => x + 1, _)
-    ->bind(x => ask()->map(name, _)->map(to_string(x), _), _)
-    ->local(env => {...env, name: "Vicent"}, _)
-
-  let env = {name: "Jack", age: 85}
-  run(r, env)->Js.log
-  Js.Console.timeEnd("reader")
-  // -> Name: Vicent, Age: 25
-}
+//type env = {
+//  name: string,
+//  age: int,
+//}
+//
+//let getName = env => env.name
+//
+//let to_string = (age, name) => "Name: " ++ name ++ ", Age: " ++ string_of_int(age)
+//
+//let _ = {
+//  let _env = {name: "John", age: 30}
+//  Js.Console.timeStart("reader")
+//  let r =
+//    return(24)
+//    ->map(x => x + 1, _)
+//    ->bind(x => ask()->map(getName, _)->map(to_string(x), _), _)
+//    ->local(env => {...env, name: "Vicent"}, _)
+//
+//  let env = {name: "Jack", age: 85}
+//  run(r, env)->Js.log
+//  Js.Console.timeEnd("reader")
+//   -> Name: Vicent, Age: 25
+//}
 
 type env2 = {state: int}
 
 let _ = {
   let _getState = env2 => env2.state
 
-  let r2 = return("danny")->bind(x => (string_of_int(1) ++ x)->return, _)
+  let r2 = return("danny")->bind(x => {
+    ask()->map(_getState, _)->map(y => string_of_int(y) ++ x, _)
+  }, _)
 
   let env2 = {state: 1}
 
   run(r2, env2)->Js.log
+  run(r2, {state: 3})->Js.log
 }

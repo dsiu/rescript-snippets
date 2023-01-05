@@ -3,7 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Js_promise from "rescript/lib/es6/js_promise.js";
 import * as Belt_Result from "rescript/lib/es6/belt_Result.js";
-import * as SafeReadFile from "../safeReadFile.js";
+import * as SafeReadFile from "./safeReadFile";
 
 function produce(a, b) {
   return Promise.all([
