@@ -1,3 +1,6 @@
+open Stdlib
+module L = List
+
 let log = Js.log
 let log2 = Js.log2
 open Belt
@@ -47,5 +50,5 @@ module More_Higher_Order_Functions = {
 
 module From_Map_To_FlatMap = {
   let ls = list{"Hello", "World"}
-  ls->FP_Utils.flatMapList(c => list{c->Js.String2.toUpperCase})->List.toArray->log2(__LINE__, _)
+  ls->L.flatMap(c => list{c->Js.String2.toUpperCase})->List.toArray->log2(__LINE__, _)
 }
