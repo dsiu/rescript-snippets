@@ -1,3 +1,6 @@
 {
-    "jest.jestCommandLine": "node_modules/.bin/jest"
+    "jest.jestCommandLine": "node_modules/.bin/jest",
+    "ocaml.sandbox": {
+        "kind": "global"
+    }
 }
