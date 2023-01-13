@@ -24,8 +24,9 @@ module RWS_M = RWST_WITHMONAD.WithEnvAndStateAndLog(
   WriterLog,
 )
 
-let computation = rws => {
-  let e = rws->RWS_M
-}
+//let computation = (r, s) => {
+//  let e = r->RWS_M.map
+//}
 
-let example = RWS_M.runRWST(computation, 2, 3)
+let example = RWS_M.runRWST(2, 3, _)
+example->log

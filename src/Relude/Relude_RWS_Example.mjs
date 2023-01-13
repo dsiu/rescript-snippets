@@ -2,6 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Relude_RWST from "relude/src/Relude_RWST.mjs";
+import * as Relude_WriterT from "relude/src/Relude_WriterT.mjs";
 import * as Relude_Identity from "relude/src/Relude_Identity.mjs";
 
 function log(prim) {
@@ -12,17 +13,36 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-var RWST_M = Relude_RWST.WithMonad(Relude_Identity.Monad);
+var WriterLog = Curry._1(Relude_WriterT.WriterLog.List.WithEntry, {});
 
-var RWST_MY = Curry._2(RWST_M.WithEnvAndStateAndLog, {}, {});
+var WriterList = Relude_WriterT.Writer.WithLog(WriterLog);
+
+var RWST_WITHMONAD = Relude_RWST.WithMonad(Relude_Identity.Monad);
+
+var RWS_M = Curry._3(RWST_WITHMONAD.WithEnvAndStateAndLog, {}, {}, WriterLog);
+
+function example(__x) {
+  return Curry._3(RWS_M.runRWST, 2, 3, __x);
+}
+
+console.log(example);
 
 var RWST;
 
+var WriterT;
+
+var Writer;
+
 export {
   RWST ,
+  WriterT ,
+  Writer ,
   log ,
   log2 ,
-  RWST_M ,
-  RWST_MY ,
+  WriterLog ,
+  WriterList ,
+  RWST_WITHMONAD ,
+  RWS_M ,
+  example ,
 }
-/* RWST_M Not a pure module */
+/* WriterLog Not a pure module */
