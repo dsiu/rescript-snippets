@@ -2,6 +2,7 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Relude_Int from "relude/src/Relude_Int.mjs";
+import * as Relude_Tuple from "relude/src/Relude_Tuple.mjs";
 import * as Relude_String from "relude/src/Relude_String.mjs";
 import * as Relude_Tuple2 from "relude/src/Relude_Tuple2.mjs";
 import * as Relude_ReaderT from "relude/src/Relude_ReaderT.mjs";
@@ -455,6 +456,12 @@ var AT_IntStr = {
 var prim$1 = Curry._1(sort$1, arr_rev);
 
 console.log(prim$1);
+
+var prim$2 = Relude_Array_Instances.showBy((function (param) {
+        return Relude_Tuple.showBy2(Relude_String.show, Relude_Int.show, param);
+      }), arr_rev);
+
+console.log(prim$2);
 
 var ReaderT;
 

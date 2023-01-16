@@ -52,3 +52,5 @@ module AT_IntStr = {
   include Array.ArrayOrdExtensions(Tuple.WithOrds2(String.Ord, Int.Ord))
 }
 arr_rev->AT_IntStr.sort->log
+
+arr_rev->AT_IntStr.showBy(Tuple.showBy2(String.show, Int.show), _)->log
