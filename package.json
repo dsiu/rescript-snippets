@@ -74,6 +74,7 @@
     "js-array2-ex": "^0.0.4",
     "nodemon": "^2.0.19",
     "relude": "github:dsiu/relude#rescript-v10",
+    "relude-parse": "github:dsiu/relude-parse#rescript-v10",
     "rescript-bag": "github:dsiu/rescript-bag#main",
     "rescript-js": "^1.0.0-beta.2",
     "rescript-jzon": "latest",

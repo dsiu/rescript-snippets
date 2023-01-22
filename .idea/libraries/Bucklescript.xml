@@ -10,6 +10,7 @@
         <item url="file://$PROJECT_DIR$/node_modules/bs-fetch" />
         <item url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
         <item url="file://$PROJECT_DIR$/node_modules/relude" />
+        <item url="file://$PROJECT_DIR$/node_modules/relude-parse" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-js" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-nodejs" />
@@ -26,6 +27,7 @@
       <root url="file://$PROJECT_DIR$/node_modules/bs-fetch" />
       <root url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
       <root url="file://$PROJECT_DIR$/node_modules/relude" />
+      <root url="file://$PROJECT_DIR$/node_modules/relude-parse" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-js" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-nodejs" />
