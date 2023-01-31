@@ -111,7 +111,7 @@ function $plus$1(prim0, prim1) {
 }
 
 function $tilde$neg$1(prim) {
-  return -prim;
+  return - prim;
 }
 
 function $star$1(prim0, prim1) {
@@ -145,7 +145,7 @@ function of_int$1(n) {
   };
   var m = loop(Pervasives.abs(n), 1, 0);
   if (n < 0) {
-    return -m;
+    return - m;
   } else {
     return m;
   }
@@ -284,7 +284,7 @@ function of_int$3(n) {
   };
   var m = loop(Pervasives.abs(n), 1, 0);
   if (n < 0) {
-    return -m;
+    return - m;
   } else {
     return m;
   }
@@ -447,7 +447,7 @@ function $plus$3(param, param$1) {
 
 function $tilde$neg$3(param) {
   return [
-          -param[0],
+          - param[0],
           param[1]
         ];
 }
@@ -665,7 +665,7 @@ function $plus$5(param, param$1) {
 
 function $tilde$neg$5(param) {
   return [
-          -param[0],
+          - param[0],
           param[1]
         ];
 }

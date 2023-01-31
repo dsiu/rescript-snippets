@@ -71,7 +71,7 @@ function $plus$2(prim0, prim1) {
 }
 
 function $tilde$neg$2(prim) {
-  return -prim;
+  return - prim;
 }
 
 function $star$2(prim0, prim1) {
@@ -97,7 +97,7 @@ function $plus$3(prim0, prim1) {
 }
 
 function $tilde$neg$3(prim) {
-  return -prim;
+  return - prim;
 }
 
 function $star$3(prim0, prim1) {
@@ -196,7 +196,7 @@ function $plus$5(param, param$1) {
 
 function $tilde$neg$5(param) {
   return [
-          -param[0],
+          - param[0],
           param[1]
         ];
 }

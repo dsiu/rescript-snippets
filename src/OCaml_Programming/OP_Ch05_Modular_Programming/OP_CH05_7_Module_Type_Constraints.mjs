@@ -44,7 +44,7 @@ function $star$1(prim0, prim1) {
 }
 
 function $tilde$neg$1(prim) {
-  return -prim;
+  return - prim;
 }
 
 var FloatRing = {
@@ -95,7 +95,7 @@ function $star$3(prim0, prim1) {
 }
 
 function $tilde$neg$3(prim) {
-  return -prim;
+  return - prim;
 }
 
 var FloatRing$1 = {

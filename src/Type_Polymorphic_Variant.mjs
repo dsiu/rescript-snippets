@@ -39,7 +39,7 @@ console.log(displayColor("blue"));
 
 var intl = Intl.NumberFormat("de-DE");
 
-var message = "Hello Apple";
+var message = "Hello " + "Apple";
 
 var myLabel = "aria-hidden";
 
