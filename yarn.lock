@@ -941,12 +941,16 @@
   resolved "https://registry.yarnpkg.com/@mobily/rescript-date/-/rescript-date-2.1.0.tgz#d062a8e211fe5609203d8b2c88247c52e4626ae6"
   integrity sha512-F6uc9Ea3nLRQCYOPqYIK8498uWeyVOEjogQNKIKD/VPtrjeS3da0FkMER56JrAGO/RYyCuN/VNuHN6FOqEX2DA==
 
+"@rescript/core@github:rescript-association/rescript-core":
+  version "0.1.0"
+  resolved "https://codeload.github.com/rescript-association/rescript-core/tar.gz/64f449d032e7ab33a2cbc85ac81600aa66d69987"
+
 "@rescript/std@^10.0.0":
   version "10.0.1"
   resolved "https://registry.yarnpkg.com/@rescript/std/-/std-10.0.1.tgz#2ffa229f3345fea3341fed4bbc9b15949cf182ba"
   integrity sha512-cchIxAI/zVU2sITZgVWz/QOKSRDGEhGyzMTWfsZdgNf6QD9+S/CUVfS1lBqPaX9GaGy1FCWHAqGYwIIaVqAS4Q==
 
-"@ryyppy/rescript-promise@^2.1.0", "@ryyppy/rescript-promise@latest":
+"@ryyppy/rescript-promise@^2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@ryyppy/rescript-promise/-/rescript-promise-2.1.0.tgz#a33861274c41360cfbe872cf489f3dcb8dd526e6"
   integrity sha512-+dW6msBrj2Lr2hbEMX+HoWCvN89qVjl94RwbYWJgHQuj8jm/izdPC0YzxgpGoEFdeAEW2sOozoLcYHxT6o5WXQ==

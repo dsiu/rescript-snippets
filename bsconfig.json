@@ -29,6 +29,7 @@
   "ppx-flags": [
   ],
   "bs-dependencies": [
+    "@rescript/core",
     "@ryyppy/rescript-promise",
     "rescript-js",
     "rescript-jzon",

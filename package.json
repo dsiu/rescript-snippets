@@ -62,10 +62,10 @@
     "rescript-test": "^4.0.0"
   },
   "dependencies": {
+    "@rescript/core": "github:rescript-association/rescript-core",
     "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp",
     "@glennsl/bs-json": "^5.0.4",
     "@mobily/rescript-date": "^2.1.0",
-    "@ryyppy/rescript-promise": "latest",
     "add": "^2.0.6",
     "bs-bastet": "github:dsiu/bastet#rescript-v10",
     "bs-fetch": "^0.6.2",
