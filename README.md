@@ -4,6 +4,7 @@
 * [You Could Have Invented Monads! (And Maybe You Already Have.)](http://blog.sigfpe.com/2006/08/you-could-have-invented-monads-and.html) - This article is GOOD
 
 ## TODOs:
+* [Node-PG Rescript bindings](https://gist.github.com/tsnobip/a39af55ec2e3bf30ff035698a033731a)
 * [Cool Things You Can Do with First-Class Modules in ReScriptReact](https://alexfedoseev.com/blog/post/cool-things-you-can-do-with-first-class-modules-in-rescript-react)
 * [Relude Parse](https://github.com/reazen/relude-parse)
 * [check out monads here](https://github.com/BinaryAnalysisPlatform/bap)
