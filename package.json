@@ -64,6 +64,7 @@
   "dependencies": {
     "@dsiu/rescript-stdlib-fp": "github:dsiu/rescript-stdlib-fp",
     "@glennsl/bs-json": "^5.0.4",
+    "@jmagaram/rescript-extras": "^1.1.0",
     "@mobily/rescript-date": "^2.1.0",
     "@rescript/core": "github:rescript-association/rescript-core",
     "@ryyppy/rescript-promise": "latest",

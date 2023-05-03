@@ -896,6 +896,14 @@
     "@types/yargs" "^17.0.8"
     chalk "^4.0.0"
 
+"@jmagaram/rescript-extras@^1.1.0":
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/@jmagaram/rescript-extras/-/rescript-extras-1.1.0.tgz#c1115c8d22413fc980200002456ec5c6dea3a997"
+  integrity sha512-68JBfh4j7dzZyHe8dYHPKo+PSa57n3iA7o738QsLjtx//auFweENk2WAzTPhzmOg563vXb9dNxsmEb6Wo8QKjA==
+  dependencies:
+    rescript "^10.1.4"
+    rescript-struct "^4.0.0"
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"
@@ -4901,6 +4909,11 @@ rescript-nodejs@^14.4.0:
 "rescript-ocamlgraph@github:dsiu/rescript-ocamlgraph#rescript-v10":
   version "0.0.1"
   resolved "https://codeload.github.com/dsiu/rescript-ocamlgraph/tar.gz/93d48983dbdee9acb93111fa00ba123d570e2185"
+
+rescript-struct@^4.0.0:
+  version "4.0.0"
+  resolved "https://registry.yarnpkg.com/rescript-struct/-/rescript-struct-4.0.0.tgz#7af4ab0baf889a478443540fe3c4a0fa88fe1a8f"
+  integrity sha512-bp6yh1SVTAndbB1m+i7LSQem8zxsqAA258l8BBwSWdfFcYT+ThS21XWK/npyO0Xl0eaWzRPxXfyJMZx3lxwMOg==
 
 rescript-test@^4.0.0:
   version "4.0.0"
