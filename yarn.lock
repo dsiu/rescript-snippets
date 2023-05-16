@@ -904,6 +904,13 @@
     rescript "^10.1.4"
     rescript-struct "^4.0.0"
 
+"@jmagaram/rescript-seq@^2.1.0":
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/@jmagaram/rescript-seq/-/rescript-seq-2.1.0.tgz#a26bbebbfb09c9f1a27317926ed7f89ed835f58f"
+  integrity sha512-150+Kkw8wA6COzBLCMfXAPKNfr9VqVk/l2sp/CtaLTwXJGQMjMm1dqePPsKxTqA7msjuhmL5pQCgZwQo+RINPg==
+  dependencies:
+    rescript "^10.1.4"
+
 "@jridgewell/gen-mapping@^0.1.0":
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/@jridgewell/gen-mapping/-/gen-mapping-0.1.1.tgz#e5d2e450306a9491e3bd77e323e38d7aff315996"

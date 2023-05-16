@@ -44,7 +44,8 @@
     "js-array2-ex",
     "tablecloth-rescript",
     "@dsiu/rescript-stdlib-fp",
-    "@jmagaram/rescript-extras"
+    "@jmagaram/rescript-extras",
+    "@jmagaram/rescript-seq"
   ],
   "bs-dev-dependencies": [
     "rescript-test",
