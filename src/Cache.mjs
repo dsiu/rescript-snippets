@@ -28,7 +28,7 @@ function connect$1(param) {
   return client$1;
 }
 
-connect$1(undefined);
+connect$1();
 
 var cache$1 = {};
 

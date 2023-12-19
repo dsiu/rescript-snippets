@@ -2,8 +2,9 @@
 
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Fetch from "bs-fetch/src/Fetch.mjs";
+import * as Core__JSON from "@rescript/core/src/Core__JSON.mjs";
 import * as Js_promise from "rescript/lib/es6/js_promise.js";
-import * as Json_decode from "@glennsl/bs-json/src/Json_decode.mjs";
+import * as Core__Option from "@rescript/core/src/Core__Option.mjs";
 
 require('isomorphic-fetch')
 ;
@@ -18,7 +19,9 @@ Js_promise.then_((function (json) {
 
 function catData(data) {
   return {
-          file: Json_decode.field("file", Json_decode.string, data)
+          file: Core__Option.getExn(Core__Option.flatMap(Core__Option.flatMap(Core__JSON.Decode.object(data), (function (__x) {
+                          return __x["file"];
+                        })), Core__JSON.Decode.string))
         };
 }
 
@@ -34,7 +37,7 @@ function fetchCat(param) {
               }), __x$1);
 }
 
-var __x$2 = fetchCat(undefined);
+var __x$2 = fetchCat();
 
 Js_promise.then_((function (data) {
         return Promise.resolve((console.log(data.file), undefined));

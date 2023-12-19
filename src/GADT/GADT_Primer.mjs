@@ -3,16 +3,18 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 
 function mapOption$p(f, opt) {
-  if (opt) {
-    return /* Some' */{
+  if (typeof opt !== "object") {
+    return "None'";
+  } else {
+    return {
+            TAG: "Some'",
             _0: Curry._1(f, opt._0)
           };
-  } else {
-    return /* None' */0;
   }
 }
 
-var a = /* Some' */{
+var a = {
+  TAG: "Some'",
   _0: 5
 };
 
@@ -22,7 +24,7 @@ function inc(x) {
 
 var c = mapOption$p(inc, a);
 
-var d = mapOption$p(inc, /* None' */0);
+var d = mapOption$p(inc, "None'");
 
 function $$eval(a) {
   return a.VAL;
@@ -40,28 +42,34 @@ var List$p = {};
 
 var HList = {};
 
-var myHList = /* Cons */{
+var myHList = {
+  TAG: "Cons",
   _0: 1,
-  _1: /* Cons */{
+  _1: {
+    TAG: "Cons",
     _0: "a",
-    _1: /* Cons */{
+    _1: {
+      TAG: "Cons",
       _0: 1.5,
-      _1: /* Nil */0
+      _1: "Nil"
     }
   }
 };
 
 console.log(myHList);
 
-var b = /* None' */0;
+var b = "None'";
 
-var myList = /* Con */{
+var myList = {
+  TAG: "Con",
   _0: 1,
-  _1: /* Con */{
+  _1: {
+    TAG: "Con",
     _0: 2,
-    _1: /* Con */{
+    _1: {
+      TAG: "Con",
       _0: 3,
-      _1: /* Empty */0
+      _1: "Empty"
     }
   }
 };

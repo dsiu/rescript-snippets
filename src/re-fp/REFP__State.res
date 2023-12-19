@@ -1,9 +1,11 @@
+let identity = (a: 'a) => a
+
 module State = {
   // type t<'a, 'r> = 'r => 'a
   type t<'a, 'r, 'w> = 'r => ('a, 'w)
 
-  let ask: unit => t<'a, 'r, 'w> = () => REFP__Functions.identity
-  let asks: ('r => ('a, 'w)) => t<'a, 'r, 'w> = REFP__Functions.identity
+  let ask: unit => t<'a, 'r, 'w> = () => identity
+  let asks: ('r => ('a, 'w)) => t<'a, 'r, 'w> = identity
   let from = (a): t<'a, 'r, 'w> => _ => a
 
   let map = (fa: t<'a, 'r, 'w>, f: 'a => 'b): t<'b, 'r, 'w> =>

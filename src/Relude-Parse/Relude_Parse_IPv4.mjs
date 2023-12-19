@@ -12,7 +12,8 @@ function log2(prim0, prim1) {
 }
 
 function make(a, b, c, d) {
-  return /* IPv4 */{
+  return {
+          TAG: "IPv4",
           _0: a,
           _1: b,
           _2: c,

@@ -167,28 +167,28 @@ Test.test("6. is_palindrome", (function (param) {
 Test.test("7. flatten", (function (param) {
         Test_Utils.listEqual(undefined, Lists_99.flatten({
                   hd: {
-                    TAG: /* One */0,
+                    TAG: "One",
                     _0: "a"
                   },
                   tl: {
                     hd: {
-                      TAG: /* Many */1,
+                      TAG: "Many",
                       _0: {
                         hd: {
-                          TAG: /* One */0,
+                          TAG: "One",
                           _0: "b"
                         },
                         tl: {
                           hd: {
-                            TAG: /* Many */1,
+                            TAG: "Many",
                             _0: {
                               hd: {
-                                TAG: /* One */0,
+                                TAG: "One",
                                 _0: "c"
                               },
                               tl: {
                                 hd: {
-                                  TAG: /* One */0,
+                                  TAG: "One",
                                   _0: "d"
                                 },
                                 tl: /* [] */0
@@ -197,7 +197,7 @@ Test.test("7. flatten", (function (param) {
                           },
                           tl: {
                             hd: {
-                              TAG: /* One */0,
+                              TAG: "One",
                               _0: "e"
                             },
                             tl: /* [] */0
@@ -448,30 +448,30 @@ Test.test("11. encode'", (function (param) {
         console.log("11. encode result", __x);
         var __x$1 = [
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 4,
             _1: "a"
           },
           {
-            TAG: /* One */0,
+            TAG: "One",
             _0: "b"
           },
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 2,
             _1: "c"
           },
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 2,
             _1: "a"
           },
           {
-            TAG: /* One */0,
+            TAG: "One",
             _0: "d"
           },
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 4,
             _1: "e"
           }
@@ -482,35 +482,35 @@ Test.test("11. encode'", (function (param) {
 Test.test("12. decode", (function (param) {
         var __x = Belt_List.toArray(Lists_99.decode({
                   hd: {
-                    TAG: /* Many */1,
+                    TAG: "Many",
                     _0: 4,
                     _1: "a"
                   },
                   tl: {
                     hd: {
-                      TAG: /* One */0,
+                      TAG: "One",
                       _0: "b"
                     },
                     tl: {
                       hd: {
-                        TAG: /* Many */1,
+                        TAG: "Many",
                         _0: 2,
                         _1: "c"
                       },
                       tl: {
                         hd: {
-                          TAG: /* Many */1,
+                          TAG: "Many",
                           _0: 2,
                           _1: "a"
                         },
                         tl: {
                           hd: {
-                            TAG: /* One */0,
+                            TAG: "One",
                             _0: "d"
                           },
                           tl: {
                             hd: {
-                              TAG: /* Many */1,
+                              TAG: "Many",
                               _0: 4,
                               _1: "e"
                             },
@@ -615,30 +615,30 @@ Test.test("13. encode", (function (param) {
         console.log("13. encode result", __x);
         var __x$1 = [
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 4,
             _1: "a"
           },
           {
-            TAG: /* One */0,
+            TAG: "One",
             _0: "b"
           },
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 2,
             _1: "c"
           },
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 2,
             _1: "a"
           },
           {
-            TAG: /* One */0,
+            TAG: "One",
             _0: "d"
           },
           {
-            TAG: /* Many */1,
+            TAG: "Many",
             _0: 4,
             _1: "e"
           }

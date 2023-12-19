@@ -14,7 +14,7 @@ function coord(p) {
 }
 
 var prim = coord({
-      TAG: /* FloatPoint */0,
+      TAG: "FloatPoint",
       _0: 1.0,
       _1: 2.0
     });
@@ -22,7 +22,7 @@ var prim = coord({
 console.log(prim);
 
 var prim$1 = coord({
-      TAG: /* IntPoint */1,
+      TAG: "IntPoint",
       _0: 3,
       _1: 4
     });

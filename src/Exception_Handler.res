@@ -4,12 +4,12 @@
 let safeParse1 = string =>
   try {
     let json = Js.Json.parseExn(string)
-    Belt.Result.Ok(json)
+    Ok(json)
   } catch {
   | Js.Exn.Error(obj) =>
     switch Js.Exn.message(obj) {
-    | Some(m) => Belt.Result.Error(m)
-    | None => Belt.Result.Error("Unknown")
+    | Some(m) => Error(m)
+    | None => Error("Unknown")
     }
   }
 

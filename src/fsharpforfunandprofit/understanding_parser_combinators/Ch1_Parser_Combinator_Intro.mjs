@@ -70,7 +70,7 @@ function pchar(charToMatch, str) {
   var first = Caml_string.get(str.charAt(0), 0);
   if (first === charToMatch) {
     var remaining = str.slice(1);
-    var msg = "Found " + $$String.make(1, charToMatch) + "";
+    var msg = "Found " + $$String.make(1, charToMatch);
     return [
             msg,
             remaining
@@ -102,7 +102,7 @@ console.log("-- Returning a Success/Failure");
 function pchar$1(charToMatch, str) {
   if (str.length === 0) {
     return {
-            TAG: /* Failure */1,
+            TAG: "Failure",
             _0: "No more input"
           };
   }
@@ -110,7 +110,7 @@ function pchar$1(charToMatch, str) {
   if (first === charToMatch) {
     var remaining = str.slice(1);
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               charToMatch,
               remaining
@@ -119,7 +119,7 @@ function pchar$1(charToMatch, str) {
   }
   var msg = "Expecting '" + $$String.make(1, charToMatch) + "'. Got '" + $$String.make(1, first) + "'";
   return {
-          TAG: /* Failure */1,
+          TAG: "Failure",
           _0: msg
         };
 }
@@ -140,7 +140,7 @@ function pchar$2(charToMatch) {
   return function (str) {
     if (str.length === 0) {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: "No more input"
             };
     }
@@ -148,7 +148,7 @@ function pchar$2(charToMatch) {
     if (first === charToMatch) {
       var remaining = str.slice(1);
       return {
-              TAG: /* Success */0,
+              TAG: "Success",
               _0: [
                 charToMatch,
                 remaining
@@ -157,7 +157,7 @@ function pchar$2(charToMatch) {
     }
     var msg = "Expecting '" + $$String.make(1, charToMatch) + "'. Got '" + $$String.make(1, first) + "'";
     return {
-            TAG: /* Failure */1,
+            TAG: "Failure",
             _0: msg
           };
   };
@@ -183,7 +183,7 @@ function pchar$3(charToMatch) {
   var innerFn = function (str) {
     if (str.length === 0) {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: "No more input"
             };
     }
@@ -191,7 +191,7 @@ function pchar$3(charToMatch) {
     if (first === charToMatch) {
       var remaining = str.slice(1);
       return {
-              TAG: /* Success */0,
+              TAG: "Success",
               _0: [
                 charToMatch,
                 remaining
@@ -200,11 +200,12 @@ function pchar$3(charToMatch) {
     }
     var msg = "Expecting '" + $$String.make(1, charToMatch) + "'. Got '" + $$String.make(1, first) + "'";
     return {
-            TAG: /* Failure */1,
+            TAG: "Failure",
             _0: msg
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -234,17 +235,17 @@ console.log("-- Combining two parsers in sequence");
 function andThen(parser1, parser2) {
   var innerFn = function (input) {
     var result1 = run(parser1, input);
-    if (result1.TAG !== /* Success */0) {
+    if (result1.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: result1._0
             };
     }
     var match = result1._0;
     var result2 = run(parser2, match[1]);
-    if (result2.TAG !== /* Success */0) {
+    if (result2.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: result2._0
             };
     }
@@ -256,14 +257,15 @@ function andThen(parser1, parser2) {
       newValue_1
     ];
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               newValue,
               match$1[1]
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -297,13 +299,14 @@ console.log("-- Choosing between two parsers");
 function orElse(parser1, parser2) {
   var innerFn = function (input) {
     var result1 = run(parser1, input);
-    if (result1.TAG === /* Success */0) {
+    if (result1.TAG === "Success") {
       return result1;
     } else {
       return run(parser2, input);
     }
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -365,10 +368,11 @@ console.log("");
 console.log("-- Choosing from a list of parsers");
 
 function choice(listOfParsers) {
-  return Belt_List.reduce(listOfParsers, /* Parser */{
+  return Belt_List.reduce(listOfParsers, {
+              TAG: "Parser",
               _0: (function (string) {
                   return {
-                          TAG: /* Failure */1,
+                          TAG: "Failure",
                           _0: "Initial parser"
                         };
                 })

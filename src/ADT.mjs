@@ -3,39 +3,41 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 
 function length(l) {
-  if (l) {
-    return length(l.next) + 1 | 0;
-  } else {
+  if (typeof l !== "object") {
     return 0;
+  } else {
+    return length(l.next) + 1 | 0;
   }
 }
 
 function map(l, f) {
-  if (l) {
-    return /* Node */{
+  if (typeof l !== "object") {
+    return "Empty";
+  } else {
+    return {
+            TAG: "Node",
             val: Curry._1(f, l.val),
             next: map(l.next, f)
           };
-  } else {
-    return /* Empty */0;
   }
 }
 
 function sum(l) {
-  if (l) {
-    return l.val + sum(l.next) | 0;
-  } else {
+  if (typeof l !== "object") {
     return 0;
+  } else {
+    return l.val + sum(l.next) | 0;
   }
 }
 
 function append(l, r) {
-  if (!l) {
+  if (typeof l !== "object") {
     return r;
   }
   var val = l.val;
   var next = l.next;
-  return /* Node */{
+  return {
+          TAG: "Node",
           val: val,
           next: append(next, r)
         };
@@ -44,11 +46,11 @@ function append(l, r) {
 function append_(_l, r) {
   while(true) {
     var l = _l;
-    if (!l) {
+    if (typeof l !== "object") {
       return ;
     }
     var next = l.next;
-    if (!next) {
+    if (typeof next !== "object") {
       l.next = r;
       return ;
     }

@@ -7,30 +7,30 @@ function handle(n, divisor, label) {
   var match = Caml_int32.mod_(n, divisor);
   if (match !== 0) {
     return {
-            TAG: /* Unhandled */0,
+            TAG: "Unhandled",
             _0: n
           };
   } else {
     return {
-            TAG: /* Handled */1,
+            TAG: "Handled",
             _0: label
           };
   }
 }
 
 function ifUnhandledDo(result, f) {
-  if (result.TAG === /* Unhandled */0) {
+  if (result.TAG === "Unhandled") {
     return Curry._1(f, result._0);
   } else {
     return {
-            TAG: /* Handled */1,
+            TAG: "Handled",
             _0: result._0
           };
   }
 }
 
 function lastStep(x) {
-  if (x.TAG === /* Unhandled */0) {
+  if (x.TAG === "Unhandled") {
     return String(x._0);
   } else {
     return x._0;

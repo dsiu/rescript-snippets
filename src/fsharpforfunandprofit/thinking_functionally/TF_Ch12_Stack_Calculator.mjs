@@ -17,7 +17,8 @@ var contents = {
 console.log(contents);
 
 function push(contents, x) {
-  return /* StackContents */{
+  return {
+          TAG: "StackContents",
           _0: {
             hd: x,
             tl: contents._0
@@ -25,7 +26,8 @@ function push(contents, x) {
         };
 }
 
-var emptyStack = /* StackContents */{
+var emptyStack = {
+  TAG: "StackContents",
   _0: /* [] */0
 };
 
@@ -57,7 +59,8 @@ function five(__x) {
   return push(__x, 5.0);
 }
 
-var empty = /* StackContents */{
+var empty = {
+  TAG: "StackContents",
   _0: /* [] */0
 };
 
@@ -78,7 +81,8 @@ console.log(result321);
 function pop(contents) {
   var contents$1 = contents._0;
   if (contents$1) {
-    var newStack = /* StackContents */{
+    var newStack = {
+      TAG: "StackContents",
       _0: contents$1.tl
     };
     return [
@@ -272,7 +276,8 @@ function lambda_square(param) {
               }), param);
 }
 
-var newStack = /* StackContents */{
+var newStack = {
+  TAG: "StackContents",
   _0: {
     hd: 1.0,
     tl: {

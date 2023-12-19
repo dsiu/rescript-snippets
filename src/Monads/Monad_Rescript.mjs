@@ -52,10 +52,10 @@ readAndConcatFiles(SafeReadFile("Color.res"), SafeReadFile("Result.res"));
 console.log("=========");
 
 function product(r1, r2) {
-  if (r1.TAG === /* Ok */0) {
-    if (r2.TAG === /* Ok */0) {
+  if (r1.TAG === "Ok") {
+    if (r2.TAG === "Ok") {
       return {
-              TAG: /* Ok */0,
+              TAG: "Ok",
               _0: [
                 r1._0,
                 r2._0
@@ -63,13 +63,13 @@ function product(r1, r2) {
             };
     } else {
       return {
-              TAG: /* Error */1,
+              TAG: "Error",
               _0: r2._0
             };
     }
   } else {
     return {
-            TAG: /* Error */1,
+            TAG: "Error",
             _0: r1._0
           };
   }
@@ -80,17 +80,17 @@ var Result = {
 };
 
 var maybeCityId = {
-  TAG: /* Ok */0,
+  TAG: "Ok",
   _0: 1
 };
 
 var maybeTargetUser = {
-  TAG: /* Ok */0,
+  TAG: "Ok",
   _0: 2
 };
 
 var maybeBookingIds = {
-  TAG: /* Ok */0,
+  TAG: "Ok",
   _0: 3
 };
 

@@ -7,7 +7,8 @@ function run(r, env) {
 }
 
 function $$return(a) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (_env) {
               return a;
             })
@@ -15,7 +16,8 @@ function $$return(a) {
 }
 
 function ask(param) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return env;
             })
@@ -23,7 +25,8 @@ function ask(param) {
 }
 
 function local(f, m) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return run(m, Curry._1(f, env));
             })
@@ -31,7 +34,8 @@ function local(f, m) {
 }
 
 function map(f, m) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return Curry._1(f, run(m, env));
             })
@@ -39,7 +43,8 @@ function map(f, m) {
 }
 
 function bind(f, m) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return run(Curry._1(f, run(m, env)), env);
             })
@@ -54,14 +59,16 @@ function _getState(env2) {
   return env2.state;
 }
 
-var __x = /* Reader */{
+var __x = {
+  TAG: "Reader",
   _0: (function (_env) {
       return "danny";
     })
 };
 
 var r2 = bind((function (x) {
-        var __x = map(_getState, /* Reader */{
+        var __x = map(_getState, {
+              TAG: "Reader",
               _0: (function (env) {
                   return env;
                 })

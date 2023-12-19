@@ -44,26 +44,27 @@ var A_Trivial_Example = {
 function Make_interval(Endpoint) {
   var create = function (low, high) {
     if (Curry._2(Endpoint.compare, low, high) > 0) {
-      return /* Empty */0;
+      return "Empty";
     } else {
-      return /* Interval */{
+      return {
+              TAG: "Interval",
               _0: low,
               _1: high
             };
     }
   };
   var is_empty = function (x) {
-    if (x) {
-      return false;
-    } else {
+    if (typeof x !== "object") {
       return true;
+    } else {
+      return false;
     }
   };
   var contains = function (t, x) {
-    if (t && Curry._2(Endpoint.compare, x, t._0) >= 0) {
-      return Curry._2(Endpoint.compare, x, t._1) <= 0;
-    } else {
+    if (typeof t !== "object" || Curry._2(Endpoint.compare, x, t._0) < 0) {
       return false;
+    } else {
+      return Curry._2(Endpoint.compare, x, t._1) <= 0;
     }
   };
   var intersect = function (t1, t2) {
@@ -81,10 +82,10 @@ function Make_interval(Endpoint) {
         return y;
       }
     };
-    if (t1 && t2) {
-      return create(max(t1._0, t2._0), min(t1._1, t2._1));
+    if (typeof t1 !== "object" || typeof t2 !== "object") {
+      return "Empty";
     } else {
-      return /* Empty */0;
+      return create(max(t1._0, t2._0), min(t1._1, t2._1));
     }
   };
   return {
@@ -97,9 +98,10 @@ function Make_interval(Endpoint) {
 
 function create(low, high) {
   if (Caml_obj.compare(low, high) > 0) {
-    return /* Empty */0;
+    return "Empty";
   } else {
-    return /* Interval */{
+    return {
+            TAG: "Interval",
             _0: low,
             _1: high
           };
@@ -107,18 +109,18 @@ function create(low, high) {
 }
 
 function is_empty(x) {
-  if (x) {
-    return false;
-  } else {
+  if (typeof x !== "object") {
     return true;
+  } else {
+    return false;
   }
 }
 
 function contains(t, x) {
-  if (t && Caml_obj.compare(x, t._0) >= 0) {
-    return Caml_obj.compare(x, t._1) <= 0;
-  } else {
+  if (typeof t !== "object" || Caml_obj.compare(x, t._0) < 0) {
     return false;
+  } else {
+    return Caml_obj.compare(x, t._1) <= 0;
   }
 }
 
@@ -137,10 +139,10 @@ function intersect(t1, t2) {
       return y;
     }
   };
-  if (t1 && t2) {
-    return create(max(t1._0, t2._0), min(t1._1, t2._1));
+  if (typeof t1 !== "object" || typeof t2 !== "object") {
+    return "Empty";
   } else {
-    return /* Empty */0;
+    return create(max(t1._0, t2._0), min(t1._1, t2._1));
   }
 }
 
@@ -153,9 +155,10 @@ var Int_interval = {
 
 function create$1(low, high) {
   if (Caml_obj.compare(low, high) > 0) {
-    return /* Empty */0;
+    return "Empty";
   } else {
-    return /* Interval */{
+    return {
+            TAG: "Interval",
             _0: low,
             _1: high
           };
@@ -163,18 +166,18 @@ function create$1(low, high) {
 }
 
 function is_empty$1(x) {
-  if (x) {
-    return false;
-  } else {
+  if (typeof x !== "object") {
     return true;
+  } else {
+    return false;
   }
 }
 
 function contains$1(t, x) {
-  if (t && Caml_obj.compare(x, t._0) >= 0) {
-    return Caml_obj.compare(x, t._1) <= 0;
-  } else {
+  if (typeof t !== "object" || Caml_obj.compare(x, t._0) < 0) {
     return false;
+  } else {
+    return Caml_obj.compare(x, t._1) <= 0;
   }
 }
 
@@ -193,10 +196,10 @@ function intersect$1(t1, t2) {
       return y;
     }
   };
-  if (t1 && t2) {
-    return create$1(max(t1._0, t2._0), min(t1._1, t2._1));
+  if (typeof t1 !== "object" || typeof t2 !== "object") {
+    return "Empty";
   } else {
-    return /* Empty */0;
+    return create$1(max(t1._0, t2._0), min(t1._1, t2._1));
   }
 }
 
@@ -216,36 +219,38 @@ var My_Str = {
 };
 
 function create$2(low, high) {
-  return /* Interval */{
+  return {
+          TAG: "Interval",
           _0: low,
           _1: high
         };
 }
 
 function is_empty$2(x) {
-  if (x) {
-    return false;
-  } else {
+  if (typeof x !== "object") {
     return true;
+  } else {
+    return false;
   }
 }
 
 function contains$2(t, x) {
-  if (t) {
-    return true;
-  } else {
+  if (typeof t !== "object") {
     return false;
+  } else {
+    return true;
   }
 }
 
 function intersect$2(t1, t2) {
-  if (t1 && t2) {
-    return /* Interval */{
+  if (typeof t1 !== "object" || typeof t2 !== "object") {
+    return "Empty";
+  } else {
+    return {
+            TAG: "Interval",
             _0: t1._0,
             _1: t1._1
           };
-  } else {
-    return /* Empty */0;
   }
 }
 
@@ -264,9 +269,10 @@ console.log(intersect(i1, i2));
 
 function create$3(low, high) {
   if ((low - high | 0) > 0) {
-    return /* Empty */0;
+    return "Empty";
   } else {
-    return /* Interval */{
+    return {
+            TAG: "Interval",
             _0: low,
             _1: high
           };
@@ -274,18 +280,18 @@ function create$3(low, high) {
 }
 
 function is_empty$3(x) {
-  if (x) {
-    return false;
-  } else {
+  if (typeof x !== "object") {
     return true;
+  } else {
+    return false;
   }
 }
 
 function contains$3(t, x) {
-  if (t && (x - t._0 | 0) >= 0) {
-    return (x - t._1 | 0) <= 0;
-  } else {
+  if (typeof t !== "object" || (x - t._0 | 0) < 0) {
     return false;
+  } else {
+    return (x - t._1 | 0) <= 0;
   }
 }
 
@@ -304,10 +310,10 @@ function intersect$3(t1, t2) {
       return y;
     }
   };
-  if (t1 && t2) {
-    return create$3(max(t1._0, t2._0), min(t1._1, t2._1));
+  if (typeof t1 !== "object" || typeof t2 !== "object") {
+    return "Empty";
   } else {
-    return /* Empty */0;
+    return create$3(max(t1._0, t2._0), min(t1._1, t2._1));
   }
 }
 
@@ -318,7 +324,8 @@ var Rev_int_interval = {
   intersect: intersect$3
 };
 
-console.log(is_empty(/* Interval */{
+console.log(is_empty({
+          TAG: "Interval",
           _0: 4,
           _1: 3
         }));
@@ -337,26 +344,27 @@ var A_Bigger_Example = {
 function Make_interval$1(Endpoint) {
   var create = function (low, high) {
     if (Curry._2(Endpoint.compare, low, high) > 0) {
-      return /* Empty */0;
+      return "Empty";
     } else {
-      return /* Interval */{
+      return {
+              TAG: "Interval",
               _0: low,
               _1: high
             };
     }
   };
   var is_empty = function (x) {
-    if (x) {
-      return false;
-    } else {
+    if (typeof x !== "object") {
       return true;
+    } else {
+      return false;
     }
   };
   var contains = function (t, x) {
-    if (t && Curry._2(Endpoint.compare, x, t._0) >= 0) {
-      return Curry._2(Endpoint.compare, x, t._1) <= 0;
-    } else {
+    if (typeof t !== "object" || Curry._2(Endpoint.compare, x, t._0) < 0) {
       return false;
+    } else {
+      return Curry._2(Endpoint.compare, x, t._1) <= 0;
     }
   };
   var intersect = function (t1, t2) {
@@ -374,10 +382,10 @@ function Make_interval$1(Endpoint) {
         return y;
       }
     };
-    if (t1 && t2) {
-      return create(max(t1._0, t2._0), min(t1._1, t2._1));
+    if (typeof t1 !== "object" || typeof t2 !== "object") {
+      return "Empty";
     } else {
-      return /* Empty */0;
+      return create(max(t1._0, t2._0), min(t1._1, t2._1));
     }
   };
   return {
@@ -390,9 +398,10 @@ function Make_interval$1(Endpoint) {
 
 function create$4(low, high) {
   if (Caml_obj.compare(low, high) > 0) {
-    return /* Empty */0;
+    return "Empty";
   } else {
-    return /* Interval */{
+    return {
+            TAG: "Interval",
             _0: low,
             _1: high
           };
@@ -400,18 +409,18 @@ function create$4(low, high) {
 }
 
 function is_empty$4(x) {
-  if (x) {
-    return false;
-  } else {
+  if (typeof x !== "object") {
     return true;
+  } else {
+    return false;
   }
 }
 
 function contains$4(t, x) {
-  if (t && Caml_obj.compare(x, t._0) >= 0) {
-    return Caml_obj.compare(x, t._1) <= 0;
-  } else {
+  if (typeof t !== "object" || Caml_obj.compare(x, t._0) < 0) {
     return false;
+  } else {
+    return Caml_obj.compare(x, t._1) <= 0;
   }
 }
 
@@ -430,10 +439,10 @@ function intersect$4(t1, t2) {
       return y;
     }
   };
-  if (t1 && t2) {
-    return create$4(max(t1._0, t2._0), min(t1._1, t2._1));
+  if (typeof t1 !== "object" || typeof t2 !== "object") {
+    return "Empty";
   } else {
-    return /* Empty */0;
+    return create$4(max(t1._0, t2._0), min(t1._1, t2._1));
   }
 }
 
@@ -457,26 +466,27 @@ var Sharing_Constraints = {
 function Make_interval$2(Endpoint) {
   var create = function (low, high) {
     if (Curry._2(Endpoint.compare, low, high) > 0) {
-      return /* Empty */0;
+      return "Empty";
     } else {
-      return /* Interval */{
+      return {
+              TAG: "Interval",
               _0: low,
               _1: high
             };
     }
   };
   var is_empty = function (x) {
-    if (x) {
-      return false;
-    } else {
+    if (typeof x !== "object") {
       return true;
+    } else {
+      return false;
     }
   };
   var contains = function (t, x) {
-    if (t && Curry._2(Endpoint.compare, x, t._0) >= 0) {
-      return Curry._2(Endpoint.compare, x, t._1) <= 0;
-    } else {
+    if (typeof t !== "object" || Curry._2(Endpoint.compare, x, t._0) < 0) {
       return false;
+    } else {
+      return Curry._2(Endpoint.compare, x, t._1) <= 0;
     }
   };
   var intersect = function (t1, t2) {
@@ -494,10 +504,10 @@ function Make_interval$2(Endpoint) {
         return y;
       }
     };
-    if (t1 && t2) {
-      return create(max(t1._0, t2._0), min(t1._1, t2._1));
+    if (typeof t1 !== "object" || typeof t2 !== "object") {
+      return "Empty";
     } else {
-      return /* Empty */0;
+      return create(max(t1._0, t2._0), min(t1._1, t2._1));
     }
   };
   return {
@@ -510,9 +520,10 @@ function Make_interval$2(Endpoint) {
 
 function create$5(low, high) {
   if (Caml_obj.compare(low, high) > 0) {
-    return /* Empty */0;
+    return "Empty";
   } else {
-    return /* Interval */{
+    return {
+            TAG: "Interval",
             _0: low,
             _1: high
           };
@@ -520,18 +531,18 @@ function create$5(low, high) {
 }
 
 function is_empty$5(x) {
-  if (x) {
-    return false;
-  } else {
+  if (typeof x !== "object") {
     return true;
+  } else {
+    return false;
   }
 }
 
 function contains$5(t, x) {
-  if (t && Caml_obj.compare(x, t._0) >= 0) {
-    return Caml_obj.compare(x, t._1) <= 0;
-  } else {
+  if (typeof t !== "object" || Caml_obj.compare(x, t._0) < 0) {
     return false;
+  } else {
+    return Caml_obj.compare(x, t._1) <= 0;
   }
 }
 
@@ -550,10 +561,10 @@ function intersect$5(t1, t2) {
       return y;
     }
   };
-  if (t1 && t2) {
-    return create$5(max(t1._0, t2._0), min(t1._1, t2._1));
+  if (typeof t1 !== "object" || typeof t2 !== "object") {
+    return "Empty";
   } else {
-    return /* Empty */0;
+    return create$5(max(t1._0, t2._0), min(t1._1, t2._1));
   }
 }
 
@@ -578,26 +589,27 @@ var Sexpable = {};
 function Make_interval$3(Endpoint) {
   var create = function (low, high) {
     if (Curry._2(Endpoint.compare, low, high) > 0) {
-      return /* Empty */0;
+      return "Empty";
     } else {
-      return /* Interval */{
+      return {
+              TAG: "Interval",
               _0: low,
               _1: high
             };
     }
   };
   var is_empty = function (x) {
-    if (x) {
-      return false;
-    } else {
+    if (typeof x !== "object") {
       return true;
+    } else {
+      return false;
     }
   };
   var contains = function (t, x) {
-    if (t && Curry._2(Endpoint.compare, x, t._0) >= 0) {
-      return Curry._2(Endpoint.compare, x, t._1) <= 0;
-    } else {
+    if (typeof t !== "object" || Curry._2(Endpoint.compare, x, t._0) < 0) {
       return false;
+    } else {
+      return Curry._2(Endpoint.compare, x, t._1) <= 0;
     }
   };
   var intersect = function (t1, t2) {
@@ -615,10 +627,10 @@ function Make_interval$3(Endpoint) {
         return y;
       }
     };
-    if (t1 && t2) {
-      return create(max(t1._0, t2._0), min(t1._1, t2._1));
+    if (typeof t1 !== "object" || typeof t2 !== "object") {
+      return "Empty";
     } else {
-      return /* Empty */0;
+      return create(max(t1._0, t2._0), min(t1._1, t2._1));
     }
   };
   return {

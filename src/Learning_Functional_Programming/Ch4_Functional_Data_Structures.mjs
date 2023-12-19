@@ -14,7 +14,8 @@ function log2(prim0, prim1) {
 
 function getUser(id) {
   if (id !== 0) {
-    return /* Customer */{
+    return {
+            TAG: "Customer",
             _0: id
           };
   }
@@ -38,24 +39,27 @@ var Ch4_flatmap = {
 function getUsers(param) {
   return {
           hd: {
-            TAG: /* Ok */0,
-            _0: /* User */{
+            TAG: "Ok",
+            _0: {
+              TAG: "User",
               id: 1,
               email: "jack@example.com"
             }
           },
           tl: {
             hd: {
-              TAG: /* Error */1,
-              _0: /* Error */{
+              TAG: "Error",
+              _0: {
+                TAG: "Error",
                 id: 4,
                 text: "user not found"
               }
             },
             tl: {
               hd: {
-                TAG: /* Ok */0,
-                _0: /* User */{
+                TAG: "Ok",
+                _0: {
+                  TAG: "User",
                   id: 2,
                   email: "andrea@example.com"
                 }
@@ -68,24 +72,27 @@ function getUsers(param) {
 
 var emails = Stdlib_List.map({
       hd: {
-        TAG: /* Ok */0,
-        _0: /* User */{
+        TAG: "Ok",
+        _0: {
+          TAG: "User",
           id: 1,
           email: "jack@example.com"
         }
       },
       tl: {
         hd: {
-          TAG: /* Error */1,
-          _0: /* Error */{
+          TAG: "Error",
+          _0: {
+            TAG: "Error",
             id: 4,
             text: "user not found"
           }
         },
         tl: {
           hd: {
-            TAG: /* Ok */0,
-            _0: /* User */{
+            TAG: "Ok",
+            _0: {
+              TAG: "User",
               id: 2,
               email: "andrea@example.com"
             }
@@ -109,27 +116,31 @@ var Ch4_Higher_Order_Functions = {
 };
 
 function getStudent(id) {
-  return /* Student */{
+  return {
+          TAG: "Student",
           id: 1,
           email: "alex"
         };
 }
 
 function getFinalGrade(student) {
-  return /* FinalGrade */{
+  return {
+          TAG: "FinalGrade",
           grade: 100
         };
 }
 
 var Ch4_Monads_students = {
-  hd: /* Student */{
+  hd: {
+    TAG: "Student",
     id: 1,
     email: "jack@example.com"
   },
   tl: {
     hd: undefined,
     tl: {
-      hd: /* Student */{
+      hd: {
+        TAG: "Student",
         id: 2,
         email: "andrea@example.com"
       },

@@ -3,19 +3,19 @@
 
 var payloadResults = [
   {
-    TAG: /* Ok */0,
+    TAG: "Ok",
     _0: {
       data: "hi"
     }
   },
   {
-    TAG: /* Ok */0,
+    TAG: "Ok",
     _0: {
       data: "bye"
     }
   },
   {
-    TAG: /* Error */1,
+    TAG: "Error",
     _0: "Something wrong happened!"
   }
 ];

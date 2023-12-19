@@ -1,4 +1,6 @@
-open Jest2
+open Jest
+open Expect
+
 open FizzBuzz
 
 test("FizzBuzz 12", () => {

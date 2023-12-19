@@ -131,7 +131,8 @@ function size$1(s) {
 }
 
 function push$2(x, s) {
-  return /* S */{
+  return {
+          TAG: "S",
           _0: {
             top: x,
             rest: s,
@@ -162,7 +163,8 @@ function pop$2(s) {
       };
 }
 
-var CustomStack_empty = /* S */{
+var CustomStack_empty = {
+  TAG: "S",
   _0: undefined
 };
 

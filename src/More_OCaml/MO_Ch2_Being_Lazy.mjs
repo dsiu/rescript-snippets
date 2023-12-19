@@ -26,7 +26,8 @@ function logList2(l, str) {
 }
 
 function lseq(n) {
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: n,
           _1: (function (param) {
               return lseq(n + 1 | 0);
@@ -78,7 +79,8 @@ console.log(prim$1);
 
 function lmap(f, param) {
   var tf = param._1;
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: Curry._1(f, param._0),
           _1: (function (param) {
               return lmap(f, Curry._1(tf, undefined));
@@ -92,7 +94,8 @@ function lfilter(f, _param) {
     var tf = param._1;
     var h = param._0;
     if (Curry._1(f, h)) {
-      return /* Cons */{
+      return {
+              TAG: "Cons",
               _0: h,
               _1: (function(tf){
               return function (param) {
@@ -121,7 +124,8 @@ console.log(prim$2);
 function mkprimes(param) {
   var tf = param._1;
   var h = param._0;
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: h,
           _1: (function (param) {
               return mkprimes(lfilter((function (x) {
@@ -141,7 +145,8 @@ console.log(prim$3);
 
 function interleave(param, l) {
   var tf = param._1;
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: param._0,
           _1: (function (param) {
               return interleave(l, Curry._1(tf, undefined));
@@ -156,7 +161,8 @@ var prim$4 = Js_list.toVector(l$3);
 console.log(prim$4);
 
 function lconst(n) {
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: n,
           _1: (function (param) {
               return lconst(n);
@@ -173,7 +179,8 @@ var prim$5 = Js_list.toVector(l$4);
 console.log(prim$5);
 
 function allfrom(l) {
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: l,
           _1: (function (param) {
               return interleave(allfrom({
@@ -196,7 +203,8 @@ var prim$6 = Js_list.toVector(l$5);
 console.log(prim$6);
 
 function q1_ldouble(n) {
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: n,
           _1: (function (param) {
               return q1_ldouble((n << 1));
@@ -231,14 +239,16 @@ function q3_lrepeating(l) {
       var t = c.tl;
       var x = c.hd;
       if (t) {
-        return /* Cons */{
+        return {
+                TAG: "Cons",
                 _0: x,
                 _1: (function (param) {
                     return lrepeating_inner(t, l);
                   })
               };
       } else {
-        return /* Cons */{
+        return {
+                TAG: "Cons",
                 _0: x,
                 _1: (function (param) {
                     return lrepeating_inner(l, l);
@@ -271,7 +281,8 @@ var x$1 = Js_list.toVector(l$7);
 console.log("q3_lrepeating", x$1);
 
 function fibonacci_inner(x, y) {
-  return /* Cons */{
+  return {
+          TAG: "Cons",
           _0: x,
           _1: (function (param) {
               return fibonacci_inner(y, x + y | 0);
@@ -291,13 +302,15 @@ function q5_unleave(param) {
   var match = Curry._1(param._1, undefined);
   var t = Curry._1(match._1, undefined);
   return [
-          /* Cons */{
+          {
+            TAG: "Cons",
             _0: param._0,
             _1: (function (param) {
                 return q5_unleave(t)[0];
               })
           },
-          /* Cons */{
+          {
+            TAG: "Cons",
             _0: match._0,
             _1: (function (param) {
                 return q5_unleave(t)[1];

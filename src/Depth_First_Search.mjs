@@ -39,7 +39,7 @@ function depth_first_search(g) {
         var f = match.f;
         var d = match.d;
         var t = param[0];
-        if (Curry._2(Char_map.find, v, color) === /* White */0) {
+        if (Curry._2(Char_map.find, v, color) === "White") {
           return dfs_visit(t, v, {
                       d: d,
                       f: f,
@@ -65,7 +65,7 @@ function depth_first_search(g) {
               d: Curry._3(Char_map.add, u, t$1, param.d),
               f: param.f,
               pred: param.pred,
-              color: Curry._3(Char_map.add, u, /* Gray */1, param.color)
+              color: Curry._3(Char_map.add, u, "Gray", param.color)
             }
           ], Curry._2(Char_map.find, u, g));
       var match$1 = match[1];
@@ -76,11 +76,11 @@ function depth_first_search(g) {
                 d: match$1.d,
                 f: Curry._3(Char_map.add, u, t$2, match$1.f),
                 pred: match$1.pred,
-                color: Curry._3(Char_map.add, u, /* Black */2, match$1.color)
+                color: Curry._3(Char_map.add, u, "Black", match$1.color)
               }
             ];
     };
-    if (Curry._2(Char_map.find, u, color) === /* White */0) {
+    if (Curry._2(Char_map.find, u, color) === "White") {
       return dfs_visit(t, u, {
                   d: d,
                   f: f,
@@ -109,7 +109,7 @@ function depth_first_search(g) {
   var initial_state_f = Char_map.empty;
   var initial_state_pred = Char_map.empty;
   var initial_state_color = List.fold_right((function (x) {
-          return Curry._2(Char_map.add, x, /* White */0);
+          return Curry._2(Char_map.add, x, "White");
         }), v, Char_map.empty);
   var initial_state = {
     d: initial_state_d,

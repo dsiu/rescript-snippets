@@ -1,5 +1,7 @@
 // https://cs3110.github.io/textbook/chapters/modules/exercises.html
 //
+open RescriptCore
+
 let log = Js.log
 let log2 = Js.log2
 
@@ -89,7 +91,7 @@ module Fraction = {
     }
     let numerator = t => t.p
     let denominator = t => t.q
-    let to_string = ({p, q}) => {j`$p / $q`}
+    let to_string = ({p, q}) => {`${p->Int.toString} / ${q->Int.toString}`}
     let to_float = ({p, q}) => float(p) /. float(q)
     let add = ({p: p1, q: q1}, {p: p2, q: q2}) => {
       let p = p1 * q2 + p2 * q1
@@ -129,7 +131,7 @@ module Fraction_Reduced = {
     }
     let numerator = t => t.p
     let denominator = t => t.q
-    let to_string = ({p, q}) => {j`$p / $q`}
+    let to_string = ({p, q}) => {`${p->Int.toString} / ${q->Int.toString}`}
     let to_float = ({p, q}) => float(p) /. float(q)
     let add = ({p: p1, q: q1}, {p: p2, q: q2}) => {
       let p = p1 * q2 + p2 * q1

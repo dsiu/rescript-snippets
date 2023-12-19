@@ -273,10 +273,10 @@ var prim$3 = split({
 console.log(prim$3);
 
 function fold_tree(f, e, t) {
-  if (t) {
-    return Curry._3(f, t._0, fold_tree(f, e, t._1), fold_tree(f, e, t._2));
-  } else {
+  if (typeof t !== "object") {
     return e;
+  } else {
+    return Curry._3(f, t._0, fold_tree(f, e, t._1), fold_tree(f, e, t._2));
   }
 }
 
@@ -292,21 +292,25 @@ function tree_sum(t) {
               }), 0, t);
 }
 
-var exp_tr = /* Br */{
+var exp_tr = {
+  TAG: "Br",
   _0: 1,
-  _1: /* Br */{
+  _1: {
+    TAG: "Br",
     _0: 0,
-    _1: /* Lf */0,
-    _2: /* Lf */0
+    _1: "Lf",
+    _2: "Lf"
   },
-  _2: /* Br */{
+  _2: {
+    TAG: "Br",
     _0: 6,
-    _1: /* Br */{
+    _1: {
+      TAG: "Br",
       _0: 4,
-      _1: /* Lf */0,
-      _2: /* Lf */0
+      _1: "Lf",
+      _2: "Lf"
     },
-    _2: /* Lf */0
+    _2: "Lf"
   }
 };
 

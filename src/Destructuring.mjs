@@ -9,12 +9,14 @@ console.log(name1, 23);
 
 console.log(name2, 31);
 
-var joe = /* Person */{
+var joe = {
+  TAG: "Person",
   _0: "Joe",
   _1: 23
 };
 
-var jim = /* Person */{
+var jim = {
+  TAG: "Person",
   _0: "Jim",
   _1: 31
 };

@@ -8,7 +8,8 @@ import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.m
 function createWithCont(success, failure, s) {
   var match = /^\S+@\S+\.\S+$/.exec(s);
   if (match !== null) {
-    return Curry._1(success, /* EmailAddress */{
+    return Curry._1(success, {
+                TAG: "EmailAddress",
                 _0: s
               });
   } else {
@@ -44,7 +45,8 @@ var EmailAddress = {
 function createWithCont$1(success, failure, s) {
   var match = /^\d{5}$/.exec(s);
   if (match !== null) {
-    return Curry._1(success, /* ZipCode */{
+    return Curry._1(success, {
+                TAG: "ZipCode",
                 _0: s
               });
   } else {
@@ -89,7 +91,8 @@ function createWithCont$2(success, failure, s) {
             }
           }
         }, s$p, Stdlib_Function.eq)) {
-    return Curry._1(success, /* StateCode */{
+    return Curry._1(success, {
+                TAG: "StateCode",
                 _0: s
               });
   } else {

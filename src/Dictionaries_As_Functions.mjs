@@ -25,7 +25,7 @@ function despicable(param) {
   return add((function (param) {
                 return add((function (param) {
                               return add(empty, "Felonius Gru", 53, param);
-                            }), "Dave the Minion", 2147483647, param);
+                            }), "Dave the Minion", -2147483648, param);
               }), "Dr. Nefario", 80, param);
 }
 

@@ -10,7 +10,7 @@ var style = Jzon.object2((function (param) {
               ];
       }), (function (param) {
         return {
-                TAG: /* Ok */0,
+                TAG: "Ok",
                 _0: {
                   size: param[0],
                   color: param[1]
@@ -27,7 +27,7 @@ var point = Jzon.object4((function (param) {
               ];
       }), (function (param) {
         return {
-                TAG: /* Ok */0,
+                TAG: "Ok",
                 _0: {
                   x: param[0],
                   y: param[1],
@@ -35,7 +35,7 @@ var point = Jzon.object4((function (param) {
                   style: param[3]
                 }
               };
-      }), Jzon.field("x", Jzon.$$float), Jzon.field("y", Jzon.$$float), Jzon.$$default(Jzon.field("z", Jzon.$$float), 0.0), Jzon.optional(Jzon.field("style", style)));
+      }), Jzon.field("x", Jzon.$$float), Jzon.field("y", Jzon.$$float), Jzon.default(Jzon.field("z", Jzon.$$float), 0.0), Jzon.optional(Jzon.field("style", style)));
 
 var Codecs = {
   style: style,

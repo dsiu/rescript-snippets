@@ -3,7 +3,6 @@
     <properties>
       <sourceFilesUrls>
         <item url="file://$PROJECT_DIR$/node_modules/@dsiu/rescript-stdlib-fp" />
-        <item url="file://$PROJECT_DIR$/node_modules/@glennsl/bs-json" />
         <item url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-extras" />
         <item url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-seq" />
         <item url="file://$PROJECT_DIR$/node_modules/@mobily/rescript-date" />
@@ -14,7 +13,6 @@
         <item url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
         <item url="file://$PROJECT_DIR$/node_modules/relude" />
         <item url="file://$PROJECT_DIR$/node_modules/relude-parse" />
-        <item url="file://$PROJECT_DIR$/node_modules/rescript-js" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-nodejs" />
         <item url="file://$PROJECT_DIR$/node_modules/rescript-ocamlgraph" />
@@ -23,7 +21,6 @@
     </properties>
     <CLASSES>
       <root url="file://$PROJECT_DIR$/node_modules/@dsiu/rescript-stdlib-fp" />
-      <root url="file://$PROJECT_DIR$/node_modules/@glennsl/bs-json" />
       <root url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-extras" />
       <root url="file://$PROJECT_DIR$/node_modules/@jmagaram/rescript-seq" />
       <root url="file://$PROJECT_DIR$/node_modules/@mobily/rescript-date" />
@@ -34,7 +31,6 @@
       <root url="file://$PROJECT_DIR$/node_modules/js-array2-ex" />
       <root url="file://$PROJECT_DIR$/node_modules/relude" />
       <root url="file://$PROJECT_DIR$/node_modules/relude-parse" />
-      <root url="file://$PROJECT_DIR$/node_modules/rescript-js" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-jzon" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-nodejs" />
       <root url="file://$PROJECT_DIR$/node_modules/rescript-ocamlgraph" />

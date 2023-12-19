@@ -66,21 +66,21 @@ var pointToAnimal = TableclothMap.fromArray({
           0,
           0
         ],
-        /* Cow */0
+        "Cow"
       ],
       [
         [
           3,
           4
         ],
-        /* Sheep */2
+        "Sheep"
       ],
       [
         [
           6,
           7
         ],
-        /* Pig */1
+        "Pig"
       ]
     ]);
 

@@ -2,16 +2,17 @@
 
 
 function length(l) {
-  if (l) {
-    return length(l.next) + 1 | 0;
-  } else {
+  if (typeof l !== "object") {
     return 0;
+  } else {
+    return length(l.next) + 1 | 0;
   }
 }
 
-console.log(length(/* Node */{
+console.log(length({
+          TAG: "Node",
           val: 3,
-          next: /* Empty */0
+          next: "Empty"
         }));
 
 function len(l) {
@@ -31,12 +32,12 @@ console.log(len({
         }));
 
 function $$eval(e) {
-  switch (e.TAG | 0) {
-    case /* Number */0 :
+  switch (e.TAG) {
+    case "Number" :
         return e._0;
-    case /* Add */1 :
+    case "Add" :
         return $$eval(e._0) + $$eval(e._1) | 0;
-    case /* Mul */2 :
+    case "Mul" :
         return Math.imul($$eval(e._0), $$eval(e._1));
     
   }

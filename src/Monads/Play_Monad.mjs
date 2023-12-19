@@ -8,7 +8,7 @@ function square(x) {
   var result = Math.imul(x, x);
   return {
           result: result,
-          logs: ["Squared " + x + " to get " + result]
+          logs: ["Squared " + x.toString() + " to get " + result.toString()]
         };
 }
 
@@ -16,7 +16,7 @@ function addOne(x) {
   var result = x + 1 | 0;
   return {
           result: result,
-          logs: ["Added 1 to " + x + " to get to " + result]
+          logs: ["Added 1 to " + x.toString() + " to get to " + result.toString()]
         };
 }
 

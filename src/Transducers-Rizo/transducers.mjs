@@ -20,14 +20,15 @@ function $great$great(g, f) {
 var $less$less = compose;
 
 function stateless(f) {
-  return /* Reducer */{
+  return {
+          TAG: "Reducer",
           _0: [
             undefined,
             (function (param, x, y) {
                 return [
                         undefined,
                         {
-                          TAG: /* Continue */0,
+                          TAG: "Continue",
                           _0: Curry._2(f, x, y)
                         }
                       ];
@@ -56,7 +57,7 @@ function transduce(param, f, r0, param$1) {
       var match$1 = Curry._3(step, s, r, match[0]);
       var r$1 = match$1[1];
       var s$1 = match$1[0];
-      if (r$1.TAG !== /* Continue */0) {
+      if (r$1.TAG !== "Continue") {
         return [
                 s$1,
                 r$1._0
@@ -75,7 +76,8 @@ function map(f) {
   var $$this = function (param) {
     var match = param._0;
     var next = match[1];
-    return /* Reducer */{
+    return {
+            TAG: "Reducer",
             _0: [
               match[0],
               (function (s, r, x) {
@@ -93,7 +95,8 @@ function filter(p) {
   var $$this = function (param) {
     var match = param._0;
     var next = match[1];
-    return /* Reducer */{
+    return {
+            TAG: "Reducer",
             _0: [
               match[0],
               (function (s, r, x) {
@@ -103,7 +106,7 @@ function filter(p) {
                     return [
                             s,
                             {
-                              TAG: /* Continue */0,
+                              TAG: "Continue",
                               _0: r
                             }
                           ];
@@ -121,7 +124,8 @@ function take(n) {
   var $$this = function (param) {
     var match = param._0;
     var next = match[1];
-    return /* Reducer */{
+    return {
+            TAG: "Reducer",
             _0: [
               [
                 match[0],
@@ -137,7 +141,7 @@ function take(n) {
                               i
                             ],
                             {
-                              TAG: /* Done */1,
+                              TAG: "Done",
                               _0: r
                             }
                           ];
@@ -169,7 +173,8 @@ function iter_list(input) {
     }
     
   };
-  return /* Iterator */{
+  return {
+          TAG: "Iterator",
           _0: input,
           _1: next
         };

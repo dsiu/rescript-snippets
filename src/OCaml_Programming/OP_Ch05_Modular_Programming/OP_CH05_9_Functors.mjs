@@ -194,14 +194,15 @@ var ListStack = {
 };
 
 function push(x, s) {
-  return /* S */{
+  return {
+          TAG: "S",
           _0: x,
           _1: s
         };
 }
 
 function peek$1(s) {
-  if (s) {
+  if (typeof s === "object") {
     return s._0;
   }
   throw {
@@ -211,7 +212,7 @@ function peek$1(s) {
 }
 
 function pop$1(s) {
-  if (s) {
+  if (typeof s === "object") {
     return s._1;
   }
   throw {
@@ -221,7 +222,7 @@ function pop$1(s) {
 }
 
 var VariantStack = {
-  empty: /* E */0,
+  empty: "E",
   push: push,
   peek: peek$1,
   pop: pop$1
@@ -231,9 +232,10 @@ var prim = peek(List.cons(1, /* [] */0)) === 1;
 
 console.log(prim);
 
-var prim$1 = peek$1(/* S */{
+var prim$1 = peek$1({
+      TAG: "S",
       _0: 1,
-      _1: /* E */0
+      _1: "E"
     }) === 1;
 
 console.log(prim$1);
@@ -251,9 +253,10 @@ var ListStackTester = {
   tests: tests
 };
 
-var tests$1 = peek$1(/* S */{
+var tests$1 = peek$1({
+      TAG: "S",
       _0: 1,
-      _1: /* E */0
+      _1: "E"
     }) === 1;
 
 var VariantStackTester = {

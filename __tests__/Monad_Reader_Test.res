@@ -1,10 +1,13 @@
 // ref: https://kevanstannard.github.io/rescript-blog/reader-monad.html
 
-open Jest2
+open Jest
+open Expect
+
 open Monad_Reader
 
 test("Reader Type", () => {
   Reader(e => e + 1)->ignore
+  expect(1)->toEqual(1)
 })
 
 // The run() function takes a reader and an environment passes the environment to the reader function.

@@ -29,7 +29,7 @@ function pchar(charToMatch) {
   var innerFn = function (str) {
     if (str.length === 0) {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: "No more input"
             };
     }
@@ -37,7 +37,7 @@ function pchar(charToMatch) {
     if (first === charToMatch) {
       var remaining = str.slice(1);
       return {
-              TAG: /* Success */0,
+              TAG: "Success",
               _0: [
                 charToMatch,
                 remaining
@@ -46,11 +46,12 @@ function pchar(charToMatch) {
     }
     var msg = "Expecting '" + $$String.make(1, charToMatch) + "'. Got '" + $$String.make(1, first) + "'";
     return {
-            TAG: /* Failure */1,
+            TAG: "Failure",
             _0: msg
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -62,17 +63,17 @@ function run(parser, input) {
 function andThen(parser1, parser2) {
   var innerFn = function (input) {
     var result1 = run(parser1, input);
-    if (result1.TAG !== /* Success */0) {
+    if (result1.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: result1._0
             };
     }
     var match = result1._0;
     var result2 = run(parser2, match[1]);
-    if (result2.TAG !== /* Success */0) {
+    if (result2.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: result2._0
             };
     }
@@ -84,14 +85,15 @@ function andThen(parser1, parser2) {
       newValue_1
     ];
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               newValue,
               match$1[1]
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -99,22 +101,24 @@ function andThen(parser1, parser2) {
 function orElse(parser1, parser2) {
   var innerFn = function (input) {
     var result1 = run(parser1, input);
-    if (result1.TAG === /* Success */0) {
+    if (result1.TAG === "Success") {
       return result1;
     } else {
       return run(parser2, input);
     }
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
 
 function choice(listOfParsers) {
-  return Belt_List.reduce(listOfParsers, /* Parser */{
+  return Belt_List.reduce(listOfParsers, {
+              TAG: "Parser",
               _0: (function (string) {
                   return {
-                          TAG: /* Failure */1,
+                          TAG: "Failure",
                           _0: "Initial parser"
                         };
                 })
@@ -138,23 +142,24 @@ console.log("parseThreeDigits 123A", prim1);
 function mapP(f, parser) {
   var innerFn = function (input) {
     var result = run(parser, input);
-    if (result.TAG !== /* Success */0) {
+    if (result.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: result._0
             };
     }
     var match = result._0;
     var newValue = Curry._1(f, match[0]);
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               newValue,
               match[1]
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -196,14 +201,15 @@ console.log("-- 2. Lifting functions to the world of Parsers");
 function returnP(x) {
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               x,
               input
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -249,14 +255,15 @@ function sequence(parserList) {
   }
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               /* [] */0,
               input
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -314,7 +321,7 @@ console.log("-- 4. Matching a parser multiple times");
 
 function parseZeroOrMore(parser, input) {
   var firstResult = run(parser, input);
-  if (firstResult.TAG !== /* Success */0) {
+  if (firstResult.TAG !== "Success") {
     return [
             /* [] */0,
             input
@@ -337,11 +344,12 @@ function parseZeroOrMore(parser, input) {
 function many(parser) {
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: parseZeroOrMore(parser, input)
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -414,9 +422,9 @@ console.log("-- Defining many1");
 function many1(parser) {
   var innerFn = function (input) {
     var firstResult = run(parser, input);
-    if (firstResult.TAG !== /* Success */0) {
+    if (firstResult.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: firstResult._0
             };
     }
@@ -429,14 +437,15 @@ function many1(parser) {
       tl: values_1
     };
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               values,
               match$1[1]
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -513,14 +522,15 @@ function opt(p) {
         }), p);
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               undefined,
               input
             ]
           };
   };
-  var none = /* Parser */{
+  var none = {
+    TAG: "Parser",
     _0: innerFn
   };
   return orElse(some, none);
@@ -650,14 +660,15 @@ function sepBy1(p, sep) {
 function sepBy(p, sep) {
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               /* [] */0,
               input
             ]
           };
   };
-  return orElse(sepBy1(p, sep), /* Parser */{
+  return orElse(sepBy1(p, sep), {
+              TAG: "Parser",
               _0: innerFn
             });
 }
@@ -722,7 +733,7 @@ function pchar$1(charToMatch) {
   var innerFn = function (str) {
     if (str.length === 0) {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: "No more input"
             };
     }
@@ -730,7 +741,7 @@ function pchar$1(charToMatch) {
     if (first === charToMatch) {
       var remaining = str.slice(1);
       return {
-              TAG: /* Success */0,
+              TAG: "Success",
               _0: [
                 charToMatch,
                 remaining
@@ -739,11 +750,12 @@ function pchar$1(charToMatch) {
     }
     var msg = "Expecting '" + $$String.make(1, charToMatch) + "'. Got '" + $$String.make(1, first) + "'";
     return {
-            TAG: /* Failure */1,
+            TAG: "Failure",
             _0: msg
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -755,9 +767,9 @@ function run$1(parser, input) {
 function bindP(f, p) {
   var innerFn = function (input) {
     var result1 = run$1(p, input);
-    if (result1.TAG !== /* Success */0) {
+    if (result1.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: result1._0
             };
     }
@@ -765,7 +777,8 @@ function bindP(f, p) {
     var p2 = Curry._1(f, match[0]);
     return run$1(p2, match[1]);
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -773,14 +786,15 @@ function bindP(f, p) {
 function returnP$1(x) {
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               x,
               input
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -817,22 +831,24 @@ function andThen$1(p1, p2) {
 function orElse$1(parser1, parser2) {
   var innerFn = function (input) {
     var result1 = run$1(parser1, input);
-    if (result1.TAG === /* Success */0) {
+    if (result1.TAG === "Success") {
       return result1;
     } else {
       return run$1(parser2, input);
     }
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
 
 function choice$1(listOfParsers) {
-  return Belt_List.reduce(listOfParsers, /* Parser */{
+  return Belt_List.reduce(listOfParsers, {
+              TAG: "Parser",
               _0: (function (string) {
                   return {
-                          TAG: /* Failure */1,
+                          TAG: "Failure",
                           _0: "Initial parser"
                         };
                 })
@@ -855,21 +871,22 @@ function sequence$1(parserList) {
   }
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               /* [] */0,
               input
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
 
 function parseZeroOrMore$1(parser, input) {
   var firstResult = run$1(parser, input);
-  if (firstResult.TAG !== /* Success */0) {
+  if (firstResult.TAG !== "Success") {
     return [
             /* [] */0,
             input
@@ -892,11 +909,12 @@ function parseZeroOrMore$1(parser, input) {
 function many$1(parser) {
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: parseZeroOrMore$1(parser, input)
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           _0: innerFn
         };
 }
@@ -919,14 +937,15 @@ function opt$1(p) {
         }), p);
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               undefined,
               input
             ]
           };
   };
-  var none = /* Parser */{
+  var none = {
+    TAG: "Parser",
     _0: innerFn
   };
   return orElse$1(some, none);
@@ -964,14 +983,15 @@ function sepBy1$1(p, sep) {
 function sepBy$1(p, sep) {
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               /* [] */0,
               input
             ]
           };
   };
-  return orElse$1(sepBy1$1(p, sep), /* Parser */{
+  return orElse$1(sepBy1$1(p, sep), {
+              TAG: "Parser",
               _0: innerFn
             });
 }

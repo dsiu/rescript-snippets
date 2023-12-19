@@ -4,19 +4,19 @@ import * as Curry from "rescript/lib/es6/curry.js";
 import * as $$Promise from "@ryyppy/rescript-promise/src/Promise.mjs";
 
 function testEach(title, data, f) {
-  test.each(data)("" + title + "(%#) %p", f);
+  test.each(data)(title + "(%#) %p", f);
 }
 
 function testEach2(title, data, f) {
-  test.each(data)("" + title + "(%#) %p %p", f);
+  test.each(data)(title + "(%#) %p %p", f);
 }
 
 function testEach3(title, data, f) {
-  test.each(data)("" + title + "(%#) %p %p %p", f);
+  test.each(data)(title + "(%#) %p %p %p", f);
 }
 
 function testEach4(title, data, f) {
-  test.each(data)("" + title + "(%#) %p %p %p %p", f);
+  test.each(data)(title + "(%#) %p %p %p %p", f);
 }
 
 function awaitThen(pa, done, f) {

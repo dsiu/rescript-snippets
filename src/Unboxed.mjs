@@ -26,12 +26,12 @@ function string(v) {
 function classify(v) {
   if (typeof v === "number") {
     return {
-            TAG: /* Number */0,
+            TAG: "Number",
             _0: v
           };
   } else {
     return {
-            TAG: /* String */1,
+            TAG: "String",
             _0: v
           };
   }
@@ -69,12 +69,12 @@ var $$instanceof = (function(a) {
 function classify$1(v) {
   if ($$instanceof(v)) {
     return {
-            TAG: /* A */0,
+            TAG: "A",
             _0: v
           };
   } else {
     return {
-            TAG: /* B */1,
+            TAG: "B",
             _0: b$1
           };
   }

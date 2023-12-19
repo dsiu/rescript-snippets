@@ -8,7 +8,7 @@ function safeParse1(string) {
   try {
     var json = JSON.parse(string);
     return {
-            TAG: /* Ok */0,
+            TAG: "Ok",
             _0: json
           };
   }
@@ -18,12 +18,12 @@ function safeParse1(string) {
       var m = obj._1.message;
       if (m !== undefined) {
         return {
-                TAG: /* Error */1,
+                TAG: "Error",
                 _0: m
               };
       } else {
         return {
-                TAG: /* Error */1,
+                TAG: "Error",
                 _0: "Unknown"
               };
       }
@@ -41,14 +41,14 @@ function safeParse(string) {
     var exn = Caml_js_exceptions.internalToOCamlException(raw_exn);
     if (exn.RE_EXN_ID === Js_exn.$$Error) {
       return {
-              TAG: /* Error */1,
+              TAG: "Error",
               _0: Belt_Option.getWithDefault(exn._1.message, "Unknown")
             };
     }
     throw exn;
   }
   return {
-          TAG: /* Ok */0,
+          TAG: "Ok",
           _0: json
         };
 }

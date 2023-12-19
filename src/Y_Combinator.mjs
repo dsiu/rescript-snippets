@@ -3,7 +3,8 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 
 function fix(x) {
-  return /* Fix */{
+  return {
+          TAG: "Fix",
           _0: x
         };
 }
@@ -16,7 +17,8 @@ function y(f) {
   var g = function (x, a) {
     return Curry._2(f, Curry._1(x._0, x), a);
   };
-  var partial_arg = /* Fix */{
+  var partial_arg = {
+    TAG: "Fix",
     _0: g
   };
   return function (param) {
@@ -34,16 +36,17 @@ function fact(self, n) {
 
 function int2nat(self, n) {
   if (n === 0) {
-    return /* Zero */0;
+    return "Zero";
   } else {
-    return /* Succ */{
+    return {
+            TAG: "Succ",
             _0: Curry._1(self, n - 1 | 0)
           };
   }
 }
 
 function string_of_nat(x) {
-  if (!x) {
+  if (typeof x !== "object") {
     return "Zero";
   }
   var s = string_of_nat(x._0);
@@ -52,13 +55,13 @@ function string_of_nat(x) {
 
 var result = y(fact)(6);
 
-console.log("" + result + "\n");
+console.log(result.toString() + "\n");
 
 var result$1 = y(int2nat)(6);
 
 var result_str = string_of_nat(result$1);
 
-console.log("" + result_str + "\n");
+console.log(result_str + "\n");
 
 export {
   fix ,

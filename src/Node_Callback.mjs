@@ -9,13 +9,13 @@ function callbackWithResult(f) {
   return function (error, result) {
     if (!(error == null)) {
       return Curry._1(f, {
-                  TAG: /* Error */1,
+                  TAG: "Error",
                   _0: error
                 });
     }
     if (!(result == null)) {
       return Curry._1(f, {
-                  TAG: /* Ok */0,
+                  TAG: "Ok",
                   _0: result
                 });
     }
@@ -29,7 +29,7 @@ function callbackWithResult(f) {
 
 function onResult(result) {
   var message;
-  message = result.TAG === /* Ok */0 ? "Success: " + result._0 : "Error: " + Belt_Option.getWithDefault(result._0.message, "Unknown");
+  message = result.TAG === "Ok" ? "Success: " + result._0 : "Error: " + Belt_Option.getWithDefault(result._0.message, "Unknown");
   console.log(message);
 }
 
@@ -92,7 +92,7 @@ function handlePromise(promise) {
         }), __x);
   Js_promise.then_((function (message) {
           console.log(message);
-          return Promise.resolve(undefined);
+          return Promise.resolve();
         }), __x$1);
 }
 

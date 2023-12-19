@@ -97,7 +97,7 @@ function flatten(l) {
         return acc;
       }
       var x = l$p.hd;
-      if (x.TAG === /* One */0) {
+      if (x.TAG === "One") {
         _acc = {
           hd: x._0,
           tl: acc
@@ -246,12 +246,12 @@ function encode_11(l) {
   var create_tuple = function (cnt, elem) {
     if (cnt === 1) {
       return {
-              TAG: /* One */0,
+              TAG: "One",
               _0: elem
             };
     } else {
       return {
-              TAG: /* Many */1,
+              TAG: "Many",
               _0: cnt,
               _1: elem
             };
@@ -323,7 +323,7 @@ function decode(l) {
       return acc;
     }
     var x = l$1.hd;
-    if (x.TAG === /* One */0) {
+    if (x.TAG === "One") {
       _acc = {
         hd: x._0,
         tl: acc
@@ -341,13 +341,13 @@ function encode_13(l) {
   var rle = function (count, x) {
     if (count !== 0) {
       return {
-              TAG: /* Many */1,
+              TAG: "Many",
               _0: count + 1 | 0,
               _1: x
             };
     } else {
       return {
-              TAG: /* One */0,
+              TAG: "One",
               _0: x
             };
     }

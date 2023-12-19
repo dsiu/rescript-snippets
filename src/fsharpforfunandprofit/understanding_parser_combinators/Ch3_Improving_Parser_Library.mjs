@@ -47,11 +47,11 @@ function compose(f, g, x) {
 }
 
 function printResult(result) {
-  if (result.TAG === /* Success */0) {
+  if (result.TAG === "Success") {
     console.log(result._0[0]);
     return ;
   }
-  console.log("Error parsing " + result._0 + "\n" + result._1 + "");
+  console.log("Error parsing " + result._0 + "\n" + result._1);
 }
 
 function getLabel(param) {
@@ -62,20 +62,21 @@ function setLabel(param, newLabel) {
   var parseFn = param.parseFn;
   var newInnerFn = function (input) {
     var result = Curry._1(parseFn, input);
-    if (result.TAG === /* Success */0) {
+    if (result.TAG === "Success") {
       return {
-              TAG: /* Success */0,
+              TAG: "Success",
               _0: result._0
             };
     } else {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: newLabel,
               _1: result._1
             };
     }
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           parseFn: newInnerFn,
           label: newLabel
         };
@@ -85,7 +86,7 @@ function satisfy(predicate, label) {
   var innerFn = function (input) {
     if (input.length === 0) {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: label,
               _1: "No more input"
             };
@@ -94,21 +95,22 @@ function satisfy(predicate, label) {
     if (Curry._1(predicate, first)) {
       var remainingInput = input.slice(1);
       return {
-              TAG: /* Success */0,
+              TAG: "Success",
               _0: [
                 first,
                 remainingInput
               ]
             };
     }
-    var err = "Unexpected " + $$String.make(1, first) + "";
+    var err = "Unexpected " + $$String.make(1, first);
     return {
-            TAG: /* Failure */1,
+            TAG: "Failure",
             _0: label,
             _1: err
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           parseFn: innerFn,
           label: label
         };
@@ -129,9 +131,9 @@ function run(param, input) {
 function bindP(f, p) {
   var innerFn = function (input) {
     var result1 = run(p, input);
-    if (result1.TAG !== /* Success */0) {
+    if (result1.TAG !== "Success") {
       return {
-              TAG: /* Failure */1,
+              TAG: "Failure",
               _0: result1._0,
               _1: result1._1
             };
@@ -140,7 +142,8 @@ function bindP(f, p) {
     var p2 = Curry._1(f, match[0]);
     return run(p2, match[1]);
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           parseFn: innerFn,
           label: "unknown"
         };
@@ -149,14 +152,15 @@ function bindP(f, p) {
 function returnP(x) {
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: [
               x,
               input
             ]
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           parseFn: innerFn,
           label: ""
         };
@@ -181,7 +185,7 @@ function lift2(f, xP, yP) {
 }
 
 function andThen(p1, p2) {
-  var label = "" + getLabel(p1) + " andThen " + getLabel(p2) + "";
+  var label = getLabel(p1) + " andThen " + getLabel(p2);
   return setLabel(bindP((function (p1Result) {
                     return bindP((function (p2Result) {
                                   return returnP([
@@ -193,26 +197,28 @@ function andThen(p1, p2) {
 }
 
 function orElse(parser1, parser2) {
-  var label = "" + getLabel(parser1) + " orElse " + getLabel(parser2) + "";
+  var label = getLabel(parser1) + " orElse " + getLabel(parser2);
   var innerFn = function (input) {
     var result1 = run(parser1, input);
-    if (result1.TAG === /* Success */0) {
+    if (result1.TAG === "Success") {
       return result1;
     } else {
       return run(parser2, input);
     }
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           parseFn: innerFn,
           label: label
         };
 }
 
 function choice(listOfParsers) {
-  return Belt_List.reduce(listOfParsers, /* Parser */{
+  return Belt_List.reduce(listOfParsers, {
+              TAG: "Parser",
               parseFn: (function (string) {
                   return {
-                          TAG: /* Failure */1,
+                          TAG: "Failure",
                           _0: "Initial parser",
                           _1: "Initial parser"
                         };
@@ -222,7 +228,7 @@ function choice(listOfParsers) {
 }
 
 function anyOf(listOfChars) {
-  var label = "any of " + charListToString(listOfChars) + "";
+  var label = "any of " + charListToString(listOfChars);
   return setLabel(choice(Belt_List.map(listOfChars, pchar)), label);
 }
 
@@ -242,7 +248,7 @@ function sequence(parserList) {
 
 function parseZeroOrMore(parser, input) {
   var firstResult = run(parser, input);
-  if (firstResult.TAG !== /* Success */0) {
+  if (firstResult.TAG !== "Success") {
     return [
             /* [] */0,
             input
@@ -263,14 +269,15 @@ function parseZeroOrMore(parser, input) {
 }
 
 function many(parser) {
-  var label = "many " + getLabel(parser) + "";
+  var label = "many " + getLabel(parser);
   var innerFn = function (input) {
     return {
-            TAG: /* Success */0,
+            TAG: "Success",
             _0: parseZeroOrMore(parser, input)
           };
   };
-  return /* Parser */{
+  return {
+          TAG: "Parser",
           parseFn: innerFn,
           label: label
         };

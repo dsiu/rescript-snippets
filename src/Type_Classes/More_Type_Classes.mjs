@@ -726,7 +726,8 @@ var prim1$19 = traverse(ssqrt, {
 console.log("all_roots = ", prim1$19);
 
 function node(l, x, r) {
-  return /* Node */{
+  return {
+          TAG: "Node",
           _0: l,
           _1: x,
           _2: r
@@ -736,10 +737,10 @@ function node(l, x, r) {
 function TreeTraversable(A) {
   var traverse = function (f, t) {
     var apply = A.apply;
-    if (t) {
-      return Curry._2(apply, Curry._2(apply, Curry._2(A.map, node, traverse(f, t._0)), Curry._1(f, t._1)), traverse(f, t._2));
+    if (typeof t !== "object") {
+      return Curry._1(A.pure, "Leaf");
     } else {
-      return Curry._1(A.pure, /* Leaf */0);
+      return Curry._2(apply, Curry._2(apply, Curry._2(A.map, node, traverse(f, t._0)), Curry._1(f, t._1)), traverse(f, t._2));
     }
   };
   return {
@@ -767,8 +768,8 @@ var IdApplicative = {
 };
 
 function traverse$1(f, t) {
-  if (!t) {
-    return /* Leaf */0;
+  if (typeof t !== "object") {
+    return "Leaf";
   }
   var partial_arg = Curry._1(f, t._1);
   var partial_arg$1 = traverse$1(f, t._0);
@@ -799,8 +800,8 @@ function TraversableFunctor(MT) {
 }
 
 function traverse$2(f, t) {
-  if (!t) {
-    return /* Leaf */0;
+  if (typeof t !== "object") {
+    return "Leaf";
   }
   var partial_arg = Curry._1(f, t._1);
   var partial_arg$1 = traverse$2(f, t._0);
@@ -828,13 +829,15 @@ function f$4(x) {
   return Math.imul(x, x);
 }
 
-var prim1$20 = traverse$2(f$4, /* Node */{
-      _0: /* Leaf */0,
+var prim1$20 = traverse$2(f$4, {
+      TAG: "Node",
+      _0: "Leaf",
       _1: 3,
-      _2: /* Node */{
-        _0: /* Leaf */0,
+      _2: {
+        TAG: "Node",
+        _0: "Leaf",
         _1: 5,
-        _2: /* Leaf */0
+        _2: "Leaf"
       }
     });
 

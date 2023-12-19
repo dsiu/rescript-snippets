@@ -27,12 +27,12 @@ function logList2(l, str) {
 function mapListToString(m) {
   var b = Belt_MapString.toList(m);
   return $$String.concat(", ", Belt_List.map(b, (function (param) {
-                    return "" + param[0] + ": " + param[1] + "";
+                    return param[0] + ": " + param[1];
                   })));
 }
 
 function logStrMapList(m, str) {
-  var prim = "" + str + ": " + mapListToString(m) + "";
+  var prim = str + ": " + mapListToString(m);
   console.log(prim);
 }
 
@@ -59,7 +59,7 @@ function depth_first_search(g) {
         var f = match.f;
         var d = match.d;
         var t = param[0];
-        if (Belt_MapString.getExn(color, v) === /* White */0) {
+        if (Belt_MapString.getExn(color, v) === "White") {
           return dfs_visit(t, v, {
                       d: d,
                       f: f,
@@ -85,7 +85,7 @@ function depth_first_search(g) {
               d: Belt_MapString.set(param.d, u, t$1),
               f: param.f,
               pred: param.pred,
-              color: Belt_MapString.set(param.color, u, /* Gray */1)
+              color: Belt_MapString.set(param.color, u, "Gray")
             }
           ], edge);
       var match$1 = match[1];
@@ -96,11 +96,11 @@ function depth_first_search(g) {
                 d: match$1.d,
                 f: Belt_MapString.set(match$1.f, u, t$2),
                 pred: match$1.pred,
-                color: Belt_MapString.set(match$1.color, u, /* Black */2)
+                color: Belt_MapString.set(match$1.color, u, "Black")
               }
             ];
     };
-    if (Belt_MapString.getExn(color, u) === /* White */0) {
+    if (Belt_MapString.getExn(color, u) === "White") {
       return dfs_visit(t, u, {
                   d: d,
                   f: f,
@@ -126,7 +126,7 @@ function depth_first_search(g) {
                 };
         }));
   var initial_state_color = Belt_List.reduceReverse(v, undefined, (function (m, x) {
-          return Belt_MapString.set(m, x, /* White */0);
+          return Belt_MapString.set(m, x, "White");
         }));
   var initial_state = {
     d: undefined,

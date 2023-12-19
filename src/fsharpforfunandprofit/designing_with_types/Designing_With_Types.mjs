@@ -8,7 +8,8 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 function createEmailAddress(s) {
   var match = /^\S+@\S+\.\S+$/.exec(s);
   if (match !== null) {
-    return /* EmailAddress */{
+    return {
+            TAG: "EmailAddress",
             _0: s
           };
   }
@@ -30,7 +31,8 @@ function createStateCode(s) {
           return a === b;
         }));
   if (match) {
-    return /* StateCode */{
+    return {
+            TAG: "StateCode",
             _0: s$p
           };
   }
@@ -49,14 +51,15 @@ function createEmailAddress2(s) {
   var match = /^\S+@\S+\.\S+$/.exec(s);
   if (match !== null) {
     return {
-            TAG: /* Success */0,
-            _0: /* EmailAddress */{
+            TAG: "Success",
+            _0: {
+              TAG: "EmailAddress",
               _0: s
             }
           };
   } else {
     return {
-            TAG: /* Error */1,
+            TAG: "Error",
             _0: "Email address must contain an @ sign"
           };
   }
@@ -67,7 +70,8 @@ console.log(createEmailAddress2("diudiu"));
 function createEmailAddressWithContinuations(success, failure, s) {
   var match = /^\S+@\S+\.\S+$/.exec(s);
   if (match !== null) {
-    return Curry._1(success, /* EmailAddress */{
+    return Curry._1(success, {
+                TAG: "EmailAddress",
                 _0: s
               });
   } else {
@@ -106,7 +110,8 @@ console.log(createEmailAddress("diudiu"), "with carry");
 function create(s) {
   var match = /^\S+@\S+\.\S+$/.exec(s);
   if (match !== null) {
-    return /* EmailAddress */{
+    return {
+            TAG: "EmailAddress",
             _0: s
           };
   }

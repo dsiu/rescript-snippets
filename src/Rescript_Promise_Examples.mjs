@@ -28,7 +28,7 @@ Promise.resolve("hello world").then(function (msg) {
         return Promise.resolve("Message: " + msg);
       }).then(function (msg) {
       console.log(msg);
-      return Promise.resolve(undefined);
+      return Promise.resolve();
     });
 
 function queryComments(username) {
@@ -51,7 +51,7 @@ queryUser("u1").then(function (user) {
       Belt_Array.forEach(comments, (function (comment) {
               console.log(comment);
             }));
-      return Promise.resolve(undefined);
+      return Promise.resolve();
     });
 
 function createNumPromise(n) {
@@ -72,27 +72,27 @@ $$Promise.$$catch(Promise.reject({
             }).then(function (str) {
             console.log("this should not be reached: " + str);
             return Promise.resolve({
-                        TAG: /* Ok */0,
+                        TAG: "Ok",
                         _0: "successful"
                       });
           }), (function (e) {
           var err = e.RE_EXN_ID === MyError ? "found MyError: " + e._1 : "Some unknown error";
           return Promise.resolve({
-                      TAG: /* Error */1,
+                      TAG: "Error",
                       _0: err
                     });
         })).then(function (result) {
       var msg;
-      msg = result.TAG === /* Ok */0 ? "Successful: " + result._0 : "Error: " + result._0;
+      msg = result.TAG === "Ok" ? "Successful: " + result._0 : "Error: " + result._0;
       console.log(msg);
-      return Promise.resolve(undefined);
+      return Promise.resolve();
     });
 
 function causeErr(param) {
   return Promise.resolve(Js_exn.raiseError("Some JS error"));
 }
 
-$$Promise.$$catch(Promise.resolve(undefined).then(function (param) {
+$$Promise.$$catch(Promise.resolve().then(function (param) {
           return Promise.resolve(Js_exn.raiseError("Some JS error"));
         }), (function (e) {
         if (e.RE_EXN_ID === $$Promise.JsError) {
@@ -105,7 +105,7 @@ $$Promise.$$catch(Promise.resolve(undefined).then(function (param) {
         } else {
           console.log("Some unknown error");
         }
-        return Promise.resolve(undefined);
+        return Promise.resolve();
       }));
 
 var TestError = /* @__PURE__ */Caml_exceptions.create("Rescript_Promise_Examples.TestError");
@@ -122,7 +122,7 @@ function causeReScriptErr(param) {
       };
 }
 
-$$Promise.$$catch(Promise.resolve(undefined).then(function (param) {
+$$Promise.$$catch(Promise.resolve().then(function (param) {
           if (generateRandomInt() > 5) {
             throw {
                   RE_EXN_ID: TestError,
@@ -144,7 +144,7 @@ $$Promise.$$catch(Promise.resolve(undefined).then(function (param) {
         } else {
           console.log("Some unknown error");
         }
-        return Promise.resolve(undefined);
+        return Promise.resolve();
       }));
 
 someAsyncApi().then(function (str) {
@@ -179,9 +179,9 @@ Promise.all([
         p3$1
       ]).then(function (arr) {
       Belt_Array.forEach(arr, (function (param) {
-              console.log("Place " + String(param[0]) + " => " + param[1] + "");
+              console.log("Place " + String(param[0]) + " => " + param[1]);
             }));
-      return Promise.resolve(undefined);
+      return Promise.resolve();
     });
 
 function racer(ms, name) {
@@ -211,7 +211,7 @@ $$Promise.$$catch(Promise.resolve(1).then(function (value) {
         }), (function (e) {
         console.log("luckily, our mistake will be caught here");
         console.log(e);
-        return Promise.resolve(undefined);
+        return Promise.resolve();
       }));
 
 $$Promise.$$catch(Promise.resolve(1).then(function (value) {
@@ -222,11 +222,11 @@ $$Promise.$$catch(Promise.resolve(1).then(function (value) {
               });
         }), (function (e) {
         console.log("luckily, our mistake will be caught here");
-        return Promise.resolve(undefined);
+        return Promise.resolve();
       }));
 
 new Promise((function (resolve, _reject) {
-        resolve(undefined);
+        resolve();
       }));
 
 var queryUser$1;

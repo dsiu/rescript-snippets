@@ -58,7 +58,7 @@ function adderWithPluggableLogger(logger, x, y) {
 }
 
 function consoleLogger(argName, argValue) {
-  console.log("" + argName + "=" + String(argValue) + "");
+  console.log(argName + "=" + String(argValue));
 }
 
 function addWithConsoleLogger(param, param$1) {
@@ -70,7 +70,7 @@ adderWithPluggableLogger(consoleLogger, 1, 2);
 adderWithPluggableLogger(consoleLogger, 42, 99);
 
 function redLogger(argName, argValue) {
-  var message = "" + argName + "=" + String(argValue) + "";
+  var message = argName + "=" + String(argValue);
   console.log("[red]" + message);
 }
 

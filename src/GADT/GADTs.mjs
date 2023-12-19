@@ -8,28 +8,28 @@ var t2 = "asdf";
 var t3 = true;
 
 function $$eval(expr) {
-  switch (expr.TAG | 0) {
-    case /* Int */0 :
-    case /* Bool */1 :
+  switch (expr.TAG) {
+    case "Int" :
+    case "Bool" :
         return expr._0;
-    case /* Eq */2 :
+    case "Eq" :
         return $$eval(expr._0) === $$eval(expr._1);
-    case /* Add */3 :
+    case "Add" :
         return $$eval(expr._0) + $$eval(expr._1) | 0;
-    case /* Mul */4 :
+    case "Mul" :
         return Math.imul($$eval(expr._0), $$eval(expr._1));
     
   }
 }
 
 var isOneEqToOne = {
-  TAG: /* Eq */2,
+  TAG: "Eq",
   _0: {
-    TAG: /* Int */0,
+    TAG: "Int",
     _0: 1
   },
   _1: {
-    TAG: /* Int */0,
+    TAG: "Int",
     _0: 1
   }
 };
@@ -37,27 +37,27 @@ var isOneEqToOne = {
 var shouldBeTrue = $$eval(isOneEqToOne);
 
 var is2mult2plus3equalTo7 = {
-  TAG: /* Eq */2,
+  TAG: "Eq",
   _0: {
-    TAG: /* Add */3,
+    TAG: "Add",
     _0: {
-      TAG: /* Mul */4,
+      TAG: "Mul",
       _0: {
-        TAG: /* Int */0,
+        TAG: "Int",
         _0: 2
       },
       _1: {
-        TAG: /* Int */0,
+        TAG: "Int",
         _0: 2
       }
     },
     _1: {
-      TAG: /* Int */0,
+      TAG: "Int",
       _0: 3
     }
   },
   _1: {
-    TAG: /* Int */0,
+    TAG: "Int",
     _0: 7
   }
 };

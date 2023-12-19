@@ -14,12 +14,12 @@ console.log(add(3.0, 2.0));
 console.log(add("hello, ", "BuckleScript"));
 
 var x = {
-  TAG: /* JsonString */1,
+  TAG: "JsonString",
   _0: "hello"
 };
 
 var y = {
-  TAG: /* JsonBool */0,
+  TAG: "JsonBool",
   _0: true
 };
 

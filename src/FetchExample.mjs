@@ -31,15 +31,15 @@ function login(email, password) {
                   if (msg == null) {
                     var token = data.token;
                     tmp = (token == null) ? ({
-                          TAG: /* Error */1,
+                          TAG: "Error",
                           _0: "Didn't return a token"
                         }) : ({
-                          TAG: /* Ok */0,
+                          TAG: "Ok",
                           _0: token
                         });
                   } else {
                     tmp = {
-                      TAG: /* Error */1,
+                      TAG: "Error",
                       _0: msg
                     };
                   }
@@ -53,7 +53,7 @@ function login(email, password) {
                   msg = "Unexpected error occurred";
                 }
                 return Promise.resolve({
-                            TAG: /* Error */1,
+                            TAG: "Error",
                             _0: msg
                           });
               }));
@@ -65,7 +65,7 @@ var Login = {
 
 function getProducts(token, param) {
   var params = {
-    Authorization: "Bearer " + token + ""
+    Authorization: "Bearer " + token
   };
   return $$Promise.$$catch(globalThis.fetch("https://reqres.in/api/products", params).then(function (res) {
                     return res.json();
@@ -73,7 +73,7 @@ function getProducts(token, param) {
                   var data$1 = data.data;
                   var ret = (data$1 == null) ? [] : data$1;
                   return Promise.resolve({
-                              TAG: /* Ok */0,
+                              TAG: "Ok",
                               _0: ret
                             });
                 }), (function (e) {
@@ -85,7 +85,7 @@ function getProducts(token, param) {
                   msg = "Unexpected error occurred";
                 }
                 return Promise.resolve({
-                            TAG: /* Error */1,
+                            TAG: "Error",
                             _0: msg
                           });
               }));
@@ -98,7 +98,7 @@ var Product = {
 var FailedRequest = /* @__PURE__ */Caml_exceptions.create("FetchExample.FailedRequest");
 
 $$Promise.$$catch(login("emma.wong@reqres.in", "pw").then(function (ret) {
-            if (ret.TAG !== /* Ok */0) {
+            if (ret.TAG !== "Ok") {
               return Promise.reject({
                           RE_EXN_ID: FailedRequest,
                           _1: "Login error - " + ret._0
@@ -108,10 +108,10 @@ $$Promise.$$catch(login("emma.wong@reqres.in", "pw").then(function (ret) {
             return getProducts(ret._0, undefined);
           }).then(function (result) {
           var tmp;
-          if (result.TAG === /* Ok */0) {
+          if (result.TAG === "Ok") {
             console.log("\nAvailable Products:\n---");
             tmp = Belt_Array.forEach(result._0, (function (p) {
-                    console.log("" + String(p.id) + " - " + p.name + "");
+                    console.log(String(p.id) + " - " + p.name);
                   }));
           } else {
             console.log("Could not query products: " + result._0);
@@ -124,7 +124,7 @@ $$Promise.$$catch(login("emma.wong@reqres.in", "pw").then(function (ret) {
         } else {
           console.log("Unknown error");
         }
-        return Promise.resolve(undefined);
+        return Promise.resolve();
       }));
 
 export {

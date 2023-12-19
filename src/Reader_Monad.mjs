@@ -3,7 +3,8 @@
 import * as $$Array from "rescript/lib/es6/array.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 
-var r = /* Reader */{
+var r = {
+  TAG: "Reader",
   _0: (function (e) {
       return e + 1 | 0;
     })
@@ -13,7 +14,8 @@ function run(r, env) {
   return Curry._1(r._0, env);
 }
 
-var r1 = /* Reader */{
+var r1 = {
+  TAG: "Reader",
   _0: (function (e) {
       return e + 1 | 0;
     })
@@ -22,14 +24,16 @@ var r1 = /* Reader */{
 run(r1, 1);
 
 function $$return(a) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (_env) {
               return a;
             })
         };
 }
 
-var r2 = /* Reader */{
+var r2 = {
+  TAG: "Reader",
   _0: (function (_env) {
       return 99;
     })
@@ -38,14 +42,16 @@ var r2 = /* Reader */{
 run(r2, 1);
 
 function ask(param) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return env;
             })
         };
 }
 
-var r3 = /* Reader */{
+var r3 = {
+  TAG: "Reader",
   _0: (function (env) {
       return env;
     })
@@ -54,14 +60,16 @@ var r3 = /* Reader */{
 run(r3, 123);
 
 function local(f, m) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return run(m, Curry._1(f, env));
             })
         };
 }
 
-var r4 = /* Reader */{
+var r4 = {
+  TAG: "Reader",
   _0: (function (e) {
       return e + 1 | 0;
     })
@@ -74,14 +82,16 @@ var r5 = local((function (e) {
 run(r5, 1);
 
 function map(f, m) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return Curry._1(f, run(m, env));
             })
         };
 }
 
-var r6 = /* Reader */{
+var r6 = {
+  TAG: "Reader",
   _0: (function (e) {
       return e + 1 | 0;
     })
@@ -94,21 +104,24 @@ var r7 = map((function (x) {
 run(r7, 1);
 
 function bind(f, m) {
-  return /* Reader */{
+  return {
+          TAG: "Reader",
           _0: (function (env) {
               return run(Curry._1(f, run(m, env)), env);
             })
         };
 }
 
-var r8 = /* Reader */{
+var r8 = {
+  TAG: "Reader",
   _0: (function (e) {
       return e + 1 | 0;
     })
 };
 
 var r9 = bind((function (x) {
-        return /* Reader */{
+        return {
+                TAG: "Reader",
                 _0: (function (param) {
                     return (x << 1);
                   })
@@ -117,7 +130,8 @@ var r9 = bind((function (x) {
 
 run(r9, 1);
 
-var r10 = /* Reader */{
+var r10 = {
+  TAG: "Reader",
   _0: (function (e) {
       return e + 1 | 0;
     })
@@ -125,7 +139,8 @@ var r10 = /* Reader */{
 
 var r11 = bind((function (x) {
         var a = (x << 1);
-        return /* Reader */{
+        return {
+                TAG: "Reader",
                 _0: (function (_env) {
                     return a;
                   })
@@ -144,19 +159,22 @@ function lines(param) {
               }), param);
 }
 
-var ra = /* Reader */{
+var ra = {
+  TAG: "Reader",
   _0: (function (param) {
       return greet("One", param);
     })
 };
 
-var rb = /* Reader */{
+var rb = {
+  TAG: "Reader",
   _0: (function (param) {
       return greet("Two", param);
     })
 };
 
-var rc = /* Reader */{
+var rc = {
+  TAG: "Reader",
   _0: (function (param) {
       return greet("Three", param);
     })
@@ -170,7 +188,8 @@ var r12 = bind((function (a) {
                                           b,
                                           c
                                         ]);
-                                    return /* Reader */{
+                                    return {
+                                            TAG: "Reader",
                                             _0: (function (_env) {
                                                 return a$1;
                                               })
@@ -195,19 +214,22 @@ function lines$1(param) {
               }), param);
 }
 
-var ra$1 = /* Reader */{
+var ra$1 = {
+  TAG: "Reader",
   _0: (function (param) {
       return greet$1("One", param);
     })
 };
 
-var rb$1 = /* Reader */{
+var rb$1 = {
+  TAG: "Reader",
   _0: (function (param) {
       return greet$1("Two", param);
     })
 };
 
-var rc$1 = /* Reader */{
+var rc$1 = {
+  TAG: "Reader",
   _0: (function (param) {
       return greet$1("Three", param);
     })
@@ -221,7 +243,8 @@ var r13 = bind((function (a) {
                                           b,
                                           c
                                         ]);
-                                    return /* Reader */{
+                                    return {
+                                            TAG: "Reader",
                                             _0: (function (_env) {
                                                 return a$1;
                                               })

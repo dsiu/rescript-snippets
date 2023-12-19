@@ -4,6 +4,7 @@
 // https://blog.shaynefletcher.org/2015/03/y-combinator.html
 //
 @@warning("-3-32")
+open RescriptCore
 
 /*
   There is this blog post by Caltech computer scientist, Mike Vanier. The code in Mike's article uses the Scheme
@@ -84,11 +85,11 @@ let rec string_of_nat = x =>
 
 let _ = {
   let result = y(fact, 6)
-  j`$result\n`->Js.log
+  `${result->Int.toString}\n`->Js.log
 
   let result = y(int2nat, 6)
   let result_str = string_of_nat(result)
-  j`$result_str\n`->Js.log
+  `${result_str}\n`->Js.log
 }
 
 //

@@ -6,18 +6,18 @@ function makeStageA(x) {
   if (x !== 1) {
     if (x !== 2) {
       return {
-              TAG: /* Ok */0,
+              TAG: "Ok",
               _0: x
             };
     } else {
       return {
-              TAG: /* Error */1,
+              TAG: "Error",
               _0: "ProblemA2"
             };
     }
   } else {
     return {
-            TAG: /* Error */1,
+            TAG: "Error",
             _0: "ProblemA1"
           };
   }
@@ -27,18 +27,18 @@ function makeStageB(x) {
   if (x !== 1) {
     if (x !== 2) {
       return {
-              TAG: /* Ok */0,
+              TAG: "Ok",
               _0: x
             };
     } else {
       return {
-              TAG: /* Error */1,
+              TAG: "Error",
               _0: "ProblemB2"
             };
     }
   } else {
     return {
-            TAG: /* Error */1,
+            TAG: "Error",
             _0: "ProblemB1"
           };
   }
@@ -48,18 +48,18 @@ function makeStageC(x) {
   if (x !== 1) {
     if (x !== 2) {
       return {
-              TAG: /* Ok */0,
+              TAG: "Ok",
               _0: x
             };
     } else {
       return {
-              TAG: /* Error */1,
+              TAG: "Error",
               _0: "ProblemC2"
             };
     }
   } else {
     return {
-            TAG: /* Error */1,
+            TAG: "Error",
             _0: "ProblemC1"
           };
   }
@@ -67,7 +67,7 @@ function makeStageC(x) {
 
 function make(x) {
   var result = Belt_Result.flatMap(Belt_Result.flatMap(makeStageA(x), makeStageB), makeStageC);
-  if (result.TAG === /* Ok */0) {
+  if (result.TAG === "Ok") {
     console.log("Ok");
     return ;
   }

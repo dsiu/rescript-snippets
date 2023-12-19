@@ -3,16 +3,18 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 
 function mapOption$p(f, opt) {
-  if (opt) {
-    return /* Some' */{
+  if (typeof opt !== "object") {
+    return "None'";
+  } else {
+    return {
+            TAG: "Some'",
             _0: Curry._1(f, opt._0)
           };
-  } else {
-    return /* None' */0;
   }
 }
 
-var a = /* Some' */{
+var a = {
+  TAG: "Some'",
   _0: 5
 };
 
@@ -22,7 +24,7 @@ function inc(x) {
 
 var c = mapOption$p(inc, a);
 
-var d = mapOption$p(inc, /* None' */0);
+var d = mapOption$p(inc, "None'");
 
 var myInt = 42;
 
@@ -34,13 +36,16 @@ var myStr = "Hello";
 
 var List$p = {};
 
-var myList = /* Con */{
+var myList = {
+  TAG: "Con",
   _0: 1,
-  _1: /* Con */{
+  _1: {
+    TAG: "Con",
     _0: 2,
-    _1: /* Con */{
+    _1: {
+      TAG: "Con",
       _0: 3,
-      _1: /* Empty */0
+      _1: "Empty"
     }
   }
 };
@@ -48,10 +53,10 @@ var myList = /* Con */{
 console.log(myList, "myList");
 
 function length(t) {
-  if (t) {
-    return 1 + length(t._1) | 0;
-  } else {
+  if (typeof t !== "object") {
     return 0;
+  } else {
+    return 1 + length(t._1) | 0;
   }
 }
 
@@ -59,25 +64,33 @@ var HList = {
   length: length
 };
 
-var myHeteroList = /* Con */{
+var myHeteroList = {
+  TAG: "Con",
   _0: 1,
-  _1: /* Con */{
+  _1: {
+    TAG: "Con",
     _0: 2.5,
-    _1: /* Con */{
+    _1: {
+      TAG: "Con",
       _0: false,
-      _1: /* Con */{
+      _1: {
+        TAG: "Con",
         _0: "abc",
-        _1: /* Con */{
+        _1: {
+          TAG: "Con",
           _0: 5,
-          _1: /* Con */{
-            _0: /* Con */{
+          _1: {
+            TAG: "Con",
+            _0: {
+              TAG: "Con",
               _0: 1,
-              _1: /* Con */{
+              _1: {
+                TAG: "Con",
                 _0: "def",
-                _1: /* Empty */0
+                _1: "Empty"
               }
             },
-            _1: /* Empty */0
+            _1: "Empty"
           }
         }
       }
@@ -92,10 +105,10 @@ console.log(myHeteroList, "myHeteroList");
 console.log(myListLength, "myListLength");
 
 function length$1(t) {
-  if (t) {
-    return 1 + length$1(t._1) | 0;
-  } else {
+  if (typeof t !== "object") {
     return 0;
+  } else {
+    return 1 + length$1(t._1) | 0;
   }
 }
 
@@ -108,15 +121,19 @@ var SafeList = {
   head: head
 };
 
-var nonEmptyList = /* Con */{
+var nonEmptyList = {
+  TAG: "Con",
   _0: 1,
-  _1: /* Con */{
+  _1: {
+    TAG: "Con",
     _0: 2,
-    _1: /* Con */{
+    _1: {
+      TAG: "Con",
       _0: 3,
-      _1: /* Con */{
+      _1: {
+        TAG: "Con",
         _0: 4,
-        _1: /* Empty */0
+        _1: "Empty"
       }
     }
   }
@@ -130,23 +147,27 @@ console.log(sizeOfNonEmptyList, "sizeOfNonEmptyList");
 
 console.log(firstElem, "firstElem");
 
-var sizeOfEmptyList = length$1(/* Empty */0);
+var sizeOfEmptyList = length$1("Empty");
 
-console.log(/* Empty */0, "emptyList");
+console.log("Empty", "emptyList");
 
 console.log(sizeOfEmptyList, "sizeOfEmptyList");
 
-var one = /* Succ */{
-  _0: /* Zero */0
+var one = {
+  TAG: "Succ",
+  _0: "Zero"
 };
 
-var two = /* Succ */{
-  _0: /* Succ */{
-    _0: /* Zero */0
+var two = {
+  TAG: "Succ",
+  _0: {
+    TAG: "Succ",
+    _0: "Zero"
   }
 };
 
-var three = /* Succ */{
+var three = {
+  TAG: "Succ",
   _0: two
 };
 
@@ -155,20 +176,25 @@ console.log(one, "one");
 console.log(two, "two");
 
 function inc$1(pn) {
-  return /* Succ */{
+  return {
+          TAG: "Succ",
           _0: pn
         };
 }
 
-var three_ = /* Succ */{
-  _0: /* Succ */{
-    _0: /* Succ */{
-      _0: /* Zero */0
+var three_ = {
+  TAG: "Succ",
+  _0: {
+    TAG: "Succ",
+    _0: {
+      TAG: "Succ",
+      _0: "Zero"
     }
   }
 };
 
-var three__ = /* Succ */{
+var three__ = {
+  TAG: "Succ",
   _0: two
 };
 
@@ -176,22 +202,23 @@ function dec(pn) {
   return pn._0;
 }
 
-var one_ = /* Succ */{
-  _0: /* Zero */0
+var one_ = {
+  TAG: "Succ",
+  _0: "Zero"
 };
 
 function isEqual(_i, _j) {
   while(true) {
     var j = _j;
     var i = _i;
-    if (!i) {
-      if (j) {
-        return false;
-      } else {
+    if (typeof i !== "object") {
+      if (typeof j !== "object") {
         return true;
+      } else {
+        return false;
       }
     }
-    if (!j) {
+    if (typeof j !== "object") {
       return false;
     }
     _j = j._0;
@@ -202,7 +229,8 @@ function isEqual(_i, _j) {
 
 var isTwoEqualToOne = isEqual(one, two);
 
-var isThreeEqualToSuccTwo = isEqual(/* Succ */{
+var isThreeEqualToSuccTwo = isEqual({
+      TAG: "Succ",
       _0: two
     }, three);
 
@@ -211,16 +239,17 @@ console.log(isTwoEqualToOne, "isTwoEqualToOne");
 console.log(isThreeEqualToSuccTwo, "isThreeEqualToSuccTwo");
 
 function $$eval(pn) {
-  if (pn) {
-    return 1 + $$eval(pn._0) | 0;
-  } else {
+  if (typeof pn !== "object") {
     return 0;
+  } else {
+    return 1 + $$eval(pn._0) | 0;
   }
 }
 
 var threeValue = $$eval(three);
 
-var fourValue = $$eval(/* Succ */{
+var fourValue = $$eval({
+      TAG: "Succ",
       _0: three
     });
 
@@ -229,10 +258,10 @@ console.log(threeValue, "threeValue");
 console.log(fourValue, "fourValue");
 
 function length$2(l) {
-  if (l) {
-    return 1 + length$2(l._1) | 0;
-  } else {
+  if (typeof l !== "object") {
     return 0;
+  } else {
+    return 1 + length$2(l._1) | 0;
   }
 }
 
@@ -241,15 +270,17 @@ function pop(l) {
 }
 
 function push(l, v) {
-  if (l) {
-    return /* Con */{
+  if (typeof l !== "object") {
+    return {
+            TAG: "Con",
             _0: v,
-            _1: l
+            _1: "Empty"
           };
   } else {
-    return /* Con */{
+    return {
+            TAG: "Con",
             _0: v,
-            _1: /* Empty */0
+            _1: l
           };
   }
 }
@@ -260,11 +291,13 @@ var LengthList = {
   push: push
 };
 
-var twoElemList = /* Con */{
+var twoElemList = {
+  TAG: "Con",
   _0: 1,
-  _1: /* Con */{
+  _1: {
+    TAG: "Con",
     _0: 2,
-    _1: /* Empty */0
+    _1: "Empty"
   }
 };
 
@@ -285,9 +318,9 @@ function push_(l, v) {
         };
 }
 
-var b = /* None' */0;
+var b = "None'";
 
-var emptyList = /* Empty */0;
+var emptyList = "Empty";
 
 export {
   mapOption$p ,

@@ -1,3 +1,5 @@
+open RescriptCore
+
 // Monad Type
 type numberWithLogs = {
   result: int,
@@ -7,16 +9,16 @@ type numberWithLogs = {
 let square = (x: int) => {
   let result = x * x
   {
-    result: result,
-    logs: [j`Squared $x to get $result`],
+    result,
+    logs: [`Squared ${x->Int.toString} to get ${result->Int.toString}`],
   }
 }
 
 let addOne = (x: int) => {
   let result = x + 1
   {
-    result: result,
-    logs: [j`Added 1 to $x to get to $result`],
+    result,
+    logs: [`Added 1 to ${x->Int.toString} to get to ${result->Int.toString}`],
   }
 }
 

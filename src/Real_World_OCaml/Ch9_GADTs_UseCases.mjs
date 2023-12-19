@@ -75,11 +75,11 @@ function flexible_find_1(_l, f, if_not_found) {
   while(true) {
     var l = _l;
     if (!l) {
-      if (typeof if_not_found === "number") {
-        if (if_not_found !== 0) {
-          return ;
-        } else {
+      if (typeof if_not_found !== "object") {
+        if (if_not_found === "Raise") {
           return Pervasives.failwith("Element not found");
+        } else {
+          return ;
         }
       } else {
         return Caml_option.some(if_not_found._0);
@@ -105,7 +105,7 @@ var __x = flexible_find_1({
       }
     }, (function (x) {
         return x > 10;
-      }), /* Return_none */1);
+      }), "Return_none");
 
 console.log("flexible_find_1", __x);
 
@@ -120,7 +120,8 @@ var __x$1 = flexible_find_1({
       }
     }, (function (x) {
         return x > 10;
-      }), /* Default_to */{
+      }), {
+      TAG: "Default_to",
       _0: 10
     });
 
@@ -138,7 +139,7 @@ try {
         }
       }, (function (x) {
           return x > 10;
-        }), /* Raise */0);
+        }), "Raise");
   console.log("flexible_find_1", __x$2);
 }
 catch (exn){
@@ -156,7 +157,7 @@ var __x$3 = flexible_find_1({
       }
     }, (function (x) {
         return x > 10;
-      }), /* Raise */0);
+      }), "Raise");
 
 console.log("flexible_find_1", __x$3);
 
@@ -171,11 +172,11 @@ function flexible_find_2(f, _list, if_not_found) {
   while(true) {
     var list = _list;
     if (!list) {
-      if (typeof if_not_found === "number") {
-        if (if_not_found !== 0) {
-          return ;
-        } else {
+      if (typeof if_not_found !== "object") {
+        if (if_not_found === "Raise") {
           return Pervasives.failwith("No matching item found");
+        } else {
+          return ;
         }
       } else {
         return if_not_found._0;
@@ -183,7 +184,7 @@ function flexible_find_2(f, _list, if_not_found) {
     }
     var hd = list.hd;
     if (Curry._1(f, hd)) {
-      if (typeof if_not_found === "number" && if_not_found !== 0) {
+      if (typeof if_not_found !== "object" && if_not_found !== "Raise") {
         return Caml_option.some(hd);
       } else {
         return hd;
@@ -205,7 +206,7 @@ var __x$4 = flexible_find_2((function (x) {
           tl: /* [] */0
         }
       }
-    }, /* Return_none */1);
+    }, "Return_none");
 
 console.log("flexible_find_2", __x$4);
 
@@ -220,7 +221,8 @@ var __x$5 = flexible_find_2((function (x) {
           tl: /* [] */0
         }
       }
-    }, /* Default_to */{
+    }, {
+      TAG: "Default_to",
       _0: 10
     });
 
@@ -238,7 +240,7 @@ try {
             tl: /* [] */0
           }
         }
-      }, /* Raise */0);
+      }, "Raise");
   console.log("flexible_find_2", __x$6);
 }
 catch (exn$1){
@@ -256,7 +258,7 @@ var __x$7 = flexible_find_2((function (x) {
           tl: /* [] */0
         }
       }
-    }, /* Raise */0);
+    }, "Raise");
 
 console.log("flexible_find_2", __x$7);
 
@@ -289,7 +291,8 @@ function id(x) {
   return x;
 }
 
-var stringables_0 = /* Stringable */{
+var stringables_0 = {
+  TAG: "Stringable",
   value: 100,
   to_string: (function (prim) {
       return String(prim);
@@ -297,14 +300,16 @@ var stringables_0 = /* Stringable */{
 };
 
 var stringables_1 = {
-  hd: /* Stringable */{
+  hd: {
+    TAG: "Stringable",
     value: 12.3,
     to_string: (function (prim) {
         return String(prim);
       })
   },
   tl: {
-    hd: /* Stringable */{
+    hd: {
+      TAG: "Stringable",
       value: "foo",
       to_string: id
     },
@@ -408,7 +413,8 @@ function sum_file_sizes(d) {
 console.log(sum_file_sizes("."));
 
 function add_step(f, pipeline) {
-  return /* Step */{
+  return {
+          TAG: "Step",
           _0: f,
           _1: pipeline
         };
@@ -418,7 +424,7 @@ function exec(_pipeline, _input) {
   while(true) {
     var input = _input;
     var pipeline = _pipeline;
-    if (!pipeline) {
+    if (typeof pipeline !== "object") {
       return input;
     }
     _input = Curry._1(pipeline._0, input);
@@ -427,24 +433,28 @@ function exec(_pipeline, _input) {
   };
 }
 
-var p1_1 = /* Step */{
+var p1_1 = {
+  TAG: "Step",
   _0: (function (__x) {
       return Belt_List.keep(__x, is_file_exn);
     }),
-  _1: /* Step */{
+  _1: {
+    TAG: "Step",
     _0: (function (__x) {
         return Belt_List.map(__x, (function (x) {
                       return lstat(x).st_size;
                     }));
       }),
-    _1: /* Step */{
+    _1: {
+      TAG: "Step",
       _0: list_sum,
-      _1: /* Empty */0
+      _1: "Empty"
     }
   }
 };
 
-var p1 = /* Step */{
+var p1 = {
+  TAG: "Step",
   _0: ls_dir,
   _1: p1_1
 };
@@ -461,7 +471,7 @@ function exec_with_profile(pipeline, input) {
       var rev_profile = _rev_profile;
       var input = _input;
       var pipeline = _pipeline;
-      if (!pipeline) {
+      if (typeof pipeline !== "object") {
         return [
                 input,
                 rev_profile
@@ -496,7 +506,7 @@ var Abstracting_Computational_Machines = {
   sum_file_sizes: sum_file_sizes,
   add_step: add_step,
   $plus: add_step,
-  empty: /* Empty */0,
+  empty: "Empty",
   exec: exec,
   p1: p1,
   exec_with_profile: exec_with_profile
@@ -524,7 +534,8 @@ var $$Permissions = {
 function set_user_id(request, x) {
   return {
           user_name: request.user_name,
-          user_id: /* Present */{
+          user_id: {
+            TAG: "Present",
             _0: x
           },
           permissions: request.permissions
@@ -535,7 +546,8 @@ function set_permissions(request, x) {
   return {
           user_name: request.user_name,
           user_id: request.user_id,
-          permissions: /* Present */{
+          permissions: {
+            TAG: "Present",
             _0: x
           }
         };
@@ -544,14 +556,15 @@ function set_permissions(request, x) {
 function check_completeness(request) {
   var match = request.user_id;
   var match$1 = request.permissions;
-  if (match && match$1) {
+  if (typeof match !== "object" || typeof match$1 !== "object") {
+    return ;
+  } else {
     return {
             user_name: request.user_name,
             user_id: match,
             permissions: match$1
           };
   }
-  
 }
 
 function authorized(request) {

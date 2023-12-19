@@ -35,16 +35,15 @@ type callbackOnlyError = (. callbackError) => unit
 // Utility function #1
 // An example utility function for handling node callbacks that returns a Result.
 
-let callbackWithResult = (
-  f: Belt.Result.t<'a, Js.Exn.t> => unit,
-  . error: callbackError,
+let callbackWithResult = (f: Belt.Result.t<'a, Js.Exn.t> => unit) => (.
+  error: callbackError,
   result: callbackResult<'a>,
 ) => {
   let errorOpt: option<Js.Exn.t> = Js.Nullable.toOption(error)
   let resultOpt: option<'a> = Js.Nullable.toOption(result)
   switch (errorOpt, resultOpt) {
-  | (Some(error), _) => f(Belt.Result.Error(error))
-  | (_, Some(result)) => f(Belt.Result.Ok(result))
+  | (Some(error), _) => f(Error(error))
+  | (_, Some(result)) => f(Ok(result))
   | (None, None) => raise(Invalid_argument("nodeCallback arguments invalid"))
   }
 }
@@ -64,10 +63,8 @@ readFile("hello.txt", "UTF-8", callbackWithResult(onResult))
 
 // Utility function #2
 // Another example utility function that uses onSuccess and onError callbacks
-let callbackWithSuccessOrError = (
-  onSuccess: 'a => unit,
-  onError: Js.Exn.t => unit,
-  . error: callbackError,
+let callbackWithSuccessOrError = (onSuccess: 'a => unit, onError: Js.Exn.t => unit) => (.
+  error: callbackError,
   result: callbackResult<'a>,
 ) => {
   let errorOpt: option<Js.Exn.t> = Js.Nullable.toOption(error)
@@ -96,9 +93,8 @@ readFile("hello.txt", "UTF-8", callbackWithSuccessOrError(onSuccess, onError))
 
 // Utility function #3
 // Last example converts the result to a promise.
-let callbackWithPromise = (
-  f: Js.Promise.t<'a> => unit,
-  . error: callbackError,
+let callbackWithPromise = (f: Js.Promise.t<'a> => unit) => (.
+  error: callbackError,
   result: callbackResult<'a>,
 ) => {
   let errorOpt: option<Js.Exn.t> = Js.Nullable.toOption(error)

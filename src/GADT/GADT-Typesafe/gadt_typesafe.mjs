@@ -10,18 +10,19 @@ var $$default = {
 
 function toString(prop) {
   switch (prop._0) {
-    case /* Src */0 :
+    case "Src" :
         return "src";
-    case /* Mask */1 :
+    case "Mask" :
         return "mask";
-    case /* MaskAngle */2 :
+    case "MaskAngle" :
         return "maskAngle";
     
   }
 }
 
 function getProperty(metadata, prop) {
-  var someProp = toString(/* SomeProperty */{
+  var someProp = toString({
+        TAG: "SomeProperty",
         _0: prop
       });
   var v = metadata[someProp];
@@ -32,12 +33,11 @@ function getProperty(metadata, prop) {
   }
 }
 
-console.log(getProperty($$default, /* Src */0), "src");
+console.log(getProperty($$default, "Src"), "src");
 
-console.log(getProperty($$default, /* MaskAngle */2), "maskAngle");
+console.log(getProperty($$default, "MaskAngle"), "maskAngle");
 
 export {
-  $$default ,
   $$default as default,
   toString ,
   getProperty ,

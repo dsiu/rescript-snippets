@@ -8,10 +8,6 @@
       "type": "dev"
     },
     {
-      "dir": "re-fp/src",
-      "subdirs": true
-    },
-    {
       "dir": "interop",
       "type": "dev"
     },
@@ -31,10 +27,8 @@
   "bs-dependencies": [
     "@rescript/core",
     "@ryyppy/rescript-promise",
-    "rescript-js",
     "rescript-jzon",
     "bs-fetch",
-    "@glennsl/bs-json",
     "rescript-nodejs",
     "@mobily/rescript-date",
     "rescript-ocamlgraph",
@@ -53,5 +47,6 @@
   ],
   "warnings": {
     "number": "-101-33-3-60-44-27"
-  }
+  },
+  "uncurried": false
 }

@@ -7,16 +7,16 @@ var Ill_typed = /* @__PURE__ */Caml_exceptions.create("Ch9_GADTs.Ill_typed");
 function $$eval(_expr) {
   while(true) {
     var expr = _expr;
-    switch (expr.TAG | 0) {
-      case /* Value */0 :
+    switch (expr.TAG) {
+      case "Value" :
           return expr._0;
-      case /* Eq */1 :
+      case "Eq" :
           var match = $$eval(expr._0);
           var match$1 = $$eval(expr._1);
-          if (match.TAG === /* Int */0) {
-            if (match$1.TAG === /* Int */0) {
+          if (match.TAG === "Int") {
+            if (match$1.TAG === "Int") {
               return {
-                      TAG: /* Bool */1,
+                      TAG: "Bool",
                       _0: match._0 === match$1._0
                     };
             }
@@ -29,13 +29,13 @@ function $$eval(_expr) {
                 RE_EXN_ID: Ill_typed,
                 Error: new Error()
               };
-      case /* Plus */2 :
+      case "Plus" :
           var match$2 = $$eval(expr._0);
           var match$3 = $$eval(expr._1);
-          if (match$2.TAG === /* Int */0) {
-            if (match$3.TAG === /* Int */0) {
+          if (match$2.TAG === "Int") {
+            if (match$3.TAG === "Int") {
               return {
-                      TAG: /* Int */0,
+                      TAG: "Int",
                       _0: match$2._0 + match$3._0 | 0
                     };
             }
@@ -48,9 +48,9 @@ function $$eval(_expr) {
                 RE_EXN_ID: Ill_typed,
                 Error: new Error()
               };
-      case /* If */3 :
+      case "If" :
           var b = $$eval(expr._0);
-          if (b.TAG === /* Int */0) {
+          if (b.TAG === "Int") {
             throw {
                   RE_EXN_ID: Ill_typed,
                   Error: new Error()
@@ -68,43 +68,43 @@ function $$eval(_expr) {
 }
 
 console.log($$eval({
-          TAG: /* Plus */2,
+          TAG: "Plus",
           _0: {
-            TAG: /* Value */0,
+            TAG: "Value",
             _0: {
-              TAG: /* Int */0,
+              TAG: "Int",
               _0: 3
             }
           },
           _1: {
-            TAG: /* Value */0,
+            TAG: "Value",
             _0: {
-              TAG: /* Int */0,
+              TAG: "Int",
               _0: 2
             }
           }
         }));
 
 console.log($$eval({
-          TAG: /* If */3,
+          TAG: "If",
           _0: {
-            TAG: /* Value */0,
+            TAG: "Value",
             _0: {
-              TAG: /* Bool */1,
+              TAG: "Bool",
               _0: true
             }
           },
           _1: {
-            TAG: /* Value */0,
+            TAG: "Value",
             _0: {
-              TAG: /* Int */0,
+              TAG: "Int",
               _0: 4
             }
           },
           _2: {
-            TAG: /* Value */0,
+            TAG: "Value",
             _0: {
-              TAG: /* Int */0,
+              TAG: "Int",
               _0: 10
             }
           }
@@ -112,9 +112,9 @@ console.log($$eval({
 
 function $$int(x) {
   return {
-          TAG: /* Value */0,
+          TAG: "Value",
           _0: {
-            TAG: /* Int */0,
+            TAG: "Int",
             _0: x
           }
         };
@@ -122,9 +122,9 @@ function $$int(x) {
 
 function bool(x) {
   return {
-          TAG: /* Value */0,
+          TAG: "Value",
           _0: {
-            TAG: /* Bool */1,
+            TAG: "Bool",
             _0: x
           }
         };
@@ -132,7 +132,7 @@ function bool(x) {
 
 function if_(c, t, e) {
   return {
-          TAG: /* If */3,
+          TAG: "If",
           _0: c,
           _1: t,
           _2: e
@@ -141,7 +141,7 @@ function if_(c, t, e) {
 
 function eq(x, y) {
   return {
-          TAG: /* Eq */1,
+          TAG: "Eq",
           _0: x,
           _1: y
         };
@@ -149,7 +149,7 @@ function eq(x, y) {
 
 function plus(x, y) {
   return {
-          TAG: /* Plus */2,
+          TAG: "Plus",
           _0: x,
           _1: y
         };
@@ -157,7 +157,7 @@ function plus(x, y) {
 
 function int_eval(expr) {
   var x = $$eval(expr);
-  if (x.TAG === /* Int */0) {
+  if (x.TAG === "Int") {
     return x._0;
   }
   throw {
@@ -168,7 +168,7 @@ function int_eval(expr) {
 
 function bool_eval(expr) {
   var x = $$eval(expr);
-  if (x.TAG !== /* Int */0) {
+  if (x.TAG !== "Int") {
     return x._0;
   }
   throw {
@@ -188,18 +188,18 @@ var Typesafe_lang = {
 };
 
 console.log({
-      TAG: /* Plus */2,
+      TAG: "Plus",
       _0: {
-        TAG: /* Value */0,
+        TAG: "Value",
         _0: {
-          TAG: /* Int */0,
+          TAG: "Int",
           _0: 3
         }
       },
       _1: {
-        TAG: /* Value */0,
+        TAG: "Value",
         _0: {
-          TAG: /* Int */0,
+          TAG: "Int",
           _0: 2
         }
       }
@@ -209,9 +209,9 @@ console.log("Try_Ordinary_Variants");
 
 function i(x) {
   return {
-          TAG: /* Value */0,
+          TAG: "Value",
           _0: {
-            TAG: /* Int */0,
+            TAG: "Int",
             _0: x
           }
         };
@@ -219,9 +219,9 @@ function i(x) {
 
 function b(x) {
   return {
-          TAG: /* Value */0,
+          TAG: "Value",
           _0: {
-            TAG: /* Bool */1,
+            TAG: "Bool",
             _0: x
           }
         };
@@ -229,50 +229,50 @@ function b(x) {
 
 function $plus(x, y) {
   return {
-          TAG: /* Plus */2,
+          TAG: "Plus",
           _0: x,
           _1: y
         };
 }
 
 console.log({
-      TAG: /* Value */0,
+      TAG: "Value",
       _0: {
-        TAG: /* Int */0,
+        TAG: "Int",
         _0: 3
       }
     });
 
 console.log({
-      TAG: /* Value */0,
+      TAG: "Value",
       _0: {
-        TAG: /* Bool */1,
+        TAG: "Bool",
         _0: false
       }
     });
 
 console.log({
-      TAG: /* Plus */2,
+      TAG: "Plus",
       _0: {
-        TAG: /* Value */0,
+        TAG: "Value",
         _0: {
-          TAG: /* Int */0,
+          TAG: "Int",
           _0: 3
         }
       },
       _1: {
-        TAG: /* Value */0,
+        TAG: "Value",
         _0: {
-          TAG: /* Int */0,
+          TAG: "Int",
           _0: 2
         }
       }
     });
 
 console.log({
-      TAG: /* Value */0,
+      TAG: "Value",
       _0: {
-        TAG: /* Bool */1,
+        TAG: "Bool",
         _0: 3
       }
     });
@@ -286,26 +286,26 @@ var Try_Ordinary_Variants = {
 console.log("GADTs");
 
 console.log({
-      TAG: /* Value */0,
+      TAG: "Value",
       _0: {
-        TAG: /* Int */0,
+        TAG: "Int",
         _0: 3
       }
     });
 
 console.log({
-      TAG: /* Plus */2,
+      TAG: "Plus",
       _0: {
-        TAG: /* Value */0,
+        TAG: "Value",
         _0: {
-          TAG: /* Int */0,
+          TAG: "Int",
           _0: 3
         }
       },
       _1: {
-        TAG: /* Value */0,
+        TAG: "Value",
         _0: {
-          TAG: /* Int */0,
+          TAG: "Int",
           _0: 6
         }
       }
@@ -318,14 +318,14 @@ function eval_value(v) {
 function $$eval$1(_e) {
   while(true) {
     var e = _e;
-    switch (e.TAG | 0) {
-      case /* Value */0 :
+    switch (e.TAG) {
+      case "Value" :
           return e._0._0;
-      case /* Eq */1 :
+      case "Eq" :
           return $$eval$1(e._0) === $$eval$1(e._1);
-      case /* Plus */2 :
+      case "Plus" :
           return $$eval$1(e._0) + $$eval$1(e._1) | 0;
-      case /* If */3 :
+      case "If" :
           if ($$eval$1(e._0)) {
             _e = e._1;
             continue ;
@@ -344,14 +344,14 @@ function eval_value_2(v) {
 function eval_2(_e) {
   while(true) {
     var e = _e;
-    switch (e.TAG | 0) {
-      case /* Value */0 :
+    switch (e.TAG) {
+      case "Value" :
           return e._0._0;
-      case /* Eq */1 :
+      case "Eq" :
           return eval_2(e._0) === eval_2(e._1);
-      case /* Plus */2 :
+      case "Plus" :
           return eval_2(e._0) + eval_2(e._1) | 0;
-      case /* If */3 :
+      case "If" :
           if (eval_2(e._0)) {
             _e = e._1;
             continue ;

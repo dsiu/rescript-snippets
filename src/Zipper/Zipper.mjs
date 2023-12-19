@@ -4,14 +4,16 @@ import * as Pervasives from "rescript/lib/es6/pervasives.js";
 
 function go_down(param) {
   var t = param._0;
-  if (t.TAG === /* Item */0) {
+  if (t.TAG === "Item") {
     return Pervasives.failwith("down of item");
   }
   var match = t._0;
   if (match) {
-    return /* Loc */{
+    return {
+            TAG: "Loc",
             _0: match.hd,
-            _1: /* Node */{
+            _1: {
+              TAG: "Node",
               _0: /* [] */0,
               _1: param._1,
               _2: match.tl
@@ -28,14 +30,16 @@ function nth(loc, n) {
       if (n > 0) {
         var param = nthrec(n - 1 | 0);
         var p = param._1;
-        if (!p) {
+        if (typeof p !== "object") {
           return Pervasives.failwith("right of top");
         }
         var match = p._2;
         if (match) {
-          return /* Loc */{
+          return {
+                  TAG: "Loc",
                   _0: match.hd,
-                  _1: /* Node */{
+                  _1: {
+                    TAG: "Node",
                     _0: {
                       hd: param._0,
                       tl: p._0
@@ -59,10 +63,14 @@ function nth(loc, n) {
 
 function insert_right(param, r) {
   var p = param._1;
-  if (p) {
-    return /* Loc */{
+  if (typeof p !== "object") {
+    return Pervasives.failwith("insert of top");
+  } else {
+    return {
+            TAG: "Loc",
             _0: param._0,
-            _1: /* Node */{
+            _1: {
+              TAG: "Node",
               _0: p._0,
               _1: p._1,
               _2: {
@@ -71,17 +79,19 @@ function insert_right(param, r) {
               }
             }
           };
-  } else {
-    return Pervasives.failwith("insert of top");
   }
 }
 
 function insert_left(param, l) {
   var p = param._1;
-  if (p) {
-    return /* Loc */{
+  if (typeof p !== "object") {
+    return Pervasives.failwith("insert of top");
+  } else {
+    return {
+            TAG: "Loc",
             _0: param._0,
-            _1: /* Node */{
+            _1: {
+              TAG: "Node",
               _0: {
                 hd: l,
                 tl: p._0
@@ -90,19 +100,19 @@ function insert_left(param, l) {
               _2: p._2
             }
           };
-  } else {
-    return Pervasives.failwith("insert of top");
   }
 }
 
 function insert_down(param, t1) {
   var t = param._0;
-  if (t.TAG === /* Item */0) {
+  if (t.TAG === "Item") {
     return Pervasives.failwith("down of item");
   } else {
-    return /* Loc */{
+    return {
+            TAG: "Loc",
             _0: t1,
-            _1: /* Node */{
+            _1: {
+              TAG: "Node",
               _0: /* [] */0,
               _1: param._1,
               _2: t._0
@@ -113,33 +123,38 @@ function insert_down(param, t1) {
 
 function $$delete(param) {
   var p = param._1;
-  if (!p) {
+  if (typeof p !== "object") {
     return Pervasives.failwith("delete of top");
   }
   var left = p._0;
   var match = p._2;
   if (match) {
-    return /* Loc */{
+    return {
+            TAG: "Loc",
             _0: match.hd,
-            _1: /* Node */{
+            _1: {
+              TAG: "Node",
               _0: left,
               _1: p._1,
               _2: match.tl
             }
           };
   } else if (left) {
-    return /* Loc */{
+    return {
+            TAG: "Loc",
             _0: left.hd,
-            _1: /* Node */{
+            _1: {
+              TAG: "Node",
               _0: left.tl,
               _1: p._1,
               _2: /* [] */0
             }
           };
   } else {
-    return /* Loc */{
+    return {
+            TAG: "Loc",
             _0: {
-              TAG: /* Section */1,
+              TAG: "Section",
               _0: /* [] */0
             },
             _1: p._1
@@ -149,29 +164,32 @@ function $$delete(param) {
 
 function go_up_memo(param) {
   var p = param._1;
-  if (p) {
-    return /* Loc */{
+  if (typeof p !== "object") {
+    return Pervasives.failwith("up of top");
+  } else {
+    return {
+            TAG: "Loc",
             _0: {
-              TAG: /* Siblings */1,
+              TAG: "Siblings",
               _0: p._0,
               _1: param._0,
               _2: p._2
             },
             _1: p._1
           };
-  } else {
-    return Pervasives.failwith("up of top");
   }
 }
 
 function go_down_memo(param) {
   var t = param._0;
-  if (t.TAG === /* Item */0) {
+  if (t.TAG === "Item") {
     return Pervasives.failwith("down of item");
   } else {
-    return /* Loc */{
+    return {
+            TAG: "Loc",
             _0: t._1,
-            _1: /* Node */{
+            _1: {
+              TAG: "Node",
               _0: t._0,
               _1: param._1,
               _2: t._2
@@ -181,7 +199,8 @@ function go_down_memo(param) {
 }
 
 function change(param, t) {
-  return /* Loc */{
+  return {
+          TAG: "Loc",
           _0: t,
           _1: param._1
         };
@@ -189,15 +208,16 @@ function change(param, t) {
 
 function go_left(param) {
   var p = param._1;
-  if (typeof p === "number") {
+  if (typeof p !== "object") {
     return Pervasives.failwith("left of top");
-  } else if (p.TAG === /* Left */0) {
+  } else if (p.TAG === "Left") {
     return Pervasives.failwith("left of Left");
   } else {
-    return /* Loc */{
+    return {
+            TAG: "Loc",
             _0: p._0,
             _1: {
-              TAG: /* Left */0,
+              TAG: "Left",
               _0: p._1,
               _1: param._0
             }
@@ -207,13 +227,14 @@ function go_left(param) {
 
 function go_right(param) {
   var p = param._1;
-  if (typeof p === "number") {
+  if (typeof p !== "object") {
     return Pervasives.failwith("right of top");
-  } else if (p.TAG === /* Left */0) {
-    return /* Loc */{
+  } else if (p.TAG === "Left") {
+    return {
+            TAG: "Loc",
             _0: p._1,
             _1: {
-              TAG: /* Right */1,
+              TAG: "Right",
               _0: param._0,
               _1: p._0
             }
@@ -226,19 +247,23 @@ function go_right(param) {
 function go_up(param) {
   var p = param._1;
   var t = param._0;
-  if (typeof p === "number") {
+  if (typeof p !== "object") {
     return Pervasives.failwith("up of top");
-  } else if (p.TAG === /* Left */0) {
-    return /* Loc */{
-            _0: /* Cons */{
+  } else if (p.TAG === "Left") {
+    return {
+            TAG: "Loc",
+            _0: {
+              TAG: "Cons",
               _0: t,
               _1: p._1
             },
             _1: p._0
           };
   } else {
-    return /* Loc */{
-            _0: /* Cons */{
+    return {
+            TAG: "Loc",
+            _0: {
+              TAG: "Cons",
               _0: p._0,
               _1: t
             },
@@ -249,54 +274,56 @@ function go_up(param) {
 
 function go_first(param) {
   var t = param._0;
-  if (t) {
-    return /* Loc */{
+  if (typeof t !== "object") {
+    return Pervasives.failwith("first of Nil");
+  } else {
+    return {
+            TAG: "Loc",
             _0: t._0,
             _1: {
-              TAG: /* Left */0,
+              TAG: "Left",
               _0: param._1,
               _1: t._1
             }
           };
-  } else {
-    return Pervasives.failwith("first of Nil");
   }
 }
 
 function go_second(param) {
   var t = param._0;
-  if (t) {
-    return /* Loc */{
+  if (typeof t !== "object") {
+    return Pervasives.failwith("second of Nil");
+  } else {
+    return {
+            TAG: "Loc",
             _0: t._1,
             _1: {
-              TAG: /* Right */1,
+              TAG: "Right",
               _0: t._0,
               _1: param._1
             }
           };
-  } else {
-    return Pervasives.failwith("second of Nil");
   }
 }
 
 var ex1 = {
-  TAG: /* Section */1,
+  TAG: "Section",
   _0: {
     hd: {
-      TAG: /* Section */1,
+      TAG: "Section",
       _0: {
         hd: {
-          TAG: /* Item */0,
+          TAG: "Item",
           _0: "a"
         },
         tl: {
           hd: {
-            TAG: /* Item */0,
+            TAG: "Item",
             _0: "*"
           },
           tl: {
             hd: {
-              TAG: /* Item */0,
+              TAG: "Item",
               _0: "b"
             },
             tl: /* [] */0
@@ -306,25 +333,25 @@ var ex1 = {
     },
     tl: {
       hd: {
-        TAG: /* Item */0,
+        TAG: "Item",
         _0: "+"
       },
       tl: {
         hd: {
-          TAG: /* Section */1,
+          TAG: "Section",
           _0: {
             hd: {
-              TAG: /* Item */0,
+              TAG: "Item",
               _0: "c"
             },
             tl: {
               hd: {
-                TAG: /* Item */0,
+                TAG: "Item",
                 _0: "*"
               },
               tl: {
                 hd: {
-                  TAG: /* Item */0,
+                  TAG: "Item",
                   _0: "d"
                 },
                 tl: /* [] */0
@@ -338,41 +365,44 @@ var ex1 = {
   }
 };
 
-var loc1 = /* Loc */{
+var loc1 = {
+  TAG: "Loc",
   _0: {
-    TAG: /* Item */0,
+    TAG: "Item",
     _0: "*"
   },
-  _1: /* Node */{
+  _1: {
+    TAG: "Node",
     _0: {
       hd: {
-        TAG: /* Item */0,
+        TAG: "Item",
         _0: "c"
       },
       tl: /* [] */0
     },
-    _1: /* Node */{
+    _1: {
+      TAG: "Node",
       _0: {
         hd: {
-          TAG: /* Item */0,
+          TAG: "Item",
           _0: "+"
         },
         tl: {
           hd: {
-            TAG: /* Section */1,
+            TAG: "Section",
             _0: {
               hd: {
-                TAG: /* Item */0,
+                TAG: "Item",
                 _0: "a"
               },
               tl: {
                 hd: {
-                  TAG: /* Item */0,
+                  TAG: "Item",
                   _0: "*"
                 },
                 tl: {
                   hd: {
-                    TAG: /* Item */0,
+                    TAG: "Item",
                     _0: "b"
                   },
                   tl: /* [] */0
@@ -383,12 +413,12 @@ var loc1 = /* Loc */{
           tl: /* [] */0
         }
       },
-      _1: /* Top */0,
+      _1: "Top",
       _2: /* [] */0
     },
     _2: {
       hd: {
-        TAG: /* Item */0,
+        TAG: "Item",
         _0: "d"
       },
       tl: /* [] */0

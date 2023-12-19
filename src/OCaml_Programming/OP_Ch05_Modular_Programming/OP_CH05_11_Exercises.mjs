@@ -83,7 +83,7 @@ function denominator(t) {
 }
 
 function to_string(param) {
-  return "" + param.p + " / " + param.q;
+  return param.p.toString() + " / " + param.q.toString();
 }
 
 function to_float(param) {
@@ -168,7 +168,7 @@ function denominator$1(t) {
 }
 
 function to_string$1(param) {
-  return "" + param.p + " / " + param.q;
+  return param.p.toString() + " / " + param.q.toString();
 }
 
 function to_float$1(param) {

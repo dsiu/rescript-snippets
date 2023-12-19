@@ -24,11 +24,11 @@ var Xkcd = {
   fetchCurrentComic: fetchCurrentComic
 };
 
-$$Promise.$$catch(fetchCurrentComic(undefined).then(function (result) {
+$$Promise.$$catch(fetchCurrentComic().then(function (result) {
           console.log(result);
         }), (function (error) {
         console.log(error);
-        return Promise.resolve(undefined);
+        return Promise.resolve();
       }));
 
 export {

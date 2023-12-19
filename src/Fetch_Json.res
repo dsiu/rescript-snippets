@@ -5,6 +5,7 @@
 // {
 //  file: "https://purr.objects-us-east-1.dream.io/i/w8V75.jpg"
 //}
+open RescriptCore
 
 // for fetch() node fill-in
 %%raw("require('isomorphic-fetch')")
@@ -20,9 +21,14 @@ type catData = {file: string}
 
 // Converting your API response
 module Decode = {
-  open Json.Decode
+  open JSON
   let catData = (data: Js.Json.t) => {
-    file: field("file", string, data),
+    //    file: string("file", string, data),
+    file: data
+    ->Decode.object
+    ->Option.flatMap(Dict.get(_, "file"))
+    ->Option.flatMap(Decode.string)
+    ->Option.getExn,
   }
 }
 
