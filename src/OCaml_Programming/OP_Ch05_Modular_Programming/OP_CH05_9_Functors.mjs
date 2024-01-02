@@ -8,7 +8,7 @@ import * as Belt_Map from "rescript/lib/es6/belt_Map.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_HashMap from "rescript/lib/es6/belt_HashMap.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -317,7 +317,7 @@ var UniqListSet = {
   empty: /* [] */0,
   mem: List.mem,
   add: add$1,
-  elements: Stdlib_Function.identity
+  elements: Stdlib__Function.identity
 };
 
 function of_list(lst) {
@@ -369,7 +369,7 @@ var UniqSetL = {
   empty: /* [] */0,
   mem: List.mem,
   add: add$1,
-  elements: Stdlib_Function.identity,
+  elements: Stdlib__Function.identity,
   of_list: of_list$3
 };
 

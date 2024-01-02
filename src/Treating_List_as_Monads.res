@@ -22,7 +22,7 @@ A.liftM2(pair, keyboards, drives)->log
 
 let solve = (b, keyboards, drives) => {
   A.liftM2(\"+", keyboards, drives)
-  ->A.keep(lessThanEq(_, b))
+  ->A.filter(lessThanEq(_, b))
   ->sort(flip(compare))
   ->O.arrayToMayBe
   ->O.fromMaybe(-1)

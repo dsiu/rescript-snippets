@@ -3,7 +3,7 @@
 import * as List from "rescript/lib/es6/list.js";
 import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
 var Empty = /* @__PURE__ */Caml_exceptions.create("OP_ListQueue.M.Empty");
 
@@ -50,7 +50,7 @@ var M = {
   front: front,
   dequeue: dequeue,
   size: List.length,
-  to_list: Stdlib_Function.identity
+  to_list: Stdlib__Function.identity
 };
 
 export {

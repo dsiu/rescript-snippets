@@ -2,11 +2,12 @@
 
 @val external describe: (string, @uncurry (unit => unit)) => unit = "describe"
 @val external test: (string, @uncurry (unit => unit)) => unit = "test"
-@val external _each1: (array<'a>, . string, 'a => unit) => unit = "test.each"
-@val external _each2: (array<('a, 'b)>, . string, ('a, 'b) => unit) => unit = "test.each"
-@val external _each3: (array<('a, 'b, 'c)>, . string, ('a, 'b, 'c) => unit) => unit = "test.each"
+@val external _each1: array<'a> => (. string, 'a => unit) => unit = "test.each"
+@val external _each2: array<('a, 'b)> => (. string, ('a, 'b) => unit) => unit = "test.each"
+@val external _each3: array<('a, 'b, 'c)> => (. string, ('a, 'b, 'c) => unit) => unit = "test.each"
 @val
-external _each4: (array<('a, 'b, 'c, 'd)>, . string, ('a, 'b, 'c, 'd) => unit) => unit = "test.each"
+external _each4: array<('a, 'b, 'c, 'd)> => (. string, ('a, 'b, 'c, 'd) => unit) => unit =
+  "test.each"
 
 // Helper methods that seem easier to use for me. Also automatically makes the
 // title of the tests include the test index and parameters. Make sure to put ->
@@ -28,7 +29,7 @@ type m<'a> // matcher of type 'a
 @val external describe: (string, @uncurry (unit => unit)) => unit = "describe"
 @val external test: (string, @uncurry (unit => unit)) => unit = "test"
 type done = @uncurry (unit => unit)
-type errorableDone<'a> = @uncurry (exn => Promise.t<'a>)
+type errorableDone<'a> = @uncurry (exn => RescriptCore.Promise.t<'a>)
 @val external testAsync: (string, @uncurry (done => unit)) => unit = "test"
 external toErrorable: done => errorableDone<'a> = "%identity"
 
@@ -39,9 +40,9 @@ external toErrorable: done => errorableDone<'a> = "%identity"
 
 let awaitThen = (pa, done, f) =>
   pa
-  ->Promise.thenResolve(a => {
+  ->RescriptCore.Promise.thenResolve(a => {
     f(a)
     done()
   })
-  ->Promise.catch(done->toErrorable)
+  ->RescriptCore.Promise.catch(done->toErrorable)
   ->ignore

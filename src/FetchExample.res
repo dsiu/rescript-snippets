@@ -1,7 +1,10 @@
 // https://github.com/ryyppy/rescript-promise
 
 // This is only needed for polyfilling the `fetch` API in
-// node, so we can run this example on the commandline
+// node, so we can run this example on the commandline.
+
+open RescriptCore
+
 module NodeFetchPolyfill = {
   type t
   @module external fetch: t = "node-fetch"
@@ -81,12 +84,12 @@ module Login = {
         }
       }->resolve
     })
-    ->catch(e => {
+    ->Promise.catch(e => {
       let msg = switch e {
-      | JsError(err) =>
-        switch Js.Exn.message(err) {
-        | Some(msg) => msg
-        | None => ""
+      | Exn.Error(obj) =>
+        switch Exn.message(obj) {
+        | Some(msg) => "JS exception occurred: " ++ msg
+        | None => "Some other JS value has been thrown"
         }
       | _ => "Unexpected error occurred"
       }
@@ -122,10 +125,10 @@ module Product = {
     })
     ->catch(e => {
       let msg = switch e {
-      | JsError(err) =>
-        switch Js.Exn.message(err) {
-        | Some(msg) => msg
-        | None => ""
+      | Exn.Error(obj) =>
+        switch Exn.message(obj) {
+        | Some(msg) => "JS exception occurred: " ++ msg
+        | None => "Some other JS value has been thrown"
         }
       | _ => "Unexpected error occurred"
       }

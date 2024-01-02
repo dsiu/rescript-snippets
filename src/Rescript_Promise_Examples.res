@@ -1,6 +1,7 @@
 //
 // https://github.com/ryyppy/rescript-promise
 //
+open RescriptCore
 open Promise
 
 //
@@ -133,15 +134,15 @@ Promise.resolve()
   causeErr()
 })
 ->catch(e => {
-  switch e {
-  | JsError(obj) =>
-    switch Js.Exn.message(obj) {
-    | Some(msg) => Js.log("Some JS error msg: " ++ msg)
-    | None => Js.log("Must be some non-error value")
+  let msg = switch e {
+  | Exn.Error(obj) =>
+    switch Exn.message(obj) {
+    | Some(msg) => "JS exception occurred: " ++ msg
+    | None => "Some other JS value has been thrown"
     }
-  | _ => Js.log("Some unknown error")
+  | _ => "Unexpected error occurred"
   }
-  resolve()
+  resolve(msg)
   // Outputs: Some JS error msg: Some JS error
 })
 ->ignore
@@ -178,12 +179,12 @@ resolve()
 ->catch(e => {
   switch e {
   | TestError(msg) => Js.log("ReScript Error caught:" ++ msg)
-  | JsError(obj) =>
-    switch Js.Exn.message(obj) {
-    | Some(msg) => Js.log("Some JS error msg: " ++ msg)
-    | None => Js.log("Must be some non-error value")
+  | Exn.Error(obj) =>
+    switch Exn.message(obj) {
+    | Some(msg) => Js.log("JS exception occurred: " ++ msg)
+    | None => Js.log("Some other JS value has been thrown")
     }
-  | _ => Js.log("Some unknown error")
+  | _ => Js.log("Unexpected error occurred")
   }
   resolve()
 })

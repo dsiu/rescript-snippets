@@ -26,7 +26,6 @@
   ],
   "bs-dependencies": [
     "@rescript/core",
-    "@ryyppy/rescript-promise",
     "rescript-jzon",
     "bs-fetch",
     "rescript-nodejs",

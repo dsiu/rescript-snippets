@@ -3,7 +3,7 @@
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
 function createWithCont(success, failure, s) {
   var match = /^\S+@\S+\.\S+$/.exec(s);
@@ -32,7 +32,7 @@ function apply(f, e) {
 }
 
 function value(e) {
-  return Stdlib_Function.identity(e._0);
+  return Stdlib__Function.identity(e._0);
 }
 
 var EmailAddress = {
@@ -69,7 +69,7 @@ function apply$1(f, e) {
 }
 
 function value$1(e) {
-  return Stdlib_Function.identity(e._0);
+  return Stdlib__Function.identity(e._0);
 }
 
 var ZipCode = {
@@ -90,7 +90,7 @@ function createWithCont$2(success, failure, s) {
               tl: /* [] */0
             }
           }
-        }, s$p, Stdlib_Function.eq)) {
+        }, s$p, Stdlib__Function.eq)) {
     return Curry._1(success, {
                 TAG: "StateCode",
                 _0: s
@@ -115,7 +115,7 @@ function apply$2(f, e) {
 }
 
 function value$2(e) {
-  return Stdlib_Function.identity(e._0);
+  return Stdlib__Function.identity(e._0);
 }
 
 var StateCode = {
@@ -135,9 +135,9 @@ var PostalContactInfo = {};
 
 var Contact = {};
 
-var identity = Stdlib_Function.identity;
+var identity = Stdlib__Function.identity;
 
-var eq = Stdlib_Function.eq;
+var eq = Stdlib__Function.eq;
 
 export {
   identity ,

@@ -2,10 +2,10 @@
 
 import * as Caml from "rescript/lib/es6/caml.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
-import * as Stdlib_Array from "@dsiu/rescript-stdlib-fp/src/Stdlib_Array.mjs";
-import * as Stdlib_Option from "@dsiu/rescript-stdlib-fp/src/Stdlib_Option.mjs";
+import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.mjs";
 import * as Belt_SortArray from "rescript/lib/es6/belt_SortArray.js";
-import * as Stdlib_Function from "@dsiu/rescript-stdlib-fp/src/Stdlib_Function.mjs";
+import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -31,17 +31,17 @@ function pair(a, b) {
         ];
 }
 
-var prim = Stdlib_Array.liftM2(pair, keyboards, drives);
+var prim = Stdlib__Array.liftM2(pair, keyboards, drives);
 
 console.log(prim);
 
 function solve(b, keyboards, drives) {
-  return Stdlib_Option.fromMaybe(Stdlib_Option.arrayToMayBe(Belt_SortArray.stableSortBy(Stdlib_Array.keep(Stdlib_Array.liftM2((function (prim0, prim1) {
+  return Stdlib__Option.fromMaybe(Stdlib__Option.arrayToMayBe(Belt_SortArray.stableSortBy(Stdlib__Array.filter(Stdlib__Array.liftM2((function (prim0, prim1) {
                                 return prim0 + prim1 | 0;
                               }), keyboards, drives), (function (__x) {
                             return Caml_obj.lessequal(__x, b);
                           })), (function (param, param$1) {
-                        return Stdlib_Function.flip(Caml.int_compare, param, param$1);
+                        return Stdlib__Function.flip(Caml.int_compare, param, param$1);
                       }))), -1);
 }
 
@@ -53,7 +53,7 @@ var A;
 
 var O;
 
-var flip = Stdlib_Function.flip;
+var flip = Stdlib__Function.flip;
 
 var sort = Belt_SortArray.stableSortBy;
 

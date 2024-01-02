@@ -13,6 +13,8 @@ if (!globalThis.fetch) {
 }
 `)
 
+open RescriptCore
+
 module Fetch = {
   module Response = {
     type t<'a>

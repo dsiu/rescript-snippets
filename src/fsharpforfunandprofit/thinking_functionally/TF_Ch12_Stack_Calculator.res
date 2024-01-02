@@ -174,8 +174,10 @@ start->two->square->show2("square")->ignore
 let cube = dup->compose(dup)->compose(mul)->compose(mul)
 start->three->cube->show2("cube")->ignore
 
-let composeN = Function.composeN
-let sum_numbers_upto = [dup, one, add, mul, two, div]->composeN
+let compose = Function.compose
+let compose3 = Function.compose3
+let compose4 = Function.compose4
+let sum_numbers_upto = compose(compose4(dup, one, add, mul), compose(two, div))
 start->three->square->sum_numbers_upto->show2("sum up to 9")->ignore
 
 // pipes vs composition

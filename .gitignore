@@ -7,3 +7,11 @@ npm-debug.log
 /.idea/sonarlint/issuestore/
 /re-fp/src/
 /re-fp/tests/
+.yarn/*
+!.yarn/cache
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+/coverage/
