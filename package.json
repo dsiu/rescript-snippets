@@ -58,11 +58,11 @@
     "@swc/jest": "^0.2.29",
     "esbuild-jest": "^0.5.0",
     "jest": "^29.7.0",
-    "rescript": "^11.0.0-rc.8",
+    "rescript": "^11.0.0-rc.9",
     "rescript-test": "^5.0.0"
   },
   "dependencies": {
-    "@dsiu/rescript-stdlib-fp": "git+https://github.com/dsiu/rescript-stdlib-fp#commit=50a6ce6c316e46e32f326e0541eff376d23e55b2",
+    "@dsiu/rescript-stdlib-fp": "git+https://github.com/dsiu/rescript-stdlib-fp#commit=9a355bb3f6e197aba4b8c695098d9e6d14e3cbee",
     "@jmagaram/rescript-extras": "^3.0.0",
     "@jmagaram/rescript-seq": "^3.0.1",
     "@mobily/rescript-date": "^2.1.0",
