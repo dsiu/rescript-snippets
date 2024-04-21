@@ -22,7 +22,7 @@ var RWST_WITHMONAD = Relude_RWST.WithMonad(Relude_Identity.Monad);
 var RWS_M = Curry._3(RWST_WITHMONAD.WithEnvAndStateAndLog, {}, {}, WriterLog);
 
 function example(__x) {
-  return Curry._3(RWS_M.runRWST, 2, 3, __x);
+  return RWS_M.runRWST(2, 3, __x);
 }
 
 console.log(example);

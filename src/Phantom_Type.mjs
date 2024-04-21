@@ -50,9 +50,9 @@ var $$FormData = {
 
 var shouldBeOkay = "should be okay";
 
-var validatedData = shouldBeOkay;
-
 var cantBePassed = "ok?";
+
+var validatedData = shouldBeOkay;
 
 export {
   Animal ,

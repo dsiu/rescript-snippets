@@ -1,6 +1,8 @@
 //
 // ref: https://fsharpforfunandprofit.com/posts/partial-application/
 //
+@@uncurried
+@@uncurried.swap
 
 open Belt
 let log = Js.log
@@ -19,7 +21,7 @@ twoIsLessThan(3)->log
 list{1, 2, 3}->Belt.List.map(twoIsLessThan)->log
 
 // create an adder that supports a pluggable logging function
-let adderWithPluggableLogger = (logger, x, y) => {
+let adderWithPluggableLogger = (. logger, x, y) => {
   logger("x", x)
   logger("y", y)
   let result = x + y

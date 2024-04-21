@@ -72,10 +72,10 @@ let propagate_none: ((int, int) => option<int>, option<int>, option<int>) => opt
 
 let wrap_output: ((int, int) => int, int, int) => option<int> = (op, x, y) => Some(op(x, y))
 
-let \"+" = propagate_none(wrap_output(\"+"))
-let \"-" = propagate_none(wrap_output(\"-"))
-let \"*" = propagate_none(wrap_output(\"*"))
-let \"/" = propagate_none((x, y) => y === 0 ? None : wrap_output(\"/", x, y))
+let \"+" = propagate_none(wrap_output(\"+", ...), ...)
+let \"-" = propagate_none(wrap_output(\"-", ...), ...)
+let \"*" = propagate_none(wrap_output(\"*", ...), ...)
+let \"/" = propagate_none((x, y) => y === 0 ? None : wrap_output(\"/", x, y), ...)
 
 //let \"+" = Pervasives.\"+"
 //let \"-" = Pervasives.\"-"

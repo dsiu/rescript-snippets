@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 module ReaderT = Relude.ReaderT
 
 let log = Js.log
@@ -30,7 +33,7 @@ Reader.asks(r => r.version * 2)->Reader.map(a => a * 10, _)->Reader.runReaderT(t
 // local
 Reader.local(
   r => {version: r.version * 2, product: r.product ++ "!"},
-  Reader.ask->Reader.map(a => string_of_int(a.version) ++ a.product, _),
+  Reader.ask->(Reader.map(a => string_of_int(a.version) ++ a.product, _)),
 )
 ->Reader.runReaderT(testEnv, _)
 ->log
@@ -42,7 +45,7 @@ Reader.pure(42)->Reader.map(a => a * 2, _)->Reader.runReaderT(testEnv, _)->log
 
 // apply
 Reader.pure(42)
-->Reader.apply(Reader.make((r, a) => a * r.version * 2), _)
+->Reader.apply(Reader.make(r => a => a * r.version * 2), _)
 ->Reader.runReaderT(testEnv, _)
 ->log
 // ->3528

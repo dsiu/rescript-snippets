@@ -66,11 +66,11 @@ var y = useAtom(atom(Promise.resolve([
               3
             ])));
 
-var x$p = useAtom(atom(async function (param) {
+var x$p = useAtom(atom(async function () {
           return "yo";
         }));
 
-var y$p = useAtom(atom(function (param) {
+var y$p = useAtom(atom(function () {
           return "yo";
         }));
 

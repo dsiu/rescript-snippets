@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 module M: OP_Queue.S = {
   @ocaml.doc(" [{o; i}] represents the queue [o @ List.rev i]. For example,
       [{o = [1; 2]; i = [5; 4; 3]}] represents the queue [1, 2, 3, 4, 5],
@@ -20,7 +23,7 @@ module M: OP_Queue.S = {
   let enqueue = (x, q) =>
     switch q {
     | {o: list{}} => {o: list{x}, i: list{}}
-    | {o, i} => {o: o, i: list{x, ...i}}
+    | {o, i} => {o, i: list{x, ...i}}
     }
 
   let front = x =>
@@ -33,10 +36,10 @@ module M: OP_Queue.S = {
     switch x {
     | {o: list{}} => raise(Empty)
     | {o: list{_}, i} => {o: List.rev(i), i: list{}}
-    | {o: list{_, ...t}, i} => {o: t, i: i}
+    | {o: list{_, ...t}, i} => {o: t, i}
     }
 
-  let size = ({o, i}) => {
+  let size = (. {o, i}) => {
     open List
     length(o) + length(i)
   }

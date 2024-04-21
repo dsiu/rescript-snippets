@@ -16,7 +16,7 @@ var cache = {
   contents: undefined
 };
 
-function connect$1(param) {
+function connect$1() {
   var client = cache.contents;
   if (client !== undefined) {
     return client;
@@ -32,7 +32,7 @@ connect$1();
 
 var cache$1 = {};
 
-function connect$2(param) {
+function connect$2() {
   var key = "client";
   var optClient = Js_dict.get(cache$1, key);
   if (optClient !== undefined) {

@@ -1,6 +1,9 @@
 // https://github.com/Risto-Stevcev/bastet
 // https://risto-stevcev.github.io/bastet/bastet/index.html
 
+@@uncurried
+@@uncurried.swap
+
 open BsBastet
 
 let log = Js.log
@@ -19,7 +22,7 @@ let get_form = () => Some({name: "Foo", address: Some("123 Bar St.")})
 
 let get_address = form => form.address
 
-let get_form_address = get_form->\">=>"(get_address)
+let get_form_address = get_form->(\">=>"(get_address, ...))
 
 get_form_address()->log
 
@@ -34,7 +37,7 @@ let fmap_add = Functors.ArrayF.Int.Additive.Fold_Map.fold_map
 
 let trim_all = strings => {
   open List.Infix
-  StringLabels.trim->\"<$>"(strings)
+  (s => StringLabels.trim(s))->\"<$>"(strings)
 }
 trim_all(list{"foo   ", "bar", "    baz"})->log
 

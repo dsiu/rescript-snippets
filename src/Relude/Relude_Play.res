@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 let log = Js.log
 let log2 = Js.log2
 
@@ -18,7 +21,7 @@ module Reader = Relude.Reader.WithEnv({
   type t = env
 })
 
-let r = Reader.make(r => r.intValue * 2) |> Reader.runReaderT(testEnv)
+let r = Reader.make(r => r.intValue * 2)->(Reader.runReaderT(testEnv, _))
 r->log
 
 // Array of Tuples
@@ -53,4 +56,4 @@ module AT_IntStr = {
 }
 arr_rev->AT_IntStr.sort->log
 
-arr_rev->AT_IntStr.showBy(Tuple.showBy2(String.show, Int.show), _)->log
+arr_rev->AT_IntStr.showBy(Tuple.showBy2(String.show, Int.show, ...), _)->log

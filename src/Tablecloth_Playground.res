@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 let log = Js.log
 let log2 = Js.log2
 open Tablecloth
@@ -6,7 +9,7 @@ Tuple2.make(3, 4)->Tuple2.toArray->log
 
 module Point = {
   type t = Tuple2.t<int, int>
-  let compare = Tuple2.compare(~f=Int.compare, ~g=Int.compare)
+  let compare = Tuple2.compare(~f=Int.compare, ~g=Int.compare, ...)
 
   include Comparator.Make({
     type t = t

@@ -43,20 +43,23 @@
 // some of the examples below, it is also possible to write generic tests that can be used to
 // validate concrete implementations of the patterns for different underlying data types.
 
+@@uncurried
+@@uncurried.swap
+
 let log = Js.log
 let log2 = Js.log2
 
 // compose
 
 // ( << )
-let compose = (f, g, x) => f(g(x))
+let compose: (. (. 'b) => 'c, (. 'a) => 'b, 'a) => 'c = (. f, g, x) => f(g(x))
 let \"<<" = compose
 // ( >> )
-let compose_right = (f, g) => compose(g, f)
+let compose_right = (. f, g, x) => compose(g, f, x)
 let \">>" = compose_right
 
-let id = x => x
-let const = (x, _) => x
+let id = (. x) => x
+let const = (. x, _) => x
 
 // Representing the patterns
 //
@@ -70,7 +73,7 @@ let const = (x, _) => x
 //
 module type FUNCTOR = {
   type t<'a>
-  let map: ('a => 'b, t<'a>) => t<'b>
+  let map: (. (. 'a) => 'b, t<'a>) => t<'b>
 }
 // In order for a type to qualify as a functor, one need to provide an implementation for map
 // (fmap in Haskell) that satisfies the signature.
@@ -83,7 +86,7 @@ module type FUNCTOR = {
 // FUNCTOR signature, which for lists may look like:
 module ListFunctor: FUNCTOR with type t<'a> = list<'a> = {
   type t<'a> = list<'a>
-  let map = f => List.map(f)
+  let map = (. f, x) => List.map(f, x)
 }
 
 /*
@@ -117,10 +120,10 @@ module TestFunctor = (F: FUNCTOR) => {
 module TFL = TestFunctor(ListFunctor)
 
 "Test List Functor"->log
-TFL.test_id(list{})->log2("id: P{", _)
-TFL.test_id(list{1, 2})->log2("id: {1,2}", _)
-TFL.test_compose(list{})->log2("compose: {}", _)
-TFL.test_compose(list{1, 2, 3})->log2("compose: {1,2,3}", _)
+TFL.test_id(list{})->(log2("id: P{", _))
+TFL.test_id(list{1, 2})->(log2("id: {1,2}", _))
+TFL.test_compose(list{})->(log2("compose: {}", _))
+TFL.test_compose(list{1, 2, 3})->(log2("compose: {1,2,3}", _))
 
 /*
   The option type in OCaml also forms a functor:
@@ -128,7 +131,7 @@ TFL.test_compose(list{1, 2, 3})->log2("compose: {1,2,3}", _)
 module OptionFunctor: FUNCTOR with type t<'a> = option<'a> = {
   type t<'a> = option<'a>
 
-  let map = (f, x) =>
+  let map: (. (. 'a) => 'b, t<'a>) => t<'b> = (. f, x) =>
     switch x {
     | Some(x) => Some(f(x))
     | None => None
@@ -139,10 +142,10 @@ module OptionFunctor: FUNCTOR with type t<'a> = option<'a> = {
 module TOF = TestFunctor(OptionFunctor)
 
 "Test Option Functor"->log
-TOF.test_id(Some(42))->log2("id: Some(42)", _)
-TOF.test_id(None)->log2("id: None", _)
-TOF.test_compose(Some(42))->log2("compose: Some(42)", _)
-TOF.test_compose(None)->log2("compose: None", _)
+TOF.test_id(Some(42))->(log2("id: Some(42)", _))
+TOF.test_id(None)->(log2("id: None", _))
+TOF.test_compose(Some(42))->(log2("compose: Some(42)", _))
+TOF.test_compose(None)->(log2("compose: None", _))
 
 //
 // Monoids
@@ -162,7 +165,7 @@ TOF.test_compose(None)->log2("compose: None", _)
 module type MONOID = {
   type t
   let empty: t
-  let append: (t, t) => t
+  let append: (. t, t) => t
 }
 
 // There are also a few laws that instances should obey:
@@ -184,7 +187,7 @@ module TestMonoid = (M: MONOID) => {
 module IntAddMonoid: MONOID with type t = int = {
   type t = int
   let empty = 0
-  let append = \"+"
+  let append = (. a, b) => a + b
 }
 
 // Another advantage of formalizing patterns by explicit signatures is that it enables us to define
@@ -194,8 +197,8 @@ module IntAddMonoid: MONOID with type t = int = {
 
 {
   open IntAddMonoid
-  let sum = xs => List.fold_left(append, empty, xs)
-  sum(list{1, 10, 102})->log2("IntAddMonoid.sum {1,10,102}", _)
+  let sum = (. xs) => List.fold_left(append, empty, xs)
+  sum(list{1, 10, 102})->(log2("IntAddMonoid.sum {1,10,102}", _))
 }
 
 // The scheme can be generalized to operate on any list of monoids. To avoid having to specify the
@@ -204,8 +207,8 @@ module IntAddMonoid: MONOID with type t = int = {
 
 module MonoidUtils = (M: MONOID) => {
   include M
-  let \"<+>" = (x, y) => append(x, y) // infix version of append
-  let concat = xs => List.fold_left(\"<+>", empty, xs)
+  let \"<+>" = (. x, y) => append(x, y) // infix version of append
+  let concat = (. xs) => List.fold_left(\"<+>", empty, xs)
 }
 
 // Here MonoidUtils takes a MONOID module and re-exports its definition along with two additional
@@ -239,7 +242,7 @@ module type TYPE = {
 module ListMonoid = (T: TYPE): (MONOID with type t = list<T.t>) => {
   type t = list<T.t>
   let empty = list{}
-  let append = (xs, ys) => \"@"(xs, ys)
+  let append = (. xs, ys) => \"@"(xs, ys)
 }
 
 // This comes with an obvious disadvantage of having to create specialized versions for each
@@ -281,8 +284,8 @@ module ListMonoid = (T: TYPE): (MONOID with type t = list<T.t>) => {
 
 module type APPLICATIVE = {
   include FUNCTOR
-  let pure: 'a => t<'a>
-  let apply: (t<'a => 'b>, t<'a>) => t<'b>
+  let pure: (. 'a) => t<'a>
+  let apply: (. t<(. 'a) => 'b>, t<'a>) => t<'b>
 }
 // Here the infix operator ( <*> ) is named apply.
 
@@ -291,9 +294,9 @@ module type APPLICATIVE = {
 module ListApplicative: APPLICATIVE with type t<'a> = list<'a> = {
   include ListFunctor
 
-  let pure = x => list{x}
+  let pure = (. x) => list{x}
 
-  let apply = (fs, xs) => List.concat(List.map(f => List.map(f, xs), fs))
+  let apply = (. fs, xs) => List.concat(List.map(f => List.map(f, xs), fs))
 }
 
 // ListApplicative simply re-exports the implementation of ListFunctor to satisfy the functor part
@@ -309,34 +312,34 @@ module ApplicativeUtils = (A: APPLICATIVE) => {
     map f xs
     (('a -> 'b), 'a t) => 'bt
   */
-  let \"<$>" = f => map(f)
+  let \"<$>" = (. f) => map(f)
 
   /**
     apply f xs
     (('a -> 'b) t, 'a t) => 'b t
   */
-  let \"<*>" = f => apply(f)
+  let \"<*>" = (. f) => apply(f)
 
   // const <$> x <*> y
   /**
     <* x y
     ('a t, 'b t) => 'a t
   */
-  let \"<*" = (x, y) => const->\"<$>"(x)->\"<*>"(y)
+  let \"<*" = (. x, y) => const->\"<$>"(x)->\"<*>"(y)
 
   //  (fun _ y -> y) <$> x <*> y
   /**
     *> x y
     ('a t, 'b t) => 'b t
   */
-  let \"*>" = (x, y) => ((_, y) => y)->\"<$>"(x)->\"<*>"(y)
+  let \"*>" = (. x, y) => ((_, y) => y)->\"<$>"(x)->\"<*>"(y)
 
   // f <$> x <*> y
   /**
     liftA2 f x y
     (('a -> 'b -> 'c), 'a t, 'b t) => 'c t
   */
-  let liftA2 = (f, x, y) => f->\"<$>"(x)->\"<*>"(y)
+  let liftA2 = (. f, x, y) => f->\"<$>"(x)->\"<*>"(y)
 
   // The infix operators are variations of apply and map, liftA2 is for conveniently lifting a
   // regular function of two arguments into a function operating on two applicative values.
@@ -386,7 +389,7 @@ type quote = {
     ->\"<*>"(list{"XYZ", "ZYK", "ABC", "CDE", "QRZ"})
     ->\"<*>"(list{100., 90., 80., 70.})
   }
-  quotes->Belt.List.toArray->log2("quotes", _)
+  quotes->Belt.List.toArray->(log2("quotes", _))
 }
 
 // By composing applications of pure and ( <*> ) we lift functions of arbitrary arity into
@@ -398,9 +401,9 @@ type quote = {
 module OptionApplicative: APPLICATIVE with type t<'a> = option<'a> = {
   include OptionFunctor
 
-  let pure = x => Some(x)
+  let pure = (. x) => Some(x)
 
-  let apply = (fo, xo) => {
+  let apply: (. t<(. 'a) => 'b>, t<'a>) => t<'b> = (. fo, xo) => {
     switch (fo, xo) {
     | (Some(f), Some(x)) => Some(f(x))
     | _ => None
@@ -442,12 +445,12 @@ let ssqrt = x => {
     ((z, r1, r2) => z +. r1 -. r2)->\"<$>"(\"//."(x, y))->\"<*>"(ssqrt(x))->\"<*>"(ssqrt(y))
   }
 
-  f(1., 2.)->log2("f(1.,2.) = ", _)
-  f'(1., 2.)->log2("f'(1.,2.) = ", _)
-  f(1., 0.)->log2("f(1.,0.) = ", _)
-  f'(1., 0.)->log2("f'(1.,0.) = ", _)
-  f(1., -2.)->log2("f(1.,2.) = ", _)
-  f'(1., -2.)->log2("f'(1.,2.) = ", _)
+  f(1., 2.)->(log2("f(1.,2.) = ", _))
+  f'(1., 2.)->(log2("f'(1.,2.) = ", _))
+  f(1., 0.)->(log2("f(1.,0.) = ", _))
+  f'(1., 0.)->(log2("f'(1.,0.) = ", _))
+  f(1., -2.)->(log2("f(1.,2.) = ", _))
+  f'(1., -2.)->(log2("f'(1.,2.) = ", _))
 }
 
 // Applicative functors also come with a set of laws. In Haskell expressed as:
@@ -475,7 +478,7 @@ module TestApplicative = (A: APPLICATIVE) => {
 
   let test_hom = (f, x) => pure(f)->\"<*>"(pure(x)) == pure(f(x))
 
-  let test_interchange = (u, y) => u->\"<*>"(pure(y)) == pure(f => f(y))->\"<*>"(u)
+  //  let test_interchange = (u, y) => u->\"<*>"(pure(y)) == pure(f => f(y))->\"<*>"(u)
 
   let test_composition = (u, v, w) => {
     pure(\"<<")->\"<*>"(u)->\"<*>"(v)->\"<*>"(w) == u->\"<*>"(v->\"<*>"(w))
@@ -489,9 +492,9 @@ module TestApplicative = (A: APPLICATIVE) => {
 module TAL = TestApplicative(ListApplicative)
 
 // This may be used as in:
-TAL.test_id(list{})->log2("test_id = ", _)
+TAL.test_id(list{})->(log2("test_id = ", _))
 //TAL.test_interchange(list{String.length}, "interchange")->log2("test_interchange = ", _)
-TAL.test_hom(String.length, "Homomorphism")->log2("test_hom = ", _)
+TAL.test_hom(String.length, "Homomorphism")->(log2("test_hom = ", _))
 
 //
 // Traversables
@@ -540,7 +543,7 @@ TAL.test_hom(String.length, "Homomorphism")->log2("test_hom = ", _)
 module type TRAVERSABLE = {
   type t<'a>
   module Applicative: APPLICATIVE
-  let traverse: ('a => Applicative.t<'b>, t<'a>) => Applicative.t<t<'b>>
+  let traverse: (. (. 'a) => Applicative.t<'b>, t<'a>) => Applicative.t<t<'b>>
 }
 
 // To mimic the Haskell constraints it is tempting to also require the FUNCTOR interface by throwing
@@ -558,7 +561,7 @@ module ListTraversable = (A: APPLICATIVE): (
 
   module Applicative = A
 
-  let rec traverse = (f, xs) => {
+  let rec traverse: (. (. 'a) => Applicative.t<'b>, t<'a>) => Applicative.t<t<'b>> = (. f, xs) => {
     module AU = ApplicativeUtils(A)
     open AU
     switch xs {
@@ -601,9 +604,9 @@ module LTO = ListTraversable(OptionApplicative)
 {
   let all_roots = LTO.traverse(ssqrt)
 
-  all_roots(list{4.0, 9.0, 16.0})->log2("all_roots = ", _)
+  all_roots(list{4.0, 9.0, 16.0})->(log2("all_roots = ", _))
 
-  all_roots(list{4.0, -9.0, 16.0})->log2("all_roots = ", _)
+  all_roots(list{4.0, -9.0, 16.0})->(log2("all_roots = ", _))
 }
 
 // Next, let's consider a custom type ('a tree) for which we are also able to implement the
@@ -623,7 +626,7 @@ module TreeTraversable = (A: APPLICATIVE): (
   type t<'a> = tree<'a>
   // type a<'a> = A.t<'a>
 
-  let rec traverse = (f, t) => {
+  let rec traverse: (. (. 'a) => Applicative.t<'b>, t<'a>) => Applicative.t<t<'b>> = (. f, t) => {
     module AU = ApplicativeUtils(A)
     open AU
     switch t {
@@ -651,9 +654,9 @@ type id<'a> = 'a
 // for which a trivial APPLICATIVE instance exist:
 module IdApplicative: APPLICATIVE with type t<'a> = id<'a> = {
   type t<'a> = id<'a>
-  let pure = x => x
-  let map = f => f
-  let apply = f => map(f)
+  let pure = (. x) => x
+  let map = (. f) => f
+  let apply = (. f) => map(f)
 }
 
 // Using IdApplicative for the effect, traverse collapses into map:
@@ -667,14 +670,14 @@ module TraversableFunctor = (
   MT: (A: APPLICATIVE) => (TRAVERSABLE with type Applicative.t<'a> = A.t<'a>),
 ) => {
   module TI = MT(IdApplicative)
-  let map = f => TI.traverse(f)
+  let map = (. f) => TI.traverse(f)
 }
 
 // Following is an example creating a functor for trees derived from its traversable implementation:
 module TTU = TraversableFunctor(TreeTraversable)
 
 // Its map function can be used as in:
-TTU.map(x => x * x, node(Leaf, 3, node(Leaf, 5, Leaf)))->log2("TTU.map = ", _)
+TTU.map(x => x * x, node(Leaf, 3, node(Leaf, 5, Leaf)))->(log2("TTU.map = ", _))
 
 // The Haskell documentation for Applicative also dictates a set of laws:
 //  -- Naturality
@@ -707,7 +710,7 @@ module TestTraversableNat = (
 
   module T2: TRAVERSABLE with type Applicative.t<'a> = A2.t<'a> and type t<'a> = T2.t<'a> = MT(A2)
 
-  type nat = {t: 'a. A1.t<'a> => A2.t<'a>}
+  type nat = {t: 'a. (. A1.t<'a>) => A2.t<'a>}
 
   let test = (f, {t}, x) => t(T1.traverse(f, x)) == T2.traverse(\">>"(f, t), x)
 }
@@ -744,14 +747,14 @@ module TestTraversableId = (
   MT: (A: APPLICATIVE) => (TRAVERSABLE with type Applicative.t<'a> = A.t<'a>),
 ) => {
   module TI = MT(IdApplicative)
-  let test = x => TI.traverse(id, x) == x
+  let test = (. x) => TI.traverse(id, x) == x
 }
 
 // The following example shows how it can be used to test the ListTraversable module-functor:
 module TTIL = TestTraversableId(ListTraversable)
 
 {
-  TTIL.test(list{1, 2, 3})->log2("TTIL.test = ", _)
+  TTIL.test(list{1, 2, 3})->(log2("TTIL.test = ", _))
 }
 
 // The final law, composibility, relies on the type Compose which takes two higher-kinded type
@@ -777,11 +780,11 @@ module ComposeApplicative = (F: APPLICATIVE, G: APPLICATIVE): (
 ) => {
   type t<'a> = F.t<G.t<'a>>
 
-  let pure = x => F.pure(G.pure(x))
+  let pure = (. x) => F.pure(G.pure(x))
 
-  let map = f => F.map(G.map(f))
+  let map = (. f) => F.map(G.map(f))
 
-  let apply = (f, x) => {
+  let apply = (. f, x) => {
     module FU = ApplicativeUtils(F)
     open FU
     G.apply->\"<$>"(f)->\"<*>"(x)

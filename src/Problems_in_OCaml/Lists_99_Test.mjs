@@ -5,7 +5,7 @@ import * as Lists_99 from "./Lists_99.mjs";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
 import * as Test_Utils from "../../interop/Test_Utils.mjs";
 
-Test.test("1. last", (function (param) {
+Test.test("1. last", (function () {
         Test_Utils.optionEqual(undefined, Lists_99.last({
                   hd: "a",
                   tl: {
@@ -22,7 +22,7 @@ Test.test("1. last", (function (param) {
         Test_Utils.optionEqual(undefined, Lists_99.last(/* [] */0), undefined);
       }));
 
-Test.test("2. last_two", (function (param) {
+Test.test("2. last_two", (function () {
         Test_Utils.optionListEqual(undefined, Lists_99.last_two({
                   hd: "a",
                   tl: {
@@ -48,7 +48,7 @@ Test.test("2. last_two", (function (param) {
                 }), undefined);
       }));
 
-Test.test("3. at", (function (param) {
+Test.test("3. at", (function () {
         Test_Utils.optionEqual(undefined, Lists_99.at({
                   hd: "a",
                   tl: {
@@ -71,7 +71,7 @@ Test.test("3. at", (function (param) {
                 }, 3), undefined);
       }));
 
-Test.test("4. length", (function (param) {
+Test.test("4. length", (function () {
         Test_Utils.intEqual(undefined, Lists_99.length({
                   hd: "a",
                   tl: {
@@ -95,7 +95,7 @@ Test.test("4. length", (function (param) {
         Test_Utils.intEqual(undefined, Lists_99.length(/* [] */0), 0);
       }));
 
-Test.test("5. rev", (function (param) {
+Test.test("5. rev", (function () {
         Test_Utils.listEqual(undefined, Lists_99.rev({
                   hd: "a",
                   tl: {
@@ -130,7 +130,7 @@ Test.test("5. rev", (function (param) {
         Test_Utils.listEqual(undefined, Lists_99.rev(/* [] */0), /* [] */0);
       }));
 
-Test.test("6. is_palindrome", (function (param) {
+Test.test("6. is_palindrome", (function () {
         Test_Utils.boolEqual(undefined, Lists_99.is_palindrome({
                   hd: "x",
                   tl: {
@@ -164,7 +164,7 @@ Test.test("6. is_palindrome", (function (param) {
         Test_Utils.boolEqual(undefined, Lists_99.is_palindrome(/* [] */0), true);
       }));
 
-Test.test("7. flatten", (function (param) {
+Test.test("7. flatten", (function () {
         Test_Utils.listEqual(undefined, Lists_99.flatten({
                   hd: {
                     TAG: "One",
@@ -225,7 +225,7 @@ Test.test("7. flatten", (function (param) {
             });
       }));
 
-Test.test("8. compress", (function (param) {
+Test.test("8. compress", (function () {
         Test_Utils.listEqual(undefined, Lists_99.compress({
                   hd: "a",
                   tl: {
@@ -306,7 +306,7 @@ Test.test("8. compress", (function (param) {
             });
       }));
 
-Test.test("9. pack", (function (param) {
+Test.test("9. pack", (function () {
         Belt_List.toArray(Belt_List.map(Lists_99.pack({
                       hd: "a",
                       tl: {
@@ -355,7 +355,7 @@ Test.test("9. pack", (function (param) {
                     }), Belt_List.toArray));
       }));
 
-Test.test("10. encode", (function (param) {
+Test.test("10. encode", (function () {
         Belt_List.toArray(Lists_99.encode({
                   hd: "a",
                   tl: {
@@ -401,156 +401,43 @@ Test.test("10. encode", (function (param) {
                 }));
       }));
 
-Test.test("11. encode'", (function (param) {
-        var __x = Belt_List.toArray(Lists_99.encode_11({
-                  hd: "a",
-                  tl: {
-                    hd: "a",
-                    tl: {
-                      hd: "a",
-                      tl: {
+Test.test("11. encode'", (function () {
+        ((function (__x) {
+                console.log("11. encode result", __x);
+              })(Belt_List.toArray(Lists_99.encode_11({
                         hd: "a",
                         tl: {
-                          hd: "b",
-                          tl: {
-                            hd: "c",
-                            tl: {
-                              hd: "c",
-                              tl: {
-                                hd: "a",
-                                tl: {
-                                  hd: "a",
-                                  tl: {
-                                    hd: "d",
-                                    tl: {
-                                      hd: "e",
-                                      tl: {
-                                        hd: "e",
-                                        tl: {
-                                          hd: "e",
-                                          tl: {
-                                            hd: "e",
-                                            tl: /* [] */0
-                                          }
-                                        }
-                                      }
-                                    }
-                                  }
-                                }
-                              }
-                            }
-                          }
-                        }
-                      }
-                    }
-                  }
-                }));
-        console.log("11. encode result", __x);
-        var __x$1 = [
-          {
-            TAG: "Many",
-            _0: 4,
-            _1: "a"
-          },
-          {
-            TAG: "One",
-            _0: "b"
-          },
-          {
-            TAG: "Many",
-            _0: 2,
-            _1: "c"
-          },
-          {
-            TAG: "Many",
-            _0: 2,
-            _1: "a"
-          },
-          {
-            TAG: "One",
-            _0: "d"
-          },
-          {
-            TAG: "Many",
-            _0: 4,
-            _1: "e"
-          }
-        ];
-        console.log("11. encode expected", __x$1);
-      }));
-
-Test.test("12. decode", (function (param) {
-        var __x = Belt_List.toArray(Lists_99.decode({
-                  hd: {
-                    TAG: "Many",
-                    _0: 4,
-                    _1: "a"
-                  },
-                  tl: {
-                    hd: {
-                      TAG: "One",
-                      _0: "b"
-                    },
-                    tl: {
-                      hd: {
-                        TAG: "Many",
-                        _0: 2,
-                        _1: "c"
-                      },
-                      tl: {
-                        hd: {
-                          TAG: "Many",
-                          _0: 2,
-                          _1: "a"
-                        },
-                        tl: {
-                          hd: {
-                            TAG: "One",
-                            _0: "d"
-                          },
-                          tl: {
-                            hd: {
-                              TAG: "Many",
-                              _0: 4,
-                              _1: "e"
-                            },
-                            tl: /* [] */0
-                          }
-                        }
-                      }
-                    }
-                  }
-                }));
-        console.log("12. decode result", __x);
-        var __x$1 = Belt_List.toArray({
-              hd: "a",
-              tl: {
-                hd: "a",
-                tl: {
-                  hd: "a",
-                  tl: {
-                    hd: "a",
-                    tl: {
-                      hd: "b",
-                      tl: {
-                        hd: "c",
-                        tl: {
-                          hd: "c",
+                          hd: "a",
                           tl: {
                             hd: "a",
                             tl: {
                               hd: "a",
                               tl: {
-                                hd: "d",
+                                hd: "b",
                                 tl: {
-                                  hd: "e",
+                                  hd: "c",
                                   tl: {
-                                    hd: "e",
+                                    hd: "c",
                                     tl: {
-                                      hd: "e",
+                                      hd: "a",
                                       tl: {
-                                        hd: "e",
-                                        tl: /* [] */0
+                                        hd: "a",
+                                        tl: {
+                                          hd: "d",
+                                          tl: {
+                                            hd: "e",
+                                            tl: {
+                                              hd: "e",
+                                              tl: {
+                                                hd: "e",
+                                                tl: {
+                                                  hd: "e",
+                                                  tl: /* [] */0
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
                                       }
                                     }
                                   }
@@ -559,45 +446,117 @@ Test.test("12. decode", (function (param) {
                             }
                           }
                         }
-                      }
-                    }
-                  }
+                      }))));
+        ((function (__x) {
+                console.log("11. encode expected", __x);
+              })([
+                {
+                  TAG: "Many",
+                  _0: 4,
+                  _1: "a"
+                },
+                {
+                  TAG: "One",
+                  _0: "b"
+                },
+                {
+                  TAG: "Many",
+                  _0: 2,
+                  _1: "c"
+                },
+                {
+                  TAG: "Many",
+                  _0: 2,
+                  _1: "a"
+                },
+                {
+                  TAG: "One",
+                  _0: "d"
+                },
+                {
+                  TAG: "Many",
+                  _0: 4,
+                  _1: "e"
                 }
-              }
-            });
-        console.log("12. decode expected", __x$1);
+              ]));
       }));
 
-Test.test("13. encode", (function (param) {
-        var __x = Belt_List.toArray(Lists_99.encode_13({
-                  hd: "a",
-                  tl: {
+Test.test("12. decode", (function () {
+        ((function (__x) {
+                console.log("12. decode result", __x);
+              })(Belt_List.toArray(Lists_99.decode({
+                        hd: {
+                          TAG: "Many",
+                          _0: 4,
+                          _1: "a"
+                        },
+                        tl: {
+                          hd: {
+                            TAG: "One",
+                            _0: "b"
+                          },
+                          tl: {
+                            hd: {
+                              TAG: "Many",
+                              _0: 2,
+                              _1: "c"
+                            },
+                            tl: {
+                              hd: {
+                                TAG: "Many",
+                                _0: 2,
+                                _1: "a"
+                              },
+                              tl: {
+                                hd: {
+                                  TAG: "One",
+                                  _0: "d"
+                                },
+                                tl: {
+                                  hd: {
+                                    TAG: "Many",
+                                    _0: 4,
+                                    _1: "e"
+                                  },
+                                  tl: /* [] */0
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }))));
+        ((function (__x) {
+                console.log("12. decode expected", __x);
+              })(Belt_List.toArray({
                     hd: "a",
                     tl: {
                       hd: "a",
                       tl: {
                         hd: "a",
                         tl: {
-                          hd: "b",
+                          hd: "a",
                           tl: {
-                            hd: "c",
+                            hd: "b",
                             tl: {
                               hd: "c",
                               tl: {
-                                hd: "a",
+                                hd: "c",
                                 tl: {
                                   hd: "a",
                                   tl: {
-                                    hd: "d",
+                                    hd: "a",
                                     tl: {
-                                      hd: "e",
+                                      hd: "d",
                                       tl: {
                                         hd: "e",
                                         tl: {
                                           hd: "e",
                                           tl: {
                                             hd: "e",
-                                            tl: /* [] */0
+                                            tl: {
+                                              hd: "e",
+                                              tl: /* [] */0
+                                            }
                                           }
                                         }
                                       }
@@ -610,43 +569,90 @@ Test.test("13. encode", (function (param) {
                         }
                       }
                     }
-                  }
-                }));
-        console.log("13. encode result", __x);
-        var __x$1 = [
-          {
-            TAG: "Many",
-            _0: 4,
-            _1: "a"
-          },
-          {
-            TAG: "One",
-            _0: "b"
-          },
-          {
-            TAG: "Many",
-            _0: 2,
-            _1: "c"
-          },
-          {
-            TAG: "Many",
-            _0: 2,
-            _1: "a"
-          },
-          {
-            TAG: "One",
-            _0: "d"
-          },
-          {
-            TAG: "Many",
-            _0: 4,
-            _1: "e"
-          }
-        ];
-        console.log("13. encode expected", __x$1);
+                  })));
       }));
 
-Test.test("14. duplicate", (function (param) {
+Test.test("13. encode", (function () {
+        ((function (__x) {
+                console.log("13. encode result", __x);
+              })(Belt_List.toArray(Lists_99.encode_13({
+                        hd: "a",
+                        tl: {
+                          hd: "a",
+                          tl: {
+                            hd: "a",
+                            tl: {
+                              hd: "a",
+                              tl: {
+                                hd: "b",
+                                tl: {
+                                  hd: "c",
+                                  tl: {
+                                    hd: "c",
+                                    tl: {
+                                      hd: "a",
+                                      tl: {
+                                        hd: "a",
+                                        tl: {
+                                          hd: "d",
+                                          tl: {
+                                            hd: "e",
+                                            tl: {
+                                              hd: "e",
+                                              tl: {
+                                                hd: "e",
+                                                tl: {
+                                                  hd: "e",
+                                                  tl: /* [] */0
+                                                }
+                                              }
+                                            }
+                                          }
+                                        }
+                                      }
+                                    }
+                                  }
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }))));
+        ((function (__x) {
+                console.log("13. encode expected", __x);
+              })([
+                {
+                  TAG: "Many",
+                  _0: 4,
+                  _1: "a"
+                },
+                {
+                  TAG: "One",
+                  _0: "b"
+                },
+                {
+                  TAG: "Many",
+                  _0: 2,
+                  _1: "c"
+                },
+                {
+                  TAG: "Many",
+                  _0: 2,
+                  _1: "a"
+                },
+                {
+                  TAG: "One",
+                  _0: "d"
+                },
+                {
+                  TAG: "Many",
+                  _0: 4,
+                  _1: "e"
+                }
+              ]));
+      }));
+
+Test.test("14. duplicate", (function () {
         var result = Lists_99.duplicate({
               hd: "a",
               tl: {
@@ -696,7 +702,7 @@ Test.test("14. duplicate", (function (param) {
             });
       }));
 
-Test.test("15. replicate", (function (param) {
+Test.test("15. replicate", (function () {
         var result = Lists_99.replicate({
               hd: "a",
               tl: {
@@ -737,7 +743,7 @@ Test.test("15. replicate", (function (param) {
             });
       }));
 
-Test.test("16. drop", (function (param) {
+Test.test("16. drop", (function () {
         var result = Lists_99.drop({
               hd: "a",
               tl: {
@@ -793,7 +799,7 @@ Test.test("16. drop", (function (param) {
             });
       }));
 
-Test.test("17. split", (function (param) {
+Test.test("17. split", (function () {
         var match = Lists_99.split({
               hd: "a",
               tl: {
@@ -859,7 +865,7 @@ Test.test("17. split", (function (param) {
             });
       }));
 
-Test.test("18. slice", (function (param) {
+Test.test("18. slice", (function () {
         var result = Lists_99.slice({
               hd: "a",
               tl: {
@@ -909,7 +915,7 @@ Test.test("18. slice", (function (param) {
             });
       }));
 
-Test.test("19. rotate", (function (param) {
+Test.test("19. rotate", (function () {
         var result = Lists_99.rotate({
               hd: "a",
               tl: {
@@ -962,7 +968,7 @@ Test.test("19. rotate", (function (param) {
             });
       }));
 
-Test.test("20. remove_at", (function (param) {
+Test.test("20. remove_at", (function () {
         var result = Lists_99.remove_at({
               hd: "a",
               tl: {
@@ -988,7 +994,7 @@ Test.test("20. remove_at", (function (param) {
             });
       }));
 
-Test.test("21. insert_at", (function (param) {
+Test.test("21. insert_at", (function () {
         var result = Belt_List.toArray(Lists_99.insert_at({
                   hd: "a",
                   tl: {
@@ -1021,7 +1027,7 @@ Test.test("21. insert_at", (function (param) {
         Test_Utils.stringArrayEqual(undefined, result, expected);
       }));
 
-Test.test("22. range", (function (param) {
+Test.test("22. range", (function () {
         var result = Belt_List.toArray(Lists_99.range(4, 9));
         var expected = Belt_List.toArray({
               hd: 4,
@@ -1045,13 +1051,13 @@ Test.test("22. range", (function (param) {
         Test_Utils.intArrayEqual(undefined, result, expected);
       }));
 
-Test.test("23. range", (function (param) {
+Test.test("23. range", (function () {
         var result = Belt_List.toArray(Lists_99.range_tail_recur(3, 11));
         var expected = Belt_List.toArray(Lists_99.range(3, 11));
         Test_Utils.intArrayEqual(undefined, result, expected);
       }));
 
-Test.test("24. rand_select", (function (param) {
+Test.test("24. rand_select", (function () {
         var result = Belt_List.toArray(Lists_99.rand_select({
                   hd: "a",
                   tl: {

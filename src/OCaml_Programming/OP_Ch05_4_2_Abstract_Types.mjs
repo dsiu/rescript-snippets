@@ -41,6 +41,8 @@ function pop(s) {
       };
 }
 
+var size = List.length;
+
 var ListStack = {
   Empty: Empty,
   empty: /* [] */0,
@@ -48,7 +50,7 @@ var ListStack = {
   push: push,
   peek: peek,
   pop: pop,
-  size: List.length
+  size: size
 };
 
 var Empty$1 = /* @__PURE__ */Caml_exceptions.create("OP_Ch05_4_2_Abstract_Types.ListStackCachedSize.Empty");
@@ -96,7 +98,7 @@ function pop$1(s) {
       };
 }
 
-function size(prim) {
+function size$1(prim) {
   return prim[1];
 }
 
@@ -112,7 +114,7 @@ var ListStackCachedSize = {
   push: push$1,
   peek: peek$1,
   pop: pop$1,
-  size: size
+  size: size$1
 };
 
 var Empty$2 = /* @__PURE__ */Caml_exceptions.create("OP_Ch05_4_2_Abstract_Types.CustomStack.Empty");
@@ -121,7 +123,7 @@ function is_empty$2(s) {
   return s._0 === undefined;
 }
 
-function size$1(s) {
+function size$2(s) {
   var match = s._0;
   if (match !== undefined) {
     return match.size;
@@ -136,7 +138,7 @@ function push$2(x, s) {
           _0: {
             top: x,
             rest: s,
-            size: size$1(s) + 1 | 0
+            size: size$2(s) + 1 | 0
           }
         };
 }
@@ -175,7 +177,7 @@ var CustomStack = {
   push: push$2,
   peek: peek$2,
   pop: pop$2,
-  size: size$1
+  size: size$2
 };
 
 var CheckListStackCachedSize = ListStackCachedSize;

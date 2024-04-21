@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 module type Stack = {
   type t<'a>
   exception Empty
@@ -33,7 +36,7 @@ module ListStack: Stack = {
     | list{_, ...s} => s
     }
   }
-  let size = List.length
+  let size = List.length(_)
 }
 
 module ListStackCachedSize = {

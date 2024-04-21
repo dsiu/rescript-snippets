@@ -24,9 +24,9 @@ var lst = Belt_List.makeBy(100, (function (i) {
         return i;
       }));
 
-var prim1 = Belt_List.reduce(lst, 0, combine);
-
-console.log(22, prim1);
+((function (__x) {
+        console.log(22, __x);
+      })(Belt_List.reduce(lst, 0, combine)));
 
 function combine$1(m, n) {
   return m + n;
@@ -39,21 +39,21 @@ var StringMonoid = {
   empty: empty
 };
 
-var prim1$1 = Belt_List.reduce({
-      hd: "a",
-      tl: {
-        hd: "b",
-        tl: {
-          hd: "c",
-          tl: {
-            hd: "d",
-            tl: /* [] */0
-          }
-        }
-      }
-    }, empty, combine$1);
-
-console.log(31, prim1$1);
+((function (__x) {
+        console.log(31, __x);
+      })(Belt_List.reduce({
+            hd: "a",
+            tl: {
+              hd: "b",
+              tl: {
+                hd: "c",
+                tl: {
+                  hd: "d",
+                  tl: /* [] */0
+                }
+              }
+            }
+          }, empty, combine$1)));
 
 function combine$2(m, n) {
   return m * n;
@@ -78,9 +78,9 @@ var lst$1 = {
   }
 };
 
-var prim1$2 = Belt_List.reduce(lst$1, 1.0, combine$2);
-
-console.log(40, prim1$2);
+((function (__x) {
+        console.log(40, __x);
+      })(Belt_List.reduce(lst$1, 1.0, combine$2)));
 
 var Fold_And_Monoids = {
   IntMonoid: IntMonoid,
@@ -99,9 +99,9 @@ function sumOfSquares(n) {
               }));
 }
 
-var prim1$3 = sumOfSquares(10);
-
-console.log(48, prim1$3);
+((function (__x) {
+        console.log(48, __x);
+      })(sumOfSquares(10)));
 
 var More_Higher_Order_Functions = {
   sumOfSquares: sumOfSquares
@@ -115,14 +115,14 @@ var ls = {
   }
 };
 
-var prim1$4 = Belt_List.toArray(Stdlib__List.flatMap(ls, (function (c) {
-            return {
-                    hd: c.toUpperCase(),
-                    tl: /* [] */0
-                  };
-          })));
-
-console.log(53, prim1$4);
+((function (__x) {
+        console.log(53, __x);
+      })(Belt_List.toArray(Stdlib__List.flatMap(ls, (function (c) {
+                  return {
+                          hd: c.toUpperCase(),
+                          tl: /* [] */0
+                        };
+                })))));
 
 var From_Map_To_FlatMap = {
   ls: ls

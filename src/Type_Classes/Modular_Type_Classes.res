@@ -8,6 +8,8 @@
 
 // Starting with the basics, consider the class of types whose values can be compared for equality.
 // Call this type-class Eq . We represent the class as a module signature.
+@@uncurried
+@@uncurried.swap
 
 @@warning("-44")
 
@@ -83,7 +85,7 @@ test_ord_int_int->Js.log
 // This section begins with the Show type-class.
 module type SHOW = {
   type t
-  let show: t => string
+  let show: (. t) => string
 }
 
 // In what follows, it is convenient to make an alias for module values of this type.
@@ -97,7 +99,7 @@ module Show_int: SHOW with type t = int = {
 
 module Show_bool: SHOW with type t = bool = {
   type t = bool
-  let show = x =>
+  let show = (. x) =>
     switch x {
     | true => "True"
     | false => "False"
@@ -192,7 +194,7 @@ module type LIST_SHOW = (X: SHOW) => (SHOW with type t = list<X.t>)
 module List_show: LIST_SHOW = (X: SHOW) => {
   type t = list<X.t>
 
-  let show = xs => {
+  let show = (. xs) => {
     let rec go = (first, x) =>
       switch x {
       | list{} => "]"
@@ -216,7 +218,7 @@ let show_list: show_impl<'a> => show_impl<list<'a>> = (type a, show: show_impl<a
   module(
     {
       type t = list<a>
-      let show: t => string = xs => {
+      let show: (. t) => string = xs => {
         let rec go = (first, x) =>
           switch x {
           | list{} => "]"
@@ -246,7 +248,7 @@ module type MUL = {
   include EQ
   include NUM with type t := t
 
-  let mul: (t, t) => t
+  let mul: (. t, t) => t
 }
 
 type mul_impl<'a> = module(MUL with type t = 'a)
@@ -259,7 +261,7 @@ module Mul_default: MUL_F = (E: EQ, N: NUM with type t = E.t) => {
   include (E: EQ with type t = E.t)
   include (N: NUM with type t := E.t)
 
-  let mul: (t, t) => t = {
+  let mul: (. t, t) => t = {
     let rec loop = (x, y) =>
       switch () {
       | () if eq(x, from_int(0)) => from_int(0)
@@ -281,7 +283,7 @@ module Mul_int: MUL with type t = int = {
 
 let dot: (mul_impl<'a>, list<'a>, list<'a>) => 'a = (type a, mul: mul_impl<a>, xs, ys) => {
   module M = unpack(mul: MUL with type t = a)
-  \"@@"(sum(module(M: NUM with type t = a)), List.map2(M.mul, xs, ys))
+  \"@@"(sum(module(M: NUM with type t = a), _), List.map2(M.mul, xs, ys))
 }
 let test_dot = dot(module(Mul_int: MUL with type t = int), list{1, 2, 3}, list{4, 5, 6})
 
@@ -297,11 +299,14 @@ let rec replicate: (int, 'a) => list<'a> = (n, x) =>
     list{x, ...replicate(n - 1, x)}
   }
 
-let rec print_nested: 'a. (show_impl<'a>, int, 'a) => unit = (show_mod, x) =>
-  switch x {
-  | 0 => x => print(show_mod, x)
-  | n => x => print_nested(show_list(show_mod), n - 1, replicate(n, x))
-  }
+let rec print_nested: 'a. (show_impl<'a>, int, 'a) => unit = (show_mod, x, a) => {
+  (
+    switch x {
+    | 0 => x => print(show_mod, x)
+    | n => x => print_nested(show_list(show_mod), n - 1, replicate(n, x))
+    }
+  )(a)
+}
 
 let test_nested = {
   //  let n = read_int()

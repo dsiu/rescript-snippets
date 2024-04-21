@@ -17,7 +17,7 @@ function log2(prim0, prim1) {
   console.log(prim0, prim1);
 }
 
-var prim = Curry._1(Functors$BsBastet.ListF.$$Option.Traversable.sequence, {
+var prim = Functors$BsBastet.ListF.$$Option.Traversable.sequence({
       hd: "foo",
       tl: {
         hd: "bar",
@@ -27,7 +27,7 @@ var prim = Curry._1(Functors$BsBastet.ListF.$$Option.Traversable.sequence, {
 
 console.log(prim);
 
-var prim$1 = Curry._1(Functors$BsBastet.ListF.Int.Show.show, {
+var prim$1 = Functors$BsBastet.ListF.Int.Show.show({
       hd: 1,
       tl: {
         hd: 2,
@@ -48,7 +48,7 @@ console.log(prim$1);
 
 var $great$eq$great = Option$BsBastet.Infix.$great$eq$great;
 
-function get_form(param) {
+function get_form() {
   return {
           name: "Foo",
           address: "123 Bar St."
@@ -59,31 +59,33 @@ function get_address(form) {
   return form.address;
 }
 
-var get_form_address = Curry._2($great$eq$great, get_form, get_address);
+function get_form_address(extra) {
+  return Curry._3($great$eq$great, get_form, get_address, extra);
+}
 
-var prim$2 = Curry._1(get_form_address, undefined);
+var prim$2 = Curry._3($great$eq$great, get_form, get_address, undefined);
 
 console.log(prim$2);
 
 var fmap_add = Functors$BsBastet.ArrayF.Int.Additive.Fold_Map.fold_map;
 
-var __x = [
-  1,
-  2,
-  3,
-  4,
-  5
-];
-
-var prim$3 = Curry._2(fmap_add, Functions$BsBastet.id, __x);
+var prim$3 = (function (__x) {
+      return fmap_add(Functions$BsBastet.id, __x);
+    })([
+      1,
+      2,
+      3,
+      4,
+      5
+    ]);
 
 console.log(prim$3);
 
 function trim_all(strings) {
-  return Curry._2(List$BsBastet.Infix.$less$$great, StringLabels.trim, strings);
+  return List$BsBastet.Infix.$less$$great(StringLabels.trim, strings);
 }
 
-var prim$4 = Curry._2(List$BsBastet.Infix.$less$$great, StringLabels.trim, {
+var prim$4 = trim_all({
       hd: "foo   ",
       tl: {
         hd: "bar",
@@ -98,8 +100,8 @@ console.log(prim$4);
 
 function total_score(a, b) {
   return {
-          score: Curry._2(Int$BsBastet.Additive.Semigroup.append, a.score, b.score),
-          disqualified: Curry._2(Bool$BsBastet.Disjunctive.Semigroup.append, a.disqualified, b.disqualified)
+          score: Int$BsBastet.Additive.Semigroup.append(a.score, b.score),
+          disqualified: Bool$BsBastet.Disjunctive.Semigroup.append(a.disqualified, b.disqualified)
         };
 }
 

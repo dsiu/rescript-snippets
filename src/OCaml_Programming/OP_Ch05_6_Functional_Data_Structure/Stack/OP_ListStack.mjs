@@ -2,7 +2,6 @@
 
 import * as List from "rescript/lib/es6/list.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
-import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
 var Empty = /* @__PURE__ */Caml_exceptions.create("OP_ListStack.M.Empty");
 
@@ -34,6 +33,10 @@ function pop(x) {
       };
 }
 
+function to_list(prim) {
+  return prim;
+}
+
 var M = {
   Empty: Empty,
   empty: /* [] */0,
@@ -42,7 +45,7 @@ var M = {
   peek: peek,
   pop: pop,
   size: List.length,
-  to_list: Stdlib__Function.identity
+  to_list: to_list
 };
 
 export {

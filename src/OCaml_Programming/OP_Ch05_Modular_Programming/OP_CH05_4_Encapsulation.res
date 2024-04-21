@@ -5,6 +5,8 @@
 //
 // What if we wanted to modify that data structure to add an operation for the size of the stack? The easy way would be to implement it using List.length:
 //
+@@uncurried
+@@uncurried.swap
 
 module ORIG = {
   module type LIST_STACK = {
@@ -45,7 +47,7 @@ module ORIG = {
       }
     }
 
-    let size = List.length
+    let size = List.length(_)
   }
 }
 
@@ -126,6 +128,6 @@ module NEW = {
       }
     }
 
-    let size = List.length
+    let size = List.length(_)
   }
 }

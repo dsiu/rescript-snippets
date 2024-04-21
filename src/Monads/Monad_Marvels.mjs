@@ -2,7 +2,7 @@
 
 import * as Belt_Option from "rescript/lib/es6/belt_Option.js";
 
-function assembleParts(param) {
+function assembleParts() {
   return "ASSEMBLED";
 }
 
@@ -33,7 +33,7 @@ var EngineStart = {
   startEngine: startEngine
 };
 
-function rangeVerification(param) {
+function rangeVerification() {
   return {
           x: 12,
           y: 14

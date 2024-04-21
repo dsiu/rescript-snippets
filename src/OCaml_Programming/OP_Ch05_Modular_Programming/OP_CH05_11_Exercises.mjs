@@ -210,7 +210,7 @@ var Fraction_Reduced = {
 
 var cmp = Caml_obj.compare;
 
-var CharCmp = Belt_Id.MakeComparable({
+var CharCmp = Belt_Id.MakeComparableU({
       cmp: cmp
     });
 
@@ -238,7 +238,7 @@ function cmp$1(a, b) {
   }
 }
 
-var DateCmp = Belt_Id.MakeComparable({
+var DateCmp = Belt_Id.MakeComparableU({
       cmp: cmp$1
     });
 

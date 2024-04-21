@@ -18,7 +18,7 @@
     }
   ],
   "package-specs": {
-    "module": "es6",
+    "module": "esmodule",
     "in-source": true
   },
   "suffix": ".mjs",
@@ -26,11 +26,8 @@
   ],
   "bs-dependencies": [
     "@rescript/core",
-    "rescript-jzon",
     "bs-fetch",
     "rescript-nodejs",
-    "@mobily/rescript-date",
-    "rescript-ocamlgraph",
     "bs-bastet",
     "relude",
     "relude-parse",
@@ -46,6 +43,5 @@
   ],
   "warnings": {
     "number": "-101-33-3-60-44-27"
-  },
-  "uncurried": false
+  }
 }

@@ -1,5 +1,8 @@
 // https://cs3110.github.io/textbook/chapters/modules/functors.html
 //
+@@uncurried
+@@uncurried.swap
+
 let log = Js.log
 let log2 = Js.log2
 
@@ -19,8 +22,8 @@ module A = {
 
 module B = IncX(A)
 module C = IncX(B)
-B.x->log2("B.x", _)
-C.x->log2("C.x", _)
+B.x->(log2("B.x", _))
+C.x->(log2("C.x", _))
 
 module AddX = (M: X) => {
   let add = y => M.x + y
@@ -30,7 +33,7 @@ module Add42 = AddX({
   let x = 42
 })
 
-Add42.add(1)->log2("Add42.add(1)", _)
+Add42.add(1)->(log2("Add42.add(1)", _))
 // Note that the input module to AddX contains a value named x, but the output module from
 // AddX does not
 
@@ -173,7 +176,7 @@ module type S = {
 //
 // Here’s an example of using the Map.Make functor:
 
-module IntHash = Belt.Id.MakeHashable({
+module IntHash = Belt.Id.MakeHashableU({
   type t = int
   let hash = a => a
   let eq = (a, b) => a == b
@@ -191,7 +194,7 @@ Belt.HashMap.set(hMap, 0, "a")
 
 type name = {first: string, last: string}
 
-module Name = Belt.Id.MakeComparable({
+module Name = Belt.Id.MakeComparableU({
   type t = name
   let cmp = ({first: first1, last: last1}, {first: first2, last: last2}) => {
     switch compare(last1, last2) {
@@ -226,7 +229,7 @@ exception Empty
 module type Stack = {
   type t<'a>
   let empty: t<'a>
-  let push: ('a, t<'a>) => t<'a>
+  let push: (. 'a, t<'a>) => t<'a>
   let peek: t<'a> => 'a
   let pop: t<'a> => t<'a>
 }
@@ -254,7 +257,7 @@ module VariantStack = {
     | E
     | S('a, t<'a>)
   let empty = E
-  let push = (x, s) => S(x, s)
+  let push = (. x, s) => S(x, s)
   let peek = s => {
     switch s {
     | E => raise(Empty)
@@ -325,8 +328,8 @@ List.map(tests, stacks)->log
 module type Set = {
   type t<'a>
   let empty: t<'a>
-  let mem: ('a, t<'a>) => bool
-  let add: ('a, t<'a>) => t<'a>
+  let mem: (. 'a, t<'a>) => bool
+  let add: (. 'a, t<'a>) => t<'a>
   let elements: t<'a> => list<'a>
 }
 
@@ -355,7 +358,7 @@ module UniqListSet: Set = {
   type t<'a> = list<'a>
   let empty = list{}
   let mem = List.mem
-  let add = (x, s) => {
+  let add = (. x, s) => {
     mem(x, s) ? s : list{x, ...s}
   }
   let elements = Stdlib.Function.identity

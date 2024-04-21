@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 type contact_orig = {
   firstName: string,
   middleInitial: string,
@@ -110,7 +113,7 @@ createEmailAddressWithContinuations(success, failure, "someone@mail.com")->Js.lo
 //createEmailAddressWithContinuations(success, failure, "diudiu")->Js.log
 
 // carry the success and failure
-let createEmail = createEmailAddressWithContinuations(success, failure)
+let createEmail = createEmailAddressWithContinuations(success, failure, _)
 createEmailAddress("someone@mail.com")->Js.log2("with carry")
 createEmailAddress("diudiu")->Js.log2("with carry")
 

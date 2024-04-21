@@ -5,6 +5,8 @@
 
 // In this post, let's consider caching a database connection.
 // For this post consider a mock connection function and omit callbacks or promises to make the code simpler.
+@@uncurried
+@@uncurried.swap
 
 module Database = {
   type client = {id: string}
@@ -12,7 +14,7 @@ module Database = {
 }
 
 // Example 1: Caching using a ref
-let cache: Pervasives.ref<option<Database.client>> = ref(None)
+let cache: Pervasives.ref<option<Database.client>> = Pervasives.ref(None)
 
 let connect = () => {
   switch cache.contents {

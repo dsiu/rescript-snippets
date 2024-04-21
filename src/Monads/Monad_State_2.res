@@ -1,12 +1,15 @@
 //
 // ref: http://blogs.perl.org/users/cyocum/2012/11/writing-state-monads-in-ocaml.html
 //
+@@uncurried
+@@uncurried.swap
+
 let log = Js.log
 let log2 = Js.log2
 
 module type MONAD = {
   type t<'a>
-  let bind: (t<'a>, 'a => t<'b>) => t<'b>
+  let bind: (. t<'a>, 'a => t<'b>) => t<'b>
   let return: 'a => t<'a>
 }
 
@@ -27,10 +30,10 @@ module StateMonad: STATE_MONAD = (State: STATE) => {
   type state = State.t
   type t<'a> = state => ('a, state)
 
-  let bind = (m, f) => {
+  let bind: (. t<'a>, 'a => t<'b>) => t<'b> = (. m, f) => {
     s => {
       switch m(s) {
-      | (x, s') => f(x, s')
+      | (x, s') => f(x)(s')
       }
     }
   }
@@ -67,5 +70,5 @@ let _ = {
   open IntStateMonad
   let blah = return(1)
   let blah2 = blah->bind(x => return(succ(x)))
-  access(blah2)->log2(_, "test1")
+  access(blah2)->(log2(_, "test1"))
 }

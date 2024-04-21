@@ -7,6 +7,8 @@
 // You need to use a first-class module 2 to create a custom Belt.MutableMap.t. IMO, the first-class modules aren’t very well documented yet, but the basic idea is that they turn modules into values. Ordinarily, modules (module M = ...) and values (let x = ...) live on different “layers” of the language, and they can’t interact directly. With first-class modules, you can pass a module to a function like it was a value.
 //
 // Here’s a working example. The easiest way is generally using Belt.Id.MakeComparable.
+@@uncurried
+@@uncurried.swap
 
 module M = {
   type t = int
@@ -14,7 +16,7 @@ module M = {
 }
 
 // Create an new Id module
-module M_Id = Belt.Id.MakeComparable(M)
+module M_Id = Belt.Id.MakeComparableU(M)
 
 // use module() to turn M_Id into a first-class module
 let map = Belt.MutableMap.make(~id=module(M_Id))

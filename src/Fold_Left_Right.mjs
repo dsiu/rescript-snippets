@@ -14,13 +14,13 @@ function log2(prim0, prim1) {
 
 function fold_left_(f, e, s) {
   return List.rev(List.fold_right((function (a, acc) {
-                    return Curry._2(f, acc, a);
+                    return f(acc, a);
                   }), e, List.rev(s)));
 }
 
 function fold_left(f, e, s) {
   return Curry._1(List.fold_right((function (a, acc, x) {
-                    return Curry._1(acc, Curry._2(f, x, a));
+                    return Curry._1(acc, f(x, a));
                   }), s, (function (x) {
                     return x;
                   })), e);

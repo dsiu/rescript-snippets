@@ -1,4 +1,6 @@
 // // https://cs3110.github.io/textbook/chapters/modules/functional_data_structures.html
+@@uncurried
+@@uncurried.swap
 
 module type S = {
   @ocaml.doc(" An ['a t] is a queue whose elements have type ['a]. ")
@@ -24,7 +26,7 @@ module type S = {
   let dequeue: t<'a> => t<'a>
 
   @ocaml.doc(" [size q] is the number of elements in [q]. ")
-  let size: t<'a> => int
+  let size: (. t<'a>) => int
 
   @ocaml.doc(" [to_list q] is a list containing the elements of [q] in order from
       front to back. ")

@@ -2,6 +2,8 @@
 // ref: https://fsharpforfunandprofit.com/posts/how-types-work-with-functions/
 //
 
+@@uncurried
+@@uncurried.swap
 // Function types as parameters
 let evalWith5ThenAdd2 = fn => fn(5) + 2
 
@@ -13,7 +15,7 @@ let times3 = x => x * 3
 evalWith5ThenAdd2(times3)->Js.log
 
 // Functions as output
-let add = (x, y) => x + y
+let add = (. x, y) => x + y
 
 let add1 = add(1)
 let add2 = add(2)
@@ -58,7 +60,7 @@ let a = ("hello", 1)
 
 // Functions with more than two parameters
 @@warning("-27")
-let multiParamFn = (p1: int, p2: bool, p3: string, p4: float) => {p1->ignore}
+let multiParamFn = (. p1: int, p2: bool, p3: string, p4: float) => {p1->ignore}
 
 let intermediateFn1 = 42->multiParamFn
 let intermediateFn2 = false->intermediateFn1

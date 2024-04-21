@@ -3,6 +3,9 @@
 //
 // https://blog.shaynefletcher.org/2015/03/y-combinator.html
 //
+@@uncurried
+@@uncurried.swap
+
 @@warning("-3-32")
 open RescriptCore
 
@@ -45,13 +48,13 @@ let rec fact = n => {
 //
 // https://gist.github.com/dhil/55cf406865209ab945d8ba1484ea615c
 
-type rec fix<'a> = Fix(fix<'a> => 'a)
+type rec fix<'a> = Fix((. fix<'a>) => 'a)
 
-let fix = x => Fix(x)
-let unfix = (Fix(x)) => x
+let fix = (. x) => Fix(x)
+let unfix = (. Fix(x)) => x
 
-let y: 'a 'b. (('a => 'b, 'a) => 'b, 'a) => 'b = f => {
-  let g = (x, a) => f(unfix(x)(x), a)
+let y: 'a 'b. (. ('a => 'b, 'a) => 'b, 'a) => 'b = (. f) => {
+  let g = x => a => f(unfix(x)(x), a)
 
   g(fix(g))
 }

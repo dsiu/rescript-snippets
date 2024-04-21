@@ -26,9 +26,9 @@ var SomeIdCmp = Belt_Id.MakeComparable({
 
 var empty = Belt_Map.make(SomeIdCmp);
 
-var map = Belt_Map.set(empty, 1, "hello");
-
 var someId = 1;
+
+var map = Belt_Map.set(empty, someId, "hello");
 
 export {
   SomeId ,

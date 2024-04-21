@@ -4,8 +4,8 @@ import * as List from "rescript/lib/es6/list.js";
 import * as Curry from "rescript/lib/es6/curry.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_List from "rescript/lib/es6/belt_List.js";
-import * as Pervasives from "rescript/lib/es6/pervasives.js";
 import * as Caml_option from "rescript/lib/es6/caml_option.js";
+import * as PervasivesU from "rescript/lib/es6/pervasivesU.js";
 
 function log(prim) {
   console.log(prim);
@@ -19,10 +19,8 @@ function compose(f, g, x) {
   return Curry._1(f, Curry._1(g, x));
 }
 
-function compose_right(f, g) {
-  return function (param) {
-    return Curry._1(g, Curry._1(f, param));
-  };
+function compose_right(f, g, x) {
+  return Curry._1(g, Curry._1(f, x));
 }
 
 function id(x) {
@@ -33,11 +31,7 @@ function $$const(x, param) {
   return x;
 }
 
-function map(f) {
-  return function (param) {
-    return List.map(f, param);
-  };
-}
+var map = List.map;
 
 var ListFunctor = {
   map: map
@@ -75,10 +69,9 @@ function test_compose(xs) {
   var g = function (x) {
     return x - 1 | 0;
   };
-  var f$1 = function (param) {
-    return (param - 1 | 0) % 2;
-  };
-  return Caml_obj.equal(List.map(f$1, xs), List.map(f, List.map(g, xs)));
+  return Caml_obj.equal(List.map((function (param) {
+                    return (param - 1 | 0) % 2;
+                  }), xs), List.map(f, List.map(g, xs)));
 }
 
 var TFL = {
@@ -88,36 +81,36 @@ var TFL = {
 
 console.log("Test List Functor");
 
-var prim1 = test_id(/* [] */0);
+((function (__x) {
+        console.log("id: P{", __x);
+      })(test_id(/* [] */0)));
 
-console.log("id: P{", prim1);
+((function (__x) {
+        console.log("id: {1,2}", __x);
+      })(test_id({
+            hd: 1,
+            tl: {
+              hd: 2,
+              tl: /* [] */0
+            }
+          })));
 
-var prim1$1 = test_id({
-      hd: 1,
-      tl: {
-        hd: 2,
-        tl: /* [] */0
-      }
-    });
+((function (__x) {
+        console.log("compose: {}", __x);
+      })(test_compose(/* [] */0)));
 
-console.log("id: {1,2}", prim1$1);
-
-var prim1$2 = test_compose(/* [] */0);
-
-console.log("compose: {}", prim1$2);
-
-var prim1$3 = test_compose({
-      hd: 1,
-      tl: {
-        hd: 2,
-        tl: {
-          hd: 3,
-          tl: /* [] */0
-        }
-      }
-    });
-
-console.log("compose: {1,2,3}", prim1$3);
+((function (__x) {
+        console.log("compose: {1,2,3}", __x);
+      })(test_compose({
+            hd: 1,
+            tl: {
+              hd: 2,
+              tl: {
+                hd: 3,
+                tl: /* [] */0
+              }
+            }
+          })));
 
 function map$1(f, x) {
   if (x !== undefined) {
@@ -153,21 +146,21 @@ var TOF = {
 
 console.log("Test Option Functor");
 
-var prim1$4 = test_id$1(42);
+((function (__x) {
+        console.log("id: Some(42)", __x);
+      })(test_id$1(42)));
 
-console.log("id: Some(42)", prim1$4);
+((function (__x) {
+        console.log("id: None", __x);
+      })(test_id$1(undefined)));
 
-var prim1$5 = test_id$1(undefined);
+((function (__x) {
+        console.log("compose: Some(42)", __x);
+      })(test_compose$1(42)));
 
-console.log("id: None", prim1$5);
-
-var prim1$6 = test_compose$1(42);
-
-console.log("compose: Some(42)", prim1$6);
-
-var prim1$7 = test_compose$1(undefined);
-
-console.log("compose: None", prim1$7);
+((function (__x) {
+        console.log("compose: None", __x);
+      })(test_compose$1(undefined)));
 
 function TestMonoid(M) {
   var test_left_id = function (x) {
@@ -186,8 +179,8 @@ function TestMonoid(M) {
         };
 }
 
-function append(prim0, prim1) {
-  return prim0 + prim1 | 0;
+function append(a, b) {
+  return a + b | 0;
 }
 
 var IntAddMonoid = {
@@ -195,18 +188,18 @@ var IntAddMonoid = {
   append: append
 };
 
-var prim1$8 = List.fold_left(append, 0, {
-      hd: 1,
-      tl: {
-        hd: 10,
-        tl: {
-          hd: 102,
-          tl: /* [] */0
-        }
-      }
-    });
-
-console.log("IntAddMonoid.sum {1,10,102}", prim1$8);
+((function (__x) {
+        console.log("IntAddMonoid.sum {1,10,102}", __x);
+      })(List.fold_left(append, 0, {
+            hd: 1,
+            tl: {
+              hd: 10,
+              tl: {
+                hd: 102,
+                tl: /* [] */0
+              }
+            }
+          })));
 
 function MonoidUtils(M) {
   var empty = M.empty;
@@ -224,7 +217,9 @@ function MonoidUtils(M) {
 }
 
 function ListMonoid(T) {
-  var append = Pervasives.$at;
+  var append = function (xs, ys) {
+    return PervasivesU.$at(xs, ys);
+  };
   return {
           empty: /* [] */0,
           append: append
@@ -384,9 +379,9 @@ var quotes = apply(f$2, {
       }
     });
 
-var prim1$9 = Belt_List.toArray(quotes);
-
-console.log("quotes", prim1$9);
+((function (__x) {
+        console.log("quotes", __x);
+      })(Belt_List.toArray(quotes)));
 
 function pure$1(x) {
   return Caml_option.some(x);
@@ -481,29 +476,29 @@ function f$p(x, y) {
   return apply$1(f$2, ssqrt(y));
 }
 
-var prim1$10 = f$3(1, 2);
+((function (__x) {
+        console.log("f(1.,2.) = ", __x);
+      })(f$3(1, 2)));
 
-console.log("f(1.,2.) = ", prim1$10);
+((function (__x) {
+        console.log("f'(1.,2.) = ", __x);
+      })(f$p(1, 2)));
 
-var prim1$11 = f$p(1, 2);
+((function (__x) {
+        console.log("f(1.,0.) = ", __x);
+      })(f$3(1, 0)));
 
-console.log("f'(1.,2.) = ", prim1$11);
+((function (__x) {
+        console.log("f'(1.,0.) = ", __x);
+      })(f$p(1, 0)));
 
-var prim1$12 = f$3(1, 0);
+((function (__x) {
+        console.log("f(1.,2.) = ", __x);
+      })(f$3(1, -2)));
 
-console.log("f(1.,0.) = ", prim1$12);
-
-var prim1$13 = f$p(1, 0);
-
-console.log("f'(1.,0.) = ", prim1$13);
-
-var prim1$14 = f$3(1, -2);
-
-console.log("f(1.,2.) = ", prim1$14);
-
-var prim1$15 = f$p(1, -2);
-
-console.log("f'(1.,2.) = ", prim1$15);
+((function (__x) {
+        console.log("f'(1.,2.) = ", __x);
+      })(f$p(1, -2)));
 
 function TestApplicative(A) {
   var map = A.map;
@@ -538,11 +533,6 @@ function TestApplicative(A) {
   var test_hom = function (f, x) {
     return Caml_obj.equal(Curry._2(apply, Curry._1(pure, f), Curry._1(pure, x)), Curry._1(pure, Curry._1(f, x)));
   };
-  var test_interchange = function (u, y) {
-    return Caml_obj.equal(Curry._2(apply, u, Curry._1(pure, y)), Curry._2(apply, Curry._1(pure, (function (f) {
-                          return Curry._1(f, y);
-                        })), u));
-  };
   var test_composition = function (u, v, w) {
     return Caml_obj.equal(Curry._2(apply, Curry._2(apply, Curry._2(apply, Curry._1(pure, compose), u), v), w), Curry._2(apply, u, Curry._2(apply, v, w)));
   };
@@ -550,7 +540,6 @@ function TestApplicative(A) {
           AU: AU,
           test_id: test_id,
           test_hom: test_hom,
-          test_interchange: test_interchange,
           test_composition: test_composition
         };
 }
@@ -618,20 +607,6 @@ function test_hom(f, x) {
             });
 }
 
-function test_interchange(u, y) {
-  var f_0 = function (f) {
-    return Curry._1(f, y);
-  };
-  var f = {
-    hd: f_0,
-    tl: /* [] */0
-  };
-  return Caml_obj.equal(apply(u, {
-                  hd: y,
-                  tl: /* [] */0
-                }), apply(f, u));
-}
-
 function test_composition(u, v, w) {
   var f = {
     hd: compose,
@@ -646,29 +621,31 @@ var TAL = {
   AU: AU,
   test_id: test_id$2,
   test_hom: test_hom,
-  test_interchange: test_interchange,
   test_composition: test_composition
 };
 
-var prim1$16 = test_id$2(/* [] */0);
+((function (__x) {
+        console.log("test_id = ", __x);
+      })(test_id$2(/* [] */0)));
 
-console.log("test_id = ", prim1$16);
-
-var prim1$17 = test_hom((function (prim) {
-        return prim.length;
-      }), "Homomorphism");
-
-console.log("test_hom = ", prim1$17);
+((function (__x) {
+        console.log("test_hom = ", __x);
+      })(test_hom((function (prim) {
+              return prim.length;
+            }), "Homomorphism")));
 
 function ListTraversable(A) {
   var traverse = function (f, xs) {
+    var map = A.map;
     if (xs) {
-      return Curry._2(A.apply, Curry._2(A.map, (function (y, ys) {
-                        return {
-                                hd: y,
-                                tl: ys
-                              };
-                      }), Curry._1(f, xs.hd)), traverse(f, xs.tl));
+      return Curry._2(A.apply, (function (__x) {
+                      return Curry._2(map, (function (y, ys) {
+                                    return {
+                                            hd: y,
+                                            tl: ys
+                                          };
+                                  }), __x);
+                    })(Curry._1(f, xs.hd)), traverse(f, xs.tl));
     } else {
       return Curry._1(A.pure, /* [] */0);
     }
@@ -683,15 +660,16 @@ function traverse(f, xs) {
   if (!xs) {
     return /* [] */0;
   }
-  var __x = Curry._1(f, xs.hd);
-  var f$1 = function (y, ys) {
-    return {
-            hd: y,
-            tl: ys
-          };
-  };
-  var f$2 = map$1(f$1, __x);
-  return apply$1(f$2, traverse(f, xs.tl));
+  var f$1 = (function (__x) {
+        var f = function (y, ys) {
+          return {
+                  hd: y,
+                  tl: ys
+                };
+        };
+        return map$1(f, __x);
+      })(Curry._1(f, xs.hd));
+  return apply$1(f$1, traverse(f, xs.tl));
 }
 
 var LTO = {
@@ -699,31 +677,31 @@ var LTO = {
   traverse: traverse
 };
 
-var prim1$18 = traverse(ssqrt, {
-      hd: 4.0,
-      tl: {
-        hd: 9.0,
-        tl: {
-          hd: 16.0,
-          tl: /* [] */0
-        }
-      }
-    });
+((function (__x) {
+        console.log("all_roots = ", __x);
+      })(traverse(ssqrt, {
+            hd: 4.0,
+            tl: {
+              hd: 9.0,
+              tl: {
+                hd: 16.0,
+                tl: /* [] */0
+              }
+            }
+          })));
 
-console.log("all_roots = ", prim1$18);
-
-var prim1$19 = traverse(ssqrt, {
-      hd: 4.0,
-      tl: {
-        hd: -9.0,
-        tl: {
-          hd: 16.0,
-          tl: /* [] */0
-        }
-      }
-    });
-
-console.log("all_roots = ", prim1$19);
+((function (__x) {
+        console.log("all_roots = ", __x);
+      })(traverse(ssqrt, {
+            hd: 4.0,
+            tl: {
+              hd: -9.0,
+              tl: {
+                hd: 16.0,
+                tl: /* [] */0
+              }
+            }
+          })));
 
 function node(l, x, r) {
   return {
@@ -829,19 +807,19 @@ function f$4(x) {
   return Math.imul(x, x);
 }
 
-var prim1$20 = traverse$2(f$4, {
-      TAG: "Node",
-      _0: "Leaf",
-      _1: 3,
-      _2: {
-        TAG: "Node",
-        _0: "Leaf",
-        _1: 5,
-        _2: "Leaf"
-      }
-    });
-
-console.log("TTU.map = ", prim1$20);
+((function (__x) {
+        console.log("TTU.map = ", __x);
+      })(traverse$2(f$4, {
+            TAG: "Node",
+            _0: "Leaf",
+            _1: 3,
+            _2: {
+              TAG: "Node",
+              _0: "Leaf",
+              _1: 5,
+              _2: "Leaf"
+            }
+          })));
 
 function TestTraversableNat(T2, A1, A2, MT) {
   var T1 = Curry._1(MT, A1);
@@ -889,14 +867,18 @@ function TestTraversableId(MT) {
 }
 
 function traverse$3(f, xs) {
-  if (!xs) {
+  if (xs) {
+    return Curry._1((function (__x) {
+                    return function (param) {
+                      return {
+                              hd: __x,
+                              tl: param
+                            };
+                    };
+                  })(Curry._1(f, xs.hd)), traverse$3(f, xs.tl));
+  } else {
     return /* [] */0;
   }
-  var __x = Curry._1(f, xs.hd);
-  return {
-          hd: __x,
-          tl: traverse$3(f, xs.tl)
-        };
 }
 
 var TI$1 = {
@@ -913,18 +895,18 @@ var TTIL = {
   test: test
 };
 
-var prim1$21 = test({
-      hd: 1,
-      tl: {
-        hd: 2,
-        tl: {
-          hd: 3,
-          tl: /* [] */0
-        }
-      }
-    });
-
-console.log("TTIL.test = ", prim1$21);
+((function (__x) {
+        console.log("TTIL.test = ", __x);
+      })(test({
+            hd: 1,
+            tl: {
+              hd: 2,
+              tl: {
+                hd: 3,
+                tl: /* [] */0
+              }
+            }
+          })));
 
 function ComposeApplicative(F, G) {
   var pure = function (x) {
@@ -1019,7 +1001,7 @@ function partial_arg$1(param, param$1) {
 
 var TTCL = partial_arg$1(OptionApplicative, ListTraversable);
 
-var prim = Curry._3(TTCL.test, (function (x) {
+var prim = TTCL.test((function (x) {
         return {
                 hd: x,
                 tl: {

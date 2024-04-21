@@ -1,5 +1,8 @@
 // https://cryptologie.net/article/578/simple-introduction-to-monads-in-ocaml/
 // Simple introduction to monads in OCaml
+@@uncurried
+@@uncurried.swap
+
 let log = Js.log
 let log2 = Js.log2
 
@@ -51,22 +54,22 @@ module CounterStateMonad = {
   let bind: (t<'a>, 'a => t<'b>) => t<'b> = (t, f) => {
     state => {
       let (a, transient_state) = t(state)
-      let (b, final_state) = f(a, transient_state)
+      let (b, final_state) = f(a)(transient_state)
       (b, final_state)
     }
   }
 
-  let new_var = (_, state) => {
+  let new_var = (. _, state) => {
     let var = state.next
     let state = {next: state.next + 1}
     (var, state)
   }
 
-  let negate = (var, state) => {
+  let negate = (. var, state) => {
     (0 - var, state)
   }
 
-  let add = (var1, var2, state) => {
+  let add = (. var1, var2, state) => {
     (var1 + var2, state)
   }
 
@@ -94,10 +97,10 @@ module CounterStateMonad = {
 
   let _ = {
     let run = {
-      bind(new_var(), a => {
-        bind(negate(a), b => {
+      bind(new_var((), _), a => {
+        bind(negate(a, _), b => {
           bind(
-            add(a, b),
+            add(a, b, _),
             c => {
               return(c)
             },

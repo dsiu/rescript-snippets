@@ -1,5 +1,9 @@
 // https://cs3110.github.io/textbook/chapters/modules/exercises.html
 //
+
+@@uncurried
+@@uncurried.swap
+
 open RescriptCore
 
 let log = Js.log
@@ -152,7 +156,7 @@ module Fraction_Reduced = {
 // Exercise: use char map [★★]
 //
 module Char_Map = {
-  module CharCmp = Belt.Id.MakeComparable({
+  module CharCmp = Belt.Id.MakeComparableU({
     type t = char
     let cmp = compare
   })
@@ -171,7 +175,7 @@ module Char_Map = {
 module Date_Order = {
   type date = {month: int, day: int}
 
-  module DateCmp = Belt.Id.MakeComparable({
+  module DateCmp = Belt.Id.MakeComparableU({
     type t = date
     let cmp = (a, b) => {
       switch a.month - b.month {

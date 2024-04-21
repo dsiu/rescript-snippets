@@ -3,6 +3,8 @@
 
 // As a motivating example, here is a module type that represents values that support the usual
 // addition and multiplication operations from arithmetic, or more precisely, a ring:
+@@uncurried
+@@uncurried.swap
 
 let log = Js.log
 module START = {
@@ -10,9 +12,9 @@ module START = {
     type t
     let zero: t
     let one: t
-    let \"+": (t, t) => t
-    let \"*": (t, t) => t
-    let \"~-": t => t // additive inverse
+    let \"+": (. t, t) => t
+    let \"*": (. t, t) => t
+    let \"~-": (. t) => t // additive inverse
     let to_string: t => string
   }
 
@@ -56,9 +58,9 @@ module type Ring = {
   type t
   let zero: t
   let one: t
-  let \"+": (t, t) => t
-  let \"*": (t, t) => t
-  let \"~-": t => t // additive inverse
+  let \"+": (. t, t) => t
+  let \"*": (. t, t) => t
+  let \"~-": (. t) => t // additive inverse
   let to_string: t => string
 }
 

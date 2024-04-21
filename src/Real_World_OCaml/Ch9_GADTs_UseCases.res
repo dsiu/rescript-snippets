@@ -2,6 +2,8 @@
 // Real World OCaml - Ch.9 GADTs
 // https://dev.realworldocaml.org/gadts.html
 //
+@@uncurried
+@@uncurried.swap
 
 @@warning("-26")
 
@@ -66,14 +68,14 @@ module If_not_found_1 = {
     }
   }
 
-  list{1, 2, 5}->flexible_find_1(~f=x => x > 10, Return_none)->Js.log2("flexible_find_1", _)
-  list{1, 2, 5}->flexible_find_1(~f=x => x > 10, Default_to(10))->Js.log2("flexible_find_1", _)
+  list{1, 2, 5}->flexible_find_1(~f=x => x > 10, Return_none)->(Js.log2("flexible_find_1", _))
+  list{1, 2, 5}->flexible_find_1(~f=x => x > 10, Default_to(10))->(Js.log2("flexible_find_1", _))
   try {
-    list{1, 2, 5}->flexible_find_1(~f=x => x > 10, Raise)->Js.log2("flexible_find_1", _)
+    list{1, 2, 5}->flexible_find_1(~f=x => x > 10, Raise)->(Js.log2("flexible_find_1", _))
   } catch {
   | _ => Js.log2("flexible_find_1", "nothing > 10")
   }
-  list{1, 2, 20}->flexible_find_1(~f=x => x > 10, Raise)->Js.log2("flexible_find_1", _)
+  list{1, 2, 20}->flexible_find_1(~f=x => x > 10, Raise)->(Js.log2("flexible_find_1", _))
 }
 
 module If_not_found_2 = {
@@ -121,14 +123,14 @@ module If_not_found_2 = {
   // of If_not_found.t, which means it can depend on the particular variant of If_not_found.t
   // that’s in use. As a result, flexible_find only returns an option when it needs to.
 
-  flexible_find_2(~f=x => x > 10, list{1, 2, 5}, Return_none)->Js.log2("flexible_find_2", _)
-  flexible_find_2(~f=x => x > 10, list{1, 2, 5}, Default_to(10))->Js.log2("flexible_find_2", _)
+  flexible_find_2(~f=x => x > 10, list{1, 2, 5}, Return_none)->(Js.log2("flexible_find_2", _))
+  flexible_find_2(~f=x => x > 10, list{1, 2, 5}, Default_to(10))->(Js.log2("flexible_find_2", _))
   try {
-    flexible_find_2(~f=x => x > 10, list{1, 2, 5}, Raise)->Js.log2("flexible_find_2", _)
+    flexible_find_2(~f=x => x > 10, list{1, 2, 5}, Raise)->(Js.log2("flexible_find_2", _))
   } catch {
   | _ => Js.log2("flexible_find_2", "nothing > 10")
   }
-  flexible_find_2(~f=x => x > 10, list{1, 2, 20}, Raise)->Js.log2("flexible_find_2", _)
+  flexible_find_2(~f=x => x > 10, list{1, 2, 20}, Raise)->(Js.log2("flexible_find_2", _))
 }
 
 //
@@ -161,8 +163,8 @@ module Capturing_The_Unknown = {
   let id = x => x
 
   let stringables = {
-    let s = (value, to_string) => Stringable({value: value, to_string: to_string})
-    list{s(100, Belt.Int.toString), s(12.3, Belt.Float.toString), s("foo", id)}
+    let s = (value, to_string) => Stringable({value, to_string})
+    list{s(100, Belt.Int.toString(_)), s(12.3, Belt.Float.toString(_)), s("foo", id)}
   }
 
   // polymorphic print!!
@@ -345,8 +347,7 @@ module Narrowing_the_Possibilities = {
     | (Absent, _)
     | (_, Absent) =>
       None
-    | (Present(_) as user_id, Present(_) as permissions) =>
-      Some({...request, user_id: user_id, permissions: permissions})
+    | (Present(_) as user_id, Present(_) as permissions) => Some({...request, user_id, permissions})
     }
   }
 

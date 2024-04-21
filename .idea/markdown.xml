@@ -6,7 +6,6 @@
       <entry key="MermaidLanguageExtension" value="true" />
       <entry key="PlantUMLLanguageExtension" value="true" />
     </enabledExtensions>
-    <option name="fontSize" value="13" />
     <option name="splitLayout" value="SHOW_EDITOR" />
     <option name="verticalSplit" value="false" />
   </component>

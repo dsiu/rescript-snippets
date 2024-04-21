@@ -1,5 +1,8 @@
 // ref: https://kevanstannard.github.io/rescript-blog/reader-monad.html
 
+@@uncurried
+@@uncurried.swap
+
 open Jest
 open Expect
 
@@ -75,9 +78,9 @@ test("bind() 2", () => {
 test("bind() 3", () => {
   let greet = (name, greeting) => greeting ++ ": " ++ name
   //  let lines = Array.map(Js.log)
-  let ra = Reader(greet("One"))
-  let rb = Reader(greet("Two"))
-  let rc = Reader(greet("Three"))
+  let ra = Reader(greet("One", _))
+  let rb = Reader(greet("Two", _))
+  let rc = Reader(greet("Three", _))
 
   let r12 = bind(a => bind(b => bind(c => return([a, b, c]), rc), rb), ra)
   let result = run(r12, "Hello")
@@ -88,10 +91,12 @@ test("bind() 3.1", () => {
   let greet = (name, greeting) => greeting ++ ": " ++ name
 
   let result =
-    Reader(greet("One"))
+    Reader(greet("One", ...))
     ->bind(
       a =>
-        Reader(greet("Two"))->bind(b => Reader(greet("Three"))->bind(c => return([a, b, c]), _), _),
+        Reader(greet("Two", ...))->(
+          bind(b => Reader(greet("Three", ...))->(bind(c => return([a, b, c]), _)), _)
+        ),
       _,
     )
     ->run("Hey")

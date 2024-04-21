@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 open Stdlib
 let log = Js.log
 let log2 = Js.log2
@@ -24,14 +27,14 @@ f'g'(1.0)->log2("f'g'(1.0) = ")
 // can't simply be plugged into the input to f', we need to 'upgrade' f'. So we introduce a
 // function, 'bind', to do this. In other words we'd like
 
-type bind_ = (float => (float, string), (float, string)) => (float, string)
+type bind_ = (. float => (float, string), (float, string)) => (float, string)
 
 // bind must serve two purposes: it must (1) apply f' to the correct part of g' x and (2)
 // concatenate the string returned by g' with the string returned by f'.
 
 // Write the function bind.
 
-let bind: bind_ = (f, (gx, gs)) => {
+let bind: bind_ = (. f, (gx, gs)) => {
   let (fy, fs) = f'(gx)
   (fy, gs ++ fs)
 }
@@ -39,8 +42,8 @@ let bind: bind_ = (f, (gx, gs)) => {
 bind(f')(g'(1.0))->log2("bind(f')(g'(1.0)) = ")
 bind(g')(f'(1.0))->log2("bind(g')(f'(1.0)) = ")
 
-compose(g', bind(f'))(1.0)->log2("compose(g', bind(f'))(1.0) = ")
-compose(f', bind(g'))(1.0)->log2("compose(g', bind(f'))(1.0) = ")
+compose(g', bind(f', _), 1.0)->log2("compose(g', bind(f'))(1.0) = ")
+compose(f', bind(g', _), 1.0)->log2("compose(g', bind(f'))(1.0) = ")
 
 // Given a pair of debuggable functions, f' and g', we can now compose them together to make a new
 // debuggable function bind f' . g'. Write this composition as f'*g'. Even though the output of g'
@@ -61,11 +64,11 @@ let lift = (f, x) => (f(x), "")
 // or more simply, lift f = unit . f. The lifted version does much the same as the original function
 // and, quite reasonably, it produces the empty string as a side effect.
 
-let lift' = Stdlib.Function.compose(f, unit)
+let lift' = Stdlib.Function.compose(f, unit, _)
 
 // Show that lift f * lift g = lift (f.g)
-let liftThenCompose = x => bind(lift(f))(lift(g)(x))
-let composeLifted = lift(Stdlib.Function.compose(g, f))
+let liftThenCompose = x => bind(lift(f, ...))((lift(g, ...))(x))
+let composeLifted = lift(Stdlib.Function.compose(g, f, ...), ...)
 
 liftThenCompose(13.0)->log2("liftThenCompose(13.0) = ")
 composeLifted(13.0)->log2("composeLifted(13.0) = ")

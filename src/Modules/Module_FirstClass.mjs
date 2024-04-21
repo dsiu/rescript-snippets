@@ -11,7 +11,7 @@ var M = {
   cmp: cmp
 };
 
-var M_Id = Belt_Id.MakeComparable(M);
+var M_Id = Belt_Id.MakeComparableU(M);
 
 var map = Belt_MutableMap.make(M_Id);
 

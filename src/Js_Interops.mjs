@@ -4,7 +4,7 @@ import * as Caml_option from "rescript/lib/es6/caml_option.js";
 
 var isBefore = ((a, b) => a < b);
 
-setTimeout((function (param) {
+setTimeout((function () {
         console.log("Hello");
       }), 2000);
 

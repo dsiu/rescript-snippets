@@ -18,12 +18,8 @@ var prim = TableclothTuple2.toArray(TableclothTuple2.make(3, 4));
 
 console.log(prim);
 
-function compare(param) {
-  return function (param$1) {
-    var param$2 = TableclothInt.compare;
-    var param$3 = TableclothInt.compare;
-    return TableclothTuple2.compare(param, param$1, param$2, param$3);
-  };
+function compare(none, none$1) {
+  return TableclothTuple2.compare(none, none$1, TableclothInt.compare, TableclothInt.compare);
 }
 
 var include = TableclothComparator.Make({

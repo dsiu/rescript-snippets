@@ -1,7 +1,10 @@
+@@uncurried
+@@uncurried.swap
+
 open BsBastet
 
 module Hush = (B: Interface.BIFUNCTOR) => {
-  let hush = bifunctor => bifunctor |> B.bimap(Function.Category.id, Function.const())
+  let hush = bifunctor => B.bimap(Function.Category.id, Function.const((), _), bifunctor)
 }
 
 module Hush_Result = Hush(Result.Bifunctor)

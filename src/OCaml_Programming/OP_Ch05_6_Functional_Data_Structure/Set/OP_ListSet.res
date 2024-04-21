@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 module M: OP_Set.S = {
   type t<'a> = list<'a>
   let empty = list{}

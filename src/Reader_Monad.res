@@ -3,6 +3,9 @@
 //
 // ref: https://kevanstannard.github.io/rescript-blog/reader-monad.html
 
+@@uncurried
+@@uncurried.swap
+
 // A Reader is a function that takes an "environment" variable, that can be any data, and performs
 // some operation on it.
 type t<'e, 'a> = Reader('e => 'a)
@@ -91,9 +94,9 @@ let _ = run(r11, 1)
 // And a more sophisitcated example:
 let greet = (name, greeting) => greeting ++ ": " ++ name
 let lines = Array.map(Js.log)
-let ra = Reader(greet("One"))
-let rb = Reader(greet("Two"))
-let rc = Reader(greet("Three"))
+let ra = Reader(greet("One", ...))
+let rb = Reader(greet("Two", ...))
+let rc = Reader(greet("Three", ...))
 
 let r12 = bind(a => bind(b => bind(c => return(lines([a, b, c])), rc), rb), ra)
 let _ = run(r12, "Hello")
@@ -110,9 +113,9 @@ let bindFlip: bindFlip<'a, 'e, 'b> = (m, f) => bind(f, m)
 // Example:
 let greet = (name, greeting) => greeting ++ ": " ++ name
 let lines = Array.map(Js.log)
-let ra = Reader(greet("One"))
-let rb = Reader(greet("Two"))
-let rc = Reader(greet("Three"))
+let ra = Reader(greet("One", ...))
+let rb = Reader(greet("Two", ...))
+let rc = Reader(greet("Three", ...))
 
 let r13 = bindFlip(ra, a => bindFlip(rb, b => bindFlip(rc, c => return(lines([a, b, c])))))
 let _ = run(r13, "Goodbye")

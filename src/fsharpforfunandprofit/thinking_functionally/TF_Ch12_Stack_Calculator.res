@@ -1,6 +1,10 @@
 //
 // ref: https://fsharpforfunandprofit.com/posts/stack-based-calculator/
 //
+
+@@uncurried
+@@uncurried.swap
+
 @@warning("-32")
 
 // type
@@ -110,7 +114,7 @@ let twoSubtractFive = empty->two->five->sub->Js.log2("twoSubtractFive")
 let oneAddTwoSubThree = empty->one->two->add->three->sub->Js.log2("oneAddTwoSubThree")
 
 // unary
-let unary = (f, stack) => {
+let unary = (. f, stack) => {
   let (x, stack') = stack->pop
   stack'->push(x->f)
 }
@@ -162,29 +166,29 @@ start->one->two->add->show2("1+2")->three->mul->show2("*3")->two->div->show2("/2
 // using composing instead of piping
 open Stdlib
 let compose = Function.compose
-let one_two_add = one->compose(two)->compose(add)
-let one_two_sub = one->compose(two)->compose(sub)
+let one_two_add = one->(@res.partial compose(two))->(compose(add, ...))
+let one_two_sub = one->(@res.partial compose(two))->(compose(sub, ...))
 
 start->one_two_add->show2("one_two_add")->ignore
 start->one_two_sub->show2("one_two_sub")->ignore
 
-let square = dup->compose(mul)
+let square = dup->(compose(mul, ...))
 start->two->square->show2("square")->ignore
 
-let cube = dup->compose(dup)->compose(mul)->compose(mul)
+let cube = dup->(@res.partial compose(dup))->(@res.partial compose(mul))->(compose(mul, ...))
 start->three->cube->show2("cube")->ignore
 
 let compose = Function.compose
 let compose3 = Function.compose3
 let compose4 = Function.compose4
-let sum_numbers_upto = compose(compose4(dup, one, add, mul), compose(two, div))
+let sum_numbers_upto = compose(compose4(dup, one, add, mul, ...), compose(two, div, ...), ...)
 start->three->square->sum_numbers_upto->show2("sum up to 9")->ignore
 
 // pipes vs composition
 // The difference is that piping is, in a sense, a “realtime transformation” operation. When you use piping you are actually doing the operations right now, passing a particular stack around.
 // On the other hand, composition is a kind of “plan” for what you want to do, building an overall function from a set of parts, but not actually running it yet.
 
-let composed_square = dup->compose(mul)
+let composed_square = dup->(compose(mul, ...))
 // I cannot do the equivalent with the piping approach.
 // let piped_square = dup->mul
 

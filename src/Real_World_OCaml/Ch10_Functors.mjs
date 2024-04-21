@@ -588,7 +588,7 @@ var Sexpable = {};
 
 function Make_interval$3(Endpoint) {
   var create = function (low, high) {
-    if (Curry._2(Endpoint.compare, low, high) > 0) {
+    if (Endpoint.compare(low, high) > 0) {
       return "Empty";
     } else {
       return {
@@ -606,22 +606,22 @@ function Make_interval$3(Endpoint) {
     }
   };
   var contains = function (t, x) {
-    if (typeof t !== "object" || Curry._2(Endpoint.compare, x, t._0) < 0) {
+    if (typeof t !== "object" || Endpoint.compare(x, t._0) < 0) {
       return false;
     } else {
-      return Curry._2(Endpoint.compare, x, t._1) <= 0;
+      return Endpoint.compare(x, t._1) <= 0;
     }
   };
   var intersect = function (t1, t2) {
     var min = function (x, y) {
-      if (Curry._2(Endpoint.compare, x, y) <= 0) {
+      if (Endpoint.compare(x, y) <= 0) {
         return x;
       } else {
         return y;
       }
     };
     var max = function (x, y) {
-      if (Curry._2(Endpoint.compare, x, y) >= 0) {
+      if (Endpoint.compare(x, y) >= 0) {
         return x;
       } else {
         return y;

@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 type fizzBuzzResult =
   | Unhandled(int)
   | Handled(string)
@@ -22,8 +25,7 @@ let lastStep = x =>
 
 let fizzbuzz = n =>
   n
-  -> handle(~divisor=15, ~label="FizzBuzz")
-  -> ifUnhandledDo(handle(~divisor=3, ~label="Fizz"))
-  -> ifUnhandledDo(handle(~divisor=5, ~label="Buzz"))
-  -> lastStep
-
+  ->handle(~divisor=15, ~label="FizzBuzz")
+  ->ifUnhandledDo(handle(~divisor=3, ~label="Fizz", ...))
+  ->ifUnhandledDo(handle(~divisor=5, ~label="Buzz", ...))
+  ->lastStep

@@ -36,12 +36,12 @@ var prim = Stdlib__Array.liftM2(pair, keyboards, drives);
 console.log(prim);
 
 function solve(b, keyboards, drives) {
-  return Stdlib__Option.fromMaybe(Stdlib__Option.arrayToMayBe(Belt_SortArray.stableSortBy(Stdlib__Array.filter(Stdlib__Array.liftM2((function (prim0, prim1) {
-                                return prim0 + prim1 | 0;
-                              }), keyboards, drives), (function (__x) {
-                            return Caml_obj.lessequal(__x, b);
-                          })), (function (param, param$1) {
-                        return Stdlib__Function.flip(Caml.int_compare, param, param$1);
+  return Stdlib__Option.fromMaybe(Stdlib__Option.arrayToMayBe(Belt_SortArray.stableSortBy(Stdlib__Array.liftM2((function (prim0, prim1) {
+                              return prim0 + prim1 | 0;
+                            }), keyboards, drives).filter(function (__x) {
+                          return Caml_obj.lessequal(__x, b);
+                        }), (function (extra, extra$1) {
+                        return Stdlib__Function.flip(Caml.int_compare, extra, extra$1);
                       }))), -1);
 }
 

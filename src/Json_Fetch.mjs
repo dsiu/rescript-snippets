@@ -14,7 +14,7 @@ var Fetch = {
   $$Response: $$Response
 };
 
-function fetchCurrentComic(param) {
+function fetchCurrentComic() {
   return fetch("http://xkcd.com/info.0.json").then(function (prim) {
               return prim.json();
             });

@@ -20,6 +20,9 @@
    SOFTWARE.
 */
 
+@@uncurried
+@@uncurried.swap
+
 let \"|-" = (f, g, x) => g(f(x))
 
 type t<'a, 'b> = {

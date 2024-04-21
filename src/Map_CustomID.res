@@ -1,12 +1,14 @@
 // Type equivalence
 // https://forum.rescript-lang.org/t/type-equivalence/3332/3
 //
+@@uncurried
+@@uncurried.swap
 
 module type SomeId = {
   type t
   let make: int => t
   let getValue: t => int
-  let cmp: (t, t) => int
+  let cmp: (. t, t) => int
 }
 
 module SomeId: SomeId = {

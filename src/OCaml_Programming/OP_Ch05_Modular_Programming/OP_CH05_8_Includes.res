@@ -5,11 +5,15 @@
 // The OCaml module system provides a neat feature called includes that is like a principled
 // copy-and-paste that is quick and easy to use, but avoids actual duplication. It can be used
 // to solve some of the same problems as inheritance in object-oriented languages.
+
+@@uncurried
+@@uncurried.swap
+
 module type Set = {
   type t<'a>
   let empty: t<'a>
-  let mem: ('a, t<'a>) => bool
-  let add: ('a, t<'a>) => t<'a>
+  let mem: (. 'a, t<'a>) => bool
+  let add: (. 'a, t<'a>) => t<'a>
   let elements: t<'a> => list<'a>
 }
 

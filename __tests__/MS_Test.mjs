@@ -5,7 +5,7 @@ import Ms from "ms";
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Core__List from "@rescript/core/src/Core__List.mjs";
 
-Jest.describe("MS", (function (param) {
+Jest.describe("MS", (function () {
         var fromStr_Tests = Core__List.fromArray([
               [
                 Ms("10h"),

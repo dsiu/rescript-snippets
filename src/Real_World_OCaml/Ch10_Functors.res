@@ -5,6 +5,8 @@
 //
 
 // A Trivial Example
+@@uncurried
+@@uncurried.swap
 
 module A_Trivial_Example = {
   module type X_int = {
@@ -39,7 +41,7 @@ module A_Trivial_Example = {
 module A_Bigger_Example = {
   module type Comparable = {
     type t
-    let compare: (t, t) => int
+    let compare: (. t, t) => int
   }
 
   module Make_interval = (Endpoint: Comparable) => {
@@ -99,7 +101,7 @@ module A_Bigger_Example = {
 
   module My_Str = {
     type t
-    let compare = (_, _) => 0
+    let compare = (. _, _) => 0
   }
 
   module My_Str_interval = Make_interval(My_Str)
@@ -110,7 +112,7 @@ module A_Bigger_Example = {
 
   module Rev_int_interval = Make_interval({
     type t = int
-    let compare = (x, y) => x - y
+    let compare = (. x, y) => x - y
   })
 
   Int_interval.Interval(4, 3)->Int_interval.is_empty->Js.log // NOT good, should be able to access Interval.  see below for adding constraints
@@ -126,7 +128,7 @@ module A_Bigger_Example = {
 module Sharing_Constraints = {
   module type Comparable = {
     type t
-    let compare: (t, t) => int
+    let compare: (. t, t) => int
   }
 
   // To make Int_interval.t abstract, we need to restrict the output of Make_interval with
@@ -200,7 +202,7 @@ module Sharing_Constraints = {
 module Destructive_Substitution = {
   module type Comparable = {
     type t
-    let compare: (t, t) => int
+    let compare: (. t, t) => int
   }
 
   // To make Int_interval.t abstract, we need to restrict the output of Make_interval with
@@ -359,6 +361,4 @@ module Using_Multiple_Interfaces = {
 // Extending Modules
 //
 
-module Extending_Modules = {
-
-}
+module Extending_Modules = {}

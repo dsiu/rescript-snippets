@@ -57,9 +57,13 @@ function rbg(s) {
         };
 }
 
-var nextLong = rng;
+function nextLong(seed) {
+  return rng(seed);
+}
 
-var nextBool = rbg;
+function nextBool(seed) {
+  return rbg(seed);
+}
 
 console.log(rng(1.0));
 

@@ -6,6 +6,9 @@
 // Reader Type
 
 // A Reader is a function that takes an "environment" variable, that can be any data, and performs some operation on it.
+@@uncurried
+@@uncurried.swap
+
 type t<'e, 'a> = Reader('e => 'a)
 
 // eg:
@@ -169,9 +172,9 @@ type env2 = {state: int}
 let _ = {
   let _getState = env2 => env2.state
 
-  let r2 = return("danny")->bind(x => {
-    ask()->map(_getState, _)->map(y => string_of_int(y) ++ x, _)
-  }, _)
+  let r2 = return("danny")->(bind(x => {
+      ask()->map(_getState, _)->(map(y => string_of_int(y) ++ x, _))
+    }, _))
 
   let env2 = {state: 1}
 

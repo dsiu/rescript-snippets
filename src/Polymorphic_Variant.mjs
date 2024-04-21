@@ -76,6 +76,8 @@ function toString(color) {
   return color;
 }
 
+var red = "red";
+
 var hello = "hello";
 
 var hello2 = "hello";
@@ -83,8 +85,6 @@ var hello2 = "hello";
 var a = "hello";
 
 var status = "yes";
-
-var red = "red";
 
 export {
   hello ,

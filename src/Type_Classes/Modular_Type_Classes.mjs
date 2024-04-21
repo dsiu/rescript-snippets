@@ -22,8 +22,8 @@ var Eq_int = {
 
 function Eq_prod(X, Y) {
   var eq = function (param, param$1) {
-    if (Curry._2(X.eq, param[0], param$1[0])) {
-      return Curry._2(Y.eq, param[1], param$1[1]);
+    if (X.eq(param[0], param$1[0])) {
+      return Y.eq(param[1], param$1[1]);
     } else {
       return false;
     }
@@ -54,8 +54,8 @@ var Ord_int = {
 
 function Ord_prod(X, Y) {
   var eq = function (param, param$1) {
-    if (Curry._2(X.eq, param[0], param$1[0])) {
-      return Curry._2(Y.eq, param[1], param$1[1]);
+    if (X.eq(param[0], param$1[0])) {
+      return Y.eq(param[1], param$1[1]);
     } else {
       return false;
     }
@@ -66,10 +66,10 @@ function Ord_prod(X, Y) {
   var lt = function (param, param$1) {
     var x2 = param$1[0];
     var x1 = param[0];
-    if (Curry._2(X.lt, x1, x2)) {
+    if (X.lt(x1, x2)) {
       return true;
-    } else if (Curry._2(X.eq, x1, x2)) {
-      return Curry._2(Y.lt, param[1], param$1[1]);
+    } else if (X.eq(x1, x2)) {
+      return Y.lt(param[1], param$1[1]);
     } else {
       return false;
     }
@@ -121,7 +121,7 @@ var y = [
   4
 ];
 
-var test_ord_int_int = !Curry._2(Ord_int_int_eq, x, y) && Curry._2(lt$1, x, y);
+var test_ord_int_int = !Ord_int_int_eq(x, y) && lt$1(x, y);
 
 console.log(test_ord_int_int);
 
@@ -184,7 +184,7 @@ var Num_bool = {
 };
 
 function sum(num, ls) {
-  return List.fold_right(num.$plus, ls, Curry._1(num.from_int, 0));
+  return List.fold_right(num.$plus, ls, num.from_int(0));
 }
 
 var test_sum = sum(Num_int, {
@@ -208,7 +208,7 @@ console.log(test_sum);
 
 function print_incr(param, x) {
   var num = param[1];
-  print(param[0], Curry._2(num.$plus, x, Curry._1(num.from_int, 1)));
+  print(param[0], num.$plus(x, num.from_int(1)));
 }
 
 function print_incr_int(x) {
@@ -274,12 +274,12 @@ function Mul_default(E, N) {
   var from_int = N.from_int;
   var $plus = N.$plus;
   var loop = function (x, y) {
-    if (Curry._2(eq, x, Curry._1(from_int, 0))) {
-      return Curry._1(from_int, 0);
-    } else if (Curry._2(eq, x, Curry._1(from_int, 1))) {
+    if (eq(x, from_int(0))) {
+      return from_int(0);
+    } else if (eq(x, from_int(1))) {
       return y;
     } else {
-      return Curry._2($plus, y, loop(Curry._2($plus, x, Curry._1(from_int, -1)), y));
+      return $plus(y, loop($plus(x, from_int(-1)), y));
     }
   };
   return {
@@ -291,12 +291,12 @@ function Mul_default(E, N) {
 }
 
 function loop(x, y) {
-  if (Curry._2(eq, x, Curry._1(from_int$1, 0))) {
-    return Curry._1(from_int$1, 0);
-  } else if (Curry._2(eq, x, Curry._1(from_int$1, 1))) {
+  if (eq(x, from_int$1(0))) {
+    return from_int$1(0);
+  } else if (eq(x, from_int$1(1))) {
     return y;
   } else {
-    return Curry._2($plus$1, y, loop(Curry._2($plus$1, x, Curry._1(from_int$1, -1)), y));
+    return $plus$1(y, loop($plus$1(x, from_int$1(-1)), y));
   }
 }
 
@@ -319,10 +319,11 @@ var Mul_int = {
 };
 
 function dot(mul, xs, ys) {
+  var __x = List.map2(mul.mul, xs, ys);
   return sum({
               from_int: mul.from_int,
               $plus: mul.$plus
-            }, List.map2(mul.mul, xs, ys));
+            }, __x);
 }
 
 var test_dot = dot(Mul_int, {
@@ -356,19 +357,17 @@ function replicate(n, x) {
   }
 }
 
-function print_nested(show_mod, x) {
-  if (x !== 0) {
-    return function (x$1) {
-      print_nested(show_list(show_mod), x - 1 | 0)(replicate(x, x$1));
-    };
-  } else {
-    return function (x) {
-      print(show_mod, x);
-    };
-  }
+function print_nested(show_mod, x, a) {
+  (
+      x !== 0 ? (function (x$1) {
+            print_nested(show_list(show_mod), x - 1 | 0, replicate(x, x$1));
+          }) : (function (x) {
+            print(show_mod, x);
+          })
+    )(a);
 }
 
-var test_nested = print_nested(Show_int, 10)(5);
+var test_nested = print_nested(Show_int, 10, 5);
 
 var show_int = Show_int;
 

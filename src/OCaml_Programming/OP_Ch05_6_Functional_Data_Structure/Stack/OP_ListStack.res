@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 module M: OP_Stack.S = {
   type t<'a> = list<'a>
   exception Empty

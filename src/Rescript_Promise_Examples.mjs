@@ -88,11 +88,11 @@ Core__Promise.$$catch(Promise.reject({
       return Promise.resolve();
     });
 
-function causeErr(param) {
+function causeErr() {
   return Promise.resolve(Js_exn.raiseError("Some JS error"));
 }
 
-Core__Promise.$$catch(Promise.resolve().then(function (param) {
+Core__Promise.$$catch(Promise.resolve().then(function () {
           return Promise.resolve(Js_exn.raiseError("Some JS error"));
         }), (function (e) {
         var tmp;
@@ -107,11 +107,11 @@ Core__Promise.$$catch(Promise.resolve().then(function (param) {
 
 var TestError = /* @__PURE__ */Caml_exceptions.create("Rescript_Promise_Examples.TestError");
 
-function causeJsErr(param) {
+function causeJsErr() {
   return Js_exn.raiseError("Some JS error");
 }
 
-function causeReScriptErr(param) {
+function causeReScriptErr() {
   throw {
         RE_EXN_ID: TestError,
         _1: "Some ReScript error",
@@ -119,7 +119,7 @@ function causeReScriptErr(param) {
       };
 }
 
-Core__Promise.$$catch(Promise.resolve().then(function (param) {
+Core__Promise.$$catch(Promise.resolve().then(function () {
           if (generateRandomInt() > 5) {
             throw {
                   RE_EXN_ID: TestError,
@@ -154,7 +154,7 @@ var place = {
 
 function delayedMsg(ms, msg) {
   return new Promise((function (resolve, param) {
-                setTimeout((function (param) {
+                setTimeout((function () {
                         place.contents = place.contents + 1 | 0;
                         resolve([
                               place.contents,
@@ -183,7 +183,7 @@ Promise.all([
 
 function racer(ms, name) {
   return new Promise((function (resolve, param) {
-                setTimeout((function (param) {
+                setTimeout((function () {
                         resolve(name);
                       }), ms);
               }));

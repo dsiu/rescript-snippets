@@ -8,7 +8,6 @@ import * as Belt_Map from "rescript/lib/es6/belt_Map.js";
 import * as Caml_obj from "rescript/lib/es6/caml_obj.js";
 import * as Belt_HashMap from "rescript/lib/es6/belt_HashMap.js";
 import * as Caml_exceptions from "rescript/lib/es6/caml_exceptions.js";
-import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
 function log(prim) {
   console.log(prim);
@@ -41,9 +40,13 @@ var C = {
   x: x$1
 };
 
-console.log("B.x", x);
+((function (__x) {
+        console.log("B.x", __x);
+      })(x));
 
-console.log("C.x", x$1);
+((function (__x) {
+        console.log("C.x", __x);
+      })(x$1));
 
 function AddX(M) {
   var add = function (y) {
@@ -62,9 +65,9 @@ var Add42 = {
   add: add
 };
 
-var prim1 = 43;
-
-console.log("Add42.add(1)", prim1);
+((function (__x) {
+        console.log("Add42.add(1)", __x);
+      })(43));
 
 function Pair1(M) {
   var p_0 = M.x;
@@ -135,7 +138,7 @@ function hash(a) {
 
 var eq = Caml_obj.equal;
 
-var IntHash = Belt_Id.MakeHashable({
+var IntHash = Belt_Id.MakeHashableU({
       hash: hash,
       eq: eq
     });
@@ -153,7 +156,7 @@ function cmp(param, param$1) {
   }
 }
 
-var Name = Belt_Id.MakeComparable({
+var Name = Belt_Id.MakeComparableU({
       cmp: cmp
     });
 
@@ -228,36 +231,46 @@ var VariantStack = {
   pop: pop$1
 };
 
-var prim = peek(List.cons(1, /* [] */0)) === 1;
+var prim = peek((function (__x) {
+          return List.cons(1, __x);
+        })(/* [] */0)) === 1;
 
 console.log(prim);
 
-var prim$1 = peek$1({
-      TAG: "S",
-      _0: 1,
-      _1: "E"
-    }) === 1;
+var prim$1 = peek$1((function (__x) {
+          return {
+                  TAG: "S",
+                  _0: 1,
+                  _1: __x
+                };
+        })("E")) === 1;
 
 console.log(prim$1);
 
 function StackTester(S) {
-  var tests = Curry._1(S.peek, Curry._2(S.push, 1, S.empty)) === 1;
+  var tests = S.peek((function (__x) {
+            return Curry._2(S.push, 1, __x);
+          })(S.empty)) === 1;
   return {
           tests: tests
         };
 }
 
-var tests = peek(List.cons(1, /* [] */0)) === 1;
+var tests = peek((function (__x) {
+          return List.cons(1, __x);
+        })(/* [] */0)) === 1;
 
 var ListStackTester = {
   tests: tests
 };
 
-var tests$1 = peek$1({
-      TAG: "S",
-      _0: 1,
-      _1: "E"
-    }) === 1;
+var tests$1 = peek$1((function (__x) {
+          return {
+                  TAG: "S",
+                  _0: 1,
+                  _1: __x
+                };
+        })("E")) === 1;
 
 var VariantStackTester = {
   tests: tests$1
@@ -274,7 +287,9 @@ var stacks = {
 };
 
 function tests$2(m) {
-  var tests$3 = Curry._1(m.peek, Curry._2(m.push, 1, m.empty)) === 1;
+  var tests$3 = m.peek((function (__x) {
+            return Curry._2(m.push, 1, __x);
+          })(m.empty)) === 1;
   return tests$3;
 }
 
@@ -313,11 +328,15 @@ function add$1(x, s) {
   }
 }
 
+function elements$1(prim) {
+  return prim;
+}
+
 var UniqListSet = {
   empty: /* [] */0,
   mem: List.mem,
   add: add$1,
-  elements: Stdlib__Function.identity
+  elements: elements$1
 };
 
 function of_list(lst) {
@@ -369,7 +388,7 @@ var UniqSetL = {
   empty: /* [] */0,
   mem: List.mem,
   add: add$1,
-  elements: Stdlib__Function.identity,
+  elements: elements$1,
   of_list: of_list$3
 };
 

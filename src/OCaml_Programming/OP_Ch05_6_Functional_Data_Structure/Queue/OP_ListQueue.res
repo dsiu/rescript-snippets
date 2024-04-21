@@ -1,3 +1,6 @@
+@@uncurried
+@@uncurried.swap
+
 module M: OP_Queue.S = {
   @ocaml.doc(" The list [x1; x2; ...; xn] represents the queue with [x1] at its front,
       followed by [x2], ..., followed by [xn]. ")

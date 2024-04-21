@@ -3,11 +3,11 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as Monad_Reader from "../src/Monads/Monad_Reader.mjs";
 
-Jest.test("Reader Type", (function (param) {
+Jest.test("Reader Type", (function () {
         return Jest.Expect.toEqual(Jest.Expect.expect(1), 1);
       }));
 
-Jest.test("run()", (function (param) {
+Jest.test("run()", (function () {
         var result = Monad_Reader.run({
               TAG: "Reader",
               _0: (function (e) {
@@ -17,93 +17,97 @@ Jest.test("run()", (function (param) {
         return Jest.Expect.toEqual(Jest.Expect.expect(result), 2);
       }));
 
-Jest.test("return()", (function (param) {
+Jest.test("return()", (function () {
         var result = Monad_Reader.run(Monad_Reader.$$return(99), 1);
         return Jest.Expect.toEqual(Jest.Expect.expect(result), 99);
       }));
 
-Jest.test("ask()", (function (param) {
+Jest.test("ask()", (function () {
         var result = Monad_Reader.run(Monad_Reader.ask(), 123);
         return Jest.Expect.toEqual(Jest.Expect.expect(result), 123);
       }));
 
-Jest.test("local()", (function (param) {
-        var __x = {
-          TAG: "Reader",
-          _0: (function (e) {
-              return e + 1 | 0;
-            })
-        };
-        var result = Monad_Reader.run(Monad_Reader.local((function (e) {
-                    return -e | 0;
-                  }), __x), 1);
+Jest.test("local()", (function () {
+        var result = Monad_Reader.run((function (__x) {
+                  return Monad_Reader.local((function (e) {
+                                return -e | 0;
+                              }), __x);
+                })({
+                  TAG: "Reader",
+                  _0: (function (e) {
+                      return e + 1 | 0;
+                    })
+                }), 1);
         return Jest.Expect.toEqual(Jest.Expect.expect(result), 0);
       }));
 
-Jest.test("map()", (function (param) {
-        var __x = {
-          TAG: "Reader",
-          _0: (function (e) {
-              return e + 1 | 0;
-            })
-        };
-        var result = Monad_Reader.run(Monad_Reader.map((function (x) {
-                    return Math.imul(x, 10);
-                  }), __x), 1);
+Jest.test("map()", (function () {
+        var result = Monad_Reader.run((function (__x) {
+                  return Monad_Reader.map((function (x) {
+                                return Math.imul(x, 10);
+                              }), __x);
+                })({
+                  TAG: "Reader",
+                  _0: (function (e) {
+                      return e + 1 | 0;
+                    })
+                }), 1);
         return Jest.Expect.toEqual(Jest.Expect.expect(result), 20);
       }));
 
-Jest.test("bind() 1", (function (param) {
-        var __x = {
-          TAG: "Reader",
-          _0: (function (e) {
-              return e + 1 | 0;
-            })
-        };
-        var result = Monad_Reader.run(Monad_Reader.bind((function (x) {
-                    return {
-                            TAG: "Reader",
-                            _0: (function (param) {
-                                return (x << 1);
-                              })
-                          };
-                  }), __x), 1);
+Jest.test("bind() 1", (function () {
+        var result = Monad_Reader.run((function (__x) {
+                  return Monad_Reader.bind((function (x) {
+                                return {
+                                        TAG: "Reader",
+                                        _0: (function (param) {
+                                            return (x << 1);
+                                          })
+                                      };
+                              }), __x);
+                })({
+                  TAG: "Reader",
+                  _0: (function (e) {
+                      return e + 1 | 0;
+                    })
+                }), 1);
         return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
       }));
 
-Jest.test("bind() 2", (function (param) {
-        var __x = {
-          TAG: "Reader",
-          _0: (function (e) {
-              return e + 1 | 0;
-            })
-        };
-        var result = Monad_Reader.run(Monad_Reader.bind((function (x) {
-                    return Monad_Reader.$$return((x << 1));
-                  }), __x), 1);
+Jest.test("bind() 2", (function () {
+        var result = Monad_Reader.run((function (__x) {
+                  return Monad_Reader.bind((function (x) {
+                                return Monad_Reader.$$return((x << 1));
+                              }), __x);
+                })({
+                  TAG: "Reader",
+                  _0: (function (e) {
+                      return e + 1 | 0;
+                    })
+                }), 1);
         return Jest.Expect.toEqual(Jest.Expect.expect(result), 4);
       }));
 
-Jest.test("bind() 3", (function (param) {
+Jest.test("bind() 3", (function () {
         var greet = function (name, greeting) {
           return greeting + ": " + name;
         };
         var ra = {
           TAG: "Reader",
-          _0: (function (param) {
-              return greet("One", param);
+          _0: (function (__x) {
+              return greet("One", __x);
             })
         };
         var rb = {
           TAG: "Reader",
-          _0: (function (param) {
-              return greet("Two", param);
+          _0: (function (__x) {
+              return greet("Two", __x);
             })
         };
         var rc = {
           TAG: "Reader",
-          _0: (function (param) {
-              return greet("Three", param);
+          _0: (function (__x) {
+              return greet("Three", __x);
             })
         };
         var r12 = Monad_Reader.bind((function (a) {
@@ -125,39 +129,40 @@ Jest.test("bind() 3", (function (param) {
                   ]);
       }));
 
-Jest.test("bind() 3.1", (function (param) {
+Jest.test("bind() 3.1", (function () {
         var greet = function (name, greeting) {
           return greeting + ": " + name;
         };
-        var __x = {
-          TAG: "Reader",
-          _0: (function (param) {
-              return greet("One", param);
-            })
-        };
-        var result = Monad_Reader.run(Monad_Reader.bind((function (a) {
-                    var __x = {
-                      TAG: "Reader",
-                      _0: (function (param) {
-                          return greet("Two", param);
-                        })
-                    };
-                    return Monad_Reader.bind((function (b) {
-                                  var __x = {
-                                    TAG: "Reader",
-                                    _0: (function (param) {
-                                        return greet("Three", param);
-                                      })
-                                  };
-                                  return Monad_Reader.bind((function (c) {
-                                                return Monad_Reader.$$return([
-                                                            a,
-                                                            b,
-                                                            c
-                                                          ]);
-                                              }), __x);
-                                }), __x);
-                  }), __x), "Hey");
+        var result = Monad_Reader.run((function (__x) {
+                  return Monad_Reader.bind((function (a) {
+                                var __x = {
+                                  TAG: "Reader",
+                                  _0: (function (extra) {
+                                      return greet("Two", extra);
+                                    })
+                                };
+                                return Monad_Reader.bind((function (b) {
+                                              var __x = {
+                                                TAG: "Reader",
+                                                _0: (function (extra) {
+                                                    return greet("Three", extra);
+                                                  })
+                                              };
+                                              return Monad_Reader.bind((function (c) {
+                                                            return Monad_Reader.$$return([
+                                                                        a,
+                                                                        b,
+                                                                        c
+                                                                      ]);
+                                                          }), __x);
+                                            }), __x);
+                              }), __x);
+                })({
+                  TAG: "Reader",
+                  _0: (function (extra) {
+                      return greet("One", extra);
+                    })
+                }), "Hey");
         return Jest.Expect.toEqual(Jest.Expect.expect(result), [
                     "Hey: One",
                     "Hey: Two",

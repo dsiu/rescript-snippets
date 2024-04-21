@@ -40,6 +40,8 @@ function pop(list) {
       };
 }
 
+var size = List.length;
+
 var ListStack = {
   Empty: Empty,
   empty: /* [] */0,
@@ -47,7 +49,7 @@ var ListStack = {
   push: push,
   peek: peek,
   pop: pop,
-  size: List.length
+  size: size
 };
 
 var ORIG = {
@@ -99,7 +101,7 @@ function pop$1(stack) {
       };
 }
 
-function size(prim) {
+function size$1(prim) {
   return prim[1];
 }
 
@@ -115,7 +117,7 @@ var ListStackCachedSize = {
   push: push$1,
   peek: peek$1,
   pop: pop$1,
-  size: size
+  size: size$1
 };
 
 function is_empty$2(list) {
@@ -155,6 +157,8 @@ function pop$2(list) {
       };
 }
 
+var size$2 = List.length;
+
 var ListStack$1 = {
   Empty: Empty$2,
   empty: /* [] */0,
@@ -162,7 +166,7 @@ var ListStack$1 = {
   push: push$2,
   peek: peek$2,
   pop: pop$2,
-  size: List.length
+  size: size$2
 };
 
 var NEW = {

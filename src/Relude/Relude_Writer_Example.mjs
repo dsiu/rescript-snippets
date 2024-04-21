@@ -24,16 +24,16 @@ var flipMap = WriterList.Infix.$less$$$great;
 
 var bind = WriterList.Infix.$great$great$eq;
 
-var writer = Curry._2(bind, Curry._1(WriterList.pure, 42), (function (a) {
-        return Curry._2(bind, Curry._2(voidLeft, Relude_WriterT.Writer.tell({
+var writer = bind(WriterList.pure(42), (function (a) {
+        return bind(voidLeft(Relude_WriterT.Writer.tell({
                             hd: "a = " + String(a),
                             tl: /* [] */0
                           }), (a << 1)), (function (a) {
-                      return Curry._2(bind, Curry._2(voidLeft, Relude_WriterT.Writer.tell({
+                      return bind(voidLeft(Relude_WriterT.Writer.tell({
                                           hd: "a = " + String(a),
                                           tl: /* [] */0
                                         }), a + 5 | 0), (function (a) {
-                                    return Curry._2(voidLeft, Relude_WriterT.Writer.tell({
+                                    return voidLeft(Relude_WriterT.Writer.tell({
                                                     hd: "a = " + String(a),
                                                     tl: /* [] */0
                                                   }), a);

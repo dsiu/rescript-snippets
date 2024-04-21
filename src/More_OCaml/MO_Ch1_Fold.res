@@ -1,5 +1,8 @@
 // Chapter 1
 // Unravelling "Fold"
+@@uncurried
+@@uncurried.swap
+
 module List = Js.List
 
 // utils
@@ -42,7 +45,7 @@ list{1, 2, 3}->fold_right(\"+", _, 0)->log
 // 6
 
 let max = (a, b) => a > b ? a : b
-list{2, 4, 6, 20, 1}->fold_left(Js.Math.max_int, Js.Int.min, _)->log
+list{2, 4, 6, 20, 1}->fold_left((a, b) => Js.Math.max_int(a, b), Js.Int.min, _)->log
 
 let all = l => fold_left(\"&&", true, l)
 let any = l => fold_left(\"||", false, l)

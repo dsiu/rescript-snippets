@@ -1,6 +1,9 @@
 open Stdlib
 module A = Array
 
+@@uncurried
+@@uncurried.swap
+
 let log = Js.log
 let log2 = Js.log2
 
@@ -21,7 +24,7 @@ module Ch4_Higher_Order_Functions = {
   type user = User({id: int, email: string})
   type error = Error({id: int, text: string})
 
-  let getUsers = (): list<Result.t<user, error>> => {
+  let getUsers = (): list<result<user, error>> => {
     list{
       Ok(User({id: 1, email: "jack@example.com"})),
       Error(Error({id: 4, text: "user not found"})),
@@ -30,7 +33,7 @@ module Ch4_Higher_Order_Functions = {
   }
 
   let emails = getUsers()->List.map(result => result->Result.map((User(u)) => u.email))
-  emails->List.toArray->log2(__LINE__, _)
+  emails->List.toArray->(log2(__LINE__, _))
 }
 
 module Ch4_Monads = {

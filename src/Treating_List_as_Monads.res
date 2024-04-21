@@ -4,6 +4,9 @@
 // https://www.youtube.com/watch?v=ofUAlkYHFsI&list=PLr42FYa8kCv--Rtt_r7WCU5J-7qpnkZ76&index=7&t=6s
 //
 
+@@uncurried
+@@uncurried.swap
+
 open Stdlib
 let log = Js.log
 
@@ -23,7 +26,7 @@ A.liftM2(pair, keyboards, drives)->log
 let solve = (b, keyboards, drives) => {
   A.liftM2(\"+", keyboards, drives)
   ->A.filter(lessThanEq(_, b))
-  ->sort(flip(compare))
+  ->sort(flip(compare, ...))
   ->O.arrayToMayBe
   ->O.fromMaybe(-1)
 }

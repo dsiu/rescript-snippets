@@ -14,23 +14,22 @@ function unfix(x) {
 }
 
 function y(f) {
-  var g = function (x, a) {
-    return Curry._2(f, Curry._1(x._0, x), a);
+  var g = function (x) {
+    return function (a) {
+      return f(Curry._1(x._0, x), a);
+    };
   };
-  var partial_arg = {
-    TAG: "Fix",
-    _0: g
-  };
-  return function (param) {
-    return g(partial_arg, param);
-  };
+  return g({
+              TAG: "Fix",
+              _0: g
+            });
 }
 
 function fact(self, n) {
   if (n === 0) {
     return 1;
   } else {
-    return Math.imul(n, Curry._1(self, n - 1 | 0));
+    return Math.imul(n, self(n - 1 | 0));
   }
 }
 
@@ -40,7 +39,7 @@ function int2nat(self, n) {
   } else {
     return {
             TAG: "Succ",
-            _0: Curry._1(self, n - 1 | 0)
+            _0: self(n - 1 | 0)
           };
   }
 }
@@ -53,11 +52,11 @@ function string_of_nat(x) {
   return "Succ(" + s + " )";
 }
 
-var result = y(fact)(6);
+var result = Curry._1(y(fact), 6);
 
 console.log(result.toString() + "\n");
 
-var result$1 = y(int2nat)(6);
+var result$1 = Curry._1(y(int2nat), 6);
 
 var result_str = string_of_nat(result$1);
 
