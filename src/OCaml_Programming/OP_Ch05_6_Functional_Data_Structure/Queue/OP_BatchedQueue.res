@@ -35,14 +35,14 @@ module M: OP_Queue.S = {
   let dequeue = x =>
     switch x {
     | {o: list{}} => raise(Empty)
-    | {o: list{_}, i} => {o: List.rev(i), i: list{}}
+    | {o: list{_}, i} => {o: List.reverse(i), i: list{}}
     | {o: list{_, ...t}, i} => {o: t, i}
     }
 
-  let size = (. {o, i}) => {
+  let size = ({o, i}) => {
     open List
     length(o) + length(i)
   }
 
-  let to_list = ({o, i}) => \"@"(o, List.rev(i))
+  let to_list = ({o, i}) => \"@"(o, List.reverse(i))
 }

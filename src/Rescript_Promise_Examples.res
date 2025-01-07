@@ -1,7 +1,7 @@
 //
 // https://github.com/ryyppy/rescript-promise
 //
-open RescriptCore
+open Stdlib
 open Promise
 
 //
@@ -10,7 +10,7 @@ open Promise
 let p1 = Promise.make((resolve, _reject) => {
   // We use uncurried functions for resolve / reject
   // for cleaner JS output without unintended curry calls
-  resolve(. "hello world")
+  resolve("hello world")
 })
 p1->Js.log
 
@@ -206,7 +206,7 @@ let delayedMsg = (ms, msg) => {
   Promise.make((resolve, _) => {
     Js.Global.setTimeout(() => {
       place := place.contents + 1
-      resolve(. (place.contents, msg))
+      resolve((place.contents, msg))
     }, ms)->ignore
   })
 }
@@ -237,7 +237,7 @@ all([p1, p2, p3])
 let racer = (ms, name) => {
   Promise.make((resolve, _) => {
     Js.Global.setTimeout(() => {
-      resolve(. name)
+      resolve(name)
     }, ms)->ignore
   })
 }
@@ -299,5 +299,5 @@ resolve(1)
 // https://kevanstannard.github.io/rescript-blog/promise-empty-value.html
 // Return empty value in a promise
 let _ = Promise.make((resolve, _reject) => {
-  resolve(. ignore())
+  resolve(ignore())
 })

@@ -19,8 +19,8 @@ let dequeue = ((in_list, out_list)) =>
 // ocaml 'acc 'a
 
 let fold = ((in_list, out_list), ~init, ~f) => {
-  let list_fold = (~init, ~f, xs) => Js.List.foldLeft((. acc, x) => f(acc, x), init, xs)
-  let list_fold_right = (~init, ~f, xs) => Js.List.foldRight((. acc, x) => f(acc, x), xs, init)
+  let list_fold = (~init, ~f, xs) => Js.List.foldLeft((acc, x) => f(acc, x), init, xs)
+  let list_fold_right = (~init, ~f, xs) => Js.List.foldRight((acc, x) => f(acc, x), xs, init)
 
   let after_out = list_fold(~init, ~f, out_list)
 

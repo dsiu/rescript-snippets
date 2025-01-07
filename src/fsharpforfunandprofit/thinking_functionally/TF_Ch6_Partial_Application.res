@@ -21,7 +21,7 @@ twoIsLessThan(3)->log
 list{1, 2, 3}->Belt.List.map(twoIsLessThan)->log
 
 // create an adder that supports a pluggable logging function
-let adderWithPluggableLogger = (. logger, x, y) => {
+let adderWithPluggableLogger = (logger, x, y) => {
   logger("x", x)
   logger("y", y)
   let result = x + y
@@ -33,7 +33,7 @@ let adderWithPluggableLogger = (. logger, x, y) => {
 let consoleLogger = (argName, argValue) => `${argName}=${argValue->Int.toString}`->Js.log
 
 //create an adder with the console logger partially applied
-let addWithConsoleLogger = adderWithPluggableLogger(consoleLogger)
+let addWithConsoleLogger = adderWithPluggableLogger(consoleLogger, ...)
 addWithConsoleLogger(1, 2)->ignore
 addWithConsoleLogger(42, 99)->ignore
 
@@ -44,6 +44,6 @@ let redLogger = (argName, argValue) => {
 }
 
 //create an adder with the popup logger partially applied
-let addWithRedLogger = adderWithPluggableLogger(redLogger)
+let addWithRedLogger = adderWithPluggableLogger(redLogger, ...)
 addWithRedLogger(1, 2)->ignore
 addWithRedLogger(42, 99)->ignore

@@ -3,7 +3,7 @@
 // This is only needed for polyfilling the `fetch` API in
 // node, so we can run this example on the commandline.
 
-open RescriptCore
+open Stdlib
 
 module NodeFetchPolyfill = {
   type t

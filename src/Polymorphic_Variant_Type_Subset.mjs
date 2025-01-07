@@ -8,11 +8,11 @@ function f(x) {
 console.log("hello");
 
 console.log({
-      NAME: "BusinessErr",
-      VAL: "no way"
-    });
+  NAME: "BusinessErr",
+  VAL: "no way"
+});
 
 export {
-  f ,
+  f,
 }
 /*  Not a pure module */

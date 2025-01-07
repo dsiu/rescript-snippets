@@ -18,7 +18,7 @@ module type Comparable = {
   type t
   let cmp: (t, t) => int
 }
-let int_fcm: module(Comparable with type t = int) = module(Int)
+// let int_fcm: module(Comparable with type t = int) = module(Int)
 
 // You can also alias a module type to make the annotations more readable:
 type comparable<'a> = module(Comparable with type t = 'a)

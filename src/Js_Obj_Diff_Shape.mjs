@@ -20,10 +20,10 @@ const dataB = {
 ;
 
 function handleDataA(data) {
-  var body = data.body;
-  var id = data.attributes.id;
-  var title = data.attributes.title;
-  var date = data.attributes.date;
+  let body = data.body;
+  let id = data.attributes.id;
+  let title = data.attributes.title;
+  let date = data.attributes.date;
   console.log(body);
   console.log(id);
   console.log(title);
@@ -31,9 +31,9 @@ function handleDataA(data) {
 }
 
 function handleDataB(data) {
-  var body = data.body;
-  var title = data.attributes.title;
-  var template = data.attributes.template;
+  let body = data.body;
+  let title = data.attributes.title;
+  let template = data.attributes.template;
   console.log(body);
   console.log(title);
   console.log(template);
@@ -44,7 +44,7 @@ handleDataA(dataA);
 handleDataB(dataB);
 
 export {
-  handleDataA ,
-  handleDataB ,
+  handleDataA,
+  handleDataB,
 }
 /*  Not a pure module */

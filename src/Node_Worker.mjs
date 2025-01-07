@@ -2,28 +2,28 @@
 
 import * as Worker_threads from "worker_threads";
 
-var Global = {};
+let Global = {};
 
-var $$Worker = {};
+let Worker = {};
 
-var ParentPort = {};
+let ParentPort = {};
 
-var WorkerThreads = {
-  $$Worker: $$Worker,
+let WorkerThreads = {
+  Worker: Worker,
   ParentPort: ParentPort
 };
 
 if (Worker_threads.isMainThread) {
-  var worker = new Worker_threads.Worker("Node_Worker.res");
-  worker.on("message", (function (msg) {
-          console.log(msg);
-        }));
+  let worker = new Worker_threads.Worker("Node_Worker.res");
+  worker.on("message", msg => {
+    console.log(msg);
+  });
 } else {
   Worker_threads.parentPort.postMessage("Hello world!");
 }
 
 export {
-  Global ,
-  WorkerThreads ,
+  Global,
+  WorkerThreads,
 }
 /*  Not a pure module */

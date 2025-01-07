@@ -7,6 +7,7 @@
 let log = Js.Console.log
 let log2 = Js.Console.log2
 
+module F = Relude.Function
 module P = ReludeParse.Parser
 open P.Infix // Get all the infix operators in scope
 let _ = P.anyDigit->\"<*"(P.eof)->P.runParser("", _)->(log2("infix\n", _))
@@ -85,8 +86,9 @@ P.ws->\"*>"(P.anyDigit)->\"<*"(P.ws)->\"<*"(P.eof)->P.runParser("   3  ", _)->(l
 // ADVANCED: Incrementally collect parse results using a function and chained <$> map and <*> apply
 // operators.
 //
-let add3 = a => b => c => a + b + c
+let add3 = (. a, b, c) => a + b + c
 add3
+->F.uncurryFn3 // Convert a curried function to an uncurried function
 ->\"<$>"(P.anyDigitAsInt)
 ->\"<*>"(P.anyDigitAsInt)
 ->\"<*>"(P.anyDigitAsInt)

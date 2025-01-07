@@ -2,9 +2,9 @@
 
 import * as Fs from "fs";
 
-var Stats = {};
+let Stats = {};
 
-var Fs$1 = {
+let Fs$1 = {
   Stats: Stats
 };
 
@@ -14,6 +14,6 @@ function isFile(path) {
 
 export {
   Fs$1 as Fs,
-  isFile ,
+  isFile,
 }
 /* fs Not a pure module */

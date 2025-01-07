@@ -5,12 +5,12 @@ function logName(o) {
   console.log(o.name);
 }
 
-var a = {
+let a = {
   name: "Hello",
   age: 20
 };
 
-var b = {
+let b = {
   name: "Cybertruck",
   make: "Tesla"
 };
@@ -20,8 +20,8 @@ console.log(a.name);
 console.log(b.name);
 
 export {
-  logName ,
-  a ,
-  b ,
+  logName,
+  a,
+  b,
 }
 /*  Not a pure module */

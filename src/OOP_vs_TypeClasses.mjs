@@ -7,24 +7,24 @@ function log(prim) {
 
 function coord(p) {
   return [
-          p._0,
-          p._1
-        ];
+    p._0,
+    p._1
+  ];
 }
 
-var prim = coord({
-      TAG: "FloatPoint",
-      _0: 1.0,
-      _1: 2.0
-    });
+let prim = coord({
+  TAG: "FloatPoint",
+  _0: 1.0,
+  _1: 2.0
+});
 
 console.log(prim);
 
-var prim$1 = coord({
-      TAG: "IntPoint",
-      _0: 3,
-      _1: 4
-    });
+let prim$1 = coord({
+  TAG: "IntPoint",
+  _0: 3,
+  _1: 4
+});
 
 console.log(prim$1);
 
@@ -37,24 +37,24 @@ function read(a) {
 }
 
 function proc(inc, read) {
-  return function (x) {
+  return x => {
     inc(x);
     inc(x);
     inc(x);
-    var prim = read(x);
+    let prim = read(x);
     console.log(prim);
   };
 }
 
 proc(inc, read)({
-      contents: 5
-    });
+  contents: 5
+});
 
 export {
-  log ,
-  coord ,
-  inc ,
-  read ,
-  proc ,
+  log,
+  coord,
+  inc,
+  read,
+  proc,
 }
 /* prim Not a pure module */

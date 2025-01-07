@@ -5,18 +5,18 @@ function show(person) {
   return person.name;
 }
 
-var ShowPerson = {
+let ShowPerson = {
   show: show
 };
 
 console.log("Joe");
 
-var joe = {
+let joe = {
   name: "Joe"
 };
 
 export {
-  ShowPerson ,
-  joe ,
+  ShowPerson,
+  joe,
 }
 /*  Not a pure module */

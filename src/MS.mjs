@@ -4,11 +4,11 @@ import Ms from "ms";
 
 function fromMSLong(s) {
   return Ms(s, {
-              long: true
-            });
+    long: true
+  });
 }
 
 export {
-  fromMSLong ,
+  fromMSLong,
 }
 /* ms Not a pure module */

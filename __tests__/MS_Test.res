@@ -2,7 +2,7 @@ open Jest
 open Expect
 open MS
 
-open RescriptCore
+open Stdlib
 
 describe("MS", () => {
   let fromStr_Tests =

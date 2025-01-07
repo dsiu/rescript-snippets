@@ -10,10 +10,10 @@ function length(l) {
 }
 
 console.log(length({
-          TAG: "Node",
-          val: 3,
-          next: "Empty"
-        }));
+  TAG: "Node",
+  val: 3,
+  next: "Empty"
+}));
 
 function len(l) {
   if (typeof l === "object") {
@@ -24,35 +24,34 @@ function len(l) {
 }
 
 console.log(len({
-          NAME: "Node",
-          VAL: [
-            3,
-            "Empty"
-          ]
-        }));
+  NAME: "Node",
+  VAL: [
+    3,
+    "Empty"
+  ]
+}));
 
 function $$eval(e) {
   switch (e.TAG) {
     case "Number" :
-        return e._0;
+      return e._0;
     case "Add" :
-        return $$eval(e._0) + $$eval(e._1) | 0;
+      return $$eval(e._0) + $$eval(e._1) | 0;
     case "Mul" :
-        return Math.imul($$eval(e._0), $$eval(e._1));
-    
+      return Math.imul($$eval(e._0), $$eval(e._1));
   }
 }
 
 function eval_(e) {
-  var variant = e.NAME;
+  let variant = e.NAME;
   if (variant === "Add") {
-    var match = e.VAL;
+    let match = e.VAL;
     return eval_(match[0]) + eval_(match[1]) | 0;
   }
   if (variant !== "Mul") {
     return e.VAL;
   }
-  var match$1 = e.VAL;
+  let match$1 = e.VAL;
   return Math.imul(eval_(match$1[0]), eval_(match$1[1]));
 }
 
@@ -60,7 +59,7 @@ function httpStatus(code) {
   
 }
 
-var statusString = "Yes";
+let statusString = "Yes";
 
 function colorToString(color) {
   if (color === "red") {
@@ -76,29 +75,29 @@ function toString(color) {
   return color;
 }
 
-var red = "red";
+let red = "red";
 
-var hello = "hello";
+let hello = "hello";
 
-var hello2 = "hello";
+let hello2 = "hello";
 
-var a = "hello";
+let a = "hello";
 
-var status = "yes";
+let status = "yes";
 
 export {
-  hello ,
-  hello2 ,
-  a ,
-  length ,
-  len ,
-  $$eval ,
-  eval_ ,
-  httpStatus ,
-  status ,
-  statusString ,
-  colorToString ,
-  toString ,
-  red ,
+  hello,
+  hello2,
+  a,
+  length,
+  len,
+  $$eval,
+  eval_,
+  httpStatus,
+  status,
+  statusString,
+  colorToString,
+  toString,
+  red,
 }
 /*  Not a pure module */

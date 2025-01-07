@@ -3,6 +3,8 @@
 //
 @@warning("-32")
 
+open Stdlib
+
 // 2.1 Trees, paths and locations
 //
 type rec tree<'a> =
@@ -69,7 +71,7 @@ let go_right = (Loc(t, p)) => {
 let go_up = (Loc(t, p)) => {
   switch p {
   | Top => failwith("up of top")
-  | Node(left, up, right) => Loc(Section(List.append(List.rev(left), list{t, ...right})), up)
+  | Node(left, up, right) => Loc(Section(List.append(List.reverse(left), list{t, ...right})), up)
   }
 }
 

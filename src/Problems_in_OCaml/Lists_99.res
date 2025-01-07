@@ -289,7 +289,7 @@ let rand_select = (list, n) => {
   }
 
   let extract_rand = (list, len) => {
-    extract(list, list{}, Random.int(len))
+    extract(list, list{}, Math.Int.random(0, len))
   }
 
   let rec aux = (n, acc, list, len) => {

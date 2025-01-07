@@ -3,23 +3,12 @@
 import * as Jest from "@glennsl/rescript-jest/src/jest.mjs";
 import * as FizzBuzz from "../src/FizzBuzz.mjs";
 
-Jest.test("FizzBuzz 12", (function () {
-        return Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(12)), "Fizz");
-      }));
+Jest.test("FizzBuzz 12", () => Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(12)), "Fizz"));
 
-Jest.test("FizzBuzz 10", (function () {
-        return Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(10)), "Buzz");
-      }));
+Jest.test("FizzBuzz 10", () => Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(10)), "Buzz"));
 
-Jest.test("FizzBuzz 15", (function () {
-        return Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(15)), "FizzBuzz");
-      }));
+Jest.test("FizzBuzz 15", () => Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(15)), "FizzBuzz"));
 
-Jest.test("FizzBuzz 1", (function () {
-        return Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(1)), "1");
-      }));
+Jest.test("FizzBuzz 1", () => Jest.Expect.toEqual(Jest.Expect.expect(FizzBuzz.fizzbuzz(1)), "1"));
 
-export {
-  
-}
 /*  Not a pure module */

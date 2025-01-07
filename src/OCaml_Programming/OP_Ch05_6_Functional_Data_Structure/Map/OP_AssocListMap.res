@@ -5,10 +5,10 @@ module M: OP_Map.S = {
   type t<'k, 'v> = list<('k, 'v)>
   let empty = list{}
   let insert = (k, v, m) => list{(k, v), ...m}
-  let lookup = (k, m) => List.assoc(k, m)
+  let lookup = (k, m) => List.getAssoc(m, k, (a, b) => a == b)->Option.getExn
   let keys = m => {
     open List
-    m |> map(fst) |> sort_uniq(Pervasives.compare)
+    List.sort(List.map(m, fst), (a, b) => Pervasives.compare(a, b)->Ordering.fromInt)
   }
-  let bindings = m => m |> keys |> List.map(k => (k, lookup(k, m)))
+  let bindings = m => List.map(keys(m), k => (k, lookup(k, m)))
 }

@@ -12,9 +12,9 @@ module START = {
     type t
     let zero: t
     let one: t
-    let \"+": (. t, t) => t
-    let \"*": (. t, t) => t
-    let \"~-": (. t) => t // additive inverse
+    let \"+": (t, t) => t
+    let \"*": (t, t) => t
+    let \"~-": t => t // additive inverse
     let to_string: t => string
   }
 
@@ -25,7 +25,7 @@ module START = {
     let \"+" = Pervasives.\"+"
     let \"*" = Pervasives.\"*"
     let \"~-" = Pervasives.\"~-"
-    let to_string = string_of_int
+    let to_string = Int.toString(_)
   }
 
   {
@@ -40,7 +40,7 @@ module START = {
     let \"+" = Pervasives.\"+."
     let \"*" = Pervasives.\"*."
     let \"~-" = Pervasives.\"~-."
-    let to_string = string_of_float
+    let to_string = Float.toString(_)
   }
 }
 // 5.7.1. Specializing Module Types#
@@ -58,9 +58,9 @@ module type Ring = {
   type t
   let zero: t
   let one: t
-  let \"+": (. t, t) => t
-  let \"*": (. t, t) => t
-  let \"~-": (. t) => t // additive inverse
+  let \"+": (t, t) => t
+  let \"*": (t, t) => t
+  let \"~-": t => t // additive inverse
   let to_string: t => string
 }
 
@@ -87,7 +87,7 @@ module FloatRing: Ring with type t = float = {
   let \"+" = Pervasives.\"+."
   let \"*" = Pervasives.\"*."
   let \"~-" = Pervasives.\"~-."
-  let to_string = string_of_float
+  let to_string = Float.toString(_)
 }
 
 // 5.7.2. Constraints

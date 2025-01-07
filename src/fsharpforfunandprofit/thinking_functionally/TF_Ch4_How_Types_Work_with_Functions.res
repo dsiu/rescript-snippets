@@ -15,10 +15,10 @@ let times3 = x => x * 3
 evalWith5ThenAdd2(times3)->Js.log
 
 // Functions as output
-let add = (. x, y) => x + y
+let add = (x, y) => x + y
 
-let add1 = add(1)
-let add2 = add(2)
+let add1 = add(1, ...)
+let add2 = add(2, ...)
 
 5->add1->Js.log
 5->add2->Js.log
@@ -60,9 +60,9 @@ let a = ("hello", 1)
 
 // Functions with more than two parameters
 @@warning("-27")
-let multiParamFn = (. p1: int, p2: bool, p3: string, p4: float) => {p1->ignore}
+let multiParamFn = (p1: int, p2: bool, p3: string, p4: float) => {p1->ignore}
 
-let intermediateFn1 = 42->multiParamFn
-let intermediateFn2 = false->intermediateFn1
-let intermediateFn3 = "hello"->intermediateFn2
+let intermediateFn1 = multiParamFn(42, ...)
+let intermediateFn2 = intermediateFn1(false, ...)
+let intermediateFn3 = intermediateFn2("hello", ...)
 let finalResult = 3.141->intermediateFn3

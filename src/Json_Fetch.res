@@ -13,7 +13,7 @@ if (!globalThis.fetch) {
 }
 `)
 
-open RescriptCore
+open Stdlib
 
 module Fetch = {
   module Response = {

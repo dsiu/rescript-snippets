@@ -5,7 +5,10 @@
 // {
 //  file: "https://purr.objects-us-east-1.dream.io/i/w8V75.jpg"
 //}
-open RescriptCore
+
+// bs-fatch is in .ml and won't compile in Rescript-v12
+
+open Stdlib
 
 // for fetch() node fill-in
 %%raw("require('isomorphic-fetch')")
@@ -13,7 +16,7 @@ open RescriptCore
 // Fetching the data
 let _ =
   Fetch.fetch("https://aws.random.cat/meow")
-  ->Js.Promise.then_(Fetch.Response.json, _)
+  ->(Js.Promise.then_(Fetch.Response.json, _))
   ->Js.Promise.then_(json => Js.log(json)->Js.Promise.resolve, _)
 
 // Declaring your API response type
@@ -35,7 +38,7 @@ module Decode = {
 // Next we’ll create a fetchCat function to perform the fetch and convert the response.
 let fetchCat = () =>
   Fetch.fetch("https://aws.random.cat/meow")
-  ->Js.Promise.then_(Fetch.Response.json, _)
+  ->(Js.Promise.then_(Fetch.Response.json, _))
   ->Js.Promise.then_(obj => obj->Decode.catData->Js.Promise.resolve, _)
 
 let _ = fetchCat()->Js.Promise.then_(data => data.file->Js.log->Js.Promise.resolve, _)
@@ -43,7 +46,7 @@ let _ = fetchCat()->Js.Promise.then_(data => data.file->Js.log->Js.Promise.resol
 // Making the fetch function more generic
 let fetchJson = (url, decoder) =>
   Fetch.fetch(url)
-  ->Js.Promise.then_(Fetch.Response.json, _)
+  ->(Js.Promise.then_(Fetch.Response.json, _))
   ->Js.Promise.then_(obj => obj->decoder->Js.Promise.resolve, _)
 
 let fetchCat = () => fetchJson("https://aws.random.cat/meow", Decode.catData)

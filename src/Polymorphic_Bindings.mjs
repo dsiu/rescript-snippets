@@ -2,51 +2,51 @@
 
 
 function MakeAtomExternals(T) {
-  var Sync = {};
-  var Async = {};
+  let Sync = {};
+  let Async = {};
   return {
-          Sync: Sync,
-          Async: Async
-        };
+    Sync: Sync,
+    Async: Async
+  };
 }
 
-var Sync = {};
+let Sync = {};
 
-var Async = {};
+let Async = {};
 
-var Int = {
+let Int = {
   Sync: Sync,
   Async: Async
 };
 
-var Sync$1 = {};
+let Sync$1 = {};
 
-var Async$1 = {};
+let Async$1 = {};
 
-var $$String = {
+let $$String = {
   Sync: Sync$1,
   Async: Async$1
 };
 
-var Sync$2 = {};
+let Sync$2 = {};
 
-var Async$2 = {};
+let Async$2 = {};
 
-var Float = {
+let Float = {
   Sync: Sync$2,
   Async: Async$2
 };
 
-var Sync$3 = {};
+let Sync$3 = {};
 
-var Async$3 = {};
+let Async$3 = {};
 
-var IntArray = {
+let IntArray = {
   Sync: Sync$3,
   Async: Async$3
 };
 
-var Atom = {
+let Atom = {
   MakeAtomExternals: MakeAtomExternals,
   Int: Int,
   $$String: $$String,
@@ -54,54 +54,50 @@ var Atom = {
   IntArray: IntArray
 };
 
-var x = useAtom(atom([
-          1,
-          2,
-          3
-        ]));
+let x = useAtom(atom([
+  1,
+  2,
+  3
+]));
 
-var y = useAtom(atom(Promise.resolve([
-              1,
-              2,
-              3
-            ])));
+let y = useAtom(atom(Promise.resolve([
+  1,
+  2,
+  3
+])));
 
-var x$p = useAtom(atom(async function () {
-          return "yo";
-        }));
+let x$p = useAtom(atom(async () => "yo"));
 
-var y$p = useAtom(atom(function () {
-          return "yo";
-        }));
+let y$p = useAtom(atom(() => "yo"));
 
-var T = {};
+let T = {};
 
-var Sync$4 = {};
+let Sync$4 = {};
 
-var Async$4 = {};
+let Async$4 = {};
 
-var Atom$1 = {
+let Atom$1 = {
   Sync: Sync$4,
   Async: Async$4
 };
 
-var Person = {
+let Person = {
   T: T,
   Atom: Atom$1
 };
 
-var person = useAtom(atom(Promise.resolve({
-              name: "Ryan",
-              age: 35
-            })));
+let person = useAtom(atom(Promise.resolve({
+  name: "Ryan",
+  age: 35
+})));
 
 export {
-  Atom ,
-  x ,
-  y ,
-  x$p ,
-  y$p ,
-  Person ,
-  person ,
+  Atom,
+  x,
+  y,
+  x$p,
+  y$p,
+  Person,
+  person,
 }
 /* x Not a pure module */

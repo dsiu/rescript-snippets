@@ -5,7 +5,4 @@ console.log("😀");
 
 console.log("😀");
 
-export {
-  
-}
 /*  Not a pure module */

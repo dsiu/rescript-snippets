@@ -1,5 +1,3 @@
-open RescriptCore
-
 // Monad Type
 type numberWithLogs = {
   result: int,

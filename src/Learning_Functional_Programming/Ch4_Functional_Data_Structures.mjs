@@ -14,122 +14,116 @@ function log2(prim0, prim1) {
 function getUser(id) {
   if (id !== 0) {
     return {
-            TAG: "Customer",
-            _0: id
-          };
+      TAG: "Customer",
+      _0: id
+    };
   }
   
 }
 
-var prim = [
-    0,
-    1,
-    2
-  ].flatMap(function (x) {
-      return [getUser(x)];
-    });
+let prim = [
+  0,
+  1,
+  2
+].flatMap(x => [getUser(x)]);
 
 console.log(prim);
 
-var Ch4_flatmap = {
+let Ch4_flatmap = {
   getUser: getUser
 };
 
 function getUsers() {
   return {
-          hd: {
-            TAG: "Ok",
-            _0: {
-              TAG: "User",
-              id: 1,
-              email: "jack@example.com"
-            }
-          },
-          tl: {
-            hd: {
-              TAG: "Error",
-              _0: {
-                TAG: "Error",
-                id: 4,
-                text: "user not found"
-              }
-            },
-            tl: {
-              hd: {
-                TAG: "Ok",
-                _0: {
-                  TAG: "User",
-                  id: 2,
-                  email: "andrea@example.com"
-                }
-              },
-              tl: /* [] */0
-            }
-          }
-        };
-}
-
-var emails = Stdlib__List.map({
+    hd: {
+      TAG: "Ok",
+      _0: {
+        TAG: "User",
+        id: 1,
+        email: "jack@example.com"
+      }
+    },
+    tl: {
       hd: {
-        TAG: "Ok",
+        TAG: "Error",
         _0: {
-          TAG: "User",
-          id: 1,
-          email: "jack@example.com"
+          TAG: "Error",
+          id: 4,
+          text: "user not found"
         }
       },
       tl: {
         hd: {
-          TAG: "Error",
+          TAG: "Ok",
           _0: {
-            TAG: "Error",
-            id: 4,
-            text: "user not found"
+            TAG: "User",
+            id: 2,
+            email: "andrea@example.com"
           }
         },
-        tl: {
-          hd: {
-            TAG: "Ok",
-            _0: {
-              TAG: "User",
-              id: 2,
-              email: "andrea@example.com"
-            }
-          },
-          tl: /* [] */0
-        }
+        tl: /* [] */0
       }
-    }, (function (result) {
-        return Stdlib__Result.map(result, (function (u) {
-                      return u.email;
-                    }));
-      }));
+    }
+  };
+}
 
-((function (__x) {
-        console.log(36, __x);
-      })(Stdlib__List.toArray(emails)));
+let emails = Stdlib__List.map({
+  hd: {
+    TAG: "Ok",
+    _0: {
+      TAG: "User",
+      id: 1,
+      email: "jack@example.com"
+    }
+  },
+  tl: {
+    hd: {
+      TAG: "Error",
+      _0: {
+        TAG: "Error",
+        id: 4,
+        text: "user not found"
+      }
+    },
+    tl: {
+      hd: {
+        TAG: "Ok",
+        _0: {
+          TAG: "User",
+          id: 2,
+          email: "andrea@example.com"
+        }
+      },
+      tl: /* [] */0
+    }
+  }
+}, result => Stdlib__Result.map(result, u => u.email));
 
-var Ch4_Higher_Order_Functions = {
+let __x = Stdlib__List.toArray(emails);
+
+console.log(36, __x);
+
+let Ch4_Higher_Order_Functions = {
   getUsers: getUsers,
   emails: emails
 };
 
 function getStudent(id) {
   return {
-          TAG: "Student",
-          id: 1,
-          email: "alex"
-        };
+    TAG: "Student",
+    id: 1,
+    email: "alex"
+  };
 }
 
 function getFinalGrade(student) {
   return {
-          TAG: "FinalGrade",
-          grade: 100
-        };
+    TAG: "FinalGrade",
+    grade: 100
+  };
 }
 
-var Ch4_Monads_students = {
+let Ch4_Monads_students = {
   hd: {
     TAG: "Student",
     id: 1,
@@ -151,20 +145,20 @@ var Ch4_Monads_students = {
   }
 };
 
-var Ch4_Monads = {
+let Ch4_Monads = {
   getStudent: getStudent,
   getFinalGrade: getFinalGrade,
   students: Ch4_Monads_students
 };
 
-var A;
+let A;
 
 export {
-  A ,
-  log ,
-  log2 ,
-  Ch4_flatmap ,
-  Ch4_Higher_Order_Functions ,
-  Ch4_Monads ,
+  A,
+  log,
+  log2,
+  Ch4_flatmap,
+  Ch4_Higher_Order_Functions,
+  Ch4_Monads,
 }
 /* prim Not a pure module */

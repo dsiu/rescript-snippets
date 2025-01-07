@@ -5,7 +5,7 @@ function make(s) {
   return s;
 }
 
-var Username = {
+let Username = {
   make: make
 };
 
@@ -13,7 +13,7 @@ function make$1(s) {
   return s;
 }
 
-var Password = {
+let Password = {
   make: make$1
 };
 
@@ -22,17 +22,17 @@ function f(u, pw) {
   console.log(pw);
 }
 
-var u1 = "dsiu";
+let u1 = "dsiu";
 
-var p1 = "diu";
+let p1 = "diu";
 
 f(u1, p1);
 
 export {
-  Username ,
-  Password ,
-  f ,
-  u1 ,
-  p1 ,
+  Username,
+  Password,
+  f,
+  u1,
+  p1,
 }
 /*  Not a pure module */

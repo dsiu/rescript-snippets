@@ -93,7 +93,7 @@ let _ = run(r11, 1)
 
 // And a more sophisitcated example:
 let greet = (name, greeting) => greeting ++ ": " ++ name
-let lines = Array.map(Js.log)
+let lines = Array.map(_, Js.log)
 let ra = Reader(greet("One", ...))
 let rb = Reader(greet("Two", ...))
 let rc = Reader(greet("Three", ...))
@@ -112,7 +112,7 @@ let bindFlip: bindFlip<'a, 'e, 'b> = (m, f) => bind(f, m)
 
 // Example:
 let greet = (name, greeting) => greeting ++ ": " ++ name
-let lines = Array.map(Js.log)
+let lines = Array.map(_, Js.log)
 let ra = Reader(greet("One", ...))
 let rb = Reader(greet("Two", ...))
 let rc = Reader(greet("Three", ...))

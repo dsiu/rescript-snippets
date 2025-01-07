@@ -1,5 +1,5 @@
 @module external safeReadFile: string => Js.Promise.t<Js.Option.t<string>> = "./safeReadFile"
-open RescriptCore
+open Stdlib
 
 safeReadFile("Result.res")
 ->Promise.then(x =>

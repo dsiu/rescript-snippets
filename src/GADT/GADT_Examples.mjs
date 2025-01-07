@@ -13,18 +13,18 @@ console.log(add(3.0, 2.0));
 
 console.log(add("hello, ", "BuckleScript"));
 
-var x = {
+let x = {
   TAG: "JsonString",
   _0: "hello"
 };
 
-var y = {
+let y = {
   TAG: "JsonBool",
   _0: true
 };
 
 export {
-  x ,
-  y ,
+  x,
+  y,
 }
 /*  Not a pure module */

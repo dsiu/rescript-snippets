@@ -6,6 +6,6 @@ function log(prim) {
 }
 
 export {
-  log ,
+  log,
 }
 /* No side effect */

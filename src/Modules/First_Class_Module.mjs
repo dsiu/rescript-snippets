@@ -5,27 +5,27 @@ function add(a, b) {
   return a + b | 0;
 }
 
-var a = {
+let a = {
   add: add
 };
 
 console.log(5);
 
-var A = {
+let A = {
   value: 42
 };
 
-var B = a;
+let B = a;
 
-var packedA = A;
+let packedA = A;
 
-var UnpackedA = A;
+let UnpackedA = A;
 
 export {
-  a ,
-  B ,
-  A ,
-  packedA ,
-  UnpackedA ,
+  a,
+  B,
+  A,
+  packedA,
+  UnpackedA,
 }
 /*  Not a pure module */

@@ -17,16 +17,16 @@ function interMate(a, b) {
   return a + " and " + b + " are now friends";
 }
 
-var Animal = {
+let Animal = {
   makeDog: makeDog,
   makeCat: makeCat,
   mate: mate,
   interMate: interMate
 };
 
-var mike = "Mike";
+let mike = "Mike";
 
-var marla = "Marla";
+let marla = "Marla";
 
 console.log(interMate(mike, marla));
 
@@ -42,25 +42,25 @@ function saveToDB(a) {
   
 }
 
-var $$FormData = {
+let FormData = {
   make: make,
   validate: validate,
   saveToDB: saveToDB
 };
 
-var shouldBeOkay = "should be okay";
+let shouldBeOkay = "should be okay";
 
-var cantBePassed = "ok?";
+let cantBePassed = "ok?";
 
-var validatedData = shouldBeOkay;
+let validatedData = shouldBeOkay;
 
 export {
-  Animal ,
-  mike ,
-  marla ,
-  $$FormData ,
-  shouldBeOkay ,
-  validatedData ,
-  cantBePassed ,
+  Animal,
+  mike,
+  marla,
+  FormData,
+  shouldBeOkay,
+  validatedData,
+  cantBePassed,
 }
 /*  Not a pure module */

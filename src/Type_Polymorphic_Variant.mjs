@@ -37,20 +37,20 @@ function displayColor(v) {
 
 console.log(displayColor("blue"));
 
-var intl = Intl.NumberFormat("de-DE");
+let intl = Intl.NumberFormat("de-DE");
 
-var message = "Hello " + "Apple";
+let message = "Hello " + "Apple";
 
-var myLabel = "aria-hidden";
+let myLabel = "aria-hidden";
 
-var myNumber = 7;
+let myNumber = 7;
 
-var me = {
+let me = {
   NAME: "Instagram",
   VAL: "Jenny"
 };
 
-var him = {
+let him = {
   NAME: "Facebook",
   VAL: [
     "Josh",
@@ -58,33 +58,33 @@ var him = {
   ]
 };
 
-var myColor = "blue";
+let myColor = "blue";
 
-var basic = "Red";
+let basic = "Red";
 
-var foreground = "Green";
+let foreground = "Green";
 
-var background = "Red";
+let background = "Red";
 
-var color = "Purple";
+let color = "Purple";
 
-var theCompany = "Apple";
+let theCompany = "Apple";
 
 export {
-  myLabel ,
-  myNumber ,
-  render ,
-  render1 ,
-  me ,
-  him ,
-  myColor ,
-  displayColor ,
-  intl ,
-  basic ,
-  foreground ,
-  background ,
-  color ,
-  theCompany ,
-  message ,
+  myLabel,
+  myNumber,
+  render,
+  render1,
+  me,
+  him,
+  myColor,
+  displayColor,
+  intl,
+  basic,
+  foreground,
+  background,
+  color,
+  theCompany,
+  message,
 }
 /*  Not a pure module */

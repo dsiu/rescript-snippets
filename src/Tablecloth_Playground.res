@@ -1,29 +1,31 @@
-@@uncurried
-@@uncurried.swap
-
 let log = Js.log
 let log2 = Js.log2
-open Tablecloth
+open Stdlib
 
-Tuple2.make(3, 4)->Tuple2.toArray->log
+module TC = Tablecloth
+
+TC.Tuple2.make(3, 4)->TC.Tuple2.toArray->log
 
 module Point = {
-  type t = Tuple2.t<int, int>
-  let compare = Tuple2.compare(~f=Int.compare, ~g=Int.compare, ...)
+  type t = TC.Tuple2.t<int, int>
 
-  include Comparator.Make({
+  let intCompare = (a, b) => Int.compare(a, b)->Stdlib.Ordering.toInt
+
+  let compare = TC.Tuple2.compare(~f=intCompare, ~g=intCompare, ...)
+
+  include TC.Comparator.Make({
     type t = t
     let compare = compare
   })
 }
 
-let points = Set.fromArray([(0, 0), (3, 4), (6, 7)], module(Point))
-points->Set.toArray->log
+let points = TC.Set.fromArray([(0, 0), (3, 4), (6, 7)], module(Point))
+points->TC.Set.toArray->log
 
 type animal = Cow | Pig | Sheep
 
-type pointToAnimalType = Map.t<Point.t, animal, Point.identity>
-let pointToAnimal = Map.fromArray(module(Point), [((0, 0), Cow), ((3, 4), Sheep), ((6, 7), Pig)])
+type pointToAnimalType = TC.Map.t<Point.t, animal, Point.identity>
+let pointToAnimal = TC.Map.fromArray(module(Point), [((0, 0), Cow), ((3, 4), Sheep), ((6, 7), Pig)])
 
 let a = (x: pointToAnimalType) => x
 let b = pointToAnimal->a

@@ -82,7 +82,7 @@ module Ring_Base_Float = {
   let \"+" = \"+."
   let \"~-" = \"~-."
   let \"*" = \"*."
-  let to_string = string_of_float
+  let to_string = Float.toString(_)
 }
 
 /**

@@ -6,11 +6,9 @@ function safeReadFile(prim) {
   return SafeReadFile(prim);
 }
 
-SafeReadFile("Result.res").then(function (x) {
-      return Promise.resolve((console.log(x !== undefined ? x : "No cache, fetch data."), undefined));
-    });
+SafeReadFile("Result.res").then(x => Promise.resolve((console.log(x !== undefined ? x : "No cache, fetch data."), undefined)));
 
 export {
-  safeReadFile ,
+  safeReadFile,
 }
 /*  Not a pure module */

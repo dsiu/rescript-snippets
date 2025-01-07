@@ -25,14 +25,9 @@
   "ppx-flags": [
   ],
   "bs-dependencies": [
-    "@rescript/core",
     "bs-fetch",
     "rescript-nodejs",
-    "bs-bastet",
-    "relude",
-    "relude-parse",
     "js-array2-ex",
-    "tablecloth-rescript",
     "@dsiu/rescript-stdlib-fp",
     "@jmagaram/rescript-extras",
     "@jmagaram/rescript-seq"

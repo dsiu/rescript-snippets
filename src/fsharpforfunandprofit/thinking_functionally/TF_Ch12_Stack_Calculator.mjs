@@ -2,7 +2,7 @@
 
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
 
-var contents = {
+let contents = {
   hd: 1.0,
   tl: {
     hd: 2.0,
@@ -17,22 +17,22 @@ console.log(contents);
 
 function push(contents, x) {
   return {
-          TAG: "StackContents",
-          _0: {
-            hd: x,
-            tl: contents._0
-          }
-        };
+    TAG: "StackContents",
+    _0: {
+      hd: x,
+      tl: contents._0
+    }
+  };
 }
 
-var emptyStack = {
+let emptyStack = {
   TAG: "StackContents",
   _0: /* [] */0
 };
 
-var stackWith1 = push(emptyStack, 1.0);
+let stackWith1 = push(emptyStack, 1.0);
 
-var stackWith2 = push(stackWith1, 2.0);
+let stackWith2 = push(stackWith1, 2.0);
 
 console.log(stackWith1);
 
@@ -58,69 +58,69 @@ function five(__x) {
   return push(__x, 5.0);
 }
 
-var empty = {
+let empty = {
   TAG: "StackContents",
   _0: /* [] */0
 };
 
-var stackWith1$1 = push(empty, 1.0);
+let stackWith1$1 = push(empty, 1.0);
 
-var stackWith2$1 = push(stackWith1$1, 2.0);
+let stackWith2$1 = push(stackWith1$1, 2.0);
 
-var stackWith3 = push(stackWith2$1, 3.0);
+let stackWith3 = push(stackWith2$1, 3.0);
 
-var result123 = push(push(push(empty, 1.0), 2.0), 3.0);
+let result123 = push(push(push(empty, 1.0), 2.0), 3.0);
 
-var result321 = push(push(push(empty, 3.0), 2.0), 1.0);
+let result321 = push(push(push(empty, 3.0), 2.0), 1.0);
 
 console.log(result123);
 
 console.log(result321);
 
 function pop(contents) {
-  var contents$1 = contents._0;
+  let contents$1 = contents._0;
   if (contents$1) {
-    var newStack = {
+    let newStack = {
       TAG: "StackContents",
       _0: contents$1.tl
     };
     return [
-            contents$1.hd,
-            newStack
-          ];
+      contents$1.hd,
+      newStack
+    ];
   }
   throw {
-        RE_EXN_ID: "Not_found",
-        Error: new Error()
-      };
+    RE_EXN_ID: "Not_found",
+    Error: new Error()
+  };
 }
 
-var initialStack = push(push(empty, 1.0), 2.0);
+let initialStack = push(push(empty, 1.0), 2.0);
 
-var match = pop(initialStack);
+let match = pop(initialStack);
 
-var poppedStack = match[1];
+let poppedStack = match[1];
 
-var match$1 = pop(poppedStack);
+let match$1 = pop(poppedStack);
 
 function add_(stack) {
-  var match = pop(stack);
-  var match$1 = pop(match[1]);
-  var result = match[0] + match$1[0];
+  let match = pop(stack);
+  let match$1 = pop(match[1]);
+  let result = match[0] + match$1[0];
   return push(match$1[1], result);
 }
 
 function mul_(stack) {
-  var match = pop(stack);
-  var match$1 = pop(match[1]);
-  var result = match[0] * match$1[0];
+  let match = pop(stack);
+  let match$1 = pop(match[1]);
+  let result = match[0] * match$1[0];
   return push(match$1[1], result);
 }
 
 function binary(mathFn, stack) {
-  var match = pop(stack);
-  var match$1 = pop(match[1]);
-  var z = mathFn(match$1[0], match[0]);
+  let match = pop(stack);
+  let match$1 = pop(match[1]);
+  let z = mathFn(match$1[0], match[0]);
   return push(match$1[1], z);
 }
 
@@ -163,20 +163,16 @@ console.log(binary(float_sub, push(push(empty, 2.0), 5.0)), "twoSubtractFive");
 console.log(binary(float_sub, push(binary(float_add, push(push(empty, 1.0), 2.0)), 3.0)), "oneAddTwoSubThree");
 
 function unary(f, stack) {
-  var match = pop(stack);
+  let match = pop(stack);
   return push(match[1], f(match[0]));
 }
 
-function neg(param) {
-  return unary((function (x) {
-                return 0.0 - x;
-              }), param);
+function neg(extra) {
+  return unary(x => 0.0 - x, extra);
 }
 
-function square(param) {
-  return unary((function (x) {
-                return x * x;
-              }), param);
+function square(extra) {
+  return unary(x => x * x, extra);
 }
 
 console.log(neg(push(empty, 3.0)), "neg3");
@@ -184,27 +180,27 @@ console.log(neg(push(empty, 3.0)), "neg3");
 console.log(square(push(empty, 2.0)), "square2");
 
 function show(stack) {
-  var match = pop(stack);
+  let match = pop(stack);
   console.log(match[0]);
   return stack;
 }
 
 function show2(stack, str) {
-  var match = pop(stack);
+  let match = pop(stack);
   console.log(match[0], str);
   return stack;
 }
 
-var oneAddTwoSubThree = show2(binary(float_sub, push(binary(float_add, push(push(empty, 1.0), 2.0)), 3.0)), "oneAddTwoSubThree");
+let oneAddTwoSubThree = show2(binary(float_sub, push(binary(float_add, push(push(empty, 1.0), 2.0)), 3.0)), "oneAddTwoSubThree");
 
 function dup(stack) {
-  var match = pop(stack);
+  let match = pop(stack);
   return push(stack, match[0]);
 }
 
 function swap(stack) {
-  var match = pop(stack);
-  var match$1 = pop(match[1]);
+  let match = pop(stack);
+  let match$1 = pop(match[1]);
   return push(push(match$1[1], match[0]), match$1[0]);
 }
 
@@ -219,15 +215,11 @@ show2(binary(float_add, push(show2(binary(float_add, push(push(empty, 1.0), 2.0)
 show2(binary(float_div, push(show2(binary(float_mul, push(show2(binary(float_add, push(push(empty, 1.0), 2.0)), "1+2"), 3.0)), "*3"), 2.0)), "/2");
 
 function one_two_add(extra) {
-  return Stdlib__Function.compose((function (extra) {
-                return Stdlib__Function.compose(one, two, extra);
-              }), add, extra);
+  return Stdlib__Function.compose(extra => Stdlib__Function.compose(one, two, extra), add, extra);
 }
 
 function one_two_sub(extra) {
-  return Stdlib__Function.compose((function (extra) {
-                return Stdlib__Function.compose(one, two, extra);
-              }), sub, extra);
+  return Stdlib__Function.compose(extra => Stdlib__Function.compose(one, two, extra), sub, extra);
 }
 
 show2(one_two_add(empty), "one_two_add");
@@ -241,21 +233,13 @@ function square$1(extra) {
 show2(square$1(push(empty, 2.0)), "square");
 
 function cube(extra) {
-  return Stdlib__Function.compose((function (extra) {
-                return Stdlib__Function.compose((function (extra) {
-                              return Stdlib__Function.compose(dup, dup, extra);
-                            }), mul, extra);
-              }), mul, extra);
+  return Stdlib__Function.compose(extra => Stdlib__Function.compose(extra => Stdlib__Function.compose(dup, dup, extra), mul, extra), mul, extra);
 }
 
 show2(cube(push(empty, 3.0)), "cube");
 
 function sum_numbers_upto(extra) {
-  return Stdlib__Function.compose((function (extra) {
-                return Stdlib__Function.compose4(dup, one, add, mul, extra);
-              }), (function (extra) {
-                return Stdlib__Function.compose(two, div, extra);
-              }), extra);
+  return Stdlib__Function.compose(extra => Stdlib__Function.compose4(dup, one, add, mul, extra), extra => Stdlib__Function.compose(two, div, extra), extra);
 }
 
 show2(sum_numbers_upto(square$1(push(empty, 3.0))), "sum up to 9");
@@ -264,17 +248,15 @@ function composed_square(extra) {
   return Stdlib__Function.compose(dup, mul, extra);
 }
 
-var stackWith2$2 = push(empty, 2.0);
+let stackWith2$2 = push(empty, 2.0);
 
-var twoSquared = binary(float_mul, dup(stackWith2$2));
+let twoSquared = binary(float_mul, dup(stackWith2$2));
 
-function lambda_square(param) {
-  return unary((function (x) {
-                return x * x;
-              }), param);
+function lambda_square(extra) {
+  return unary(x => x * x, extra);
 }
 
-var newStack = {
+let newStack = {
   TAG: "StackContents",
   _0: {
     hd: 1.0,
@@ -288,84 +270,84 @@ var newStack = {
   }
 };
 
-var popped1 = match[0];
+let popped1 = match[0];
 
-var popped2 = match$1[0];
+let popped2 = match$1[0];
 
-var poppedStack2 = match$1[1];
+let poppedStack2 = match$1[1];
 
-var threeDivTwo;
+let threeDivTwo;
 
-var twoSubtractFive;
+let twoSubtractFive;
 
-var neg3;
+let neg3;
 
-var square2;
+let square2;
 
-var start = empty;
+let start = empty;
 
-var compose = Stdlib__Function.compose;
+let compose = Stdlib__Function.compose;
 
-var compose3 = Stdlib__Function.compose3;
+let compose3 = Stdlib__Function.compose3;
 
-var compose4 = Stdlib__Function.compose4;
+let compose4 = Stdlib__Function.compose4;
 
 export {
-  newStack ,
-  contents ,
-  push ,
-  emptyStack ,
-  one ,
-  two ,
-  three ,
-  four ,
-  five ,
-  empty ,
+  newStack,
+  contents,
+  push,
+  emptyStack,
+  one,
+  two,
+  three,
+  four,
+  five,
+  empty,
   stackWith1$1 as stackWith1,
-  stackWith3 ,
-  result123 ,
-  result321 ,
-  pop ,
-  initialStack ,
-  popped1 ,
-  poppedStack ,
-  popped2 ,
-  poppedStack2 ,
-  add_ ,
-  mul_ ,
-  binary ,
-  float_add ,
-  float_mul ,
-  float_sub ,
-  float_div ,
-  add ,
-  mul ,
-  sub ,
-  div ,
-  threeDivTwo ,
-  twoSubtractFive ,
-  unary ,
-  neg ,
-  neg3 ,
-  square2 ,
-  show ,
-  show2 ,
-  oneAddTwoSubThree ,
-  dup ,
-  swap ,
-  drop ,
-  start ,
-  one_two_add ,
-  one_two_sub ,
+  stackWith3,
+  result123,
+  result321,
+  pop,
+  initialStack,
+  popped1,
+  poppedStack,
+  popped2,
+  poppedStack2,
+  add_,
+  mul_,
+  binary,
+  float_add,
+  float_mul,
+  float_sub,
+  float_div,
+  add,
+  mul,
+  sub,
+  div,
+  threeDivTwo,
+  twoSubtractFive,
+  unary,
+  neg,
+  neg3,
+  square2,
+  show,
+  show2,
+  oneAddTwoSubThree,
+  dup,
+  swap,
+  drop,
+  start,
+  one_two_add,
+  one_two_sub,
   square$1 as square,
-  cube ,
-  compose ,
-  compose3 ,
-  compose4 ,
-  sum_numbers_upto ,
-  composed_square ,
+  cube,
+  compose,
+  compose3,
+  compose4,
+  sum_numbers_upto,
+  composed_square,
   stackWith2$2 as stackWith2,
-  twoSquared ,
-  lambda_square ,
+  twoSquared,
+  lambda_square,
 }
 /*  Not a pure module */

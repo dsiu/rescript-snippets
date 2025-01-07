@@ -3,12 +3,6 @@
 
 open Stdlib
 
-let identity = Stdlib.Function.identity
-
-// Logging
-let log = Console.log
-@val @scope("console") external consoleDir: 'a => unit = "dir"
-
 /**
  Printable
  */
@@ -24,7 +18,7 @@ module Printable = {
       })
     }
     module String = {
-      let toString = m => toString(m, identity)
+      let toString = m => toString(m, Fn.identity)
     }
 
     module Int = {
@@ -43,7 +37,7 @@ module Printable = {
       })
     }
     module String = {
-      let toString = m => toString(m, identity)
+      let toString = m => toString(m, Fn.identity)
     }
 
     module Int = {
@@ -88,10 +82,6 @@ module Printable = {
     module BigInt = {
       let toString = (m, ~radix=10) => toString(m, BigInt.toString(_, ~radix))
     }
-
-    module Int64 = {
-      let toString = m => toString(m, i => Int64.to_string(i))
-    }
   }
 
   module Array = {
@@ -113,7 +103,7 @@ module Printable = {
 //@scope("Math") @val
 @val
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
-let base2 = Int.toStringWithRadix(_, ~radix=2)
+let base2 = Int.toString(_, ~radix=2)
 
 let compose = (f, g) => Stdlib.Function.compose(f, g, ...)
 
@@ -130,22 +120,18 @@ let int32ToUint32 = x => {
   Js.TypedArray2.Uint32Array.make([x])->Js.TypedArray2.Uint32Array.unsafe_get(0)
 }
 
-let increaseByInt64 = (v, n) => {
-  v->Option.mapOr(n, x => x->Int64.add(n))
+// should use BigInt
+let increaseByBigInt = (v, n) => {
+  v->Option.mapOr(n, x => x->BigInt.add(n))
 }
 
-let increaseBy1L = increaseByInt64(_, 1L)
+let increaseBy1L = increaseByBigInt(_, 1->BigInt.fromInt)
 
 let increaseBy = (v, n) => {
   v->Option.mapOr(n, x => x + n)
 }
 
 let increaseBy1 = increaseBy(_, 1)
-
-//
-// Int64
-//
-let int64FromBitString = str => ("0b" ++ str)->Int64.of_string
 
 //
 // strings
@@ -158,6 +144,8 @@ let splitDoubleNewline = String.split(_, "\n\n")
 //
 // array
 //
+
+// todo: should use Array.sum(Module(Int))
 let sumIntArray = Array.reduce(_, 0, add)
 let mulIntArray = Array.reduce(_, 1, mul)
 let join = Array.join(_, "")
@@ -181,10 +169,8 @@ let minIntInArray = xs => {
 }
 
 module BigIntExt = {
-  open BigInt
-
   let compare = (a: bigint, b: bigint) =>
-    a < b ? Core__Ordering.less : a > b ? Core__Ordering.greater : Core__Ordering.equal
+    a < b ? Ordering.less : a > b ? Ordering.greater : Ordering.equal
 }
 
 let maxBigIntInArray = xs => {
@@ -204,7 +190,7 @@ let flatten = (xs: array<array<'a>>) => {
 // ref: https://blog.shaynefletcher.org/2017/08/transpose.html
 // ref: https://github.com/nyinyithann/rescript-js-array2-extension/blob/main/src/JsArray2Ex.res
 
-let transpose = JsArray2Ex.transpose
+// let transpose = JsArray2Ex.transpose
 
 let maxKeyIntValuePair = Array.reduce(_, ("", min_int), (acc, (k, v)) => {
   let (_, va) = acc
@@ -216,15 +202,20 @@ let minKeyIntValuePair = Array.reduce(_, ("", max_int), (acc, (k, v)) => {
   v < va ? (k, v) : acc
 })
 
-let maxKeyInt64ValuePair = Array.reduce(_, ("", Int64.min_int), (acc, (k, v)) => {
-  let (_, va) = acc
-  Int64.compare(v, va) > 0 ? (k, v) : acc
-})
+let keyCompareBigIntValuePair = (xs, cmp) => {
+  let first = xs[0]
+  let rest = Array.sliceToEnd(xs, ~start=1)
 
-let minKeyInt64ValuePair = Array.reduce(_, ("", Int64.max_int), (acc, (k, v)) => {
-  let (_, va) = acc
-  Int64.compare(v, va) < 0 ? (k, v) : acc
-})
+  first->Option.map(((_, init)) =>
+    rest->Array.reduce(("", init), (acc, (k, v)) => {
+      let (_, va) = acc
+      BigInt.compare(v, va)->cmp ? (k, v) : acc
+    })
+  )
+}
+
+let maxKeyBigIntValuePair = keyCompareBigIntValuePair(_, Stdlib.Ordering.isGreater)
+let minKeyBigIntValuePair = keyCompareBigIntValuePair(_, Stdlib.Ordering.isLess)
 
 //
 // Map / HashMap

@@ -2,33 +2,25 @@
 
 
 function asyncGetInt(extra) {
-  return async((function (num) {
-                return num;
-              }), extra);
+  return async(num => num, extra);
 }
 
 function asyncSum(extra, extra$1) {
-  return async((function (x, y) {
-                return String(x + y | 0);
-              }), extra, extra$1);
+  return async((x, y) => String(x + y | 0), extra, extra$1);
 }
 
 function asyncProg(extra) {
-  return async(function () {
-              var a = await(async((function (num) {
-                          return num;
-                        }), 5));
-              var b = await(async((function (num) {
-                          return num;
-                        }), 10));
-              var c = await(asyncSum(a, b));
-              console.log(c);
-            });
+  return async(() => {
+    let a = await(async(num => num, 5));
+    let b = await(async(num => num, 10));
+    let c = await(asyncSum(a, b));
+    console.log(c);
+  });
 }
 
 export {
-  asyncGetInt ,
-  asyncSum ,
-  asyncProg ,
+  asyncGetInt,
+  asyncSum,
+  asyncProg,
 }
 /* No side effect */

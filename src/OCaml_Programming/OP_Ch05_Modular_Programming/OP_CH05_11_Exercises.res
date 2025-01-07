@@ -4,7 +4,7 @@
 @@uncurried
 @@uncurried.swap
 
-open RescriptCore
+open Stdlib
 
 let log = Js.log
 let log2 = Js.log2

@@ -18,7 +18,7 @@ let logList2 = (l, str) => l->List.toArray->log2(str)
 
 let mapListToString = m => {
   let b = Str_map.toList(m)
-  String.concat(", ", b->List.map(((x, y)) => `${x}: ${y}`))
+  String.concatMany(", ", b->List.map(((x, y)) => `${x}: ${y}`)->List.toArray)
 }
 
 let logStrMapList = (m, str) => log(`${str}: ${mapListToString(m)}`)

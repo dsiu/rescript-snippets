@@ -114,13 +114,13 @@ let twoSubtractFive = empty->two->five->sub->Js.log2("twoSubtractFive")
 let oneAddTwoSubThree = empty->one->two->add->three->sub->Js.log2("oneAddTwoSubThree")
 
 // unary
-let unary = (. f, stack) => {
+let unary = (f, stack) => {
   let (x, stack') = stack->pop
   stack'->push(x->f)
 }
 
-let neg = unary(x => 0.0 -. x)
-let square = unary(x => x *. x)
+let neg = unary(x => 0.0 -. x, ...)
+let square = unary(x => x *. x, ...)
 
 let neg3 = empty->three->neg->Js.log2("neg3")
 let square2 = empty->two->square->Js.log2("square2")
@@ -197,4 +197,4 @@ let twoSquared = stackWith2->dup->mul
 
 // The other way to create a “plan” is to explicitly pass in a lambda to a more primitive function, as we saw near the beginning:
 
-let lambda_square = unary(x => x *. x)
+let lambda_square = unary(x => x *. x, ...)

@@ -7,30 +7,30 @@ function log(prim) {
 }
 
 function print_tree(padOpt, tree) {
-  var pad = padOpt !== undefined ? padOpt : [
+  let pad = padOpt !== undefined ? padOpt : [
       "",
       ""
     ];
-  var cs = tree._1;
-  var pc = pad[1];
+  let cs = tree._1;
+  let pc = pad[1];
   console.log(pad[0] + tree._0);
-  var n = Stdlib__List.length(cs) - 1 | 0;
-  Stdlib__List.forEachWithIndex(cs, (function (c, i) {
-          var pad_0 = pc + (
-            i === n ? "`-- " : "|-- "
-          );
-          var pad_1 = pc + (
-            i === n ? "    " : "|   "
-          );
-          var pad = [
-            pad_0,
-            pad_1
-          ];
-          print_tree(pad, c);
-        }));
+  let n = Stdlib__List.length(cs) - 1 | 0;
+  Stdlib__List.forEachWithIndex(cs, (c, i) => {
+    let pad_0 = pc + (
+      i === n ? "`-- " : "|-- "
+    );
+    let pad_1 = pc + (
+      i === n ? "    " : "|   "
+    );
+    let pad = [
+      pad_0,
+      pad_1
+    ];
+    print_tree(pad, c);
+  });
 }
 
-var tree = {
+let tree = {
   TAG: "Node",
   _0: ".",
   _1: {
@@ -74,8 +74,8 @@ var tree = {
 print_tree(undefined, tree);
 
 export {
-  log ,
-  print_tree ,
-  tree ,
+  log,
+  print_tree,
+  tree,
 }
 /*  Not a pure module */

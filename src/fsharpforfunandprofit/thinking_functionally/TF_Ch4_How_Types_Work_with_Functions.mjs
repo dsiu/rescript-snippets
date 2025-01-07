@@ -5,28 +5,24 @@ function evalWith5ThenAdd2(fn) {
   return fn(5) + 2 | 0;
 }
 
-function add1(x) {
-  return x + 1 | 0;
-}
-
-console.log(evalWith5ThenAdd2(add1));
+console.log(8);
 
 function times3(x) {
   return Math.imul(x, 3);
 }
 
-console.log(evalWith5ThenAdd2(times3));
+console.log(17);
 
 function add(x, y) {
   return x + y | 0;
 }
 
-function add1$1(param) {
-  return 1 + param | 0;
+function add1(extra) {
+  return 1 + extra | 0;
 }
 
-function add2(param) {
-  return 2 + param | 0;
+function add2(extra) {
+  return 2 + extra | 0;
 }
 
 console.log(6);
@@ -67,63 +63,57 @@ function onAStick(x) {
   return String(x._0) + " on a stick";
 }
 
-console.log(onAStick({
-          TAG: "Ts_Int",
-          _0: 1
-        }));
+console.log(String(1) + " on a stick");
 
-console.log(onAStick({
-          TAG: "Ts_Float",
-          _0: 2.0
-        }));
+console.log(String(2.0) + " on a stick");
 
 function multiParamFn(p1, p2, p3, p4) {
   
 }
 
-function intermediateFn1(param, param$1, param$2) {
+function intermediateFn1(extra, extra$1, extra$2) {
   
 }
 
-function intermediateFn2(param, param$1) {
-  return intermediateFn1(false, param, param$1);
+function intermediateFn2(extra, extra$1) {
+  return intermediateFn1(false, extra, extra$1);
 }
 
-function intermediateFn3(param) {
-  return intermediateFn1(false, "hello", param);
+function intermediateFn3(extra) {
+  return intermediateFn1(false, "hello", extra);
 }
 
-var finalResult = intermediateFn1(false, "hello", 3.141);
+let finalResult = intermediateFn1(false, "hello", 3.141);
 
-var whatIsThis;
+let whatIsThis;
 
-var printHello;
+let printHello;
 
-var a = [
+let a = [
   "hello",
   1
 ];
 
 export {
-  evalWith5ThenAdd2 ,
-  times3 ,
-  add ,
-  add1$1 as add1,
-  add2 ,
-  evalWith5AsInt ,
-  evalWith5AsFloat ,
-  evalWith5AsString ,
-  whatIsThis ,
-  printInt ,
-  printHello ,
-  printHelloFn ,
-  toString ,
-  onAStick ,
-  a ,
-  multiParamFn ,
-  intermediateFn1 ,
-  intermediateFn2 ,
-  intermediateFn3 ,
-  finalResult ,
+  evalWith5ThenAdd2,
+  times3,
+  add,
+  add1,
+  add2,
+  evalWith5AsInt,
+  evalWith5AsFloat,
+  evalWith5AsString,
+  whatIsThis,
+  printInt,
+  printHello,
+  printHelloFn,
+  toString,
+  onAStick,
+  a,
+  multiParamFn,
+  intermediateFn1,
+  intermediateFn2,
+  intermediateFn3,
+  finalResult,
 }
 /*  Not a pure module */

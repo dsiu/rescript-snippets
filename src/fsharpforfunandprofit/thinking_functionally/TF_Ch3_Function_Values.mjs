@@ -13,17 +13,17 @@ function if$p(b, t, f) {
   }
 }
 
-var f = 1;
+let f = 1;
 
-var f$p = 2;
+let f$p = 2;
 
-var f$p$p = 3;
+let f$p$p = 3;
 
 export {
-  c ,
-  f ,
-  f$p ,
-  f$p$p ,
-  if$p ,
+  c,
+  f,
+  f$p,
+  f$p$p,
+  if$p,
 }
 /* No side effect */

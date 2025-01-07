@@ -5,13 +5,13 @@ let log = Js.log
 let log2 = Js.log2
 
 let strToChar = String.get(_, 0)
-let charToStr = String.make(1, _)
+let charToStr = String.make
 
 let parseA = str => {
   module String = Js.String2
   if str->String.length == 0 {
     (false, "")
-  } else if str->String.charAt(0)->strToChar == 'A' {
+  } else if str->String.charAt(0) == "A" {
     let remaining = str->String.sliceToEnd(~from=1)
     (true, remaining)
   } else {
@@ -35,7 +35,7 @@ let pchar = (charToMatch, str) => {
     let msg = "No more input"
     (msg, "")
   } else {
-    let first = str->String.charAt(0)->strToChar
+    let first = str->String.charAt(0)
     if first == charToMatch {
       let remaining = str->String.sliceToEnd(~from=1)
       let msg = `Found ${charToMatch->charToStr}`
@@ -47,9 +47,9 @@ let pchar = (charToMatch, str) => {
   }
 }
 
-pchar('A', inputABC)->log2("pchar", _)
-pchar('A', inputZBC)->log2("pchar", _)
-pchar('Z', inputZBC)->log2("pchar", _)
+pchar("A", inputABC)->log2("pchar", _)
+pchar("A", inputZBC)->log2("pchar", _)
+pchar("Z", inputZBC)->log2("pchar", _)
 
 ""->log
 "-- Returning a Success/Failure"->log
@@ -63,7 +63,7 @@ let pchar = (charToMatch, str) => {
   if str->String.length == 0 {
     Failure("No more input")
   } else {
-    let first = str->String.charAt(0)->strToChar
+    let first = str->String.charAt(0)
     if first == charToMatch {
       let remaining = str->String.sliceToEnd(~from=1)
       Success(charToMatch, remaining)
@@ -74,8 +74,8 @@ let pchar = (charToMatch, str) => {
   }
 }
 
-pchar('A', inputABC)->log2("pchar", _)
-pchar('A', inputZBC)->log2("pchar", _)
+pchar("A", inputABC)->log2("pchar", _)
+pchar("A", inputZBC)->log2("pchar", _)
 
 ""->log
 "-- Rewriting with an inner function"->log
@@ -86,7 +86,7 @@ let pchar = charToMatch => {
     if str->String.length == 0 {
       Failure("No more input")
     } else {
-      let first = str->String.charAt(0)->strToChar
+      let first = str->String.charAt(0)
       if first == charToMatch {
         let remaining = str->String.sliceToEnd(~from=1)
         Success(charToMatch, remaining)
@@ -102,7 +102,7 @@ let pchar = charToMatch => {
 ""->log
 "-- The benefits of the curried implementation"->log
 
-let parseA = pchar('A')
+let parseA = pchar("A")
 parseA(inputABC)->log2("parseA", _)
 parseA(inputZBC)->log2("parseA", _)
 
@@ -116,7 +116,7 @@ let pchar = charToMatch => {
     if str->String.length == 0 {
       Failure("No more input")
     } else {
-      let first = str->String.charAt(0)->strToChar
+      let first = str->String.charAt(0)
       if first == charToMatch {
         let remaining = str->String.sliceToEnd(~from=1)
         Success(charToMatch, remaining)
@@ -136,7 +136,7 @@ let run = (parser, input) => {
   let Parser(innerFn) = parser
   innerFn(input)
 }
-let parseA = pchar('A')
+let parseA = pchar("A")
 run(parseA, inputABC)->log2("parseA", _)
 run(parseA, inputZBC)->log2("parseA", _)
 
@@ -172,8 +172,8 @@ let andThen = (parser1, parser2) => {
 ""->log
 "-- Testing andThen"->log
 
-let parseA = pchar('A')
-let parseB = pchar('B')
+let parseA = pchar("A")
+let parseB = pchar("B")
 let parseAThenB = parseA->andThen(parseB)
 
 run(parseAThenB, "ABC")->log2("parseAThenB ABC", _)
@@ -205,8 +205,8 @@ let orElse = (parser1, parser2) => {
 ""->log
 "-- Testing orElse"->log
 
-let parseA = pchar('A')
-let parseB = pchar('B')
+let parseA = pchar("A")
+let parseB = pchar("B")
 let parseAOrElseB = parseA->orElse(parseB)
 
 run(parseAOrElseB, "AZZ")->log2("parseAOrElseB AZZ", _)
@@ -215,9 +215,9 @@ run(parseAOrElseB, "CZZ")->log2("parseAOrElseB CZZ", _)
 
 ""->log
 "-- Combining andThen and orElse"->log
-let parseA = pchar('A')
-let parseB = pchar('B')
-let parseC = pchar('C')
+let parseA = pchar("A")
+let parseB = pchar("B")
+let parseC = pchar("C")
 let bOrElseC = parseB->orElse(parseC)
 let aAndThenBorC = parseA->andThen(bOrElseC)
 
@@ -240,13 +240,17 @@ let anyOf = listOfChars => {
 let parseLowercase = {
   "abcdefghijklmnopqrstuvwxyz"
   ->Js.String2.split("")
-  ->Belt.Array.map(strToChar)
+  //  ->Belt.Array.map(strToChar)
   ->Belt.List.fromArray
   ->anyOf
 }
 
 let parseDigit = {
-  "0123456789"->Js.String2.split("")->Belt.Array.map(strToChar)->Belt.List.fromArray->anyOf
+  "0123456789"
+  ->Js.String2.split("")
+  //  ->Belt.Array.map(strToChar)
+  ->Belt.List.fromArray
+  ->anyOf
 }
 
 run(parseLowercase, "aBC")->log2("parseLowercase aBC", _)

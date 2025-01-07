@@ -6,6 +6,6 @@ function fun(a, b) {
 }
 
 export {
-  fun ,
+  fun,
 }
 /* No side effect */

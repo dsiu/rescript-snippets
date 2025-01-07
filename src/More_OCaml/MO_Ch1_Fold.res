@@ -1,15 +1,11 @@
 // Chapter 1
 // Unravelling "Fold"
-@@uncurried
-@@uncurried.swap
-
-module List = Js.List
 
 // utils
 let log = Js.log
-let logList = l => l->List.toVector->log
+let logList = l => l->List.toArray->log
 let log2 = (x, y) => Js.log2(y, x)
-let logList2 = (l, str) => l->List.toVector->log2(str)
+let logList2 = (l, str) => l->List.toArray->log2(str)
 
 let rec fold_left = (f, a, l) =>
   switch l {
@@ -17,7 +13,7 @@ let rec fold_left = (f, a, l) =>
   | list{h, ...t} => fold_left(f, f(a, h), t)
   }
 
-list{1, 2, 3}->fold_left(\"+", 0, _)->log
+list{1, 2, 3}->(fold_left(\"+", 0, _))->log
 // fold_left("+", 0, {1,2,3})
 // fold_left("+", 1, {2,3})
 // fold_left("+", 3, {3})
@@ -34,7 +30,7 @@ let rec fold_right = (f, l, a) => {
   }
 }
 
-list{1, 2, 3}->fold_right(\"+", _, 0)->log
+list{1, 2, 3}->(fold_right(\"+", _, 0))->log
 // fold_right("+", {1,2,3}, 0)
 // "+" ( 1, fold_right("+", {2,3}, 0) )
 // "+" ( 1, "+" ( 2, fold_right("+", {3}, 0) ) )
@@ -45,7 +41,7 @@ list{1, 2, 3}->fold_right(\"+", _, 0)->log
 // 6
 
 let max = (a, b) => a > b ? a : b
-list{2, 4, 6, 20, 1}->fold_left((a, b) => Js.Math.max_int(a, b), Js.Int.min, _)->log
+list{2, 4, 6, 20, 1}->(fold_left((a, b) => Js.Math.max_int(a, b), Js.Int.min, _))->log
 
 let all = l => fold_left(\"&&", true, l)
 let any = l => fold_left(\"||", false, l)
@@ -54,12 +50,12 @@ let map = (f, l) => {
   fold_right((e, a) => list{f(e), ...a}, l, list{})
 }
 
-list{2, 9, 1}->map(x => x * 2, _)->logList2("map")
+list{2, 9, 1}->(map(x => x * 2, _))->logList2("map")
 
 // Who would have thought that fold_right was the more fundamental function? At the cost of a list
 // reversal, we can make fold_right tail-recursive by defining it in terms of fold_left:
 let fold_right_tr = (f, l, e) => {
-  fold_left((x, y) => f(y, x), e, List.rev(l))
+  fold_left((x, y) => f(y, x), e, List.reverse(l))
 }
 
 let copy = l => {
@@ -68,7 +64,7 @@ let copy = l => {
 list{2, 5, 6}->copy->logList2("copy")
 
 let copy_l = l => {
-  fold_left((e, a) => list{a, ...e}, list{}, List.rev(l))
+  fold_left((e, a) => list{a, ...e}, list{}, List.reverse(l))
 }
 list{2, 5, 6}->copy_l->logList2("copy_l")
 

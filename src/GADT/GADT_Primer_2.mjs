@@ -6,13 +6,13 @@ function mapOption$p(f, opt) {
     return "None'";
   } else {
     return {
-            TAG: "Some'",
-            _0: f(opt._0)
-          };
+      TAG: "Some'",
+      _0: f(opt._0)
+    };
   }
 }
 
-var a = {
+let a = {
   TAG: "Some'",
   _0: 5
 };
@@ -21,21 +21,21 @@ function inc(x) {
   return x + 1 | 0;
 }
 
-var c = mapOption$p(inc, a);
+let c = mapOption$p(inc, a);
 
-var d = mapOption$p(inc, "None'");
+let d = mapOption$p(inc, "None'");
 
-var myInt = 42;
+let myInt = 42;
 
-var myFloat = 4.2;
+let myFloat = 4.2;
 
-var myBool = false;
+let myBool = false;
 
-var myStr = "Hello";
+let myStr = "Hello";
 
-var List$p = {};
+let List$p = {};
 
-var myList = {
+let myList = {
   TAG: "Con",
   _0: 1,
   _1: {
@@ -59,11 +59,11 @@ function length(t) {
   }
 }
 
-var HList = {
+let HList = {
   length: length
 };
 
-var myHeteroList = {
+let myHeteroList = {
   TAG: "Con",
   _0: 1,
   _1: {
@@ -97,7 +97,7 @@ var myHeteroList = {
   }
 };
 
-var myListLength = length(myHeteroList);
+let myListLength = length(myHeteroList);
 
 console.log(myHeteroList, "myHeteroList");
 
@@ -115,12 +115,12 @@ function head(t) {
   return t._0;
 }
 
-var SafeList = {
+let SafeList = {
   length: length$1,
   head: head
 };
 
-var nonEmptyList = {
+let nonEmptyList = {
   TAG: "Con",
   _0: 1,
   _1: {
@@ -138,28 +138,26 @@ var nonEmptyList = {
   }
 };
 
-var sizeOfNonEmptyList = length$1(nonEmptyList);
+let sizeOfNonEmptyList = length$1(nonEmptyList);
 
-var firstElem = head(nonEmptyList);
+let firstElem = head(nonEmptyList);
 
-((function (__x) {
-        console.log(__x, "sizeOfNonEmptyList");
-      })(sizeOfNonEmptyList));
+console.log(sizeOfNonEmptyList, "sizeOfNonEmptyList");
 
 console.log(firstElem, "firstElem");
 
-var sizeOfEmptyList = length$1("Empty");
+let sizeOfEmptyList = length$1("Empty");
 
 console.log("Empty", "emptyList");
 
 console.log(sizeOfEmptyList, "sizeOfEmptyList");
 
-var one = {
+let one = {
   TAG: "Succ",
   _0: "Zero"
 };
 
-var two = {
+let two = {
   TAG: "Succ",
   _0: {
     TAG: "Succ",
@@ -167,7 +165,7 @@ var two = {
   }
 };
 
-var three = {
+let three = {
   TAG: "Succ",
   _0: two
 };
@@ -178,12 +176,12 @@ console.log(two, "two");
 
 function inc$1(pn) {
   return {
-          TAG: "Succ",
-          _0: pn
-        };
+    TAG: "Succ",
+    _0: pn
+  };
 }
 
-var three_ = {
+let three_ = {
   TAG: "Succ",
   _0: {
     TAG: "Succ",
@@ -194,7 +192,7 @@ var three_ = {
   }
 };
 
-var three__ = {
+let three__ = {
   TAG: "Succ",
   _0: two
 };
@@ -203,37 +201,33 @@ function dec(pn) {
   return pn._0;
 }
 
-var one_ = {
+let one_ = {
   TAG: "Succ",
   _0: "Zero"
 };
 
 function isEqual(_i, _j) {
-  while(true) {
-    var j = _j;
-    var i = _i;
+  while (true) {
+    let j = _j;
+    let i = _i;
     if (typeof i !== "object") {
-      if (typeof j !== "object") {
-        return true;
-      } else {
-        return false;
-      }
+      return typeof j !== "object";
     }
     if (typeof j !== "object") {
       return false;
     }
     _j = j._0;
     _i = i._0;
-    continue ;
+    continue;
   };
 }
 
-var isTwoEqualToOne = isEqual(one, two);
+let isTwoEqualToOne = isEqual(one, two);
 
-var isThreeEqualToSuccTwo = isEqual({
-      TAG: "Succ",
-      _0: two
-    }, three);
+let isThreeEqualToSuccTwo = isEqual({
+  TAG: "Succ",
+  _0: two
+}, three);
 
 console.log(isTwoEqualToOne, "isTwoEqualToOne");
 
@@ -247,12 +241,12 @@ function $$eval(pn) {
   }
 }
 
-var threeValue = $$eval(three);
+let threeValue = $$eval(three);
 
-var fourValue = $$eval({
-      TAG: "Succ",
-      _0: three
-    });
+let fourValue = $$eval({
+  TAG: "Succ",
+  _0: three
+});
 
 console.log(threeValue, "threeValue");
 
@@ -273,26 +267,26 @@ function pop(l) {
 function push(l, v) {
   if (typeof l !== "object") {
     return {
-            TAG: "Con",
-            _0: v,
-            _1: "Empty"
-          };
+      TAG: "Con",
+      _0: v,
+      _1: "Empty"
+    };
   } else {
     return {
-            TAG: "Con",
-            _0: v,
-            _1: l
-          };
+      TAG: "Con",
+      _0: v,
+      _1: l
+    };
   }
 }
 
-var LengthList = {
+let LengthList = {
   length: length$2,
   pop: pop,
   push: push
 };
 
-var twoElemList = {
+let twoElemList = {
   TAG: "Con",
   _0: 1,
   _1: {
@@ -302,9 +296,9 @@ var twoElemList = {
   }
 };
 
-var threeElemList = push(twoElemList, 3);
+let threeElemList = push(twoElemList, 3);
 
-var oneElemList = pop(pop(threeElemList));
+let oneElemList = pop(pop(threeElemList));
 
 console.log(twoElemList, "twoElemList");
 
@@ -314,54 +308,54 @@ console.log(oneElemList, "oneElemList");
 
 function push_(l, v) {
   return {
-          hd: v,
-          tl: /* [] */0
-        };
+    hd: v,
+    tl: /* [] */0
+  };
 }
 
-var b = "None'";
+let b = "None'";
 
-var emptyList = "Empty";
+let emptyList = "Empty";
 
 export {
-  mapOption$p ,
-  a ,
-  b ,
-  c ,
-  d ,
-  myInt ,
-  myFloat ,
-  myBool ,
-  myStr ,
-  List$p ,
-  myList ,
-  HList ,
-  myHeteroList ,
-  myListLength ,
-  SafeList ,
-  nonEmptyList ,
-  sizeOfNonEmptyList ,
-  firstElem ,
-  emptyList ,
-  sizeOfEmptyList ,
-  one ,
-  two ,
-  three ,
+  mapOption$p,
+  a,
+  b,
+  c,
+  d,
+  myInt,
+  myFloat,
+  myBool,
+  myStr,
+  List$p,
+  myList,
+  HList,
+  myHeteroList,
+  myListLength,
+  SafeList,
+  nonEmptyList,
+  sizeOfNonEmptyList,
+  firstElem,
+  emptyList,
+  sizeOfEmptyList,
+  one,
+  two,
+  three,
   inc$1 as inc,
-  three_ ,
-  three__ ,
-  dec ,
-  one_ ,
-  isEqual ,
-  isTwoEqualToOne ,
-  isThreeEqualToSuccTwo ,
-  $$eval ,
-  threeValue ,
-  fourValue ,
-  LengthList ,
-  twoElemList ,
-  threeElemList ,
-  oneElemList ,
-  push_ ,
+  three_,
+  three__,
+  dec,
+  one_,
+  isEqual,
+  isTwoEqualToOne,
+  isThreeEqualToSuccTwo,
+  $$eval,
+  threeValue,
+  fourValue,
+  LengthList,
+  twoElemList,
+  threeElemList,
+  oneElemList,
+  push_,
 }
 /* c Not a pure module */

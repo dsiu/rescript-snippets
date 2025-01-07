@@ -10,29 +10,27 @@ function ask() {
 }
 
 function from(a) {
-  return function (param) {
-    return a;
-  };
+  return param => a;
 }
 
 function map(fa, f) {
-  return function (r) {
-    var match = fa(r);
+  return r => {
+    let match = fa(r);
     return [
-            f(match[0]),
-            match[1]
-          ];
+      f(match[0]),
+      match[1]
+    ];
   };
 }
 
 function chain(fa, f) {
-  return function (r) {
-    var match = fa(r);
+  return r => {
+    let match = fa(r);
     return f(match[0])(match[1]);
   };
 }
 
-var State = {
+let State = {
   ask: ask,
   asks: identity,
   from: from,
@@ -40,15 +38,15 @@ var State = {
   chain: chain
 };
 
-var asks = identity;
+let asks = identity;
 
 export {
-  identity ,
-  State ,
-  ask ,
-  asks ,
-  from ,
-  map ,
-  chain ,
+  identity,
+  State,
+  ask,
+  asks,
+  from,
+  map,
+  chain,
 }
 /* No side effect */

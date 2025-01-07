@@ -6,13 +6,13 @@ function mapOption$p(f, opt) {
     return "None'";
   } else {
     return {
-            TAG: "Some'",
-            _0: f(opt._0)
-          };
+      TAG: "Some'",
+      _0: f(opt._0)
+    };
   }
 }
 
-var a = {
+let a = {
   TAG: "Some'",
   _0: 5
 };
@@ -21,27 +21,27 @@ function inc(x) {
   return x + 1 | 0;
 }
 
-var c = mapOption$p(inc, a);
+let c = mapOption$p(inc, a);
 
-var d = mapOption$p(inc, "None'");
+let d = mapOption$p(inc, "None'");
 
 function $$eval(a) {
   return a.VAL;
 }
 
-var myInt = 42;
+let myInt = 42;
 
-var myFloat = 4.2;
+let myFloat = 4.2;
 
-var myBool = false;
+let myBool = false;
 
-var myStr = "Hello";
+let myStr = "Hello";
 
-var List$p = {};
+let List$p = {};
 
-var HList = {};
+let HList = {};
 
-var myHList = {
+let myHList = {
   TAG: "Cons",
   _0: 1,
   _1: {
@@ -57,9 +57,9 @@ var myHList = {
 
 console.log(myHList);
 
-var b = "None'";
+let b = "None'";
 
-var myList = {
+let myList = {
   TAG: "Con",
   _0: 1,
   _1: {
@@ -73,7 +73,7 @@ var myList = {
   }
 };
 
-var hList = [
+let hList = [
   1,
   [
     "Hello",
@@ -85,21 +85,21 @@ var hList = [
 ];
 
 export {
-  mapOption$p ,
-  a ,
-  b ,
-  inc ,
-  c ,
-  d ,
-  $$eval ,
-  myInt ,
-  myFloat ,
-  myBool ,
-  myStr ,
-  List$p ,
-  myList ,
-  HList ,
-  myHList ,
-  hList ,
+  mapOption$p,
+  a,
+  b,
+  inc,
+  c,
+  d,
+  $$eval,
+  myInt,
+  myFloat,
+  myBool,
+  myStr,
+  List$p,
+  myList,
+  HList,
+  myHList,
+  hList,
 }
 /* c Not a pure module */

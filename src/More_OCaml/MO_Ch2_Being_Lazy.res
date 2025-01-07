@@ -1,13 +1,13 @@
 // Chapter 1
 // Being Lazy
 
-module List = Js.List
+//module List = Js.List
 
 // utils
 let log = Js.log
-let logList = l => l->List.toVector->log
+let logList = l => l->List.toArray->log
 let log2 = (x, y) => Js.log2(y, x)
-let logList2 = (l, str) => l->List.toVector->log2(str)
+let logList2 = (l, str) => l->List.toArray->log2(str)
 
 // lazy list type
 type rec lazylist<'a> = Cons('a, unit => lazylist<'a>)

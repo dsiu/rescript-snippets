@@ -87,7 +87,7 @@ module FloatRing: Ring = {
 
   let \"*" = \"*."
 
-  let to_string = string_of_float
+  let to_string = Float.toString(_)
 
   let of_int = n => float_of_int(n)
 }
@@ -107,7 +107,7 @@ module FloatField: Field = {
 
   let \"/" = \"/."
 
-  let to_string = string_of_float
+  let to_string = Float.toString(_)
 
   let of_int = n => float_of_int(n)
 }
@@ -147,7 +147,7 @@ module FloatRational: Field = {
 
   let \"*" = ((a, b), (c, d)) => (a *. c, b *. d)
 
-  let to_string = ((a, b)) => string_of_float(a) ++ "/" ++ string_of_float(b)
+  let to_string = ((a, b)) => Float.toString(a) ++ "/" ++ Float.toString(b)
 
   let of_int = n => (float_of_int(n), 1.)
 }

@@ -21,19 +21,19 @@ function not_(b) {
   return b(false_, true_);
 }
 
-var prim = true_(false_, true_)("true", "false");
+let prim = true_(false_, true_)("true", "false");
 
 console.log(prim);
 
-var prim$1 = false_(false_, true_)("true", "false");
+let prim$1 = false_(false_, true_)("true", "false");
 
 console.log(prim$1);
 
 export {
-  log ,
-  log2 ,
-  true_ ,
-  false_ ,
-  not_ ,
+  log,
+  log2,
+  true_,
+  false_,
+  not_,
 }
 /* prim Not a pure module */

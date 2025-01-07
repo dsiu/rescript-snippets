@@ -14,10 +14,10 @@ function map(l, f) {
     return "Empty";
   } else {
     return {
-            TAG: "Node",
-            val: f(l.val),
-            next: map(l.next, f)
-          };
+      TAG: "Node",
+      val: f(l.val),
+      next: map(l.next, f)
+    };
   }
 }
 
@@ -33,36 +33,36 @@ function append(l, r) {
   if (typeof l !== "object") {
     return r;
   }
-  var val = l.val;
-  var next = l.next;
+  let val = l.val;
+  let next = l.next;
   return {
-          TAG: "Node",
-          val: val,
-          next: append(next, r)
-        };
+    TAG: "Node",
+    val: val,
+    next: append(next, r)
+  };
 }
 
 function append_(_l, r) {
-  while(true) {
-    var l = _l;
+  while (true) {
+    let l = _l;
     if (typeof l !== "object") {
-      return ;
+      return;
     }
-    var next = l.next;
+    let next = l.next;
     if (typeof next !== "object") {
       l.next = r;
-      return ;
+      return;
     }
     _l = next;
-    continue ;
+    continue;
   };
 }
 
 export {
-  length ,
-  map ,
-  sum ,
-  append ,
-  append_ ,
+  length,
+  map,
+  sum,
+  append,
+  append_,
 }
 /* No side effect */

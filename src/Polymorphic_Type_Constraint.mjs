@@ -14,8 +14,8 @@ function fst(a, param) {
 }
 
 export {
-  id2 ,
-  id1 ,
-  fst ,
+  id2,
+  id1,
+  fst,
 }
 /* No side effect */

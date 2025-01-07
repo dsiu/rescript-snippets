@@ -21,77 +21,73 @@ function g(x) {
 
 function f$p(x) {
   return [
-          x + 2.0,
-          "f was called."
-        ];
+    x + 2.0,
+    "f was called."
+  ];
 }
 
 function g$p(x) {
   return [
-          x * 3.0,
-          "g was called."
-        ];
+    x * 3.0,
+    "g was called."
+  ];
 }
 
 function f$pg$p(x) {
-  var match = g$p(x);
-  var match$1 = f$p(match[0]);
+  let match = g$p(x);
+  let match$1 = f$p(match[0]);
   return [
-          match$1[0],
-          match[1] + match$1[1]
-        ];
+    match$1[0],
+    match[1] + match$1[1]
+  ];
 }
 
-var prim0 = f$pg$p(1.0);
+let prim0 = f$pg$p(1.0);
 
 console.log(prim0, "f'g'(1.0) = ");
 
 function bind(f, param) {
-  var match = f$p(param[0]);
+  let match = f$p(param[0]);
   return [
-          match[0],
-          param[1] + match[1]
-        ];
+    match[0],
+    param[1] + match[1]
+  ];
 }
 
-var prim0$1 = bind(f$p, [
-      1.0 * 3.0,
-      "g was called."
-    ]);
+let prim0$1 = bind(f$p, [
+  1.0 * 3.0,
+  "g was called."
+]);
 
-console.log(prim0$1, "bind(f')(g'(1.0)) = ");
+console.log(prim0$1, "bind(f',g'(1.0)) = ");
 
-var prim0$2 = bind(g$p, [
-      1.0 + 2.0,
-      "f was called."
-    ]);
+let prim0$2 = bind(g$p, [
+  1.0 + 2.0,
+  "f was called."
+]);
 
-console.log(prim0$2, "bind(g')(f'(1.0)) = ");
+console.log(prim0$2, "bind(g',f'(1.0)) = ");
 
-var prim0$3 = Stdlib__Function.compose(g$p, (function (__x) {
-        return bind(f$p, __x);
-      }), 1.0);
+let prim0$3 = Stdlib__Function.compose(g$p, __x => bind(f$p, __x), 1.0);
 
 console.log(prim0$3, "compose(g', bind(f'))(1.0) = ");
 
-var prim0$4 = Stdlib__Function.compose(f$p, (function (__x) {
-        return bind(g$p, __x);
-      }), 1.0);
+let prim0$4 = Stdlib__Function.compose(f$p, __x => bind(g$p, __x), 1.0);
 
 console.log(prim0$4, "compose(g', bind(f'))(1.0) = ");
 
 function unit(x) {
   return [
-          x,
-          ""
-        ];
+    x,
+    ""
+  ];
 }
 
 function lift(f, x) {
   return [
-          f(x),
-          ""
-        ];
+    f(x),
+    ""
+  ];
 }
 
 function lift$p(__x) {
@@ -99,24 +95,27 @@ function lift$p(__x) {
 }
 
 function liftThenCompose(x) {
-  return bind((function (extra) {
-                return lift(f, extra);
-              }), (function (extra) {
-                  return lift(g, extra);
-                })(x));
+  return bind(extra => [
+    extra + 2.0,
+    ""
+  ], [
+    x * 3.0,
+    ""
+  ]);
 }
 
 function composeLifted(extra) {
-  return lift((function (extra) {
-                return Stdlib__Function.compose(g, f, extra);
-              }), extra);
+  return [
+    Stdlib__Function.compose(g, f, extra),
+    ""
+  ];
 }
 
-var prim0$5 = liftThenCompose(13.0);
+let prim0$5 = liftThenCompose(13.0);
 
 console.log(prim0$5, "liftThenCompose(13.0) = ");
 
-var prim0$6 = composeLifted(13.0);
+let prim0$6 = composeLifted(13.0);
 
 console.log(prim0$6, "composeLifted(13.0) = ");
 
@@ -130,25 +129,25 @@ function cbrt(x) {
 
 function sqrt$p(x) {
   return {
-          hd: sqrt(x),
-          tl: {
-            hd: sqrt(x + 1.0),
-            tl: /* [] */0
-          }
-        };
+    hd: sqrt(x),
+    tl: {
+      hd: sqrt(x + 1.0),
+      tl: /* [] */0
+    }
+  };
 }
 
 function cbrt$p(x) {
   return {
-          hd: cbrt(x),
-          tl: {
-            hd: cbrt(x + 1.0),
-            tl: {
-              hd: cbrt(x + 2.0),
-              tl: /* [] */0
-            }
-          }
-        };
+    hd: cbrt(x),
+    tl: {
+      hd: cbrt(x + 1.0),
+      tl: {
+        hd: cbrt(x + 2.0),
+        tl: /* [] */0
+      }
+    }
+  };
 }
 
 function bindComplex(f, x) {
@@ -157,37 +156,37 @@ function bindComplex(f, x) {
 
 function unitComplex(x) {
   return {
-          hd: x,
-          tl: /* [] */0
-        };
+    hd: x,
+    tl: /* [] */0
+  };
 }
 
-var prim0$7 = Stdlib__List.toArray(bindComplex(sqrt$p, cbrt$p(2.0)));
+let prim0$7 = Stdlib__List.toArray(bindComplex(sqrt$p, cbrt$p(2.0)));
 
 console.log(prim0$7, "ddd");
 
-var compose = Stdlib__Function.compose;
+let compose = Stdlib__Function.compose;
 
 export {
-  log ,
-  log2 ,
-  compose ,
-  f ,
-  g ,
-  f$p ,
-  g$p ,
-  f$pg$p ,
-  bind ,
-  unit ,
-  lift ,
-  lift$p ,
-  liftThenCompose ,
-  composeLifted ,
-  sqrt ,
-  cbrt ,
-  sqrt$p ,
-  cbrt$p ,
-  bindComplex ,
-  unitComplex ,
+  log,
+  log2,
+  compose,
+  f,
+  g,
+  f$p,
+  g$p,
+  f$pg$p,
+  bind,
+  unit,
+  lift,
+  lift$p,
+  liftThenCompose,
+  composeLifted,
+  sqrt,
+  cbrt,
+  sqrt$p,
+  cbrt$p,
+  bindComplex,
+  unitComplex,
 }
 /* prim0 Not a pure module */

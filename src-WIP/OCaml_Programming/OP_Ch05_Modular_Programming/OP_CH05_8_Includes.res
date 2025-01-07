@@ -6,23 +6,22 @@
 // copy-and-paste that is quick and easy to use, but avoids actual duplication. It can be used
 // to solve some of the same problems as inheritance in object-oriented languages.
 
-@@uncurried
-@@uncurried.swap
+open Stdlib
 
 module type Set = {
   type t<'a>
   let empty: t<'a>
-  let mem: (. 'a, t<'a>) => bool
-  let add: (. 'a, t<'a>) => t<'a>
+  let mem: ('a, t<'a>) => bool
+  let add: ('a, t<'a>) => t<'a>
   let elements: t<'a> => list<'a>
 }
 
 module ListSet: Set = {
   type t<'a> = list<'a>
   let empty = list{}
-  let mem = List.mem
-  let add = List.cons
-  let elements = s => List.sort_uniq(Pervasives.compare, s)
+  let mem = (x, xs) => List.has(xs, x, (a, b) => a == b)
+  let add = (x, xs) => List.cons(xs, x)
+  let elements = s => List.sort(s, (a, b) => Pervasives.compare(a, b)->Ordering.fromInt)
 }
 
 // Suppose we wanted to add a function of_list : 'a list -> 'a t that could construct a set out
@@ -37,7 +36,7 @@ module ListSet: Set = {
 //
 module ListSetExtended_ = {
   include ListSet
-  let of_list = lst => List.fold_right(add, lst, empty)
+  let of_list = lst => List.reduceReverse(empty, lst, add)
 }
 
 // 5.8.1. Semantics of Includes

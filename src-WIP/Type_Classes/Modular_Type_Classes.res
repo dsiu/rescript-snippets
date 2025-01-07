@@ -85,7 +85,7 @@ test_ord_int_int->Js.log
 // This section begins with the Show type-class.
 module type SHOW = {
   type t
-  let show: (. t) => string
+  let show: t => string
 }
 
 // In what follows, it is convenient to make an alias for module values of this type.
@@ -99,7 +99,7 @@ module Show_int: SHOW with type t = int = {
 
 module Show_bool: SHOW with type t = bool = {
   type t = bool
-  let show = (. x) =>
+  let show = x =>
     switch x {
     | true => "True"
     | false => "False"
@@ -114,7 +114,7 @@ let show_bool: show_impl<bool> = module(Show_bool: SHOW with type t = bool)
 // first parametrically polymorphic function.
 let print: (show_impl<'a>, 'a) => unit = (type a, show: show_impl<a>, x: a) => {
   module Show = unpack(show: SHOW with type t = a)
-  \"@@"(print_endline, Show.show(x))
+  \"@@"(Console.log, Show.show(x))
 }
 let test_print_1: unit = print(show_bool, true)
 let test_print_2: unit = print(show_int, 3)
@@ -194,7 +194,7 @@ module type LIST_SHOW = (X: SHOW) => (SHOW with type t = list<X.t>)
 module List_show: LIST_SHOW = (X: SHOW) => {
   type t = list<X.t>
 
-  let show = (. xs) => {
+  let show = xs => {
     let rec go = (first, x) =>
       switch x {
       | list{} => "]"
@@ -218,7 +218,7 @@ let show_list: show_impl<'a> => show_impl<list<'a>> = (type a, show: show_impl<a
   module(
     {
       type t = list<a>
-      let show: (. t) => string = xs => {
+      let show: t => string = xs => {
         let rec go = (first, x) =>
           switch x {
           | list{} => "]"
@@ -248,7 +248,7 @@ module type MUL = {
   include EQ
   include NUM with type t := t
 
-  let mul: (. t, t) => t
+  let mul: (t, t) => t
 }
 
 type mul_impl<'a> = module(MUL with type t = 'a)
@@ -261,7 +261,7 @@ module Mul_default: MUL_F = (E: EQ, N: NUM with type t = E.t) => {
   include (E: EQ with type t = E.t)
   include (N: NUM with type t := E.t)
 
-  let mul: (. t, t) => t = {
+  let mul: (t, t) => t = {
     let rec loop = (x, y) =>
       switch () {
       | () if eq(x, from_int(0)) => from_int(0)

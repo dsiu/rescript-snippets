@@ -7,7 +7,7 @@
 @@uncurried.swap
 
 @@warning("-3-32")
-open RescriptCore
+open Stdlib
 
 /*
   There is this blog post by Caltech computer scientist, Mike Vanier. The code in Mike's article uses the Scheme
@@ -48,12 +48,12 @@ let rec fact = n => {
 //
 // https://gist.github.com/dhil/55cf406865209ab945d8ba1484ea615c
 
-type rec fix<'a> = Fix((. fix<'a>) => 'a)
+type rec fix<'a> = Fix(fix<'a> => 'a)
 
-let fix = (. x) => Fix(x)
-let unfix = (. Fix(x)) => x
+let fix = x => Fix(x)
+let unfix = (Fix(x)) => x
 
-let y: 'a 'b. (. ('a => 'b, 'a) => 'b, 'a) => 'b = (. f) => {
+let y: 'a 'b. (('a => 'b, 'a) => 'b, 'a) => 'b = f => {
   let g = x => a => f(unfix(x)(x), a)
 
   g(fix(g))

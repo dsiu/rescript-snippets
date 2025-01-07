@@ -1,10 +1,10 @@
 // https://cs3110.github.io/textbook/chapters/modules/functors.html
 //
-@@uncurried
-@@uncurried.swap
 
 let log = Js.log
 let log2 = Js.log2
+
+open Stdlib
 
 module type X = {
   let x: int
@@ -22,8 +22,8 @@ module A = {
 
 module B = IncX(A)
 module C = IncX(B)
-B.x->(log2("B.x", _))
-C.x->(log2("C.x", _))
+B.x->log2("B.x", _)
+C.x->log2("C.x", _)
 
 module AddX = (M: X) => {
   let add = y => M.x + y
@@ -33,7 +33,7 @@ module Add42 = AddX({
   let x = 42
 })
 
-Add42.add(1)->(log2("Add42.add(1)", _))
+Add42.add(1)->log2("Add42.add(1)", _)
 // Note that the input module to AddX contains a value named x, but the output module from
 // AddX does not
 
@@ -229,7 +229,7 @@ exception Empty
 module type Stack = {
   type t<'a>
   let empty: t<'a>
-  let push: (. 'a, t<'a>) => t<'a>
+  let push: ('a, t<'a>) => t<'a>
   let peek: t<'a> => 'a
   let pop: t<'a> => t<'a>
 }
@@ -237,7 +237,7 @@ module type Stack = {
 module ListStack = {
   type t<'a> = list<'a>
   let empty = list{}
-  let push = List.cons
+  let push = (x, xs) => List.cons(xs, x)
   let peek = s => {
     switch s {
     | list{} => raise(Empty)
@@ -257,7 +257,7 @@ module VariantStack = {
     | E
     | S('a, t<'a>)
   let empty = E
-  let push = (. x, s) => S(x, s)
+  let push = (x, s) => S(x, s)
   let peek = s => {
     switch s {
     | E => raise(Empty)
@@ -274,12 +274,12 @@ module VariantStack = {
 
 {
   open ListStack
-  (empty->push(1, _)->peek === 1)->log
+  (empty->(push(1, _))->peek === 1)->log
 }
 // Unfortunately, to test a VariantStack, we’d have to duplicate that code:
 {
   open VariantStack
-  (empty->push(1, _)->peek === 1)->log
+  (empty->(push(1, _))->peek === 1)->log
 }
 
 // And if we had other stack implementations, we’d have to duplicate the test for them, too. That’s
@@ -292,7 +292,7 @@ module VariantStack = {
 
 module StackTester = (S: Stack) => {
   open S
-  let tests = empty->push(1, _)->peek === 1
+  let tests = empty->(push(1, _))->peek === 1
 }
 module ListStackTester = StackTester(ListStack)
 module VariantStackTester = StackTester(VariantStack)
@@ -312,7 +312,7 @@ let tests = m => {
   T.tests
 }
 
-List.map(tests, stacks)->log
+List.map(stacks, tests)->log
 // Now it suffices just to add the newest stack implementation to the stacks list. Nicer!
 
 //
@@ -328,8 +328,8 @@ List.map(tests, stacks)->log
 module type Set = {
   type t<'a>
   let empty: t<'a>
-  let mem: (. 'a, t<'a>) => bool
-  let add: (. 'a, t<'a>) => t<'a>
+  let mem: ('a, t<'a>) => bool
+  let add: ('a, t<'a>) => t<'a>
   let elements: t<'a> => list<'a>
 }
 
@@ -358,7 +358,7 @@ module UniqListSet: Set = {
   type t<'a> = list<'a>
   let empty = list{}
   let mem = List.mem
-  let add = (. x, s) => {
+  let add = (x, s) => {
     mem(x, s) ? s : list{x, ...s}
   }
   let elements = Stdlib.Function.identity

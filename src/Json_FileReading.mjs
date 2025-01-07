@@ -2,13 +2,13 @@
 
 import * as PackageJson from "../package.json";
 
-var $$package = PackageJson;
+let $$package = PackageJson;
 
-Object.keys($$package.dependencies).forEach(function (prim) {
-      console.log(prim);
-    });
+Object.keys($$package.dependencies).forEach(prim => {
+  console.log(prim);
+});
 
 export {
-  $$package ,
+  $$package,
 }
 /* package Not a pure module */

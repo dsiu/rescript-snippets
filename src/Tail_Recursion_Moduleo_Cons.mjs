@@ -18,17 +18,17 @@ function map(f, l) {
   if (!l) {
     return /* [] */0;
   }
-  var y = f(l.hd);
+  let y = f(l.hd);
   return {
-          hd: y,
-          tl: map(f, l.tl)
-        };
+    hd: y,
+    tl: map(f, l.tl)
+  };
 }
 
 export {
-  log ,
-  g ,
-  f ,
-  map ,
+  log,
+  g,
+  f,
+  map,
 }
 /* No side effect */

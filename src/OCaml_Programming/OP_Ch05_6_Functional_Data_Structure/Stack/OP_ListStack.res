@@ -1,5 +1,4 @@
-@@uncurried
-@@uncurried.swap
+open Stdlib
 
 module M: OP_Stack.S = {
   type t<'a> = list<'a>
@@ -10,7 +9,7 @@ module M: OP_Stack.S = {
     | list{} => true
     | _ => false
     }
-  let push = List.cons
+  let push = (x, xs) => List.cons(xs, x)
   let peek = x =>
     switch x {
     | list{} => raise(Empty)
@@ -22,5 +21,5 @@ module M: OP_Stack.S = {
     | list{_, ...s} => s
     }
   let size = List.length
-  let to_list = Stdlib.Function.identity
+  let to_list = Function.identity
 }
