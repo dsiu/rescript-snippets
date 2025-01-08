@@ -25,7 +25,6 @@
   "ppx-flags": [
   ],
   "bs-dependencies": [
-    "bs-fetch",
     "rescript-nodejs",
     "js-array2-ex",
     "@dsiu/rescript-stdlib-fp",

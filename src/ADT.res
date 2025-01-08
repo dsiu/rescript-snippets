@@ -42,7 +42,7 @@ type rec seq =
 let rec append = (l, r) => {
   switch l {
   | Empty => r
-  | Node({val, next}) => Node({val: val, next: append(next, r)})
+  | Node({val, next}) => Node({val, next: append(next, r)})
   }
 }
 
