@@ -15,3 +15,6 @@ npm-debug.log
 !.yarn/sdks
 !.yarn/versions
 /coverage/
+/lib/ocaml/.compiler.log
+/lib/ocaml/.ninja_log
+/lib/ocaml/install.stamp
