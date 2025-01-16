@@ -45,10 +45,10 @@
     "rescript-test": "git+https://github.com/dsiu/rescript-test#rescript-v12"
   },
   "dependencies": {
-    "@dsiu/rescript-bag": "*",
-    "@dsiu/rescript-stdlib-fp": "*",
-    "@jmagaram/rescript-extras": "*",
-    "@jmagaram/rescript-seq": "*",
+    "@dsiu/rescript-bag": "workspace:^",
+    "@dsiu/rescript-stdlib-fp": "workspace:^",
+    "@jmagaram/rescript-extras": "workspace:^",
+    "@jmagaram/rescript-seq": "workspace:^",
     "@mobily/rescript-date": "^2.1.0",
     "add": "^2.0.6",
     "d3": "^7.9.0",
