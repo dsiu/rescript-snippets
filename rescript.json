@@ -29,7 +29,10 @@
     "js-array2-ex",
     "@dsiu/rescript-stdlib-fp",
     "@jmagaram/rescript-extras",
-    "@jmagaram/rescript-seq"
+    "@jmagaram/rescript-seq",
+    "rescript-bastet",
+    "rescript-relude",
+    "rescript-relude-parse"
   ],
   "bs-dev-dependencies": [
     "rescript-test",

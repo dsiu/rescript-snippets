@@ -14,6 +14,7 @@ open P.Infix
 
 type t = IPv4(int, int, int, int)
 let make = (a, b, c, d) => IPv4(a, b, c, d)
+let makeCurried = a=> b=> c=> d => IPv4(a, b, c, d)
 
 // Using a tuple and mapTuple4
 // parse a short (up to 255) and the dot separators
@@ -41,7 +42,7 @@ let parseWithNestedFlatMaps =
           P.str(".")->\">>="(
             _ =>
               P.anyPositiveShort->\">>="(
-                c => P.str(".")->\">>="(_ => P.anyPositiveShort->\"<#>"(d => make(a, b, c, d))),
+                c => P.str(".")->\">>="(_ => P.anyPositiveShort->\"<$$>"(d => make(a, b, c, d))),
               ),
           ),
       )
@@ -62,7 +63,7 @@ parseWithNestedFlatMaps->P.runParser("127.0.0.1", _)->log2("with nested flatMaps
 // until we finally collect the 4 args.
 // The `<* str(".")` reads a ".", but throw it away.
 let parseWithMonadicFlow =
-  make
+  makeCurried
   ->\"<$>"(P.anyPositiveShort) // collect a positive short
   ->\"<*"(P.str(".")) // read and ignore .
   ->\"<*>"(P.anyPositiveShort) // collect a positive short

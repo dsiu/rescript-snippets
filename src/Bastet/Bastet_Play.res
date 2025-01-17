@@ -4,6 +4,7 @@
 @@uncurried
 @@uncurried.swap
 
+module CoreString = String
 open BsBastet
 
 let log = Js.log
@@ -37,7 +38,7 @@ let fmap_add = Functors.ArrayF.Int.Additive.Fold_Map.fold_map
 
 let trim_all = strings => {
   open List.Infix
-  (s => StringLabels.trim(s))->\"<$>"(strings)
+  (s => CoreString.trim(s))->\"<$>"(strings)
 }
 trim_all(list{"foo   ", "bar", "    baz"})->log
 
