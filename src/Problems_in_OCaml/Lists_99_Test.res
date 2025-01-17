@@ -1,48 +1,64 @@
-open Test
-open Test_Utils
+open Jest
+open Expect
 
 open Lists_99
 
 @@warning("-26")
-test("1. last", () => {
-  optionEqual(list{"a", "b", "c", "d"}->last, Some("d"))
-  optionEqual(list{}->last, None)
+describe("List_99", () => {
+  let test1 = list{(list{"a", "b", "c", "d"}->last, Some("d")), (list{}->last, None)}
+  testAll("1. last", test1, ((result, expected)) => {
+    expect(result)->toEqual(expected)
+  })
+
+  let test2 = list{
+    (list{"a", "b", "c", "d"}->last_two, Some(list{"c", "d"})),
+    (list{"a"}->last_two, (None)),
+  }
+
+  testAll("2. last_two", test2, ((result, expected)) => {
+    expect(result)->toEqual(expected)
+  })
+
+  let test3 = list{list{"a", "b", "c", "d", "e"}->at(3), Some("c"), list{"a"}->at(3), None}
+
+  testAll("3. at", test3, ((result, expected)) => {
+    expect(result)->toEqual(expected)
+  })
+
+
+  let test4 = list{
+  (list{"a", "b", "c", "d", "e"}->length), (5),
+  (list{"a"}->length), (1),
+  (list{}->length), (0),
+  }
+
+  testAll("4. length", test4, ((result, expected)) => {
+  expect(result)->toEqual(expected)
+
 })
 
-test("2. last_two", () => {
-  optionListEqual(list{"a", "b", "c", "d"}->last_two, Some(list{"c", "d"}))
-  optionListEqual(list{"a"}->last_two, None)
-})
 
-test("3. at", () => {
-  optionEqual(list{"a", "b", "c", "d", "e"}->at(3), Some("c"))
-  optionEqual(list{"a"}->at(3), None)
-})
-
-test("4. length", () => {
-  intEqual(list{"a", "b", "c", "d", "e"}->length, 5)
-  intEqual(list{"a"}->length, 1)
-  intEqual(list{}->length, 0)
-})
 
 test("5. rev", () => {
-  listEqual(list{"a", "b", "c", "d", "e"}->rev, list{"e", "d", "c", "b", "a"})
-  listEqual(list{}->rev, list{})
+  expect(list{"a", "b", "c", "d", "e"}->rev)->toEqual(list{"e", "d", "c", "b", "a"})
+  expect(list{}->rev)->toEqual(list{})
 })
 
 test("6. is_palindrome", () => {
-  boolEqual(list{"x", "a", "m", "a", "x"}->is_palindrome, true)
-  boolEqual(list{"a", "b", "c"}->is_palindrome, false)
-  boolEqual(list{"a"}->is_palindrome, true)
-  boolEqual(list{}->is_palindrome, true)
-  //  listEqual(list{}->rev, list{})
+  expect(list{"x", "a", "m", "a", "x"}->is_palindrome)->toEqual(true)
+  expect(list{"a", "b", "c"}->is_palindrome)->toEqual(false)
+  expect(list{"a"}->is_palindrome)->toEqual(true)
+  expect(list{}->is_palindrome)->toEqual(true)
+  //  expect(list{}->rev)->toEqual(list{})
 })
 
 test("7. flatten", () => {
-  listEqual(
-    list{One("a"), Many(list{One("b"), Many(list{One("c"), One("d")}), One("e")})}->flatten,
-    list{"a", "b", "c", "d", "e"},
-  )
+  expect(
+    Belt.List.eq(
+      list{One("a"), Many(list{One("b"), Many(list{One("c"), One("d")}), One("e")})}->flatten,
+      list{"a", "b", "c", "d", "e"},
+    ),
+  )->toEqual(true)
 })
 
 test("8. compress", () => {
@@ -124,45 +140,45 @@ test("13. encode", () => {
 test("14. duplicate", () => {
   let result = list{"a", "b", "c", "c", "d"}->duplicate
   let expected = list{"a", "a", "b", "b", "c", "c", "c", "c", "d", "d"}
-  listEqual(result, expected)
+  expect(result)->toEqual(expected)
 })
 
 test("15. replicate", () => {
   let result = replicate(list{"a", "b", "c"}, 3)
   let expected = list{"a", "a", "a", "b", "b", "b", "c", "c", "c"}
-  listEqual(result, expected)
+  expect(result)->toEqual(expected)
 })
 
 test("16. drop", () => {
   let result = list{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}->drop(3)
   let expected = list{"a", "b", "d", "e", "g", "h", "j"}
-  listEqual(result, expected)
+  expect(result)->toEqual(expected)
 })
 
 test("17. split", () => {
   let (r1, r2) = list{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}->split(3)
   let e1 = list{"a", "b", "c"}
   let e2 = list{"d", "e", "f", "g", "h", "i", "j"}
-  listEqual(r1, e1)
-  listEqual(r2, e2)
+  expect(r1)->toEqual(e1)
+  expect(r2)->toEqual(e2)
 })
 
 test("18. slice", () => {
   let result = list{"a", "b", "c", "d", "e", "f", "g", "h", "i", "j"}->slice(2, 6)
   let expected = list{"c", "d", "e", "f", "g"}
-  listEqual(result, expected)
+  expect(result)->toEqual(expected)
 })
 
 test("19. rotate", () => {
   let result = list{"a", "b", "c", "d", "e", "f", "g", "h"}->rotate(3)
   let expected = list{"d", "e", "f", "g", "h", "a", "b", "c"}
-  listEqual(result, expected)
+  expect(result)->toEqual(expected)
 })
 
 test("20. remove_at", () => {
   let result = list{"a", "b", "c", "d"}->remove_at(1)
   let expected = list{"a", "c", "d"}
-  listEqual(result, expected)
+  expect(result)->toEqual(expected)
 })
 
 test("21. insert_at", () => {
