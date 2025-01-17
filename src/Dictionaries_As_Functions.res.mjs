@@ -22,7 +22,7 @@ function find(d, k) {
   return d(k);
 }
 
-let despicable = add(add(add(empty, "Felonius Gru", 53), "Dave the Minion", -2147483648), "Dr. Nefario", 80);
+let despicable = add(add(add(empty, "Felonius Gru", 53), "Dave the Minion", 4500), "Dr. Nefario", 80);
 
 let x = despicable("Dave the Minion");
 

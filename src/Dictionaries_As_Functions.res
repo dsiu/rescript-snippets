@@ -39,12 +39,12 @@ let find = (d: dict<'a, 'b>, k: 'a): option<'b> => d(k)
   Name                            | Age
   ================================+====
   "Felonius Gru"                  |  53
-  "Dave the Minion"               | 4.54e9
+  "Dave the Minion"               | 4.5e3
   "Dr. Joseph Albert Nefario"     |  80
 
 */
 let despicable = add(
-  add(add(empty, "Felonius Gru", 53), "Dave the Minion", int_of_float(4.54e9)),
+  add(add(empty, "Felonius Gru", 53), "Dave the Minion", int_of_float(4.5e3)),
   "Dr. Nefario",
   80,
 )
