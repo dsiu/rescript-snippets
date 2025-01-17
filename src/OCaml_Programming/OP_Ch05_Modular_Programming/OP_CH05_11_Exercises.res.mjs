@@ -2,7 +2,7 @@
 
 import * as Belt_Id from "rescript/lib/es6/Belt_Id.js";
 import * as Belt_Map from "rescript/lib/es6/Belt_Map.js";
-import * as OP_ListQueue from "../OP_Ch05_6_Functional_Data_Structure/Queue/OP_ListQueue.mjs";
+import * as OP_ListQueue from "../OP_Ch05_6_Functional_Data_Structure/Queue/OP_ListQueue.res.mjs";
 import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
 import * as Primitive_object from "rescript/lib/es6/Primitive_object.js";
 import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";

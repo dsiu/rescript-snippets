@@ -2,7 +2,7 @@
 
 import * as Belt_List from "rescript/lib/es6/Belt_List.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
-import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.mjs";
+import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.res.mjs";
 
 function identity(prim) {
   return prim;

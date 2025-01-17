@@ -6,8 +6,8 @@
     "clean": "rescript clean -with-deps",
     "start": "rescript build -w",
     "test": "jest",
-    "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.mjs",
-    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.mjs"
+    "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.res.mjs",
+    "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.res.mjs"
   },
   "type": "module",
   "engines": {
@@ -21,8 +21,8 @@
   "license": "MIT",
   "jest": {
     "testMatch": [
-      "<rootDir>/**/**/*.test.(js|mjs|jsx|ts|tsx|mjs)",
-      "**/*_Test.(js|ts|jsx|tsx|mjs)"
+      "<rootDir>/**/**/*.test.res.(js|mjs|jsx|ts|tsx|mjs)",
+      "**/*_Test.res.(js|ts|jsx|tsx|mjs)"
     ],
     "transform": {
       "^.+\\.m?jsx?$": "@swc/jest"
