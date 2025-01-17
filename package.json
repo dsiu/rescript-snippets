@@ -28,7 +28,7 @@
       "^.+\\.m?jsx?$": "@swc/jest"
     },
     "transformIgnorePatterns": [
-      "<rootDir>/node_modules/(?!(rescript|@rescript/core|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale)/)"
+      "<rootDir>/node_modules/(?!(rescript|@rescript/core|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|ms|@dsiu/rescript-stdlib-fp)/)"
     ],
     "moduleFileExtensions": [
       "js",
@@ -45,10 +45,10 @@
     "rescript-test": "git+https://github.com/dsiu/rescript-test#rescript-v12"
   },
   "dependencies": {
-    "@dsiu/rescript-bag": "workspace:^",
-    "@dsiu/rescript-stdlib-fp": "workspace:^",
-    "@jmagaram/rescript-extras": "workspace:^",
-    "@jmagaram/rescript-seq": "workspace:^",
+    "@dsiu/rescript-bag": "git+https://github.com/dsiu/rescript-bag#rescript-v12",
+    "@dsiu/rescript-stdlib-fp": "git+https://github.com/dsiu/rescript-stdlib-fp#rescript-v12",
+    "@jmagaram/rescript-extras": "git+https://github.com/dsiu/rescript-extras#rescript-v12",
+    "@jmagaram/rescript-seq": "git+https://github.com/dsiu/rescript-seq#rescript-v12",
     "@mobily/rescript-date": "^2.1.0",
     "add": "^2.0.6",
     "d3": "^7.9.0",
@@ -57,9 +57,9 @@
     "ms": "^2.1.3",
     "nodemon": "^3.1.9",
     "rationale": "^0.2.0",
-    "rescript-bastet": "workspace:^",
+    "rescript-bastet": "git+https://github.com/dsiu/rescript-bastet#rescript-v12",
     "rescript-nodejs": "^16.1.0",
-    "rescript-relude": "workspace:^",
-    "rescript-relude-parse": "workspace:^"
+    "rescript-relude": "git+https://github.com/dsiu/rescript-relude#rescript-v12",
+    "rescript-relude-parse": "git+https://github.com/dsiu/rescript-relude-parse#rescript-v12"
   }
 }
