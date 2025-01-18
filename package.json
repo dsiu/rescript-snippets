@@ -2,9 +2,9 @@
   "name": "rescript-snippets",
   "version": "0.0.1",
   "scripts": {
+    "clean": "rescript clean",
     "build": "rescript",
-    "clean": "rescript clean -with-deps",
-    "start": "rescript build -w",
+    "watch": "rescript build -w",
     "test": "jest",
     "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.res.mjs",
     "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.res.mjs"
