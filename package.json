@@ -45,10 +45,10 @@
     "rescript-test": "git+https://github.com/dsiu/rescript-test#rescript-v12"
   },
   "dependencies": {
-    "@dsiu/rescript-bag": "workspace:*",
-    "@dsiu/rescript-stdlib-fp": "workspace:*",
-    "@jmagaram/rescript-extras": "workspace:*",
-    "@jmagaram/rescript-seq": "workspace:*",
+    "@dsiu/rescript-bag": "workspace:^",
+    "@dsiu/rescript-stdlib-fp": "workspace:^",
+    "@jmagaram/rescript-extras": "workspace:^",
+    "@jmagaram/rescript-seq": "workspace:^",
     "@mobily/rescript-date": "^2.1.0",
     "add": "^2.0.6",
     "d3": "^7.9.0",
@@ -57,9 +57,9 @@
     "ms": "^2.1.3",
     "nodemon": "^3.1.9",
     "rationale": "^0.2.0",
-    "rescript-bastet": "workspace:*",
+    "rescript-bastet": "workspace:^",
     "rescript-nodejs": "^16.1.0",
-    "rescript-relude": "workspace:*",
-    "rescript-relude-parse": "workspace:*"
+    "rescript-relude": "workspace:^",
+    "rescript-relude-parse": "workspace:^"
   }
 }

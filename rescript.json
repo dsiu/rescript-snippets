@@ -4,17 +4,14 @@
   "sources": [
     {
       "dir": "src",
-      "subdirs": true,
-      "type": "dev"
+      "subdirs": true
     },
     {
-      "dir": "interop",
-      "type": "dev"
+      "dir": "interop"
     },
     {
       "dir": "__tests__",
-      "subdirs": true,
-      "type": "dev"
+      "subdirs": true
     }
   ],
   "package-specs": {
@@ -32,11 +29,11 @@
     "@jmagaram/rescript-seq",
     "rescript-bastet",
     "rescript-relude",
-    "rescript-relude-parse"
-  ],
-  "bs-dev-dependencies": [
+    "rescript-relude-parse",
     "rescript-test",
     "@glennsl/rescript-jest"
+  ],
+  "bs-dev-dependencies": [
   ],
   "warnings": {
     "number": "-101-33-3-60-44-27"
