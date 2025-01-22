@@ -17,7 +17,6 @@ let addFive = x => {x + 5}
 
 let formula = square->(@res.partial andThen(double))->(andThen(addFive, ...))
 formula(3)->log // 23
-
 let showResult = n => {
   (x: float) => {
     "input " ++ string_of_int(n) ++ " yields " ++ Js.Float.toString(x)
