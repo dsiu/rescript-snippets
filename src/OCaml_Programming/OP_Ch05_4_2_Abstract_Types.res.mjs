@@ -7,7 +7,7 @@ import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js"
 let Empty = /* @__PURE__ */Primitive_exceptions.create("OP_Ch05_4_2_Abstract_Types.ListStack.Empty");
 
 function is_empty(s) {
-  return !s;
+  return s === 0;
 }
 
 function push(x, s) {
@@ -18,7 +18,7 @@ function push(x, s) {
 }
 
 function peek(s) {
-  if (s) {
+  if (s !== 0) {
     return s.hd;
   }
   throw {
@@ -28,7 +28,7 @@ function peek(s) {
 }
 
 function pop(s) {
-  if (s) {
+  if (s !== 0) {
     return s.tl;
   }
   throw {
@@ -52,7 +52,7 @@ let ListStack = {
 let Empty$1 = /* @__PURE__ */Primitive_exceptions.create("OP_Ch05_4_2_Abstract_Types.ListStackCachedSize.Empty");
 
 function is_empty$1(s) {
-  return !s[0];
+  return s[0] === 0;
 }
 
 function push$1(x, param) {
@@ -67,7 +67,7 @@ function push$1(x, param) {
 
 function peek$1(s) {
   let match = s[0];
-  if (match) {
+  if (match !== 0) {
     return match.hd;
   }
   throw {
@@ -78,7 +78,7 @@ function peek$1(s) {
 
 function pop$1(s) {
   let match = s[0];
-  if (match) {
+  if (match !== 0) {
     return [
       match.tl,
       s[1] - 1 | 0

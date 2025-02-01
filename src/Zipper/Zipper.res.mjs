@@ -9,7 +9,7 @@ function go_down(param) {
     return Pervasives.failwith("down of item");
   }
   let match = t._0;
-  if (match) {
+  if (match !== 0) {
     return {
       TAG: "Loc",
       _0: match.hd,
@@ -35,7 +35,7 @@ function nth(loc, n) {
           return Pervasives.failwith("right of top");
         }
         let match = p._2;
-        if (match) {
+        if (match !== 0) {
           return {
             TAG: "Loc",
             _0: match.hd,
@@ -129,7 +129,7 @@ function $$delete(param) {
   }
   let left = p._0;
   let match = p._2;
-  if (match) {
+  if (match !== 0) {
     return {
       TAG: "Loc",
       _0: match.hd,
@@ -140,7 +140,7 @@ function $$delete(param) {
         _2: match.tl
       }
     };
-  } else if (left) {
+  } else if (left !== 0) {
     return {
       TAG: "Loc",
       _0: left.hd,

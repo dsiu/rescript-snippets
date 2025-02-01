@@ -54,19 +54,19 @@ let __x$2 = ReludeParse_Parser.runParser("127.0.0.1", parseWithMonadicFlow);
 console.log("with monadic flow\n", __x$2);
 
 let parseWithSepBy = ReludeParse_Parser.Infix.$great$great$eq(ReludeParse_Parser.sepBy(ReludeParse_Parser.str("."), ReludeParse_Parser.anyPositiveShort), shorts => {
-  if (!shorts) {
+  if (shorts === 0) {
     return ReludeParse_Parser.fail("Expected exactly 4 shorts separated by .");
   }
   let match = shorts.tl;
-  if (!match) {
+  if (match === 0) {
     return ReludeParse_Parser.fail("Expected exactly 4 shorts separated by .");
   }
   let match$1 = match.tl;
-  if (!match$1) {
+  if (match$1 === 0) {
     return ReludeParse_Parser.fail("Expected exactly 4 shorts separated by .");
   }
   let match$2 = match$1.tl;
-  if (match$2 && !match$2.tl) {
+  if (match$2 !== 0 && match$2.tl === 0) {
     return ReludeParse_Parser.pure(make(shorts.hd, match.hd, match$1.hd, match$2.hd));
   } else {
     return ReludeParse_Parser.fail("Expected exactly 4 shorts separated by .");

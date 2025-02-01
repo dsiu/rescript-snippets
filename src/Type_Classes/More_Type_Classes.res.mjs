@@ -527,7 +527,7 @@ console.log("test_hom = ", __x$17);
 
 function ListTraversable(A) {
   let traverse = (f, xs) => {
-    if (!xs) {
+    if (xs === 0) {
       return A.pure(/* [] */0);
     }
     let __x = f(xs.hd);
@@ -543,7 +543,7 @@ function ListTraversable(A) {
 }
 
 function traverse(f, xs) {
-  if (!xs) {
+  if (xs === 0) {
     return /* [] */0;
   }
   let __x = f(xs.hd);
@@ -741,7 +741,7 @@ function TestTraversableId(MT) {
 }
 
 function traverse$3(f, xs) {
-  if (xs) {
+  if (xs !== 0) {
     return apply$2(map$2(y => (ys => ({
       hd: y,
       tl: ys

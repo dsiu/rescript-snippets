@@ -7,7 +7,7 @@ import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js"
 let Empty = /* @__PURE__ */Primitive_exceptions.create("OP_ListQueue.M.Empty");
 
 function is_empty(x) {
-  return !x;
+  return x === 0;
 }
 
 function enqueue(x, q) {
@@ -18,7 +18,7 @@ function enqueue(x, q) {
 }
 
 function front(x) {
-  if (x) {
+  if (x !== 0) {
     return x.hd;
   }
   throw {
@@ -28,7 +28,7 @@ function front(x) {
 }
 
 function dequeue(x) {
-  if (x) {
+  if (x !== 0) {
     return x.tl;
   }
   throw {

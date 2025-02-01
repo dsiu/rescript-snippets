@@ -28,7 +28,7 @@ function fold_left(f, _a, _l) {
   while (true) {
     let l = _l;
     let a = _a;
-    if (!l) {
+    if (l === 0) {
       return a;
     }
     _l = l.tl;
@@ -51,7 +51,7 @@ let prim = fold_left((prim0, prim1) => prim0 + prim1 | 0, 0, {
 console.log(prim);
 
 function fold_right(f, l, a) {
-  if (l) {
+  if (l !== 0) {
     return f(l.hd, fold_right(f, l.tl, a));
   } else {
     return a;
@@ -378,12 +378,12 @@ let x$8 = q2_length({
 console.log("q2_length", x$8);
 
 function q3_last(l) {
-  if (!l) {
+  if (l === 0) {
     return;
   }
   let t = l.tl;
   let a = l.hd;
-  if (t) {
+  if (t !== 0) {
     return Primitive_option.some(fold_left((param, e) => e, a, t));
   } else {
     return Primitive_option.some(a);

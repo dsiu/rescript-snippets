@@ -7,12 +7,12 @@ import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js"
 let Empty = /* @__PURE__ */Primitive_exceptions.create("OP_BatchedQueue.M.Empty");
 
 function is_empty(x) {
-  return !x.o;
+  return x.o === 0;
 }
 
 function enqueue(x, q) {
   let o = q.o;
-  if (o) {
+  if (o !== 0) {
     return {
       o: o,
       i: {
@@ -33,7 +33,7 @@ function enqueue(x, q) {
 
 function front(x) {
   let match = x.o;
-  if (match) {
+  if (match !== 0) {
     return match.hd;
   }
   throw {
@@ -44,9 +44,9 @@ function front(x) {
 
 function dequeue(x) {
   let match = x.o;
-  if (match) {
+  if (match !== 0) {
     let t = match.tl;
-    if (t) {
+    if (t !== 0) {
       return {
         o: t,
         i: x.i

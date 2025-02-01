@@ -30,7 +30,7 @@ function push(x) {
 }
 
 let pop = bind(State.get, values => {
-  if (values) {
+  if (values !== 0) {
     return voidLeft(State.put(values.tl), values.hd);
   } else {
     return voidLeft(State.put(/* [] */0), undefined);

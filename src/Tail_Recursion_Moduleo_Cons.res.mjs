@@ -15,7 +15,7 @@ function f(n) {
 }
 
 function map(f, l) {
-  if (!l) {
+  if (l === 0) {
     return /* [] */0;
   }
   let y = f(l.hd);

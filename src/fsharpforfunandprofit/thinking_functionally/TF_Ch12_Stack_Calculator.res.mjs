@@ -79,7 +79,7 @@ console.log(result321);
 
 function pop(contents) {
   let contents$1 = contents._0;
-  if (contents$1) {
+  if (contents$1 !== 0) {
     let newStack = {
       TAG: "StackContents",
       _0: contents$1.tl

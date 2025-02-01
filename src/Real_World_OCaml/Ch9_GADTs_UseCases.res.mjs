@@ -10,7 +10,7 @@ import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 function list_find(_l, f) {
   while (true) {
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       return;
     }
     let x = l.hd;
@@ -66,7 +66,7 @@ let If_not_found_1 = {};
 function flexible_find_1(_l, f, if_not_found) {
   while (true) {
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       if (typeof if_not_found !== "object") {
         if (if_not_found === "Raise") {
           return Pervasives.failwith("Element not found");
@@ -154,7 +154,7 @@ let If_not_found_2 = {};
 function flexible_find_2(f, _list, if_not_found) {
   while (true) {
     let list = _list;
-    if (!list) {
+    if (list === 0) {
       if (typeof if_not_found !== "object") {
         if (if_not_found === "Raise") {
           return Pervasives.failwith("No matching item found");

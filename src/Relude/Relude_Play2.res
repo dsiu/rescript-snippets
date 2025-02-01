@@ -15,7 +15,10 @@ let square = x => {x * x}
 let double = x => {2 * x}
 let addFive = x => {x + 5}
 
-let formula = square->(@res.partial andThen(double))->(andThen(addFive, ...))
+//let formula = square->(@res.partial andThen(double))->(andThen(addFive, ...))
+//let formula = andThen(andThen(square, double,_),addFive, _)
+let formula = square->andThen(double,...)->andThen(addFive, ...)
+
 formula(3)->log // 23
 let showResult = n => {
   (x: float) => {

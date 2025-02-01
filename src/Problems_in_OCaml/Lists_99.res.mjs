@@ -9,11 +9,11 @@ import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 function last(_l) {
   while (true) {
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       return;
     }
     let rest = l.tl;
-    if (!rest) {
+    if (rest === 0) {
       return Primitive_option.some(l.hd);
     }
     _l = rest;
@@ -24,15 +24,15 @@ function last(_l) {
 function last_two(_l) {
   while (true) {
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       return;
     }
     let match = l.tl;
-    if (!match) {
+    if (match === 0) {
       return;
     }
     let rest = match.tl;
-    if (!rest) {
+    if (rest === 0) {
       return l;
     }
     _l = rest;
@@ -44,7 +44,7 @@ function at(_l, _k) {
   while (true) {
     let k = _k;
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       return;
     }
     if (k === 1) {
@@ -57,7 +57,7 @@ function at(_l, _k) {
 }
 
 function length(l) {
-  if (l) {
+  if (l !== 0) {
     return 1 + length(l.tl) | 0;
   } else {
     return 0;
@@ -70,7 +70,7 @@ function rev(l) {
   while (true) {
     let acc = _acc;
     let l$p = _l$p;
-    if (!l$p) {
+    if (l$p === 0) {
       return acc;
     }
     _acc = {
@@ -91,7 +91,7 @@ function flatten(l) {
     while (true) {
       let acc = _acc;
       let l$p = _l$p;
-      if (!l$p) {
+      if (l$p === 0) {
         return acc;
       }
       let x = l$p.hd;
@@ -114,11 +114,11 @@ function flatten(l) {
 function compress(_l) {
   while (true) {
     let l = _l;
-    if (!l) {
+    if (l === 0) {
       return l;
     }
     let match = l.tl;
-    if (!match) {
+    if (match === 0) {
       return l;
     }
     let t = match.tl;
@@ -147,12 +147,12 @@ function pack(l) {
       let acc = _acc;
       let current = _current;
       let l = _l;
-      if (!l) {
+      if (l === 0) {
         return /* [] */0;
       }
       let match = l.tl;
       let x = l.hd;
-      if (!match) {
+      if (match === 0) {
         return {
           hd: {
             hd: x,
@@ -198,12 +198,12 @@ function encode(l) {
       let acc = _acc;
       let count = _count;
       let l = _l;
-      if (!l) {
+      if (l === 0) {
         return /* [] */0;
       }
       let match = l.tl;
       let x = l.hd;
-      if (!match) {
+      if (match === 0) {
         return {
           hd: [
             count + 1 | 0,
@@ -260,12 +260,12 @@ function encode_11(l) {
       let acc = _acc;
       let count = _count;
       let l = _l;
-      if (!l) {
+      if (l === 0) {
         return /* [] */0;
       }
       let match = l.tl;
       let x = l.hd;
-      if (!match) {
+      if (match === 0) {
         return {
           hd: create_tuple(count + 1 | 0, x),
           tl: acc
@@ -317,7 +317,7 @@ function decode(l) {
   while (true) {
     let acc = _acc;
     let l$1 = _l;
-    if (!l$1) {
+    if (l$1 === 0) {
       return acc;
     }
     let x = l$1.hd;
@@ -355,12 +355,12 @@ function encode_13(l) {
       let acc = _acc;
       let count = _count;
       let l = _l;
-      if (!l) {
+      if (l === 0) {
         return /* [] */0;
       }
       let match = l.tl;
       let x = l.hd;
-      if (!match) {
+      if (match === 0) {
         return {
           hd: rle(count, x),
           tl: acc
@@ -392,7 +392,7 @@ function encode_13(l) {
 }
 
 function duplicate(l) {
-  if (!l) {
+  if (l === 0) {
     return /* [] */0;
   }
   let h = l.hd;
@@ -426,7 +426,7 @@ function replicate(l, n) {
   while (true) {
     let acc = _acc;
     let l$1 = _l;
-    if (!l$1) {
+    if (l$1 === 0) {
       return acc;
     }
     _acc = prepend(l$1.hd, n, acc);
@@ -440,7 +440,7 @@ function drop(l, n) {
     while (true) {
       let i = _i;
       let l = _l;
-      if (!l) {
+      if (l === 0) {
         return /* [] */0;
       }
       let t = l.tl;
@@ -466,7 +466,7 @@ function split(l, n) {
     let acc = _acc;
     let i = _i;
     let l$1 = _l;
-    if (!l$1) {
+    if (l$1 === 0) {
       return [
         rev(acc),
         /* [] */0
@@ -490,7 +490,7 @@ function split(l, n) {
 
 function slice(l, i, k) {
   let take = (l, n) => {
-    if (l && n !== 0) {
+    if (l !== 0 && n !== 0) {
       return {
         hd: l.hd,
         tl: take(l.tl, n - 1 | 0)
@@ -503,7 +503,7 @@ function slice(l, i, k) {
     while (true) {
       let n = _n;
       let l = _l;
-      if (!l) {
+      if (l === 0) {
         return /* [] */0;
       }
       if (n === 0) {
@@ -528,7 +528,7 @@ function rotate(l, n) {
 }
 
 function remove_at(l, n) {
-  if (!l) {
+  if (l === 0) {
     return /* [] */0;
   }
   let t = l.tl;
@@ -543,7 +543,7 @@ function remove_at(l, n) {
 }
 
 function insert_at(l, n, x) {
-  if (!l) {
+  if (l === 0) {
     return {
       hd: x,
       tl: /* [] */0
@@ -617,7 +617,7 @@ function rand_select(list, n) {
       let n = _n;
       let acc = _acc;
       let l = _l;
-      if (l) {
+      if (l !== 0) {
         let t = l.tl;
         let h = l.hd;
         if (n === 0) {

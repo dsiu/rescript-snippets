@@ -6,7 +6,7 @@ import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js"
 let Empty = /* @__PURE__ */Primitive_exceptions.create("OP_ListStack.M.Empty");
 
 function is_empty(x) {
-  return !x;
+  return x === 0;
 }
 
 function push(x, xs) {
@@ -14,7 +14,7 @@ function push(x, xs) {
 }
 
 function peek(x) {
-  if (x) {
+  if (x !== 0) {
     return x.hd;
   }
   throw {
@@ -24,7 +24,7 @@ function peek(x) {
 }
 
 function pop(x) {
-  if (x) {
+  if (x !== 0) {
     return x.tl;
   }
   throw {

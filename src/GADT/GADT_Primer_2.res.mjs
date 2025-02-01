@@ -313,6 +313,17 @@ function push_(l, v) {
   };
 }
 
+push_({
+  hd: 1,
+  tl: {
+    hd: 2,
+    tl: {
+      hd: 3,
+      tl: /* [] */0
+    }
+  }
+}, 4);
+
 let b = "None'";
 
 let emptyList = "Empty";

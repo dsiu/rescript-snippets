@@ -20,11 +20,13 @@ let _ = setTimeout(() => {
 // How to determine if a global value exists in ReScript?
 // ref:
 // https://kevanstannard.github.io/rescript-blog/global-values.html
-let devOpt = %external(__DEV__)
-switch devOpt {
-| Some(_) => Js.log("development mode")
-| None => Js.log("production mode")
-}
+// todo: broken in rescript v12.0.0-alpha.8
+// see: https://github.com/rescript-lang/rescript/issues/7270
+//let devOpt = %external(__DEV__)
+//switch devOpt {
+//| Some(_) => Js.log("development mode")
+//| None => Js.log("production mode")
+//}
 
 // ref:
 // https://kevanstannard.github.io/rescript-blog/global-module-functions-and-values.html

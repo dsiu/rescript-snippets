@@ -3,7 +3,7 @@
 import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
 
 function is_empty(list) {
-  return !list;
+  return list === 0;
 }
 
 function push(x, list) {
@@ -16,7 +16,7 @@ function push(x, list) {
 let Empty = /* @__PURE__ */Primitive_exceptions.create("OP_CH05_2_List_Stack.ListStack.Empty");
 
 function peek(list) {
-  if (list) {
+  if (list !== 0) {
     return list.hd;
   }
   throw {
@@ -26,7 +26,7 @@ function peek(list) {
 }
 
 function pop(list) {
-  if (list) {
+  if (list !== 0) {
     return list.tl;
   }
   throw {

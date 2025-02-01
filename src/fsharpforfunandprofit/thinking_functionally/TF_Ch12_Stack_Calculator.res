@@ -166,8 +166,10 @@ start->one->two->add->show2("1+2")->three->mul->show2("*3")->two->div->show2("/2
 // using composing instead of piping
 open Stdlib
 let compose = Function.compose
-let one_two_add = one->(@res.partial compose(two))->(compose(add, ...))
-let one_two_sub = one->(@res.partial compose(two))->(compose(sub, ...))
+//let one_two_add = one->(@res.partial compose(two))->(compose(add, ...))
+let one_two_add = one->compose(two,...)->(compose(add, ...))
+//let one_two_sub = one->(@res.partial compose(two))->(compose(sub, ...))
+let one_two_sub = one->compose(two,...)->(compose(sub, ...))
 
 start->one_two_add->show2("one_two_add")->ignore
 start->one_two_sub->show2("one_two_sub")->ignore
@@ -175,7 +177,8 @@ start->one_two_sub->show2("one_two_sub")->ignore
 let square = dup->(compose(mul, ...))
 start->two->square->show2("square")->ignore
 
-let cube = dup->(@res.partial compose(dup))->(@res.partial compose(mul))->(compose(mul, ...))
+//let cube = dup->(@res.partial compose(dup))->(@res.partial compose(mul))->(compose(mul, ...))
+let cube = dup->compose(dup,...)->( compose(mul,...))->(compose(mul, ...))
 start->three->cube->show2("cube")->ignore
 
 let compose = Function.compose

@@ -4,7 +4,7 @@ import * as List from "rescript/lib/es6/List.js";
 import * as Primitive_exceptions from "rescript/lib/es6/Primitive_exceptions.js";
 
 function is_empty(list) {
-  return !list;
+  return list === 0;
 }
 
 function push(x, list) {
@@ -17,7 +17,7 @@ function push(x, list) {
 let Empty = /* @__PURE__ */Primitive_exceptions.create("OP_CH05_4_Encapsulation.ORIG.ListStack.Empty");
 
 function peek(list) {
-  if (list) {
+  if (list !== 0) {
     return list.hd;
   }
   throw {
@@ -27,7 +27,7 @@ function peek(list) {
 }
 
 function pop(list) {
-  if (list) {
+  if (list !== 0) {
     return list.tl;
   }
   throw {
@@ -55,7 +55,7 @@ let ORIG = {
 let Empty$1 = /* @__PURE__ */Primitive_exceptions.create("OP_CH05_4_Encapsulation.NEW.ListStackCachedSize.Empty");
 
 function is_empty$1(stack) {
-  return !stack[0];
+  return stack[0] === 0;
 }
 
 function push$1(x, param) {
@@ -70,7 +70,7 @@ function push$1(x, param) {
 
 function peek$1(stack) {
   let match = stack[0];
-  if (match) {
+  if (match !== 0) {
     return match.hd;
   }
   throw {
@@ -81,7 +81,7 @@ function peek$1(stack) {
 
 function pop$1(stack) {
   let match = stack[0];
-  if (match) {
+  if (match !== 0) {
     return [
       match.tl,
       stack[1] - 1 | 0
@@ -113,7 +113,7 @@ let ListStackCachedSize = {
 };
 
 function is_empty$2(list) {
-  return !list;
+  return list === 0;
 }
 
 function push$2(x, list) {
@@ -126,7 +126,7 @@ function push$2(x, list) {
 let Empty$2 = /* @__PURE__ */Primitive_exceptions.create("OP_CH05_4_Encapsulation.NEW.ListStack.Empty");
 
 function peek$2(list) {
-  if (list) {
+  if (list !== 0) {
     return list.hd;
   }
   throw {
@@ -136,7 +136,7 @@ function peek$2(list) {
 }
 
 function pop$2(list) {
-  if (list) {
+  if (list !== 0) {
     return list.tl;
   }
   throw {

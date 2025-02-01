@@ -186,10 +186,10 @@ let Invalid_argument = /* @__PURE__ */Primitive_exceptions.create("MO_Ch2_Being_
 
 function q3_lrepeating(l) {
   let lrepeating_inner = (c, l) => {
-    if (c) {
+    if (c !== 0) {
       let t = c.tl;
       let x = c.hd;
-      if (t) {
+      if (t !== 0) {
         return {
           TAG: "Cons",
           _0: x,
