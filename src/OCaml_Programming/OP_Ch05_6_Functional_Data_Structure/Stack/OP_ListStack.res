@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 
 module M: OP_Stack.S = {
   type t<'a> = list<'a>

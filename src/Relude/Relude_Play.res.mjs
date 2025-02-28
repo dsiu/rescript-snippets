@@ -30,11 +30,7 @@ let r = Reader.runReaderT(testEnv, __x);
 
 console.log(r);
 
-let partial_arg = Relude_Int.Ord;
-
-let partial_arg$1 = Relude_Tuple2.WithOrds;
-
-let $$let = (param => partial_arg$1(partial_arg, param))(Relude_String.Ord);
+let $$let = Relude_Tuple2.WithOrds(Relude_Int.Ord)(Relude_String.Ord);
 
 let include = Relude_Array_Specializations.ArrayOrdExtensions({
   eq: $$let.eq,
@@ -263,11 +259,7 @@ console.log(prim);
 
 let arr_rev = Relude_Array_Instances.bind(arr, reverseTuple);
 
-let partial_arg$2 = Relude_String.Ord;
-
-let partial_arg$3 = Relude_Tuple2.WithOrds;
-
-let $$let$1 = (param => partial_arg$3(partial_arg$2, param))(Relude_Int.Ord);
+let $$let$1 = Relude_Tuple2.WithOrds(Relude_String.Ord)(Relude_Int.Ord);
 
 let include$1 = Relude_Array_Specializations.ArrayOrdExtensions({
   eq: $$let$1.eq,

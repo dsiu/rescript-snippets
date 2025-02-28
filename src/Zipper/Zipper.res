@@ -3,7 +3,7 @@
 //
 @@warning("-32")
 
-open Stdlib
+open StdlibFp
 
 // 2.1 Trees, paths and locations
 //

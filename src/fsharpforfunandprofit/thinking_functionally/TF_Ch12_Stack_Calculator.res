@@ -164,7 +164,7 @@ start->one->two->add->show2("1+2")->three->add->show2("+3")->ignore
 start->one->two->add->show2("1+2")->three->mul->show2("*3")->two->div->show2("/2")->ignore
 
 // using composing instead of piping
-open Stdlib
+open StdlibFp
 let compose = Function.compose
 //let one_two_add = one->(@res.partial compose(two))->(compose(add, ...))
 let one_two_add = one->compose(two,...)->(compose(add, ...))

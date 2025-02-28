@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 
 module M: OP_Set.S = {
   type t<'a> = list<'a>

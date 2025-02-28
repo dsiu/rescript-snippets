@@ -3,10 +3,10 @@
 import * as MS from "../src/MS.res.mjs";
 import Ms from "ms";
 import * as Jest from "@glennsl/rescript-jest/src/jest.res.mjs";
-import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.res.mjs";
+import * as Stdlib_List from "rescript/lib/es6/Stdlib_List.js";
 
 Jest.describe("MS", () => {
-  let fromStr_Tests = Stdlib__List.fromArray([
+  let fromStr_Tests = Stdlib_List.fromArray([
     [
       Ms("10h"),
       36000000
@@ -49,7 +49,7 @@ Jest.describe("MS", () => {
     ]
   ]);
   Jest.testAll("fromStr", fromStr_Tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
-  let fromMS_Tests = Stdlib__List.fromArray([
+  let fromMS_Tests = Stdlib_List.fromArray([
     [
       Ms(60000),
       "1m"
@@ -68,7 +68,7 @@ Jest.describe("MS", () => {
     ]
   ]);
   Jest.testAll("fromMS", fromMS_Tests, param => Jest.Expect.toEqual(Jest.Expect.expect(param[0]), param[1]));
-  let fromMSLong_Tests = Stdlib__List.fromArray([
+  let fromMSLong_Tests = Stdlib_List.fromArray([
     [
       MS.fromMSLong(60000),
       "1 minute"

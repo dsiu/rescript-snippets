@@ -1,7 +1,7 @@
 @@uncurried
 @@uncurried.swap
 
-open Stdlib
+open StdlibFp
 let log = Js.log
 let log2 = Js.log2
 let compose = Function.compose
@@ -64,11 +64,11 @@ let lift = (f, x) => (f(x), "")
 // or more simply, lift f = unit . f. The lifted version does much the same as the original function
 // and, quite reasonably, it produces the empty string as a side effect.
 
-let lift' = Stdlib.Function.compose(f, unit, _)
+let lift' = StdlibFp.Function.compose(f, unit, _)
 
 // Show that lift f * lift g = lift (f.g)
 let liftThenCompose = x => bind(lift(f, ...), (lift(g, ...))(x))
-let composeLifted = lift(Stdlib.Function.compose(g, f, ...), ...)
+let composeLifted = lift(StdlibFp.Function.compose(g, f, ...), ...)
 
 liftThenCompose(13.0)->log2("liftThenCompose(13.0) = ")
 composeLifted(13.0)->log2("composeLifted(13.0) = ")

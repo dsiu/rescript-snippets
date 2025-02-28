@@ -9,10 +9,10 @@ import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
 import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
 import * as Belt_MapString from "rescript/lib/es6/Belt_MapString.js";
 import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
+import * as Stdlib_Ordering from "rescript/lib/es6/Stdlib_Ordering.js";
 import * as Primitive_bigint from "rescript/lib/es6/Primitive_bigint.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.res.mjs";
-import * as Stdlib__Ordering from "@dsiu/rescript-stdlib-fp/src/Stdlib__Ordering.res.mjs";
 import * as Belt_HashMapString from "rescript/lib/es6/Belt_HashMapString.js";
 import * as Belt_MutableMapInt from "rescript/lib/es6/Belt_MutableMapInt.js";
 import * as Belt_MutableMapString from "rescript/lib/es6/Belt_MutableMapString.js";
@@ -360,11 +360,11 @@ function keyCompareBigIntValuePair(xs, cmp) {
 }
 
 function maxKeyBigIntValuePair(__x) {
-  return keyCompareBigIntValuePair(__x, Stdlib__Ordering.isGreater);
+  return keyCompareBigIntValuePair(__x, Stdlib_Ordering.isGreater);
 }
 
 function minKeyBigIntValuePair(__x) {
-  return keyCompareBigIntValuePair(__x, Stdlib__Ordering.isLess);
+  return keyCompareBigIntValuePair(__x, Stdlib_Ordering.isLess);
 }
 
 function hashMapStringUpdate(h, k, f) {

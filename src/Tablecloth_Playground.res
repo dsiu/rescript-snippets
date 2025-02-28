@@ -9,7 +9,7 @@ TC.Tuple2.make(3, 4)->TC.Tuple2.toArray->log
 module Point = {
   type t = TC.Tuple2.t<int, int>
 
-  let intCompare = (a, b) => Int.compare(a, b)->Stdlib.Ordering.toInt
+  let intCompare = (a, b) => Int.compare(a, b)->StdlibFp.Ordering.toInt
 
   let compare = TC.Tuple2.compare(~f=intCompare, ~g=intCompare, ...)
 

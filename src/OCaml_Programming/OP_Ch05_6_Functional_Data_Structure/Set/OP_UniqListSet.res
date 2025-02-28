@@ -12,5 +12,5 @@ module M: OP_Set.S = {
     } else {
       list{x, ...s}
     }
-  let elements = Stdlib.Function.identity
+  let elements = StdlibFp.Function.identity
 }

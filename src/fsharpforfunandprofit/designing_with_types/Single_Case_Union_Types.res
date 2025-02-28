@@ -1,8 +1,8 @@
 //
 // ref: https://fsharpforfunandprofit.com/posts/designing-with-types-single-case-dus/
 //
-open Stdlib
-let {identity, eq} = module(Stdlib.Function)
+open StdlibFp
+let {identity, eq} = module(StdlibFp.Function)
 
 module EmailAddress = {
   type t = EmailAddress(string)

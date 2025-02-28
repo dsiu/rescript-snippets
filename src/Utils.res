@@ -1,7 +1,7 @@
 @@uncurried
 @@uncurried.swap
 
-open Stdlib
+open StdlibFp
 
 /**
  Printable
@@ -105,7 +105,7 @@ module Printable = {
 external parseInt: (~x: string, ~base: int) => int = "parseInt"
 let base2 = Int.toString(_, ~radix=2)
 
-let compose = (f, g) => Stdlib.Function.compose(f, g, ...)
+let compose = (f, g) => StdlibFp.Function.compose(f, g, ...)
 
 let intFromStringExn =
   compose(String.trim, compose(Int.fromString(~radix=10, ...), Option.getUnsafe, ...), ...)

@@ -1,4 +1,4 @@
-open Stdlib
+open StdlibFp
 module L = List
 
 let log = Js.log

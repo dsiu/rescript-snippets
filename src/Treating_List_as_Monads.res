@@ -7,7 +7,7 @@
 @@uncurried
 @@uncurried.swap
 
-open Stdlib
+open StdlibFp
 let log = Js.log
 
 module A = Array
