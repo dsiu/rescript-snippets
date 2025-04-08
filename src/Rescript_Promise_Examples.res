@@ -204,10 +204,10 @@ let place = ref(0)
 
 let delayedMsg = (ms, msg) => {
   Promise.make((resolve, _) => {
-    Js.Global.setTimeout(() => {
+    setTimeout(() => {
       place := place.contents + 1
       resolve((place.contents, msg))
-    }, ms)->ignore
+    }, ms)->TimeoutId.ignore
   })
 }
 
@@ -236,9 +236,9 @@ all([p1, p2, p3])
 //
 let racer = (ms, name) => {
   Promise.make((resolve, _) => {
-    Js.Global.setTimeout(() => {
+    setTimeout(() => {
       resolve(name)
-    }, ms)->ignore
+    }, ms)->TimeoutId.ignore
   })
 }
 
@@ -290,7 +290,7 @@ resolve(1)
 ->catch(e => {
   Js.log("luckily, our mistake will be caught here")
   // e: p.then is not a function
-  e->ignore // or use e
+  // e->Exn.ignore // or use e
   resolve()
 })
 ->ignore
@@ -299,5 +299,5 @@ resolve(1)
 // https://kevanstannard.github.io/rescript-blog/promise-empty-value.html
 // Return empty value in a promise
 let _ = Promise.make((resolve, _reject) => {
-  resolve(ignore())
+  resolve(ignore)
 })
