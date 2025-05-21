@@ -24,7 +24,7 @@ module Ch4_Higher_Order_Functions = {
   type user = User({id: int, email: string})
   type error = Error({id: int, text: string})
 
-  let getUsers = (): list<result<user, error>> => {
+  let getUsers = (.): list<result<user, error>> => {
     list{
       Ok(User({id: 1, email: "jack@example.com"})),
       Error(Error({id: 4, text: "user not found"})),

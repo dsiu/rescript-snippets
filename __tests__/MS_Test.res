@@ -1,6 +1,6 @@
 open Jest
 open Expect
-open MS
+open Ms
 
 open Stdlib
 

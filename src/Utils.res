@@ -1,8 +1,6 @@
 @@uncurried
 @@uncurried.swap
 
-open StdlibFp
-
 /**
  Printable
  */
@@ -18,7 +16,7 @@ module Printable = {
       })
     }
     module String = {
-      let toString = m => toString(m, Fn.identity)
+      let toString = m => toString(m, StdlibFp.Fn.identity)
     }
 
     module Int = {
@@ -37,7 +35,7 @@ module Printable = {
       })
     }
     module String = {
-      let toString = m => toString(m, Fn.identity)
+      let toString = m => toString(m, StdlibFp.Fn.identity)
     }
 
     module Int = {
@@ -107,8 +105,11 @@ let base2 = Int.toString(_, ~radix=2)
 
 let compose = (f, g) => StdlibFp.Function.compose(f, g, ...)
 
-let intFromStringExn =
-  compose(String.trim, compose(Int.fromString(~radix=10, ...), Option.getUnsafe, ...), ...)
+let intFromStringExn = compose(
+  String.trim,
+  compose(Int.fromString(~radix=10, ...), Option.getUnsafe, ...),
+  ...
+)
 
 let add = (x, y) => x + y
 let sub = (x, y) => x - y
@@ -209,7 +210,7 @@ let keyCompareBigIntValuePair = (xs, cmp) => {
   first->Option.map(((_, init)) =>
     rest->Array.reduce(("", init), (acc, (k, v)) => {
       let (_, va) = acc
-      BigInt.compare(v, va)->cmp ? (k, v) : acc
+      StdlibFp.BigInt.compare(v, va)->cmp ? (k, v) : acc
     })
   )
 }

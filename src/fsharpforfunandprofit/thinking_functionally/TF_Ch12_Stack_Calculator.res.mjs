@@ -2,16 +2,21 @@
 
 import * as Stdlib__Function from "@dsiu/rescript-stdlib-fp/src/Stdlib__Function.res.mjs";
 
-let contents = {
-  hd: 1.0,
-  tl: {
-    hd: 2.0,
+let newStack = {
+  TAG: "StackContents",
+  _0: {
+    hd: 1.0,
     tl: {
-      hd: 3.0,
-      tl: /* [] */0
+      hd: 2.0,
+      tl: {
+        hd: 3.0,
+        tl: /* [] */0
+      }
     }
   }
 };
+
+let contents = newStack._0;
 
 console.log(contents);
 
@@ -255,20 +260,6 @@ let twoSquared = binary(float_mul, dup(stackWith2$2));
 function lambda_square(extra) {
   return unary(x => x * x, extra);
 }
-
-let newStack = {
-  TAG: "StackContents",
-  _0: {
-    hd: 1.0,
-    tl: {
-      hd: 2.0,
-      tl: {
-        hd: 3.0,
-        tl: /* [] */0
-      }
-    }
-  }
-};
 
 let popped1 = match[0];
 

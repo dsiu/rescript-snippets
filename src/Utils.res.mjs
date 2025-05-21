@@ -2,13 +2,13 @@
 
 import * as Belt_Array from "rescript/lib/es6/Belt_Array.js";
 import * as Pervasives from "rescript/lib/es6/Pervasives.js";
+import * as Stdlib_Int from "rescript/lib/es6/Stdlib_Int.js";
 import * as Belt_MapInt from "rescript/lib/es6/Belt_MapInt.js";
-import * as Stdlib__Int from "@dsiu/rescript-stdlib-fp/src/Stdlib__Int.res.mjs";
-import * as Stdlib__List from "@dsiu/rescript-stdlib-fp/src/Stdlib__List.res.mjs";
+import * as Stdlib_List from "rescript/lib/es6/Stdlib_List.js";
+import * as Stdlib_Array from "rescript/lib/es6/Stdlib_Array.js";
 import * as Primitive_int from "rescript/lib/es6/Primitive_int.js";
-import * as Stdlib__Array from "@dsiu/rescript-stdlib-fp/src/Stdlib__Array.res.mjs";
+import * as Stdlib_Option from "rescript/lib/es6/Stdlib_Option.js";
 import * as Belt_MapString from "rescript/lib/es6/Belt_MapString.js";
-import * as Stdlib__Option from "@dsiu/rescript-stdlib-fp/src/Stdlib__Option.res.mjs";
 import * as Stdlib_Ordering from "rescript/lib/es6/Stdlib_Ordering.js";
 import * as Primitive_bigint from "rescript/lib/es6/Primitive_bigint.js";
 import * as Primitive_option from "rescript/lib/es6/Primitive_option.js";
@@ -148,7 +148,7 @@ let $$Array = {
 };
 
 function toString$14(a, f) {
-  return Stdlib__List.reduce(a, "{", (a, v) => a + f(v) + ",") + "}";
+  return Stdlib_List.reduce(a, "{", (a, v) => a + f(v) + ",") + "}";
 }
 
 let List = {
@@ -177,7 +177,7 @@ function g(prim) {
 }
 
 function f(none) {
-  return Stdlib__Int.fromString(none, 10);
+  return Stdlib_Int.fromString(none, 10);
 }
 
 function g$1(extra) {
@@ -211,7 +211,7 @@ function int32ToUint32(x) {
 }
 
 function increaseByBigInt(v, n) {
-  return Stdlib__Option.mapOr(v, n, x => x + n);
+  return Stdlib_Option.mapOr(v, n, x => x + n);
 }
 
 function increaseBy1L(__x) {
@@ -219,7 +219,7 @@ function increaseBy1L(__x) {
 }
 
 function increaseBy(v, n) {
-  return Stdlib__Option.mapOr(v, n, x => x + n | 0);
+  return Stdlib_Option.mapOr(v, n, x => x + n | 0);
 }
 
 function increaseBy1(__x) {
@@ -243,11 +243,11 @@ function splitDoubleNewline(__x) {
 }
 
 function sumIntArray(__x) {
-  return Stdlib__Array.reduce(__x, 0, add);
+  return Stdlib_Array.reduce(__x, 0, add);
 }
 
 function mulIntArray(__x) {
-  return Stdlib__Array.reduce(__x, 1, mul);
+  return Stdlib_Array.reduce(__x, 1, mul);
 }
 
 function join(__x) {
@@ -267,12 +267,12 @@ function sumRange(xs, offset, len) {
 
 function maxIntInArray(xs) {
   let sorted = xs.toSorted(Primitive_int.compare);
-  return Stdlib__Array.getUnsafe(sorted, sorted.length - 1 | 0);
+  return sorted[sorted.length - 1 | 0];
 }
 
 function minIntInArray(xs) {
   let sorted = xs.toSorted(Primitive_int.compare);
-  return Stdlib__Array.getUnsafe(sorted, 0);
+  return sorted[0];
 }
 
 function compare(a, b) {
@@ -291,23 +291,23 @@ let BigIntExt = {
 
 function maxBigIntInArray(xs) {
   let sorted = xs.toSorted(compare);
-  return Stdlib__Array.getUnsafe(sorted, sorted.length - 1 | 0);
+  return sorted[sorted.length - 1 | 0];
 }
 
 function minBigIntInArray(xs) {
   let sorted = xs.toSorted(compare);
-  return Stdlib__Array.getUnsafe(sorted, 0);
+  return sorted[0];
 }
 
 function flatten(xs) {
-  return Stdlib__Array.reduce(xs, [], (a, x) => Belt_Array.concatMany([
+  return Stdlib_Array.reduce(xs, [], (a, x) => Belt_Array.concatMany([
     a,
     x
   ]));
 }
 
 function maxKeyIntValuePair(__x) {
-  return Stdlib__Array.reduce(__x, [
+  return Stdlib_Array.reduce(__x, [
     "",
     Pervasives.min_int
   ], (acc, param) => {
@@ -324,7 +324,7 @@ function maxKeyIntValuePair(__x) {
 }
 
 function minKeyIntValuePair(__x) {
-  return Stdlib__Array.reduce(__x, [
+  return Stdlib_Array.reduce(__x, [
     "",
     Pervasives.max_int
   ], (acc, param) => {
@@ -343,7 +343,7 @@ function minKeyIntValuePair(__x) {
 function keyCompareBigIntValuePair(xs, cmp) {
   let first = xs[0];
   let rest = xs.slice(1);
-  return Stdlib__Option.map(first, param => Stdlib__Array.reduce(rest, [
+  return Stdlib_Option.map(first, param => Stdlib_Array.reduce(rest, [
     "",
     param[1]
   ], (acc, param) => {
@@ -368,12 +368,12 @@ function minKeyBigIntValuePair(__x) {
 }
 
 function hashMapStringUpdate(h, k, f) {
-  Belt_HashMapString.set(h, k, Stdlib__Option.mapOr(Belt_HashMapString.get(h, k), f(undefined), x => f(Primitive_option.some(x))));
+  Belt_HashMapString.set(h, k, Stdlib_Option.mapOr(Belt_HashMapString.get(h, k), f(undefined), x => f(Primitive_option.some(x))));
   return h;
 }
 
 function mutableMapStringUpdate(h, k, f) {
-  Belt_MutableMapString.set(h, k, Stdlib__Option.mapOr(Belt_MutableMapString.get(h, k), f(undefined), x => f(Primitive_option.some(x))));
+  Belt_MutableMapString.set(h, k, Stdlib_Option.mapOr(Belt_MutableMapString.get(h, k), f(undefined), x => f(Primitive_option.some(x))));
   return h;
 }
 
