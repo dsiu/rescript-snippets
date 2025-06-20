@@ -29,8 +29,8 @@ let mapOption' = (f, opt) =>
 let a = Some'(5)
 let b = None'
 let inc = x => x + 1
-let c = a |> mapOption'(inc)
-let d = b |> mapOption'(inc)
+let c = a -> mapOption'(inc, _)
+let d = b -> mapOption'(inc, _)
 
 //
 // Unleashing GADTs

@@ -49,7 +49,7 @@ let despicable = add(
   80,
 )
 
-(find(despicable, "Dave the Minion") |> (
+(find(despicable, "Dave the Minion") -> (
   x =>
     switch x {
     | Some(x) => x
