@@ -22,7 +22,6 @@
   "ppx-flags": [
   ],
   "bs-dependencies": [
-    "rescript-nodejs",
     "js-array2-ex",
     "@dsiu/rescript-stdlib-fp",
     "@jmagaram/rescript-extras",
