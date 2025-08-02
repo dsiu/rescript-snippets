@@ -3,8 +3,8 @@
   "version": "0.0.1",
   "scripts": {
     "clean": "rescript clean",
-    "build": "rescript",
-    "watch": "rescript build -w",
+    "build": "rescript --dev",
+    "watch": "rescript watch --dev",
     "test": "jest",
     "test_retest": "NODE_OPTIONS=--experimental-vm-modules retest __tests__/*.res.mjs",
     "test99": "npx nodemon --exec NODE_OPTIONS=--experimental-vm-modules retest src/Problems_in_OCaml/*_Test.res.mjs"
