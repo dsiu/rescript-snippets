@@ -3,6 +3,7 @@
 .bsb.lock
 rescript.lock
 npm-debug.log
+/lib/rescript.lock
 /lib/bs/
 /lib/ocaml/
 /node_modules/
