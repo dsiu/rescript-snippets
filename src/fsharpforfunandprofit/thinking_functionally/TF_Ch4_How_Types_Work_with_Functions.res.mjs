@@ -42,7 +42,7 @@ function evalWith5AsString(fn) {
 }
 
 function printInt(x) {
-  console.log("x is " + String(x));
+  console.log(`x is ` + String(x));
 }
 
 console.log("hello world");

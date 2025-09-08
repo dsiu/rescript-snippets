@@ -3,7 +3,7 @@
 import * as Ms from "../src/Ms.res.mjs";
 import Ms$1 from "ms";
 import * as Jest from "@glennsl/rescript-jest/src/jest.res.mjs";
-import * as Stdlib_List from "rescript/lib/es6/Stdlib_List.js";
+import * as Stdlib_List from "@rescript/runtime/lib/es6/Stdlib_List.js";
 
 Jest.describe("MS", () => {
   let fromStr_Tests = Stdlib_List.fromArray([

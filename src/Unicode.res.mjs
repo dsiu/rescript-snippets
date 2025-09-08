@@ -3,6 +3,6 @@
 
 console.log("😀");
 
-console.log("😀");
+console.log(`😀`);
 
 /*  Not a pure module */

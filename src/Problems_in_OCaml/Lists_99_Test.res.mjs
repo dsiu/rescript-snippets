@@ -2,7 +2,7 @@
 
 import * as Jest from "@glennsl/rescript-jest/src/jest.res.mjs";
 import * as Lists_99 from "./Lists_99.res.mjs";
-import * as Belt_List from "rescript/lib/es6/Belt_List.js";
+import * as Belt_List from "@rescript/runtime/lib/es6/Belt_List.js";
 
 Jest.describe("List_99", () => {
   let test1_0 = [
