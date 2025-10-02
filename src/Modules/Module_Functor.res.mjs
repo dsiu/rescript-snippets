@@ -11,7 +11,6 @@ function valueIfName(pair, nameToMatch) {
   if (pair.name === nameToMatch) {
     return Primitive_option.some(pair.value);
   }
-  
 }
 
 function showAndReturn(argument) {

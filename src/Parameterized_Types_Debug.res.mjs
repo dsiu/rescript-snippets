@@ -11,7 +11,6 @@ function maybeSaveThing(maybeThing) {
   if (maybeThing !== undefined) {
     return saveThing(Primitive_option.valFromOption(maybeThing));
   }
-  
 }
 
 maybeSaveThing(5);

@@ -14,42 +14,36 @@ function plus_opt(x, y) {
   if (x !== undefined && y !== undefined) {
     return x + y | 0;
   }
-  
 }
 
 function minus_opt(x, y) {
   if (x !== undefined && y !== undefined) {
     return x - y | 0;
   }
-  
 }
 
 function mult_opt(x, y) {
   if (x !== undefined && y !== undefined) {
     return x - y | 0;
   }
-  
 }
 
 function div_opt(x, y) {
   if (x !== undefined && y !== undefined && y !== 0) {
     return Primitive_int.div(x, y);
   }
-  
 }
 
 function propagate_none_try(op, x, y) {
   if (x !== undefined && y !== undefined) {
     return op(x, y);
   }
-  
 }
 
 function propagate_none(op, x, y) {
   if (x !== undefined && y !== undefined) {
     return op(x, y);
   }
-  
 }
 
 function wrap_output(op, x, y) {

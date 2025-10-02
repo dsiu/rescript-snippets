@@ -45,7 +45,6 @@ function ok(res) {
   if (res.TAG === "Ok") {
     return Primitive_option.some(res._0);
   }
-  
 }
 
 function okExn(res, message) {
@@ -181,7 +180,6 @@ function transpose(res) {
       _0: Primitive_option.valFromOption(x)
     };
   }
-  
 }
 
 function tap(res, fn) {
@@ -247,7 +245,6 @@ function forEachWithIndex(res, fn) {
       if (i < a.length) {
         return i + 1 | 0;
       }
-      
     });
   });
   return {

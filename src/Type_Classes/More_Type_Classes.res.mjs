@@ -103,7 +103,6 @@ function map$1(f, x) {
   if (x !== undefined) {
     return Primitive_option.some(f(Primitive_option.valFromOption(x)));
   }
-  
 }
 
 let OptionFunctor = {
@@ -334,7 +333,6 @@ function apply$1(fo, xo) {
   if (fo !== undefined && xo !== undefined) {
     return Primitive_option.some(fo(Primitive_option.valFromOption(xo)));
   }
-  
 }
 
 let OptionApplicative = {
@@ -393,7 +391,6 @@ function f(x, y) {
   if (match !== undefined && match$1 !== undefined && match$2 !== undefined) {
     return match + match$1 - match$2;
   }
-  
 }
 
 function f$p(x, y) {
@@ -879,7 +876,6 @@ let prim = test$2(x => ({
   if (x > 10) {
     return -x | 0;
   }
-  
 }, {
   hd: 1,
   tl: {

@@ -12,7 +12,6 @@ function createEmailAddress(s) {
       _0: s
     };
   }
-  
 }
 
 function createStateCode(s) {
@@ -33,7 +32,6 @@ function createStateCode(s) {
       _0: s$p
     };
   }
-  
 }
 
 console.log(createStateCode("ca"));
@@ -112,7 +110,6 @@ function create(s) {
       _0: s
     };
   }
-  
 }
 
 function apply(f, e) {

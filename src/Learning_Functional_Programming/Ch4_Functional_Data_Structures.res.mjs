@@ -18,7 +18,6 @@ function getUser(id) {
       _0: id
     };
   }
-  
 }
 
 let prim = [
