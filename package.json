@@ -25,7 +25,22 @@
       "**/*_Test.res.(js|ts|jsx|tsx|mjs)"
     ],
     "transform": {
-      "^.+\\.m?jsx?$": "@swc/jest"
+      "^.+\\.m?jsx?$": [
+        "babel-jest",
+        {
+          "presets": [
+            [
+              "@babel/preset-env",
+              {
+                "targets": {
+                  "node": "current"
+                },
+                "modules": "commonjs"
+              }
+            ]
+          ]
+        }
+      ]
     },
     "transformIgnorePatterns": [
       "<rootDir>/node_modules/(?!(rescript|@rescript/runtime|@glennsl/rescript-jest|@ryyppy/rescript-promise|rationale|ms|@dsiu/rescript-stdlib-fp)/)"
@@ -37,11 +52,12 @@
     ]
   },
   "devDependencies": {
-    "@glennsl/rescript-jest": "git+https://github.com/dsiu/rescript-jest#rescript-v12",
-    "@swc/core": "^1.10.4",
-    "@swc/jest": "^0.2.37",
+    "@babel/core": "^7.28.5",
+    "@babel/preset-env": "^7.28.5",
+    "@glennsl/rescript-jest": "github:dsiu/rescript-jest#rescript-v12",
+    "babel-jest": "^27.3.1",
     "jest": "^27.3.1",
-    "rescript": "^12.0.0-rc.2",
+    "rescript": "^12.0.0-rc.3",
     "rescript-test": "git+https://github.com/dsiu/rescript-test#rescript-v12"
   },
   "dependencies": {
