@@ -1,6 +1,5 @@
 {
   "name": "rescript-snippets",
-  "version": "0.0.1",
   "sources": [
     {
       "dir": "src",
