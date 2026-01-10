@@ -53,10 +53,10 @@
   "devDependencies": {
     "@babel/core": "^7.28.5",
     "@babel/preset-env": "^7.28.5",
-    "@glennsl/rescript-jest": "^0.13.1",
+    "@glennsl/rescript-jest": "github:dsiu/rescript-jest#rescript-v12-wip",
     "babel-jest": "^27.3.1",
     "jest": "^27.3.1",
-    "rescript": "^12.0.1",
+    "rescript": "^12.0.2",
     "rescript-test": "git+https://github.com/dsiu/rescript-test#rescript-v12"
   },
   "dependencies": {
